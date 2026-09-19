@@ -1,10 +1,16 @@
 # RADAR-X
 
+**Live demo: https://radar-x-beta.vercel.app**
+
 Peta posisi smart money IDX untuk swing trader: siapa (insider, institusi, asing) sedang
 diam-diam mengakumulasi atau meninggalkan saham dalam hitungan minggu — dari disclosure resmi
 via **Sectors Financial API v2**. Track 3 Market Intelligence, Sectors Hackathon 2026.
 
 > Bukan nasihat investasi. Statistik deskriptif atas data publik. DYOR.
+
+Contoh nyata: pada 16 Sep 2026, disclosure mencatat insider TOWR menjual ~39,7 juta lembar @437;
+RADAR-X menandainya sebagai kasus *Keluar Duluan* dan emiten masuk bucket distribusi. 253 emiten
+terpantau, 221 kasus terdeteksi, semua outcome 30 hari diukur dari harga riil.
 
 ## Quick start
 
@@ -53,4 +59,6 @@ Pola: Keluar Duluan · Akumulasi Diam-diam · Beli Saat Turun · Bergerak Rombon
 
 - Kode baru untuk hackathon; tidak ada migrasi dari project lain.
 - Key tidak pernah masuk repo: `.env.local` ke-ignore oleh allowlist `.gitignore`.
-- Data `data/*.json` juga lokal-only (derived, regeneratable).
+- `data/*.json` = snapshot beku hasil ingest (disclosure publik, regeneratable via
+  `npm run backfill`); dikomit agar demo Vercel jalan tanpa Supabase. Di prod, lazy
+  backfill tetap bisa fetch live (write best-effort, fs serverless read-only).
