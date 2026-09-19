@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCase, getIssuerDossier } from "@/lib/services";
 import TimelineChart from "@/components/TimelineChart";
-import { ScoreBadge, Stat } from "@/components/widgets";
+import { ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
 import { fmtIDR, fmtPct, fmtShares, PATTERN_LABEL, patternTagClass } from "@/components/fmt";
 
 export const dynamic = "force-dynamic";
@@ -22,21 +22,22 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
       <div>
         <div className="flex flex-wrap items-center gap-3">
           <span className={`tag ${patternTagClass(c.pattern)}`}>{PATTERN_LABEL[c.pattern] ?? c.pattern}</span>
-          <Link href={`/saham/${c.symbol.replace(".JK", "")}`} className="mono text-xl font-bold">
+          <Link href={`/saham/${c.symbol.replace(".JK", "")}`} className="mono text-2xl font-bold">
             {c.symbol.replace(".JK", "")}
           </Link>
-          <ScoreBadge score={c.score} />
+          <ScoreNumber score={c.score} size="lg" />
+          <ScoreMarker score={c.score} />
         </div>
         <p className="mt-1 text-xs dim">
           Jangkar {c.anchorDate} · window {c.windowStart} → {c.windowEnd}
         </p>
       </div>
 
-      <section className="panel p-4">
-        <p className="text-sm leading-relaxed">{c.narrative}</p>
+      <section className="border-l-2 border-line pl-4">
+        <p className="text-sm leading-relaxed dim">{c.narrative}</p>
       </section>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
         <Stat label="Return 7 hari" value={fmtPct(c.outcome.fwd7dPct)} />
         <Stat
           label="Return 30 hari"
@@ -52,12 +53,12 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
       </div>
 
       <section className="panel p-4">
-        <h2 className="mb-2 text-xs font-bold uppercase tracking-wider dim">Timeline</h2>
+        <h2 className="section-label mb-3">Timeline</h2>
         <TimelineChart price={d.price} flow={d.flow} insider={d.insider} anchorDate={c.anchorDate} />
       </section>
 
-      <section className="panel p-4">
-        <h2 className="mb-3 text-xs font-bold uppercase tracking-wider dim">Transaksi insider dalam pola ini</h2>
+      <section>
+        <h2 className="section-label mb-3">Transaksi insider dalam pola ini</h2>
         <table className="w-full text-xs">
           <thead>
             <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">

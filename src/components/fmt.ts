@@ -42,5 +42,5 @@ export const PATTERN_LABEL: Record<string, string> = {
 export function patternTagClass(pattern: string): string {
   if (pattern === "EXIT_AHEAD") return "tag-dist";
   if (pattern === "STEALTH_ACCUMULATION" || pattern === "INSIDER_CONTRA_BUY") return "tag-acc";
-  return "tag-neutral";
+  return "tag-watch";
 }

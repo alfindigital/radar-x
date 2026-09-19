@@ -21,6 +21,7 @@ const BENCH = "^IHSG";
 export interface RadarBoard {
   week: string | null;
   scores: PositioningScore[];
+  sparks: Record<string, number[]>;
   recentInsider: InsiderTrade[];
   topCases: CaseRecord[];
   universe: number;
@@ -76,9 +77,16 @@ export async function getRadarBoard(): Promise<RadarBoard> {
     store.listCases({ limit: 12 }),
     store.listTickers(),
   ]);
+  const sparkSyms = scores.slice(0, 40).map((s) => s.symbol);
+  const flowRows = await Promise.all(sparkSyms.map((s) => store.listFlowDaily(s)));
+  const sparks: Record<string, number[]> = {};
+  flowRows.forEach((rows, i) => {
+    sparks[sparkSyms[i]] = rows.slice(-30).map((r) => r.netForeignInflow);
+  });
   return {
     week: scores[0]?.week ?? null,
     scores,
+    sparks,
     recentInsider: insider,
     topCases: cases,
     universe: tickers.length || new Set(insider.map((t) => t.symbol)).size,
@@ -151,18 +159,12 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
         );
       }
       data = await loadSymbol(symbol);
-      // recompute this symbol's score solo against stored universe
-      const anchor = new Date().toISOString().slice(0, 10);
-      const raw = rawComponents(data, anchor);
+      // recompute this symbol's score solo — tag with the latest batch week so it
+      // joins the cohort instead of becoming its own "latest week"
       const existing = await store.latestScores(500);
-      const rebuilt = computeScores(
-        [
-          { data, raw },
-          // include stored components as peers for the cross-section
-        ],
-        anchor,
-      );
-      void existing;
+      const anchor = existing[0]?.week ?? new Date().toISOString().slice(0, 10);
+      const raw = rawComponents(data, anchor);
+      const rebuilt = computeScores([{ data, raw }], anchor);
       if (rebuilt.length) await store.upsertScores([rebuilt[0]]);
       const cases = detectCases(symbol, {
         insider: data.insider,

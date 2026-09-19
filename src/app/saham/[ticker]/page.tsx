@@ -3,7 +3,7 @@
 import { getIssuerDossier } from "@/lib/services";
 import TimelineChart from "@/components/TimelineChart";
 import TradesTable from "@/components/TradesTable";
-import { CaseCard, ScoreBadge, ScoreBreakdown, Stat } from "@/components/widgets";
+import { CaseRow, ScoreBreakdown, ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
 import { fmtIDR, fmtNum, fmtShares } from "@/components/fmt";
 import type { HoldersMonthly } from "@/lib/types";
 
@@ -35,7 +35,7 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
               className="flex-1 rounded-t"
               style={{
                 height: `${Math.max(3, (inst(h) / maxInst) * 100)}%`,
-                backgroundColor: "color-mix(in srgb, var(--blue) 70%, transparent)",
+                backgroundColor: "color-mix(in srgb, var(--sky) 70%, transparent)",
               }}
               title={`${h.month}: ${fmtShares(inst(h))} lembar`}
             />
@@ -53,7 +53,7 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
               className="flex-1 rounded-t"
               style={{
                 height: `${Math.max(3, (indiv(h) / maxInd) * 100)}%`,
-                backgroundColor: "color-mix(in srgb, var(--neutral) 60%, transparent)",
+                backgroundColor: "color-mix(in srgb, var(--watch) 60%, transparent)",
               }}
               title={`${h.month}: ${fmtShares(indiv(h))} lembar`}
             />
@@ -112,9 +112,14 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="flex items-center gap-3">
-            <h1 className="mono text-2xl font-bold tracking-tight">{d.ticker?.symbol.replace(".JK", "") ?? ticker.toUpperCase()}</h1>
-            {d.score && <ScoreBadge score={d.score.score} size="lg" />}
+          <div className="flex items-center gap-4">
+            <h1 className="mono text-3xl font-bold tracking-tight">{d.ticker?.symbol.replace(".JK", "") ?? ticker.toUpperCase()}</h1>
+            {d.score && (
+              <div className="flex items-center gap-3 border-l border-line pl-4">
+                <ScoreNumber score={d.score.score} size="lg" />
+                <ScoreMarker score={d.score.score} />
+              </div>
+            )}
           </div>
           <p className="mt-1 text-xs dim">
             {d.ticker?.name !== d.ticker?.symbol ? d.ticker?.name : ""} {d.lazy && <span className="tag">live fetch</span>}
@@ -142,7 +147,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
         <TimelineChart price={d.price} flow={d.flow} insider={d.insider} />
       </section>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
         <Stat label="Insider beli 90h" value={`Rp${fmtIDR(buyVal)}`} />
         <Stat label="Insider jual 90h" value={`Rp${fmtIDR(sellVal)}`} />
         <Stat
@@ -157,28 +162,28 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <section className="panel p-4">
-          <h2 className="mb-3 text-xs font-bold uppercase tracking-wider dim">Kenapa skornya segini</h2>
+      <div className="grid gap-8 lg:grid-cols-2">
+        <section>
+          <h2 className="section-label mb-4">Kenapa skornya segini</h2>
           {d.score ? <ScoreBreakdown score={d.score} /> : <p className="dim py-4 text-xs">Skor belum dihitung untuk emiten ini.</p>}
         </section>
-        <section className="panel p-4">
-          <h2 className="mb-3 text-xs font-bold uppercase tracking-wider dim">Komposisi pemilik (bulanan)</h2>
+        <section>
+          <h2 className="section-label mb-4">Komposisi pemilik (bulanan)</h2>
           <HoldersChart holders={d.holders} />
         </section>
       </div>
 
-      <section className="panel p-4">
-        <h2 className="mb-3 text-xs font-bold uppercase tracking-wider dim">Transaksi insider tercatat</h2>
+      <section>
+        <h2 className="section-label mb-3">Transaksi insider tercatat</h2>
         <TradesTable trades={insider90} limit={30} />
       </section>
 
       {d.cases.length > 0 && (
-        <section className="space-y-3">
-          <h2 className="text-xs font-bold uppercase tracking-wider dim">Kasus terdeteksi di emiten ini</h2>
-          <div className="grid gap-3 md:grid-cols-2">
+        <section>
+          <h2 className="section-label mb-2">Kasus terdeteksi di emiten ini</h2>
+          <div>
             {d.cases.map((c) => (
-              <CaseCard key={c.id} c={c} />
+              <CaseRow key={c.id} c={c} />
             ))}
           </div>
         </section>

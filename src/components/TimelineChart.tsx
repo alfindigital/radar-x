@@ -77,7 +77,7 @@ export default function TimelineChart({ price, flow, insider, anchorDate }: Prop
       })}
       <line x1={PAD.l} x2={W - PAD.r} y1={flowBase} y2={flowBase} stroke="var(--line)" strokeWidth="0.75" />
 
-      <path d={line} fill="none" stroke="var(--blue)" strokeWidth="1.5" />
+      <path d={line} fill="none" stroke="var(--sky)" strokeWidth="1.5" />
 
       {marks.map((t, i) => {
         const cx = x(t.txnDate);
@@ -98,7 +98,7 @@ export default function TimelineChart({ price, flow, insider, anchorDate }: Prop
       })}
 
       {anchorDate && (
-        <line x1={x(anchorDate)} x2={x(anchorDate)} y1={PAD.t} y2={flowBase} stroke="var(--neutral)" strokeWidth="1" strokeDasharray="3 3" />
+        <line x1={x(anchorDate)} x2={x(anchorDate)} y1={PAD.t} y2={flowBase} stroke="var(--watch)" strokeWidth="1" strokeDasharray="3 3" />
       )}
 
       <text x={PAD.l} y={H - 6} fontSize="9" fill="var(--ink-faint)" className="mono">
@@ -107,7 +107,7 @@ export default function TimelineChart({ price, flow, insider, anchorDate }: Prop
       <text x={W - PAD.r} y={H - 6} textAnchor="end" fontSize="9" fill="var(--ink-faint)" className="mono">
         {t1}
       </text>
-      <text x={PAD.l + 4} y={PAD.t + 10} fontSize="9" fill="var(--blue)" className="mono">
+      <text x={PAD.l + 4} y={PAD.t + 10} fontSize="9" fill="var(--sky)" className="mono">
         harga
       </text>
       <text x={PAD.l + 4} y={flowBase - FLOW_H + 12} fontSize="9" fill="var(--ink-dim)" className="mono">

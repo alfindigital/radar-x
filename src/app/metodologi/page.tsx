@@ -14,7 +14,7 @@ export default function MetodologiPage() {
           Setiap emiten dinilai lintas-seksi (cross-sectional) terhadap semua emiten yang punya aktivitas insider
           dalam 6 bulan terakhir. Tiap komponen adalah z-score robust (median/MAD, di-clip ±3σ):
         </p>
-        <pre className="panel-2 mono overflow-x-auto p-3 text-xs">
+        <pre className="mono overflow-x-auto rounded-md bg-panel-2 p-3 text-xs">
 {`score = 0.30·insider_z + 0.25·foreign_trend + 0.20·instnet_z
       + 0.15·retail_exodus_z + 0.10·fclass_shift   →  ×33.3 → -100..+100`}
         </pre>

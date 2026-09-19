@@ -32,7 +32,7 @@ export default async function PersonPage({ params }: PageProps<"/orang/[holder]"
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
         <Stat label="Total nilai transaksi" value={`Rp${fmtIDR(s.totalValue)}`} />
         <Stat label="Beli / Jual" value={`${s.buys} / ${s.sells}`} />
         <Stat
@@ -47,8 +47,8 @@ export default async function PersonPage({ params }: PageProps<"/orang/[holder]"
         />
       </div>
 
-      <section className="panel p-4">
-        <h2 className="mb-3 text-xs font-bold uppercase tracking-wider dim">Seluruh histori disclosure</h2>
+      <section>
+        <h2 className="section-label mb-3">Seluruh histori disclosure</h2>
         <TradesTable trades={d.trades} />
         <p className="mt-3 text-[10px] faint">
           &quot;Jual → turun&quot; = berapa kali saham turun dalam 30 hari kalender setelah tanggal transaksinya.
