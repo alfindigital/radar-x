@@ -23,3 +23,7 @@
 !scripts/**
 !specs
 !specs/**
+# Frozen data snapshot for the live demo (derived from public IDX disclosures,
+# regeneratable via `npm run backfill`). No secrets inside.
+!data
+!data/*.json

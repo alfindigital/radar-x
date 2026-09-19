@@ -102,7 +102,8 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
   let data = await loadSymbol(symbol);
   let lazy = false;
 
-  // Lazy backfill: unknown ticker with no stored data → fetch live once
+  // Lazy backfill: unknown ticker with no stored data → fetch live once.
+  // Fetched rows are used in-memory; persistence is best-effort (serverless fs is read-only).
   if (!data.insider.length && !data.price.length) {
     lazy = true;
     try {
@@ -112,67 +113,60 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
         api.daily(symbol, { start }).catch(() => null),
         api.shareholdersComposition(symbol).catch(() => null),
       ]);
-      if (priceRes) {
-        await store.upsertPriceDaily(
-          priceRes.map((r) => ({
-            symbol: r.symbol ?? symbol,
-            date: r.date,
-            open: r.open,
-            high: r.high,
-            low: r.low,
-            close: r.close,
-            volume: r.volume,
-            marketCap: r.market_cap,
-          })),
-        );
-      }
-      if (flowRes) {
-        await store.upsertFlowDaily(
-          flowRes.data.map((r) => ({
-            symbol: flowRes.symbol ?? symbol,
-            date: r.date,
-            netForeignInflow: r.net_foreign_inflow,
-            foreignBuyIdr: r.foreign_buy_idr,
-            foreignSellIdr: r.foreign_sell_idr,
-          })),
-        );
-      }
-      if (holdersRes) {
-        await store.upsertHolders(
-          holdersRes.data.map((r) => {
-            const local: Record<string, number> = {};
-            const foreign: Record<string, number> = {};
-            for (const [k, v] of Object.entries(r)) {
-              if (k.endsWith("_l") && typeof v === "number") local[k] = v;
-              if (k.endsWith("_f") && typeof v === "number") foreign[k] = v;
-            }
-            return {
-              symbol,
-              month: r.date,
-              sharesNumber: r.shares_number,
-              nShareholders: r.numbers_of_shareholders,
-              changeInShareholders: r.change_in_shareholders,
-              local,
-              foreign,
-            };
-          }),
-        );
-      }
-      data = await loadSymbol(symbol);
+      const priceRows: PriceDaily[] = (priceRes ?? []).map((r) => ({
+        symbol: r.symbol ?? symbol,
+        date: r.date,
+        open: r.open,
+        high: r.high,
+        low: r.low,
+        close: r.close,
+        volume: r.volume,
+        marketCap: r.market_cap,
+      }));
+      const flowRows: FlowDaily[] = (flowRes?.data ?? []).map((r) => ({
+        symbol: flowRes?.symbol ?? symbol,
+        date: r.date,
+        netForeignInflow: r.net_foreign_inflow,
+        foreignBuyIdr: r.foreign_buy_idr,
+        foreignSellIdr: r.foreign_sell_idr,
+      }));
+      const holderRows: HoldersMonthly[] = (holdersRes?.data ?? []).map((r) => {
+        const local: Record<string, number> = {};
+        const foreign: Record<string, number> = {};
+        for (const [k, v] of Object.entries(r)) {
+          if (k.endsWith("_l") && typeof v === "number") local[k] = v;
+          if (k.endsWith("_f") && typeof v === "number") foreign[k] = v;
+        }
+        return {
+          symbol,
+          month: r.date,
+          sharesNumber: r.shares_number,
+          nShareholders: r.numbers_of_shareholders,
+          changeInShareholders: r.change_in_shareholders,
+          local,
+          foreign,
+        };
+      });
+      await Promise.allSettled([
+        priceRows.length ? store.upsertPriceDaily(priceRows) : null,
+        flowRows.length ? store.upsertFlowDaily(flowRows) : null,
+        holderRows.length ? store.upsertHolders(holderRows) : null,
+      ]);
+      data = { ...data, price: priceRows, flow: flowRows, holders: holderRows };
       // recompute this symbol's score solo — tag with the latest batch week so it
       // joins the cohort instead of becoming its own "latest week"
       const existing = await store.latestScores(500);
       const anchor = existing[0]?.week ?? new Date().toISOString().slice(0, 10);
       const raw = rawComponents(data, anchor);
       const rebuilt = computeScores([{ data, raw }], anchor);
-      if (rebuilt.length) await store.upsertScores([rebuilt[0]]);
+      if (rebuilt.length) await store.upsertScores(rebuilt).catch(() => {});
       const cases = detectCases(symbol, {
         insider: data.insider,
         flow: data.flow,
         price: data.price,
         bench: await store.listPriceDaily(BENCH),
       });
-      if (cases.length) await store.upsertCases(cases);
+      if (cases.length) await store.upsertCases(cases).catch(() => {});
     } catch {
       // keep whatever we have — empty dossier renders an honest empty state
     }

@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Ship the frozen data snapshot into every serverless function bundle.
+  outputFileTracingIncludes: {
+    "/*": ["./data/*.json"],
+  },
 };
 
 export default nextConfig;
