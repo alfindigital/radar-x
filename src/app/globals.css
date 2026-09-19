@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg: #0b0e11;
+  --color-panel: #12161b;
+  --color-panel-2: #171d24;
+  --color-line: #232b34;
+  --color-ink: #e6edf3;
+  --color-ink-dim: #8b98a5;
+  --color-ink-faint: #59636e;
+  --color-acc: #3fb68b;
+  --color-dist: #e5534b;
+  --color-watch: #d29922;
+  --color-sky: #58a6ff;
+}
+
 :root {
   --bg: #0b0e11;
   --panel: #12161b;

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 function Nav() {
   return (
-    <header className="border-b border-[var(--line)] bg-[var(--panel)]">
+    <header className="border-b border-line bg-panel">
       <div className="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3">
         <Link href="/" className="mono text-sm font-bold tracking-widest">
           RADAR<span className="acc">-X</span>
@@ -39,7 +39,7 @@ function Nav() {
 
 function Footer() {
   return (
-    <footer className="mt-12 border-t border-[var(--line)] px-4 py-6">
+    <footer className="mt-12 border-t border-line px-4 py-6">
       <div className="mx-auto max-w-6xl text-[11px] leading-relaxed faint">
         <p>
           RADAR-X menyajikan statistik deskriptif atas disclosure publik IDX via Sectors Financial API.

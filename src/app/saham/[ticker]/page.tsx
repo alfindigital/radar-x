@@ -32,8 +32,11 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
           {sorted.map((h) => (
             <div
               key={h.month}
-              className="flex-1 rounded-t bg-[var(--blue)]/70"
-              style={{ height: `${Math.max(3, (inst(h) / maxInst) * 100)}%` }}
+              className="flex-1 rounded-t"
+              style={{
+                height: `${Math.max(3, (inst(h) / maxInst) * 100)}%`,
+                backgroundColor: "color-mix(in srgb, var(--blue) 70%, transparent)",
+              }}
               title={`${h.month}: ${fmtShares(inst(h))} lembar`}
             />
           ))}
@@ -47,8 +50,11 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
           {sorted.map((h) => (
             <div
               key={h.month}
-              className="flex-1 rounded-t bg-[var(--neutral)]/60"
-              style={{ height: `${Math.max(3, (indiv(h) / maxInd) * 100)}%` }}
+              className="flex-1 rounded-t"
+              style={{
+                height: `${Math.max(3, (indiv(h) / maxInd) * 100)}%`,
+                backgroundColor: "color-mix(in srgb, var(--neutral) 60%, transparent)",
+              }}
               title={`${h.month}: ${fmtShares(indiv(h))} lembar`}
             />
           ))}
@@ -65,9 +71,15 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
             return (
               <div key={h.month} className="flex flex-1 flex-col items-center justify-center" title={`${h.month}: ${fmtNum(v)}`}>
                 {v < 0 ? (
-                  <div className="w-full rounded-t bg-[var(--acc)]/70" style={{ height: `${hgt}%`, minHeight: 4 }} />
+                  <div
+                    className="w-full rounded-t"
+                    style={{ height: `${hgt}%`, minHeight: 4, backgroundColor: "color-mix(in srgb, var(--acc) 70%, transparent)" }}
+                  />
                 ) : (
-                  <div className="w-full rounded-b bg-[var(--dist)]/70" style={{ height: `${hgt}%`, minHeight: 4 }} />
+                  <div
+                    className="w-full rounded-b"
+                    style={{ height: `${hgt}%`, minHeight: 4, backgroundColor: "color-mix(in srgb, var(--dist) 70%, transparent)" }}
+                  />
                 )}
               </div>
             );
@@ -111,7 +123,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
         <div className="mono text-right text-xs dim">
           {lastPrice && (
             <>
-              <div className="text-lg text-[var(--ink)]">{fmtNum(lastPrice.close)}</div>
+              <div className="text-lg text-ink">{fmtNum(lastPrice.close)}</div>
               <div>
                 {priceChg !== null && (
                   <span className={priceChg >= 0 ? "acc" : "dist"}>

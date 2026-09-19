@@ -10,7 +10,7 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
     <div className="overflow-x-auto">
       <table className="w-full text-xs">
         <thead>
-          <tr className="border-b border-[var(--line)] text-left text-[10px] uppercase tracking-wider faint">
+          <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
             <th className="py-2 pr-3 font-medium">Tanggal</th>
             <th className="py-2 pr-3 font-medium">Nama</th>
             <th className="py-2 pr-3 font-medium">Tipe</th>
@@ -22,7 +22,7 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
         </thead>
         <tbody className="mono">
           {rows.map((t, i) => (
-            <tr key={i} className="border-b border-[var(--line)]/40">
+            <tr key={i} className="border-b border-line/40">
               <td className="py-1.5 pr-3 faint">{t.txnDate}</td>
               <td className="max-w-[240px] truncate py-1.5 pr-3">
                 <Link href={`/orang/${encodeURIComponent(t.holderName)}`} className="dim">

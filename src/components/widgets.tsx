@@ -41,9 +41,9 @@ export function ScoreBreakdown({ score }: { score: PositioningScore }) {
                 {z.toFixed(2)}σ
               </span>
             </div>
-            <div className="mt-0.5 h-1.5 rounded bg-[var(--panel-2)]">
+            <div className="mt-0.5 h-1.5 rounded bg-panel-2">
               <div
-                className={`h-full rounded ${pos ? "bg-[var(--acc)]" : "bg-[var(--dist)]"}`}
+                className={`h-full rounded ${pos ? "bg-acc" : "bg-dist"}`}
                 style={{ width: `${pct}%` }}
               />
             </div>

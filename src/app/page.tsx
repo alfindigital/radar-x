@@ -37,7 +37,7 @@ export default async function BoardPage() {
         <section className="panel overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[var(--line)] text-left text-[10px] uppercase tracking-wider faint">
+              <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
                 <th className="px-4 py-2.5 font-medium">#</th>
                 <th className="px-2 py-2.5 font-medium">Emiten</th>
                 <th className="px-2 py-2.5 font-medium text-right">Skor</th>
@@ -48,7 +48,7 @@ export default async function BoardPage() {
             </thead>
             <tbody className="mono text-xs">
               {scores.map((s, i) => (
-                <tr key={s.symbol} className="table-row border-b border-[var(--line)]/50">
+                <tr key={s.symbol} className="table-row border-b border-line/50">
                   <td className="px-4 py-2.5 faint">{i + 1}</td>
                   <td className="px-2 py-2.5">
                     <Link href={`/saham/${s.symbol.replace(".JK", "")}`} className="font-bold">
@@ -88,7 +88,7 @@ export default async function BoardPage() {
             <h2 className="mb-3 text-xs font-bold uppercase tracking-wider dim">Feed insider terbaru</h2>
             <div className="space-y-2.5">
               {recentInsider.map((t, i) => (
-                <div key={i} className="border-b border-[var(--line)]/40 pb-2.5 text-xs last:border-0 last:pb-0">
+                <div key={i} className="border-b border-line/40 pb-2.5 text-xs last:border-0 last:pb-0">
                   <div className="flex items-center justify-between gap-2">
                     <Link href={`/saham/${t.symbol.replace(".JK", "")}`} className="mono font-bold">
                       {t.symbol.replace(".JK", "")}

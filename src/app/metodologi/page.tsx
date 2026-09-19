@@ -20,23 +20,23 @@ export default function MetodologiPage() {
         </pre>
         <ul className="list-inside list-disc space-y-1 dim">
           <li>
-            <b className="text-[var(--ink)]">insider_z (30%)</b> — nilai bersih transaksi insider 90 hari (Rp).
+            <b className="text-ink">insider_z (30%)</b> — nilai bersih transaksi insider 90 hari (Rp).
             Cluster (beberapa insider searah) ditimbang +25% per orang tambahan.
           </li>
           <li>
-            <b className="text-[var(--ink)]">foreign_trend (25%)</b> — net foreign inflow kumulatif 90 hari,
+            <b className="text-ink">foreign_trend (25%)</b> — net foreign inflow kumulatif 90 hari,
             dinormalisasi market cap (%).
           </li>
           <li>
-            <b className="text-[var(--ink)]">instnet_z (20%)</b> — net buy kohort institusi/asing dari broker
+            <b className="text-ink">instnet_z (20%)</b> — net buy kohort institusi/asing dari broker
             summary 14 hari.
           </li>
           <li>
-            <b className="text-[var(--ink)]">retail_exodus_z (15%)</b> — negatif dari perubahan jumlah pemegang
+            <b className="text-ink">retail_exodus_z (15%)</b> — negatif dari perubahan jumlah pemegang
             saham bulanan (ritel keluar saat smart money masuk).
           </li>
           <li>
-            <b className="text-[var(--ink)]">fclass_shift (10%)</b> — pergeseran kelas investor asing bulanan:
+            <b className="text-ink">fclass_shift (10%)</b> — pergeseran kelas investor asing bulanan:
             institusi (reksadana, lembaga keuangan) minus individu.
           </li>
         </ul>
@@ -46,18 +46,18 @@ export default function MetodologiPage() {
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Deteksi pola (Case Score 0-100)</h2>
         <ul className="list-inside list-disc space-y-1 dim">
           <li>
-            <b className="text-[var(--ink)]">Keluar Duluan</b> — insider/cluster jual, lalu saham turun ≥5%
+            <b className="text-ink">Keluar Duluan</b> — insider/cluster jual, lalu saham turun ≥5%
             dalam 30 hari.
           </li>
           <li>
-            <b className="text-[var(--ink)]">Akumulasi Diam-diam</b> — akumulasi + flow asing abnormal, lalu
+            <b className="text-ink">Akumulasi Diam-diam</b> — akumulasi + flow asing abnormal, lalu
             saham naik ≥8% dalam 30 hari.
           </li>
           <li>
-            <b className="text-[var(--ink)]">Beli Saat Turun</b> — insider membeli saat harga sedang jatuh.
+            <b className="text-ink">Beli Saat Turun</b> — insider membeli saat harga sedang jatuh.
           </li>
           <li>
-            <b className="text-[var(--ink)]">Bergerak Rombongan</b> — ≥3 insider bertransaksi searah dalam
+            <b className="text-ink">Bergerak Rombongan</b> — ≥3 insider bertransaksi searah dalam
             30 hari.
           </li>
         </ul>
@@ -78,7 +78,7 @@ export default function MetodologiPage() {
         </p>
       </section>
 
-      <section className="panel space-y-3 border-[var(--neutral)]/40 p-5">
+      <section className="panel space-y-3 border-watch/40 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider neutral">Disclaimer</h2>
         <p className="dim">
           RADAR-X adalah alat statistik deskriptif atas disclosure publik IDX. Kami <b>tidak</b> memberikan
