@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0e11;
+  --panel: #12161b;
+  --panel-2: #171d24;
+  --line: #232b34;
+  --ink: #e6edf3;
+  --ink-dim: #8b98a5;
+  --ink-faint: #59636e;
+  --acc: #3fb68b; /* accumulate */
+  --dist: #e5534b; /* distribute */
+  --neutral: #d29922; /* watch */
+  --blue: #58a6ff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.panel-2 {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.dim {
+  color: var(--ink-dim);
+}
+.faint {
+  color: var(--ink-faint);
+}
+.acc {
+  color: var(--acc);
+}
+.dist {
+  color: var(--dist);
+}
+.neutral {
+  color: var(--neutral);
+}
+.blue {
+  color: var(--blue);
+}
+
+.tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+}
+
+.tag-acc {
+  border-color: color-mix(in srgb, var(--acc) 45%, transparent);
+  color: var(--acc);
+}
+.tag-dist {
+  border-color: color-mix(in srgb, var(--dist) 45%, transparent);
+  color: var(--dist);
+}
+.tag-neutral {
+  border-color: color-mix(in srgb, var(--neutral) 45%, transparent);
+  color: var(--neutral);
+}
+
+a {
+  color: inherit;
+}
+a:hover {
+  color: var(--blue);
+}
+
+.table-row:hover {
+  background: var(--panel-2);
+}
+
+/* thin scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
 }
