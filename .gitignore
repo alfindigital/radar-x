@@ -15,6 +15,9 @@
 !CLAUDE.md
 !schema.sql
 !vercel.json
+!SESSION.md
+!docs
+!docs/**
 !src
 !src/**
 !public
@@ -27,3 +30,5 @@
 # regeneratable via `npm run backfill`). No secrets inside.
 !data
 !data/*.json
+
+.vercel
