@@ -1,7 +1,10 @@
 # SESSION.md — RADAR-X checkpoint
 
-Tanggal: 2026-09-20
+Tanggal: 2026-09-23 (audit roaming — all green, T-7 hari ke deadline 30 Sep)
 Status: **MVP live, submission pending artefak video/sosmed**
+
+Audit 09-23: git clean+sync origin/main, demo 200, API key live (962 emiten),
+data snapshot 19 Sep masih valid. Tidak ada perubahan kode sejak 2053eaf.
 
 ## State
 
