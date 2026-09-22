@@ -167,6 +167,25 @@ export interface TopChangesResponse {
   top_losers?: Record<string, { name: string; symbol: string; price_change: number; last_close_price: number }[]>;
 }
 
+export interface UniverseCloseRow {
+  symbol: string;
+  date: string;
+  close: number;
+}
+
+export interface UniverseFlowRow {
+  symbol: string;
+  date: string;
+  net_foreign_inflow: number;
+  foreign_buy_idr: number;
+  foreign_sell_idr: number;
+}
+
+export interface UniverseResponse<T> {
+  results: T[];
+  pagination: { total_count: number; has_next: boolean; next_offset: number | null };
+}
+
 export interface NewsRow {
   title: string;
   body?: string;
@@ -197,6 +216,28 @@ export const api = {
   topChanges: () => sectorsGet<TopChangesResponse>("/v2/companies/top-changes/"),
   news: (p?: { symbol?: string; limit?: number }) => sectorsGet<{ results: NewsRow[] } | NewsRow[]>("/v2/news/", p as Record<string, string | number> | undefined),
   indexDaily: (code: string) => sectorsGet<DailyRow[] | { results: DailyRow[] }>(`/v2/index-daily/${encodeURIComponent(code)}/`),
+  closeUniverse: (p: { date?: string; limit?: number; offset?: number }) =>
+    sectorsGet<UniverseResponse<UniverseCloseRow>>("/v2/close/", p as Record<string, string | number>),
+  flowUniverse: (p: { date?: string; limit?: number; offset?: number }) =>
+    sectorsGet<UniverseResponse<UniverseFlowRow>>("/v2/foreign-flow/", p as Record<string, string | number>),
 };
+
+// Pull every page of a full-universe daily feed (~25-32 credits/day).
+export async function universeAll<T>(
+  fn: (p: { date?: string; limit: number; offset: number }) => Promise<UniverseResponse<T>>,
+  date?: string,
+): Promise<{ rows: T[]; calls: number }> {
+  const rows: T[] = [];
+  let offset = 0;
+  let calls = 0;
+  while (true) {
+    const res = await fn({ date, limit: 30, offset });
+    calls++;
+    rows.push(...res.results);
+    if (!res.pagination?.has_next || res.results.length === 0) break;
+    offset = res.pagination.next_offset ?? offset + res.results.length;
+  }
+  return { rows, calls };
+}
 
 type TxnTypeStr = "buy" | "sell" | "others";

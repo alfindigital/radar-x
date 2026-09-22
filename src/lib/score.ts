@@ -84,7 +84,8 @@ export function rawComponents(d: SymbolData, anchor: string): RawComponents {
   if (flow.length >= 5) {
     dataPoints++;
     const cum = flow.reduce((s, f) => s + f.netForeignInflow, 0);
-    const lastPrice = d.price.filter((p) => p.date <= anchor).at(-1);
+    // universe-close rows carry no marketCap — fall back to last row that has one
+    const lastPrice = d.price.filter((p) => p.date <= anchor && p.marketCap).at(-1);
     const cap = lastPrice?.marketCap;
     foreignCum90dNorm = cap && cap > 0 ? (cum / cap) * 100 : 0; // % of market cap
   }

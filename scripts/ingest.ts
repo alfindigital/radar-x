@@ -18,7 +18,7 @@ try {
   /* .env.local optional in CI/prod (env injected) */
 }
 
-import { api, type FilingRaw } from "../src/lib/sectors";
+import { api, universeAll, type FilingRaw } from "../src/lib/sectors";
 import { getStore } from "../src/lib/db";
 import type {
   BrokerSummaryRow,
@@ -275,7 +275,70 @@ async function ingestIndex() {
   console.log(`index ihsg: ${n} rows`);
 }
 
+// Full-universe refresh: /v2/close/ + /v2/foreign-flow/ per trading day.
+// Covers ALL emiten (~25-32 credits/day/feed). Auto-detects missing days from
+// stored data; --days N forces an N-calendar-day backfill window.
+async function ingestUniverse() {
+  const forced = Number(flag("days", "0"));
+  const from = flag("from");
+  const to = flag("to", new Date().toISOString().slice(0, 10));
+  let days: string[];
+  if (from) {
+    days = [];
+    for (let d = new Date(from); d.toISOString().slice(0, 10) <= to!; d = new Date(d.getTime() + 864e5)) {
+      days.push(d.toISOString().slice(0, 10));
+    }
+  } else {
+    const n = forced || 3;
+    days = [];
+    for (let i = n; i >= 0; i--) {
+      days.push(new Date(Date.now() - i * 864e5).toISOString().slice(0, 10));
+    }
+  }
+
+  let calls = 0;
+  let priceRows = 0;
+  let flowRowsN = 0;
+  for (const day of days) {
+    let close;
+    try {
+      close = await universeAll(api.closeUniverse, day);
+    } catch {
+      continue; // future/non-trading day → 400 (free), skip
+    }
+    calls += close.calls;
+    if (close.rows.length === 0) continue; // non-trading day
+    priceRows += await store.upsertPriceDaily(
+      close.rows.map((r) => ({
+        symbol: r.symbol,
+        date: r.date,
+        open: r.close,
+        high: r.close,
+        low: r.close,
+        close: r.close,
+        volume: 0,
+        marketCap: null,
+      })),
+    );
+    const flow = await universeAll(api.flowUniverse, day);
+    calls += flow.calls;
+    flowRowsN += await store.upsertFlowDaily(
+      flow.rows.map((r) => ({
+        symbol: r.symbol,
+        date: r.date,
+        netForeignInflow: r.net_foreign_inflow,
+        foreignBuyIdr: r.foreign_buy_idr,
+        foreignSellIdr: r.foreign_sell_idr,
+      })),
+    );
+    console.log(`${day}: close=${close.rows.length} flow=${flow.rows.length}`);
+  }
+  await store.log("ingest_universe", calls, priceRows + flowRowsN, "ok");
+  console.log(`universe: +${priceRows} prices, +${flowRowsN} flows (${calls} calls)`);
+}
+
 const commands: Record<string, () => Promise<void>> = {
+  universe: ingestUniverse,
   filings: ingestFilings,
   tickers: ingestTickers,
   flows: ingestFlows,
