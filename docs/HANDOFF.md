@@ -15,8 +15,8 @@
 | Env di Vercel | `SECTORS_API_KEY` (secret, production) — sudah terpasang |
 | Track | **03 — Market Intelligence** |
 | Deadline submit | 30 Sep 2026, 23:59 WIB |
-| Data ter-backfill | 253 emiten · 1.476 insider trades · ~11rb flow · ~16rb harga · 2rb holders · 14rb broker rows · 221 kasus |
-| Kredit terpakai | ~850 (estimasi) |
+| Data ter-backfill | 256 emiten scored · 1.513 insider trades · ~20rb flow (8 hari universe ~700 emiten) · ~18rb harga · 2rb holders · 14rb broker rows · 235 kasus |
+| Kredit terpakai | ~1.500 (estimasi) — **kuota HABIS per 23 Sep (429 INSUFFICIENT_CREDITS)** |
 
 ## Yang masih harus dilakukan (manual, user-only)
 
@@ -39,8 +39,12 @@ npm install
 npm run dev                  # http://localhost:3000 — data/*.json sudah ikut repo
 ```
 
-Data `data/*.json` adalah snapshot beku per 19 Sep 2026 — langsung jalan tanpa ingest.
-Regenerasi penuh: `npm run backfill` (butuh ~850 kredit).
+Data `data/*.json` adalah snapshot beku per 22 Sep 2026 — langsung jalan tanpa ingest.
+Regenerasi penuh: `npm run backfill` (butuh ~850 kredit). Refresh harian:
+`npx tsx scripts/ingest.ts universe --from <tgl> --to <tgl>` (semua emiten, ~57 kredit/hari).
+**Kuota habis 23 Sep** — sisa hari universe Sep 15-18:
+`npx tsx scripts/ingest.ts universe --from 2026-09-15 --to 2026-09-18 --feed flow`
+Jalankan setelah reset/top-up, lalu `npm run compute` + commit sebelum submit.
 
 ## Aturan main yang sering kelewat
 

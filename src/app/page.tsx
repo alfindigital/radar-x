@@ -37,7 +37,8 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             {universe} emiten IDX · minggu <span className="mono">{week ?? "—"}</span>
           </p>
         </div>
-        <div className="flex gap-4 text-xs">
+        <div className="flex items-center gap-4 text-xs">
+          <span className="tag">EOD {week ?? "—"}</span>
           <span className="dim">
             <span className="acc">▲</span> {nAcc} akumulasi
           </span>
