@@ -296,32 +296,43 @@ async function ingestUniverse() {
     }
   }
 
+  const feed = flag("feed", "both"); // both | close | flow
   let calls = 0;
   let priceRows = 0;
   let flowRowsN = 0;
   for (const day of days) {
-    let close;
-    try {
-      close = await universeAll(api.closeUniverse, day);
-    } catch {
-      continue; // future/non-trading day → 400 (free), skip
+    let dayHasData = false;
+    if (feed !== "flow") {
+      try {
+        const close = await universeAll(api.closeUniverse, day);
+        calls += close.calls;
+        dayHasData = close.rows.length > 0;
+        priceRows += await store.upsertPriceDaily(
+          close.rows.map((r) => ({
+            symbol: r.symbol,
+            date: r.date,
+            open: r.close,
+            high: r.close,
+            low: r.close,
+            close: r.close,
+            volume: 0,
+            marketCap: null,
+          })),
+        );
+        if (close.rows.length) console.log(`${day}: close=${close.rows.length}`);
+      } catch {
+        continue; // future/non-trading day → 400 (free), skip
+      }
     }
-    calls += close.calls;
-    if (close.rows.length === 0) continue; // non-trading day
-    priceRows += await store.upsertPriceDaily(
-      close.rows.map((r) => ({
-        symbol: r.symbol,
-        date: r.date,
-        open: r.close,
-        high: r.close,
-        low: r.close,
-        close: r.close,
-        volume: 0,
-        marketCap: null,
-      })),
-    );
-    const flow = await universeAll(api.flowUniverse, day);
+    if (feed === "close") continue;
+    let flow;
+    try {
+      flow = await universeAll(api.flowUniverse, day);
+    } catch {
+      continue;
+    }
     calls += flow.calls;
+    if (!dayHasData && flow.rows.length === 0) continue;
     flowRowsN += await store.upsertFlowDaily(
       flow.rows.map((r) => ({
         symbol: r.symbol,
@@ -331,7 +342,7 @@ async function ingestUniverse() {
         foreignSellIdr: r.foreign_sell_idr,
       })),
     );
-    console.log(`${day}: close=${close.rows.length} flow=${flow.rows.length}`);
+    console.log(`${day}: flow=${flow.rows.length}`);
   }
   await store.log("ingest_universe", calls, priceRows + flowRowsN, "ok");
   console.log(`universe: +${priceRows} prices, +${flowRowsN} flows (${calls} calls)`);

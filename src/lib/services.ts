@@ -190,6 +190,50 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
   };
 }
 
+export interface FlowRadarRow {
+  symbol: string;
+  days: number;
+  cumNet: number; // IDR cumulative net foreign inflow over window
+  cumBuy: number;
+  cumSell: number;
+  lastDate: string;
+  streak: number; // consecutive net-buy days ending at lastDate
+}
+
+// Foreign-flow radar over the full stored universe — every emiten with
+// foreign-investor participation, not just insider-active ones.
+export async function getFlowRadar(windowDays = 14): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
+  const store = getStore();
+  const all = await store.listFlowUniverse();
+  if (!all.length) return { from: null, to: null, rows: [] };
+  const to = all.reduce((m, r) => (r.date > m ? r.date : m), all[0].date);
+  const from = new Date(new Date(to).getTime() - windowDays * 864e5).toISOString().slice(0, 10);
+
+  const bySym = new Map<string, FlowRadarRow & { nets: [string, number][] }>();
+  for (const r of all) {
+    if (r.date < from || r.date > to) continue;
+    let e = bySym.get(r.symbol);
+    if (!e) {
+      e = { symbol: r.symbol, days: 0, cumNet: 0, cumBuy: 0, cumSell: 0, lastDate: r.date, streak: 0, nets: [] };
+      bySym.set(r.symbol, e);
+    }
+    e.days++;
+    e.cumNet += r.netForeignInflow;
+    e.cumBuy += r.foreignBuyIdr;
+    e.cumSell += r.foreignSellIdr;
+    if (r.date > e.lastDate) e.lastDate = r.date;
+    e.nets.push([r.date, r.netForeignInflow]);
+  }
+  for (const e of bySym.values()) {
+    for (const [, net] of e.nets.sort((a, b) => b[0].localeCompare(a[0]))) {
+      if (net > 0) e.streak++;
+      else break;
+    }
+  }
+  const rows = [...bySym.values()].sort((a, b) => b.cumNet - a.cumNet);
+  return { from, to, rows };
+}
+
 export async function getCaseFeed(pattern?: string): Promise<CaseRecord[]> {
   return getStore().listCases({ pattern, limit: 100 });
 }

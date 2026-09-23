@@ -10,7 +10,8 @@ via **Sectors Financial API v2**. Track 3 Market Intelligence, Sectors Hackathon
 
 Contoh nyata: pada 16 Sep 2026, disclosure mencatat insider TOWR menjual ~39,7 juta lembar @437;
 RADAR-X menandainya sebagai kasus *Keluar Duluan* dan emiten masuk bucket distribusi. 253 emiten
-terpantau, 221 kasus terdeteksi, semua outcome 30 hari diukur dari harga riil.
+terpantau, 235+ kasus terdeteksi, semua outcome 30 hari diukur dari harga riil.
+Foreign Flow Radar memantau ~700 emiten dengan aktivitas asing dari feed full-universe harian.
 
 ## Quick start
 
@@ -30,6 +31,7 @@ Resume aman: semua job idempotent, `--only-missing` melompati yang sudah ada.
 | Route | Isi |
 |---|---|
 | `/` | RADAR Board — ranking Positioning Score -100..+100 + feed insider + kasus teratas |
+| `/asing` | Foreign Flow Radar — net flow asing kumulatif untuk seluruh emiten IDX |
 | `/saham/[ticker]` | Dossier emiten — timeline harga+insider+flow, breakdown skor, komposisi pemilik |
 | `/kasus`, `/kasus/[id]` | Case feed pola terdeteksi + hasil 30 hari terukur |
 | `/orang/[holder]` | Dossier orang — histori disclosure + frekuensi historis |

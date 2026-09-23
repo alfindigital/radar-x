@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 
 const NAV = [
   { href: "/", label: "Board", icon: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" },
+  { href: "/asing", label: "Asing", icon: "M3 17l6-6 4 4 8-8M15 7h6v6" },
   { href: "/kasus", label: "Kasus", icon: "M4 6h16M4 12h16M4 18h10" },
   { href: "/metodologi", label: "Metodologi", icon: "M12 8h.01M12 12v4m9-4a9 9 0 1 1-18 0 9 9 0 0 1 18 0" },
 ];

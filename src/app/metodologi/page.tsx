@@ -68,10 +68,21 @@ export default function MetodologiPage() {
       </section>
 
       <section className="panel space-y-3 p-5">
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Foreign Flow Radar (halaman Asing)</h2>
+        <p className="dim">
+          Berbeda dengan Board yang mensyaratkan aktivitas insider, halaman Asing meranking{" "}
+          <b className="text-ink">seluruh emiten IDX</b> berdasarkan net foreign inflow kumulatif 14 hari —
+          diambil dari feed full-universe harian. Atribusi berdasarkan origin investor, bukan broker.
+          Tidak dinormalisasi market cap: ini ranking flow mentah, bukan composite score.
+        </p>
+      </section>
+
+      <section className="panel space-y-3 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Sumber data</h2>
         <p className="dim">
           Sectors Financial API v2: <span className="mono">filings</span> (transaksi insider parsed),{" "}
-          <span className="mono">shareholders-composition</span> (bulanan), <span className="mono">foreign-flow</span>,{" "}
+          <span className="mono">shareholders-composition</span> (bulanan), <span className="mono">foreign-flow</span>{" "}
+          (per-emiten + full-universe), <span className="mono">close</span> (full-universe),{" "}
           <span className="mono">broker-summary</span>, <span className="mono">daily</span> &{" "}
           <span className="mono">index-daily</span>. Semua end-of-day; hasil 30 hari diukur dari harga riil,
           bukan prediksi.

@@ -3,8 +3,17 @@
 Tanggal: 2026-09-23 (audit roaming — all green, T-7 hari ke deadline 30 Sep)
 Status: **MVP live, submission pending artefak video/sosmed**
 
-Audit 09-23: git clean+sync origin/main, demo 200, API key live (962 emiten),
-data snapshot 19 Sep masih valid. Tidak ada perubahan kode sejak 2053eaf.
+Audit 09-23: git clean+sync origin/main, demo 200, API key live (962 emiten).
+
+Update 09-23 sore:
+- Snapshot di-refresh ke 22 Sep (256 skor, 235 kasus, +37 filing baru)
+- Endpoint universe ditambah: /v2/close/ + /v2/foreign-flow/ per hari bursa
+- Halaman baru /asing: Foreign Flow Radar ~700 emiten (8 hari universe: Sep 7-14, 21-22)
+- tickers.json kini berisi 962 emiten (board menampilkan universe benar)
+- ⚠️ KUOTA SECTORS HABIS per 23 Sep ~07:00 WIB (429 INSUFFICIENT_CREDITS).
+  Sisa hari universe yang belum tertarik: Sep 15-18. Jalankan ulang
+  `npx tsx scripts/ingest.ts universe --from 2026-09-15 --to 2026-09-18 --feed flow`
+  setelah kuota reset/top-up (cek dashboard sectors.app/api).
 
 ## State
 

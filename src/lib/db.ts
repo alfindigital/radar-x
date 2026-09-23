@@ -24,6 +24,7 @@ export interface DataStore {
   // flows & prices
   upsertFlowDaily(rows: FlowDaily[]): Promise<number>;
   listFlowDaily(symbol: string, since?: string): Promise<FlowDaily[]>;
+  listFlowUniverse(since?: string): Promise<FlowDaily[]>;
   upsertPriceDaily(rows: PriceDaily[]): Promise<number>;
   listPriceDaily(symbol: string, since?: string): Promise<PriceDaily[]>;
   // broker summary
@@ -120,6 +121,11 @@ export class JsonStore implements DataStore {
   async listFlowDaily(symbol: string, since?: string): Promise<FlowDaily[]> {
     const rows = (await readJson<FlowDaily[]>(FILES.flow, [])).filter((r) => r.symbol === symbol && (!since || r.date >= since));
     return rows.sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  async listFlowUniverse(since?: string): Promise<FlowDaily[]> {
+    const rows = await readJson<FlowDaily[]>(FILES.flow, []);
+    return rows.filter((r) => !since || r.date >= since);
   }
 
   async upsertPriceDaily(rows: PriceDaily[]): Promise<number> {
