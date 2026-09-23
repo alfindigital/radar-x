@@ -10,10 +10,13 @@ Update 09-23 sore:
 - Endpoint universe ditambah: /v2/close/ + /v2/foreign-flow/ per hari bursa
 - Halaman baru /asing: Foreign Flow Radar ~700 emiten (8 hari universe: Sep 7-14, 21-22)
 - tickers.json kini berisi 962 emiten (board menampilkan universe benar)
-- ⚠️ KUOTA SECTORS HABIS per 23 Sep ~07:00 WIB (429 INSUFFICIENT_CREDITS).
+- ⚠️ AKSES API DICABUT per 23 Sep: 401 SUBSCRIPTION_DOES_NOT_ALLOW
+  (sebelumnya 429 INSUFFICIENT_CREDITS — sekarang subscription-nya sendiri
+  tidak mengizinkan; top-up kredit saja tidak cukup, perlu akses diaktifkan
+  ulang via Discord/admin Sectors).
   Sisa hari universe yang belum tertarik: Sep 15-18. Jalankan ulang
   `npx tsx scripts/ingest.ts universe --from 2026-09-15 --to 2026-09-18 --feed flow`
-  setelah kuota reset/top-up (cek dashboard sectors.app/api).
+  KALAU akses dipulihkan. Demo tidak terpengaruh — snapshot beku ikut repo.
 
 ## State
 

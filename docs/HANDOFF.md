@@ -16,7 +16,7 @@
 | Track | **03 — Market Intelligence** |
 | Deadline submit | 30 Sep 2026, 23:59 WIB |
 | Data ter-backfill | 256 emiten scored · 1.513 insider trades · ~20rb flow (8 hari universe ~700 emiten) · ~18rb harga · 2rb holders · 14rb broker rows · 235 kasus |
-| Kredit terpakai | ~1.500 (estimasi) — **kuota HABIS per 23 Sep (429 INSUFFICIENT_CREDITS)** |
+| Kredit terpakai | ~1.500 (estimasi) — **akses API dicabut 23 Sep (401 SUBSCRIPTION_DOES_NOT_ALLOW)** |
 
 ## Yang masih harus dilakukan (manual, user-only)
 
