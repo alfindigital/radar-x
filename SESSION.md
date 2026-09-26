@@ -1,7 +1,12 @@
 # SESSION.md — RADAR-X checkpoint
 
-Tanggal: 2026-09-23 (audit roaming — all green, T-7 hari ke deadline 30 Sep)
+Tanggal: 2026-09-26 (QA sweep pre-rekam — all green, T-4 hari ke deadline 30 Sep)
 Status: **MVP live, submission pending artefak video/sosmed**
+
+Audit 09-26: lint+typecheck+build hijau (8 route), demo 200, 256 skor/244 kasus
+terverifikasi (190 outcome terukur). Naskah SUBMISSION.md diselaraskan ke data riil
+(TOWR = Bergerak Rombongan bukan Keluar Duluan; beat outcome pakai FILM -14,3% /
+LUCY +17,5%). API Sectors masih 401 — backfill Sep 15-18 tetap pending.
 
 Audit 09-23: git clean+sync origin/main, demo 200, API key live (962 emiten).
 
