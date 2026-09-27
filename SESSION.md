@@ -1,7 +1,20 @@
 # SESSION.md — RADAR-X checkpoint
 
 Tanggal: 2026-09-26 (QA sweep pre-rekam — all green, T-4 hari ke deadline 30 Sep)
-Status: **MVP live, submission pending artefak video/sosmed**
+Status: **MVP live · teaser 60s sudah jadi mp4 · pending judging video + sosmed + submit**
+
+Update 09-27: teaser diproduksi programmatic via Remotion, copy **English**
+(untuk juri internasional). File final:
+`Documents\Studio\video-motion\remotion\out\radarx-teaser-en.mp4` (1920×1080,
+60.0s, h264, 2.3MB). Versi ID lama masih ada: `radarx-teaser.mp4`.
+Source komposisi: `video-motion/remotion/src/RadarX/` (5 scene, data riil
+baked: TOWR cluster @437→404 ≈Rp98B, board GULA +84/SQMI −86, FILM "Exit
+Ahead" −14.3% vs IHSG −4.9%, LUCY +17.5%).
+Judging video juga programmatic: `RadarXJudging` 4215f/140.5s (≤3 mnt) —
+problem → board → score anatomy → TOWR dossier → FILM outcome → holder
+dossier (Verah W.S. Wong, TAMA @238→@190) → metodologi → outro.
+Output: `out/radarx-judging.mp4`. Caption sosmed EN siap di SUBMISSION.md.
+Tinggal: upload 2 video → post sosmed → submit portal → freeze.
 
 Audit 09-26: lint+typecheck+build hijau (8 route), demo 200, 256 skor/244 kasus
 terverifikasi (190 outcome terukur). Naskah SUBMISSION.md diselaraskan ke data riil

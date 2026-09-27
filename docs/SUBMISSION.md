@@ -29,7 +29,24 @@ Posting caption di bawah di IG / LinkedIn / Threads / TikTok,
 thumbnail dari https://canva.link/mexgt4g89m17xln, tag `@sectorsapp`,
 lalu paste URL post-nya.
 
-### Caption (paste-ready)
+### Caption (paste-ready, EN — cocok dengan video English)
+
+```
+Sep 16, 2026: six TOWR insiders sold on the same day, at the same price — @437, ≈Rp98B in official IDX filings. Six days later the price was 404.
+
+RADAR-X catches signals like this across 256 issuers: who — insiders, institutions, foreign flow — is quietly accumulating or exiting a stock, measured over weeks and verified against real prices 30 days later.
+
+Not a technical indicator. Not a buy/sell recommendation. Just scattered public disclosures, assembled into one position map.
+
+Built on the @sectorsapp Financial API for Sectors Hackathon 2026.
+
+Live: radar-x-beta.vercel.app
+Repo: github.com/alfindigital/radar-x
+
+#SectorsHackathon #IDX #MarketIntelligence
+```
+
+### Caption (alternatif ID)
 
 ```
 16 September 2026: 6 insider TOWR tercatat jual serentak di harga 437 — total ~Rp98 miliar, dari disclosure resmi IDX. Enam hari kemudian harganya 404.
@@ -48,33 +65,35 @@ Repo: github.com/alfindigital/radar-x
 
 ## Teaser video (1 menit, public)
 
-Rekam layar dari https://radar-x-beta.vercel.app. Narasi:
+**Sudah jadi — programmatic Remotion, copy English, data riil baked-in.**
+File: `Studio\video-motion\remotion\out\radarx-teaser-en.mp4` (1920×1080, 60.0s, 2.3MB).
+Tinggal upload ke YouTube/Drive public → paste URL. Beat:
 
 ```
-0:00  [Board]        "16 September. Enam insider TOWR jual serentak di 437."
-0:10  [Board scroll] "256 emiten IDX, dinilai dari siapa yang posisi —
-                      insider, institusi, asing. Bukan indikator teknikal."
-0:25  [/saham/TOWR]  Timeline: marker ▼ di 437, harga lalu 404. "Skor -70. Distribusi."
-0:40  [/kasus/FILM.JK:2026-09-01:EXIT_AHEAD]
-                     "Keluar Duluan — FILM -14,3% dalam 30 hari, IHSG cuma -4,9%."
-0:50  [Board]        "RADAR-X. Disclosure resmi jadi satu peta." → tampilkan URL
+0:00  Hook        "SEP 16, 2026 — 6 insiders sold TOWR together, same price @437, ≈Rp98B"
+0:09  Board       "256 issuers · score −100..+100 · accumulation/distribution"
+0:26  Dossier     TOWR timeline: marker ▼ "6 insiders sold @437" → drop to 404, score −70
+0:40  Case        "Exit Ahead — FILM −14.3% vs IHSG −4.9%. Measured. Not predicted."
+0:50  Outro       radar sweep + RADAR-X + radar-x-beta.vercel.app + disclaimer
 ```
 
 ## Judging video (≤3 menit, public/unlisted YouTube/Vimeo/Drive/Loom)
 
+**Sudah jadi — programmatic Remotion, 140.5s.**
+File: `Studio\video-motion\remotion\out\radarx-judging.mp4` (1920×1080, 2:20).
+Tinggal upload → paste URL. Beat:
+
 ```
-0:00  Problem: swing trader buta posisi smart money; harga adalah sinyal telat
-0:30  Board: skor -100..+100, 5 komponen z-score, sparkline flow asing inline
-      (contoh ujung: GULA +84 akumulasi, SQMI -86 / TOWR -70 distribusi)
-1:00  Dossier emiten /saham/TOWR: timeline insider × harga × flow —
-      6 insider jual @437 → 404 (-7,6%), skor -70, pola Bergerak Rombongan
-1:30  Detail kasus /kasus/FILM.JK:2026-09-01:EXIT_AHEAD: score 100,
-      outcome terukur -14,3% vs IHSG -4,9% — diukur, bukan diprediksi
-      (alternatif sisi akumulasi: LUCY.JK stealth +17,5% vs IHSG -0,9%)
-1:55  /asing: Foreign Flow Radar ~700 emiten, net flow kumulatif 8 hari bursa
-2:15  Dossier orang /orang/Indra Gunawan: histori disclosure + frekuensi
-2:35  Metodologi: formula terbuka, sumber data EOD resmi, disclaimer
-2:50  Penutup: "informasi publik yang tersebar, jadi satu peta posisi"
+0:00   Problem: disclosures are public but scattered (3 feeds × ~900 issuers)
+0:14   Board: score −100..+100, ranked issuers, foreign-flow sparklines
+0:37   Score anatomy: 5 weighted components (insider 30 / foreign 25 /
+       instnet 20 / retail exodus 15 / fclass 10), z-scored
+0:59   TOWR dossier: 6 insiders sold @437 → 404 (−7.6%), score −70, Cluster Move
+1:20   FILM case: Exit Ahead, score 100, measured −14.3% vs IHSG −4.9%
+1:42   Person dossier: Verah Wahyudi S Wong — TAMA buys @238→@190 while price fell,
+       stake 9.62%→10.06% (+ ATAP 0.4%→4.9%)
+1:55   Methodology: Sectors API → snapshot → z-scores → patterns → outcome vs IHSG
+2:11   Outro: RADAR-X + URL + disclaimer
 ```
 
 ## Checklist sebelum klik Submit
