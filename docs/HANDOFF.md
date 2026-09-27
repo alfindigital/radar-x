@@ -3,9 +3,9 @@
 > Checkpoint lokal. Kalau folder ini dipindah/dibuka di mesin atau agent lain,
 > baca file ini dulu — semua konteks untuk melanjutkan ada di sini.
 
-## Status per 2026-09-20
+## Status per 2026-09-27
 
-**MVP selesai dan live.** Tinggal artefak non-kode (video + sosmed + submit portal).
+**MVP selesai, live, dan kedua video submission sudah jadi file mp4.** Tinggal upload + sosmed + submit portal (user-only, ~15 mnt).
 
 | Item | Nilai |
 |---|---|
@@ -15,15 +15,18 @@
 | Env di Vercel | `SECTORS_API_KEY` (secret, production) — sudah terpasang |
 | Track | **03 — Market Intelligence** |
 | Deadline submit | 30 Sep 2026, 23:59 WIB |
-| Data ter-backfill | 256 emiten scored · 1.513 insider trades · ~20rb flow (8 hari universe ~700 emiten) · ~18rb harga · 2rb holders · 14rb broker rows · 235 kasus |
+| Data ter-backfill | 256 emiten scored (week 22 Sep; 509 recs total 2 minggu) · 1.513 insider trades · ~19,4rb flow · ~18,6rb harga · 2rb holders · 14,2rb broker rows · **244 kasus (190 outcome terukur)** |
 | Kredit terpakai | ~1.500 (estimasi) — **akses API dicabut 23 Sep (401 SUBSCRIPTION_DOES_NOT_ALLOW)** |
+| Teaser video | `Studio\video-motion\remotion\out\radarx-teaser-en.mp4` — 60.0s, 1920×1080, English |
+| Judging video | `Studio\video-motion\remotion\out\radarx-judging.mp4` — 140.5s (≤3 mnt), 1920×1080, English |
+| Video source | `Studio\video-motion\remotion\src\RadarX\` (compositions `RadarXTeaser` + `RadarXJudging`) |
 
 ## Yang masih harus dilakukan (manual, user-only)
 
-1. Rekam teaser 1 menit → upload **public** → simpan URL.
-2. Rekam video judging ≤3 menit → YouTube unlisted → simpan URL.
-   Naskah ada di `docs/SUBMISSION.md`.
-3. Post sosmed (IG/LinkedIn/Threads/TikTok) pakai caption di `docs/SUBMISSION.md`
+1. Upload `radarx-teaser-en.mp4` → **public** (YouTube/Drive) → simpan URL.
+2. Upload `radarx-judging.mp4` → YouTube unlisted/public → simpan URL.
+   Preview lokal dulu: `node preview-server.mjs` di folder remotion → `localhost:4567/preview.html`.
+3. Post sosmed (IG/LinkedIn/Threads/TikTok) pakai caption EN di `docs/SUBMISSION.md`
    + thumbnail dari https://canva.link/mexgt4g89m17xln + tag `@sectorsapp`.
 4. Isi form di https://hackathon.sectors.app/portal/submit → **SUBMIT TERAKHIR**.
    Setelah submit: repo & app beku total. Satu-satunya commit yang boleh
