@@ -1,6 +1,6 @@
 # RADAR-X release checklist
 
-Status: local release candidate on branch `codex/radarx-readiness`. The portal is still a draft and no external release action has been taken.
+Status: merged release on `main`; production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/). The portal is still a draft.
 
 ## Evidence and engine
 
@@ -40,6 +40,15 @@ gitleaks git --redact --no-banner --log-level warn .   passed (no findings)
 
 - [x] Arjum/ZPI/Pluang are omitted from the release. Public redistribution terms, field semantics, and a current task-scoped key are not established.
 - [x] Sectors remains the core source and the saved snapshot remains usable when upstream access is exhausted.
+
+## Release gates completed by Codex
+
+- [x] Push release branch and open [PR #1](https://github.com/alfindigital/radar-x/pull/1).
+- [x] GitHub Actions verification passed on the merged `main` commit.
+- [x] Merge the verified release to `main`.
+- [x] Deploy production through the existing Vercel project.
+- [x] Smoke-test the live root, Foreign flow, Cases, and Methodology routes with HTTP 200.
+- [x] Confirm the production `SECTORS_API_KEY` secret exists without reading its value.
 
 ## User-only gates before submission
 
