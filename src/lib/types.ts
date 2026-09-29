@@ -86,6 +86,25 @@ export type CasePattern =
   | "INSIDER_CONTRA_BUY"
   | "CLUSTER_PATTERN";
 
+export type CandidatePattern = "CLUSTER_PATTERN" | "INSIDER_CONTRA_BUY" | "STEALTH_ACCUMULATION";
+
+export interface Candidate {
+  id: string;
+  symbol: string;
+  pattern: CandidatePattern;
+  direction: "accumulate" | "distribute";
+  anchorDate: string;
+  windowStart: string;
+  windowEnd: string;
+  holders: string[];
+  insiderTrades: InsiderTrade[];
+  flowWindow: FlowDaily[];
+  priceWindow: PriceDaily[];
+  abnormalFlowZ: number;
+  abnormalVolumeZ: number;
+  preDriftPct: number;
+}
+
 export interface CaseEvidence {
   insiderTrades: InsiderTrade[];
   flowWindow: FlowDaily[];

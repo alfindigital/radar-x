@@ -1,0 +1,17 @@
+# SDD ledger — plan: docs/superpowers/plans/2026-09-29-hackathon-readiness.md
+
+Setup: isolated managed worktree `C:\Users\GEEKOM A8\.codex\worktrees\radarx-readiness\radar-x-hackaton` on branch `codex/radarx-readiness`, based on `3ea9334`. The original checkout remains untouched except for its existing untracked planning documents.
+
+Pre-flight: shared interfaces: Task 1 produces full-cohort board selection consumed by Task 7 service/page filtering; Task 2 snapshot/provenance consumed by Tasks 6-8; Task 3 candidates consumed by Tasks 6-8; Task 4 outcomes consumed by Tasks 6-8; Task 5 scores consumed by Tasks 6-8; Task 6 derived artifacts consumed by Tasks 7-11; Task 7 view models consumed by Task 8 and Task 9 E2E; Task 8 final UI consumed by Tasks 9-11. 
+
+Ruling: the plan's `sdd-workspace` helper is a Bash script without a `.ps1` extension and Bash is unavailable on this Windows host; I created the same ignored workspace and marker manually, preserving the prescribed identity and path. Cost if wrong: only scratch-ledger placement differs; task behavior and branch isolation are unchanged.
+
+Baseline: `npm install` → 399 packages, 0 vulnerabilities. Initial `npm run lint` passed; initial `npm run typecheck` failed because Next generated `PageProps`/`LayoutProps` declarations were absent before build; `npm run build` passed and generated them; fresh `npm run typecheck` then passed. No tracked files changed from install. `.env.example` is the only tracked env file. Baseline remains semantically unsafe per audit; implementation starts at Task 1.
+
+Task 1: Ruling: the one-off `npx tsx -e` verification initially used top-level await and failed at the CJS evaluator before running application code; reran with an async IIFE and observed `{scores:256,total:256,distribution:46,first:"SQMI.JK",firstScore:-86}`. Cost if wrong: none to product behavior; the first command was an invocation error.
+
+Task 1: complete (commit recorded below; tests: `npm test` → 1/1 pass, `npm run lint` → exit 0, `npm run typecheck` → exit 0, `npm run build` → exit 0, service smoke → 46 distribution rows, first SQMI.JK -86).
+
+Task 2: complete pending commit. `npm test` → 10/10 pass; `npm run audit:data` → exit 0 with 8 files present, 0 duplicates, 1,305 transaction/feed-date lag rows, 3,730 zero-volume price rows; `npm run lint` → exit 0; `npm run typecheck` → exit 0; `npm run build` → exit 0. Added immutable snapshot loading with SHA-256 manifest/indexes, safe source URL and as-of helpers, read-only audit CLI, provider-free service behavior, close-only price merge protection, and legacy price observation metadata. Ruling: preserve the existing numeric `PriceDaily` shape for current consumers and expose nullable fields through `PriceObservation`; migrate analytical consumers to nullable-aware v2 rows in later score/derive tasks. Cost if wrong: the legacy adapter remains numerically typed, but ambiguous rows are explicitly marked `legacy-unknown` and are not silently relabeled as verified.
+
+Task 3: complete pending commit. `npm test` → 13/13 pass; `npm run lint` → exit 0; `npm run typecheck` → exit 0; `npm run build` → exit 0. Added deterministic `detectCandidates` with three-holder cluster threshold, first-event-date 30-day bounds, and post-anchor exclusion. Future-price mutation and separated-event tests remain unchanged under candidate derivation. Legacy `detectCases` remains available until Task 6 switches generated output to v2.
