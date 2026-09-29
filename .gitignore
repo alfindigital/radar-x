@@ -30,5 +30,7 @@
 # regeneratable via `npm run backfill`). No secrets inside.
 !data
 !data/*.json
+!tests
+!tests/**
 
 .vercel

@@ -72,7 +72,7 @@ async function loadSymbol(symbol: string): Promise<SymbolData> {
 export async function getRadarBoard(): Promise<RadarBoard> {
   const store = getStore();
   const [scores, insider, cases, tickers] = await Promise.all([
-    store.latestScores(120),
+    store.latestScores(),
     store.listInsiderTrades({ limit: 15 }),
     store.listCases({ limit: 12 }),
     store.listTickers(),

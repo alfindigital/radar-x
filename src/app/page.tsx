@@ -5,6 +5,7 @@ import { getRadarBoard } from "@/lib/services";
 import { CaseRow, ScoreMarker, ScoreNumber } from "@/components/widgets";
 import Sparkline from "@/components/Sparkline";
 import { fmtIDR } from "@/components/fmt";
+import { selectBoard } from "@/lib/board";
 
 export const dynamic = "force-dynamic";
 
@@ -19,13 +20,10 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
   const filter = typeof f === "string" ? f : "semua";
   const { week, scores, sparks, recentInsider, topCases, universe } = await getRadarBoard();
 
-  const shown =
-    filter === "akumulasi" ? scores.filter((s) => s.score >= 25)
-    : filter === "distribusi" ? scores.filter((s) => s.score <= -25)
-    : scores;
-
-  const nAcc = scores.filter((s) => s.score >= 25).length;
-  const nDist = scores.filter((s) => s.score <= -25).length;
+  const board = selectBoard(scores, filter === "akumulasi" ? "accumulation" : filter === "distribusi" ? "distribution" : "all", 120);
+  const shown = board.rows;
+  const nAcc = board.accumulation;
+  const nDist = board.distribution;
 
   return (
     <div className="space-y-8">

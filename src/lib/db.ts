@@ -195,11 +195,11 @@ export class JsonStore implements DataStore {
     await writeJson(FILES.scores, [...map.values()]);
     return rows.length;
   }
-  async latestScores(limit = 50): Promise<PositioningScore[]> {
+  async latestScores(limit?: number): Promise<PositioningScore[]> {
     const rows = await readJson<PositioningScore[]>(FILES.scores, []);
     const latestWeek = rows.reduce<string | null>((m, r) => (m === null || r.week > m ? r.week : m), null);
     const cur = rows.filter((r) => r.week === latestWeek).sort((a, b) => b.score - a.score);
-    return cur.slice(0, limit);
+    return limit === undefined ? cur : cur.slice(0, limit);
   }
   async getScore(symbol: string): Promise<PositioningScore | null> {
     const rows = (await readJson<PositioningScore[]>(FILES.scores, []))
