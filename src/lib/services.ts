@@ -141,7 +141,7 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
   };
 }
 
-// Foreign-flow radar over the full stored universe — every emiten with
+// Foreign-flow radar over the full stored universe — every issuer with
 // foreign-investor participation, not just insider-active ones.
 export async function getFlowRadar(windowDays = 14): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
   const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);

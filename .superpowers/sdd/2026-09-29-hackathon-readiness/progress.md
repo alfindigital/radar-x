@@ -31,3 +31,5 @@ Task 9: complete pending commit. Added Playwright desktop/mobile projects, provi
 Task 10: complete pending commit. Replaced stale README, SESSION, HANDOFF, and SUBMISSION claims with the current 2026-09-22 manifest and 8 October 2026 deadline; added `docs/CLAIMS.md`, `docs/RELEASE-CHECKLIST.md`, and `docs/verification/release-evidence.md`; annotated historical specs as superseded/currently bounded. External URLs, publishing, deployment, and portal submission remain user-only gates.
 
 Clean-install recheck: `npm ci` → 403 packages installed, 0 vulnerabilities; then `npm test` → 37/37, `npm run lint` → exit 0, and `npm run typecheck` → exit 0. The generated `next-env.d.ts` remained ignored from the release commit after restoration.
+
+Copy cleanup recheck: legacy unused narrative strings and service comments were translated to English; `npm test` → 37/37, `npm run lint` → exit 0, `npm run typecheck` → exit 0, and `git diff --check` → clean.

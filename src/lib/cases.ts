@@ -143,9 +143,9 @@ function narrative(c: Omit<CaseRecord, "id" | "createdAt" | "score" | "evidence"
   const dir = c.direction === "accumulate" ? "beli" : "jual";
   const res =
     c.fwd30 === null
-      ? "Hasil 30 hari belum terealisasi."
-      : `30 hari setelahnya saham bergerak ${c.fwd30 >= 0 ? "+" : ""}${c.fwd30.toFixed(1)}%.`;
-  return `${names} tercatat ${dir} sekitar Rp${val} (${c.nTrades} transaksi) pada ${c.symbol} sekitar ${c.anchorDate}. ${res}`;
+      ? "No 30-day outcome is available yet."
+      : `The issuer moved ${c.fwd30 >= 0 ? "+" : ""}${c.fwd30.toFixed(1)}% over the following 30 days.`;
+  return `${names} reported ${dir} activity of about Rp${val} (${c.nTrades} transactions) for ${c.symbol} around ${c.anchorDate}. ${res}`;
 }
 
 /**
