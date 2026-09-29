@@ -1,4 +1,4 @@
-// Case Feed — all detected positioning patterns, filterable.
+// Candidate feed — bounded reported-activity patterns, filterable.
 
 import Link from "next/link";
 import { getCaseFeed } from "@/lib/services";
@@ -7,7 +7,7 @@ import { PATTERN_LABEL } from "@/components/fmt";
 
 export const dynamic = "force-dynamic";
 
-const PATTERNS = ["", "EXIT_AHEAD", "STEALTH_ACCUMULATION", "INSIDER_CONTRA_BUY", "CLUSTER_PATTERN"];
+const PATTERNS = ["", "STEALTH_ACCUMULATION", "INSIDER_CONTRA_BUY", "CLUSTER_PATTERN"];
 
 export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
   const { pola } = await searchParams;
@@ -18,10 +18,9 @@ export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">Case Feed</h1>
+          <h1 className="text-xl font-bold tracking-tight">Candidate Feed</h1>
           <p className="mt-1 text-xs dim">
-            Pola positioning terdeteksi dari disclosure publik — {cases.length} kasus. Hasil 30 hari diukur, bukan
-            diprediksi.
+            Bounded patterns from reported disclosures — {cases.length} candidates. Retrospective outcomes are measured, not predicted.
           </p>
         </div>
         <div className="flex items-center gap-1">
@@ -33,7 +32,7 @@ export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
                 pattern === p || (!pattern && !p) ? "bg-panel-2 text-ink" : "faint hover:text-ink"
               }`}
             >
-              {p ? PATTERN_LABEL[p] : "Semua"}
+              {p ? PATTERN_LABEL[p] : "All"}
             </Link>
           ))}
         </div>
@@ -46,7 +45,7 @@ export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
       </div>
       {!cases.length && (
         <div className="py-16 text-center text-sm dim">
-          Tidak ada kasus dengan pola ini. Deteksi jalan setelah <code className="mono">scripts/compute.ts</code>.
+          No candidates match this filter in the saved snapshot.
         </div>
       )}
     </div>

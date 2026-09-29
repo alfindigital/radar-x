@@ -1,102 +1,70 @@
-// Methodology + non-advisory disclaimer — required for hackathon compliance.
+// Methodology and non-advisory disclaimer.
 
-export default function MetodologiPage() {
+export default function MethodologyPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6 text-sm leading-relaxed">
       <div>
-        <h1 className="text-lg font-bold tracking-tight">Metodologi</h1>
-        <p className="text-xs dim">Bagaimana RADAR-X menghitung posisi smart money.</p>
+        <h1 className="text-lg font-bold tracking-tight">Methodology</h1>
+        <p className="text-xs dim">How RADAR-X summarizes reported ownership activity and its limits.</p>
       </div>
 
       <section className="panel space-y-3 p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wider dim">Positioning Score (-100 … +100)</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Positioning index (−100 to +100)</h2>
         <p>
-          Setiap emiten dinilai lintas-seksi (cross-sectional) terhadap semua emiten yang punya aktivitas insider
-          dalam 6 bulan terakhir. Tiap komponen adalah z-score robust (median/MAD, di-clip ±3σ):
+          The v2 index is a descriptive, cross-sectional comparison across the saved cohort as of the displayed date.
+          It is not a forecast and it is not a trading signal. Each component uses a robust median and interpolated IQR
+          scale, clipped to ±3σ. Fewer than five valid cohort observations make a component unrankable.
         </p>
         <pre className="mono overflow-x-auto rounded-md bg-panel-2 p-3 text-xs">
-{`score = 0.30·insider_z + 0.25·foreign_trend + 0.20·instnet_z
-      + 0.15·retail_exodus_z + 0.10·fclass_shift   →  ×33.3 → -100..+100`}
+{`index = Σ(z × weight × 100/3), published only with ≥2 rankable components
+weights = reported ownership .30 · foreign flow .25 · broker context .20
+          shareholder count .15 · foreign holder-class shift .10`}
         </pre>
         <ul className="list-inside list-disc space-y-1 dim">
-          <li>
-            <b className="text-ink">insider_z (30%)</b> — nilai bersih transaksi insider 90 hari (Rp).
-            Cluster (beberapa insider searah) ditimbang +25% per orang tambahan.
-          </li>
-          <li>
-            <b className="text-ink">foreign_trend (25%)</b> — net foreign inflow kumulatif 90 hari,
-            dinormalisasi market cap (%).
-          </li>
-          <li>
-            <b className="text-ink">instnet_z (20%)</b> — net buy kohort institusi/asing dari broker
-            summary 14 hari.
-          </li>
-          <li>
-            <b className="text-ink">retail_exodus_z (15%)</b> — negatif dari perubahan jumlah pemegang
-            saham bulanan (ritel keluar saat smart money masuk).
-          </li>
-          <li>
-            <b className="text-ink">fclass_shift (10%)</b> — pergeseran kelas investor asing bulanan:
-            institusi (reksadana, lembaga keuangan) minus individu.
-          </li>
+          <li><b className="text-ink">Reported ownership (30%)</b> — signed transaction value in the inclusive 90-calendar-day window.</li>
+          <li><b className="text-ink">Foreign flow (25%)</b> — signed net inflow in the inclusive 90-day window, normalized only when an observed positive market cap exists.</li>
+          <li><b className="text-ink">Broker context (20%)</b> — eligible institutional or foreign broker net value in the inclusive 14-day window; no rows means missing.</li>
+          <li><b className="text-ink">Shareholder count (15%)</b> — latest valid month-over-month change on or before the as-of date.</li>
+          <li><b className="text-ink">Foreign holder-class shift (10%)</b> — foreign institutional classes minus foreign individual classes across the same two months.</li>
         </ul>
+        <p className="text-xs faint">A null component is missing evidence, not a measured zero. Coverage weight is the sum of rankable weights and is not a probability.</p>
       </section>
 
       <section className="panel space-y-3 p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wider dim">Deteksi pola (Case Score 0-100)</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Bounded candidate patterns</h2>
         <ul className="list-inside list-disc space-y-1 dim">
-          <li>
-            <b className="text-ink">Keluar Duluan</b> — insider/cluster jual, lalu saham turun ≥5%
-            dalam 30 hari.
-          </li>
-          <li>
-            <b className="text-ink">Akumulasi Diam-diam</b> — akumulasi + flow asing abnormal, lalu
-            saham naik ≥8% dalam 30 hari.
-          </li>
-          <li>
-            <b className="text-ink">Beli Saat Turun</b> — insider membeli saat harga sedang jatuh.
-          </li>
-          <li>
-            <b className="text-ink">Bergerak Rombongan</b> — ≥3 insider bertransaksi searah dalam
-            30 hari.
-          </li>
+          <li><b className="text-ink">Holder cluster</b> — at least three distinct normalized holders transacting in one direction inside a 30-day event window.</li>
+          <li><b className="text-ink">Buy during decline</b> — reported buys while the pre-anchor close was lower than the prior context close.</li>
+          <li><b className="text-ink">Stealth flow</b> — reported buys with abnormal foreign flow in the bounded pre-anchor window.</li>
         </ul>
-        <p>
-          Case score menggabungkan abnormal flow (z), abnormal volume (z), pre-drift vs IHSG, ukuran transaksi
-          vs kepemilikan, kecocokan arah, dan besarnya pergerakan setelahnya.
+        <p className="dim">Candidate membership and evidence stop at the event anchor. Post-anchor prices can change only the retrospective outcome object.</p>
+      </section>
+
+      <section className="panel space-y-3 p-5">
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Retrospective outcomes</h2>
+        <p className="dim">
+          Outcomes use the first common issuer and IHSG observed session on or after the anchor (within seven calendar days),
+          then the first common session on or after the 7-, 30-, or 60-day target (also within seven days). A missing full
+          horizon is <b className="text-ink">Pending</b> or <b className="text-ink">Unavailable</b>; it is never formatted as 0%.
+          Excess return is the issuer percentage minus the benchmark percentage over the same sessions.
         </p>
       </section>
 
       <section className="panel space-y-3 p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wider dim">Foreign Flow Radar (halaman Asing)</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Data lineage and coverage</h2>
         <p className="dim">
-          Berbeda dengan Board yang mensyaratkan aktivitas insider, halaman Asing meranking{" "}
-          <b className="text-ink">seluruh emiten IDX</b> berdasarkan net foreign inflow kumulatif 14 hari —
-          diambil dari feed full-universe harian. Atribusi berdasarkan origin investor, bukan broker.
-          Tidak dinormalisasi market cap: ini ranking flow mentah, bukan composite score.
-        </p>
-      </section>
-
-      <section className="panel space-y-3 p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wider dim">Sumber data</h2>
-        <p className="dim">
-          Sectors Financial API v2: <span className="mono">filings</span> (transaksi insider parsed),{" "}
-          <span className="mono">shareholders-composition</span> (bulanan), <span className="mono">foreign-flow</span>{" "}
-          (per-emiten + full-universe), <span className="mono">close</span> (full-universe),{" "}
-          <span className="mono">broker-summary</span>, <span className="mono">daily</span> &{" "}
-          <span className="mono">index-daily</span>. Semua end-of-day; hasil 30 hari diukur dari harga riil,
-          bukan prediksi.
+          The public app reads a hash-verified local Sectors snapshot and generated v2 artifacts. The snapshot includes
+          parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, and a benchmark-observed IHSG series.
+          Retrieval times and historical publication availability are not verified for legacy rows. Ambiguous flat-OHLC or zero-volume
+          observations are marked <span className="mono">legacy-unknown</span>.
         </p>
       </section>
 
       <section className="panel space-y-3 border-watch/40 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider neutral">Disclaimer</h2>
         <p className="dim">
-          RADAR-X adalah alat statistik deskriptif atas disclosure publik IDX. Kami <b>tidak</b> memberikan
-          nasihat investasi, rekomendasi beli/jual, target harga, atau jaminan apapun. Pola historis tidak
-          menjamin hasil di masa depan. Nama pihak yang tampil berasal dari dokumen disclosure resmi —
-          kehadiran mereka bukan tuduhan pelanggaran. Selalu lakukan risetmu sendiri (DYOR) dan konsultasikan
-          keputusan dengan penasihat berlisensi.
+          RADAR-X is public-data research, not investment advice, a recommendation, or a claim about intent or wrongdoing.
+          Reported ownership activity is not proof of future price direction. Historical outcomes do not predict future returns.
         </p>
       </section>
     </div>

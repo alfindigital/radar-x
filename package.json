@@ -6,8 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test:e2e": "playwright test",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "tsx --test tests/index.test.ts",
+    "audit:data": "tsx scripts/audit-data.ts",
     "ingest": "tsx scripts/ingest.ts",
     "compute": "tsx scripts/compute.ts",
     "backfill": "tsx scripts/ingest.ts filings --months 6 && tsx scripts/ingest.ts index && tsx scripts/ingest.ts flows --limit 253 --only-missing && tsx scripts/ingest.ts prices --limit 253 --only-missing && tsx scripts/ingest.ts holders --limit 253 --only-missing && tsx scripts/ingest.ts broker --limit 40 --only-missing && tsx scripts/compute.ts"
@@ -20,6 +23,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

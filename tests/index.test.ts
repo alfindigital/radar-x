@@ -1,0 +1,12 @@
+import "./board.test";
+import "./provenance.test";
+import "./snapshot.test";
+import "./services.test";
+import "./price-merge.test";
+import "./cases.test";
+import "./outcomes.test";
+import "./score.test";
+import "./compute.test";
+import "./flow.test";
+import "./format.test";
+import "./chart-geometry.test";

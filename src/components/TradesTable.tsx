@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import type { InsiderTrade } from "@/lib/types";
-import { fmtIDR, fmtNum, fmtShares } from "./fmt";
+import { safeSourceUrl } from "@/lib/provenance";
+import { fmtCurrency, fmtNum, fmtShares } from "./fmt";
 
 export default function TradesTable({ trades, limit }: { trades: InsiderTrade[]; limit?: number }) {
   const rows = limit ? trades.slice(0, limit) : trades;
@@ -11,13 +12,14 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
       <table className="w-full text-xs">
         <thead>
           <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
-            <th className="py-2 pr-3 font-medium">Tanggal</th>
-            <th className="py-2 pr-3 font-medium">Nama</th>
-            <th className="py-2 pr-3 font-medium">Tipe</th>
-            <th className="py-2 pr-3 font-medium text-right">Lembar</th>
-            <th className="py-2 pr-3 font-medium text-right">Harga</th>
-            <th className="py-2 pr-3 font-medium text-right">Nilai</th>
-            <th className="hidden py-2 font-medium text-right md:table-cell">% sblm → ssdh</th>
+            <th className="py-2 pr-3 font-medium">Transaction date</th>
+            <th className="py-2 pr-3 font-medium">Holder</th>
+            <th className="py-2 pr-3 font-medium">Type</th>
+            <th className="py-2 pr-3 font-medium text-right">Shares</th>
+            <th className="py-2 pr-3 font-medium text-right">Price</th>
+            <th className="py-2 pr-3 font-medium text-right">Value</th>
+            <th className="hidden py-2 pr-3 font-medium text-right md:table-cell">Filed at</th>
+            <th className="hidden py-2 font-medium text-right md:table-cell">Source</th>
           </tr>
         </thead>
         <tbody className="mono">
@@ -37,16 +39,17 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
               </td>
               <td className="py-1.5 pr-3 text-right">{fmtShares(t.amount)}</td>
               <td className="py-1.5 pr-3 text-right faint">{fmtNum(t.price)}</td>
-              <td className="py-1.5 pr-3 text-right">Rp{fmtIDR(t.value)}</td>
-              <td className="hidden py-1.5 text-right faint md:table-cell">
-                {t.pctBefore !== null && t.pctAfter !== null ? `${t.pctBefore}% → ${t.pctAfter}%` : "—"}
+                <td className="py-1.5 pr-3 text-right">{fmtCurrency(t.value)}</td>
+              <td className="hidden py-1.5 pr-3 text-right faint md:table-cell">{t.filedAt?.slice(0, 10) ?? "Unavailable"}</td>
+              <td className="hidden py-1.5 text-right md:table-cell">
+                {(() => { const url = safeSourceUrl(t.sourceUrl); return url ? <a href={url} target="_blank" rel="noreferrer" className="blue">Open</a> : <span className="faint">Unavailable</span>; })()}
               </td>
             </tr>
           ))}
           {!rows.length && (
             <tr>
-              <td colSpan={7} className="py-8 text-center dim">
-                Tidak ada transaksi insider tercatat.
+              <td colSpan={8} className="py-8 text-center dim">
+                No reported ownership transactions in the saved snapshot.
               </td>
             </tr>
           )}

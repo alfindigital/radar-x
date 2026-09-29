@@ -39,7 +39,18 @@ export interface PriceDaily {
   close: number;
   volume: number;
   marketCap: number | null;
+  observationKind?: "ohlcv" | "close-only" | "legacy-unknown";
+  fieldSources?: Partial<Record<"open" | "high" | "low" | "close" | "volume" | "marketCap", "sectors-daily" | "sectors-close" | "legacy-unknown" | "arjum">>;
 }
+
+/** A normalized observation that can represent a close-only or partially known row. */
+export type PriceObservation = Omit<PriceDaily, "open" | "high" | "low" | "close" | "volume"> & {
+  open: number | null;
+  high: number | null;
+  low: number | null;
+  close: number | null;
+  volume: number | null;
+};
 
 /** One broker row inside broker-summary data */
 export interface BrokerSummaryRow {
@@ -74,6 +85,25 @@ export type CasePattern =
   | "STEALTH_ACCUMULATION"
   | "INSIDER_CONTRA_BUY"
   | "CLUSTER_PATTERN";
+
+export type CandidatePattern = "CLUSTER_PATTERN" | "INSIDER_CONTRA_BUY" | "STEALTH_ACCUMULATION";
+
+export interface Candidate {
+  id: string;
+  symbol: string;
+  pattern: CandidatePattern;
+  direction: "accumulate" | "distribute";
+  anchorDate: string;
+  windowStart: string;
+  windowEnd: string;
+  holders: string[];
+  insiderTrades: InsiderTrade[];
+  flowWindow: FlowDaily[];
+  priceWindow: PriceDaily[];
+  abnormalFlowZ: number;
+  abnormalVolumeZ: number;
+  preDriftPct: number;
+}
 
 export interface CaseEvidence {
   insiderTrades: InsiderTrade[];
@@ -120,6 +150,91 @@ export interface PositioningScore {
   score: number; // -100..100
   components: ScoreComponents;
   computedAt: string;
+}
+
+export type ComponentKey = "insiderZ" | "foreignTrend" | "instNetZ" | "retailExodusZ" | "fclassShift";
+
+export interface ComponentV2 {
+  raw: number | null;
+  z: number | null;
+  weight: number;
+  contribution: number;
+  status: "available" | "missing" | "unrankable";
+  reason: string | null;
+  observedFrom: string | null;
+  observedTo: string | null;
+  observations: number;
+}
+
+export interface ScoreV2 {
+  symbol: string;
+  asOf: string;
+  score: number | null;
+  coverageWeight: number;
+  components: Record<ComponentKey, ComponentV2>;
+  methodVersion: "radarx-v2";
+}
+
+export interface MeasuredOutcome {
+  status: "complete" | "pending" | "unavailable";
+  reason: string | null;
+  basis: "transaction-relative-retrospective";
+  horizonDays: 7 | 30 | 60;
+  startDate: string | null;
+  targetDate: string | null;
+  endDate: string | null;
+  elapsedDays: number | null;
+  startClose: number | null;
+  endClose: number | null;
+  issuerPct: number | null;
+  benchmarkPct: number | null;
+  excessPp: number | null;
+  adjustmentBasis: "unverified";
+}
+
+export interface SourceFileMeta {
+  path: string;
+  provider: "sectors";
+  sha256: string;
+  rows: number;
+  minDate: string | null;
+  maxDate: string | null;
+  retrievedAt: string | null;
+  auditedAt: string;
+  provenanceStatus: "legacy-normalized";
+  limitations: string[];
+}
+
+export interface SnapshotManifest {
+  schemaVersion: 2;
+  engineVersion: "radarx-v2";
+  asOf: string | null;
+  files: SourceFileMeta[];
+  inputHash: string;
+  generatedAt: string;
+}
+
+export interface SnapshotIndexes {
+  insiderBySymbol: Record<string, number[]>;
+  flowBySymbol: Record<string, number[]>;
+  priceBySymbol: Record<string, number[]>;
+  brokerBySymbol: Record<string, number[]>;
+  holdersBySymbol: Record<string, number[]>;
+  casesBySymbol: Record<string, number[]>;
+  scoresBySymbol: Record<string, number[]>;
+}
+
+export interface Snapshot {
+  tickers: Ticker[];
+  insider: InsiderTrade[];
+  flow: FlowDaily[];
+  price: PriceDaily[];
+  broker: BrokerSummaryRow[];
+  holders: HoldersMonthly[];
+  cases: CaseRecord[];
+  scores: PositioningScore[];
+  indexes: SnapshotIndexes;
+  manifest: SnapshotManifest;
 }
 
 export interface Ticker {

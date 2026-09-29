@@ -1,18 +1,19 @@
 // Service layer — the only thing UI/route handlers talk to.
-// Reads the store; lazy-backfills a ticker on demand (24h cache).
+// Reads the verified local snapshot and derived-v2 artifacts; never fetches or writes during a request.
 
-import { getStore } from "./db";
-import { api } from "./sectors";
-import { rawComponents, computeScores, type SymbolData } from "./score";
-import { detectCases } from "./cases";
+import { loadDerived, type DerivedCase } from "./derive";
+import { rankFlowRows, type FlowRadarRow } from "./flow";
+import { measureOutcome } from "./outcomes";
+import { loadSnapshot } from "./snapshot";
+import type { SymbolData } from "./score";
 import type {
   BrokerSummaryRow,
-  CaseRecord,
+  CandidatePattern,
   FlowDaily,
   HoldersMonthly,
   InsiderTrade,
-  PositioningScore,
   PriceDaily,
+  ScoreV2,
   Ticker,
 } from "./types";
 
@@ -20,23 +21,26 @@ const BENCH = "^IHSG";
 
 export interface RadarBoard {
   week: string | null;
-  scores: PositioningScore[];
+  asOf: string;
+  scores: ScoreV2[];
   sparks: Record<string, number[]>;
   recentInsider: InsiderTrade[];
-  topCases: CaseRecord[];
+  topCases: DerivedCase[];
   universe: number;
 }
 
 export interface IssuerDossier {
+  status: "available" | "known-uncovered" | "unknown";
   ticker: Ticker | null;
-  score: PositioningScore | null;
+  score: ScoreV2 | null;
   insider: InsiderTrade[];
   flow: FlowDaily[];
   price: PriceDaily[];
   broker: BrokerSummaryRow[];
   holders: HoldersMonthly[];
-  cases: CaseRecord[];
+  cases: DerivedCase[];
   lazy: boolean; // true = fetched live this visit
+  asOf: string;
 }
 
 export interface PersonDossier {
@@ -56,129 +60,75 @@ export interface PersonDossier {
   symbols: string[];
 }
 
-async function loadSymbol(symbol: string): Promise<SymbolData> {
-  const store = getStore();
+function loadSymbol(snapshot: Awaited<ReturnType<typeof loadSnapshot>>, symbol: string): SymbolData {
   return {
     symbol,
-    insider: await store.listInsiderTrades({ symbol }),
-    flow: await store.listFlowDaily(symbol),
-    price: await store.listPriceDaily(symbol),
-    broker: await store.listBrokerRows(symbol),
-    holders: await store.getHolders(symbol),
+    insider: snapshot.insider.filter((row) => row.symbol === symbol),
+    flow: snapshot.flow.filter((row) => row.symbol === symbol),
+    price: snapshot.price.filter((row) => row.symbol === symbol),
+    broker: snapshot.broker.filter((row) => row.symbol === symbol),
+    holders: snapshot.holders.filter((row) => row.symbol === symbol),
     instBrokers: new Set(),
   };
 }
 
 export async function getRadarBoard(): Promise<RadarBoard> {
-  const store = getStore();
-  const [scores, insider, cases, tickers] = await Promise.all([
-    store.latestScores(120),
-    store.listInsiderTrades({ limit: 15 }),
-    store.listCases({ limit: 12 }),
-    store.listTickers(),
-  ]);
+  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const scores = derived.scores;
+  const insider = [...snapshot.insider].sort((a, b) => b.txnDate.localeCompare(a.txnDate)).slice(0, 15);
+  const cases = derived.cases.slice(0, 12);
   const sparkSyms = scores.slice(0, 40).map((s) => s.symbol);
-  const flowRows = await Promise.all(sparkSyms.map((s) => store.listFlowDaily(s)));
   const sparks: Record<string, number[]> = {};
-  flowRows.forEach((rows, i) => {
-    sparks[sparkSyms[i]] = rows.slice(-30).map((r) => r.netForeignInflow);
+  sparkSyms.forEach((symbol) => {
+    const rows = snapshot.flow.filter((row) => row.symbol === symbol).sort((a, b) => a.date.localeCompare(b.date));
+    sparks[symbol] = rows.slice(-30).map((r) => r.netForeignInflow);
   });
   return {
-    week: scores[0]?.week ?? null,
+    week: derived.manifest.asOf,
+    asOf: derived.manifest.asOf,
     scores,
     sparks,
     recentInsider: insider,
     topCases: cases,
-    universe: tickers.length || new Set(insider.map((t) => t.symbol)).size,
+    universe: snapshot.tickers.length,
   };
 }
 
-export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier> {
-  const store = getStore();
-  const symbol = symbolRaw.toUpperCase().endsWith(".JK")
-    ? symbolRaw.toUpperCase()
-    : `${symbolRaw.toUpperCase()}.JK`;
-
-  let data = await loadSymbol(symbol);
-  let lazy = false;
-
-  // Lazy backfill: unknown ticker with no stored data → fetch live once.
-  // Fetched rows are used in-memory; persistence is best-effort (serverless fs is read-only).
-  if (!data.insider.length && !data.price.length) {
-    lazy = true;
-    try {
-      const start = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
-      const [flowRes, priceRes, holdersRes] = await Promise.all([
-        api.foreignFlowSymbol(symbol).catch(() => null),
-        api.daily(symbol, { start }).catch(() => null),
-        api.shareholdersComposition(symbol).catch(() => null),
-      ]);
-      const priceRows: PriceDaily[] = (priceRes ?? []).map((r) => ({
-        symbol: r.symbol ?? symbol,
-        date: r.date,
-        open: r.open,
-        high: r.high,
-        low: r.low,
-        close: r.close,
-        volume: r.volume,
-        marketCap: r.market_cap,
-      }));
-      const flowRows: FlowDaily[] = (flowRes?.data ?? []).map((r) => ({
-        symbol: flowRes?.symbol ?? symbol,
-        date: r.date,
-        netForeignInflow: r.net_foreign_inflow,
-        foreignBuyIdr: r.foreign_buy_idr,
-        foreignSellIdr: r.foreign_sell_idr,
-      }));
-      const holderRows: HoldersMonthly[] = (holdersRes?.data ?? []).map((r) => {
-        const local: Record<string, number> = {};
-        const foreign: Record<string, number> = {};
-        for (const [k, v] of Object.entries(r)) {
-          if (k.endsWith("_l") && typeof v === "number") local[k] = v;
-          if (k.endsWith("_f") && typeof v === "number") foreign[k] = v;
-        }
-        return {
-          symbol,
-          month: r.date,
-          sharesNumber: r.shares_number,
-          nShareholders: r.numbers_of_shareholders,
-          changeInShareholders: r.change_in_shareholders,
-          local,
-          foreign,
-        };
-      });
-      await Promise.allSettled([
-        priceRows.length ? store.upsertPriceDaily(priceRows) : null,
-        flowRows.length ? store.upsertFlowDaily(flowRows) : null,
-        holderRows.length ? store.upsertHolders(holderRows) : null,
-      ]);
-      data = { ...data, price: priceRows, flow: flowRows, holders: holderRows };
-      // recompute this symbol's score solo — tag with the latest batch week so it
-      // joins the cohort instead of becoming its own "latest week"
-      const existing = await store.latestScores(500);
-      const anchor = existing[0]?.week ?? new Date().toISOString().slice(0, 10);
-      const raw = rawComponents(data, anchor);
-      const rebuilt = computeScores([{ data, raw }], anchor);
-      if (rebuilt.length) await store.upsertScores(rebuilt).catch(() => {});
-      const cases = detectCases(symbol, {
-        insider: data.insider,
-        flow: data.flow,
-        price: data.price,
-        bench: await store.listPriceDaily(BENCH),
-      });
-      if (cases.length) await store.upsertCases(cases).catch(() => {});
-    } catch {
-      // keep whatever we have — empty dossier renders an honest empty state
-    }
+function decodeRouteParam(value: string): string | null {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return null;
   }
+}
 
-  const [score, cases, tickers] = await Promise.all([
-    store.getScore(symbol),
-    store.listCases({ symbol }),
-    store.listTickers(),
-  ]);
+export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier> {
+  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const decoded = decodeRouteParam(symbolRaw);
+  const normalized = decoded?.toUpperCase() ?? "";
+  const symbol = normalized.endsWith(".JK") ? normalized : `${normalized}.JK`;
+  const ticker = snapshot.tickers.find((t) => t.symbol === symbol) ?? null;
+  const data = ticker ? loadSymbol(snapshot, symbol) : null;
+  if (!ticker || !data) {
+    return {
+      status: "unknown",
+      ticker: null,
+      score: null,
+      insider: [],
+      flow: [],
+      price: [],
+      broker: [],
+      holders: [],
+      cases: [],
+      lazy: false,
+      asOf: derived.manifest.asOf,
+    };
+  }
+  const score = derived.scores.find((row) => row.symbol === symbol) ?? null;
+  const cases = derived.cases.filter((row) => row.symbol === symbol);
   return {
-    ticker: tickers.find((t) => t.symbol === symbol) ?? { symbol, name: symbol, subSector: null },
+    status: data.insider.length || data.price.length || data.flow.length ? "available" : "known-uncovered",
+    ticker,
     score,
     insider: data.insider,
     flow: data.flow,
@@ -186,70 +136,44 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
     broker: data.broker,
     holders: data.holders,
     cases,
-    lazy,
+    lazy: false,
+    asOf: derived.manifest.asOf,
   };
 }
 
-export interface FlowRadarRow {
-  symbol: string;
-  days: number;
-  cumNet: number; // IDR cumulative net foreign inflow over window
-  cumBuy: number;
-  cumSell: number;
-  lastDate: string;
-  streak: number; // consecutive net-buy days ending at lastDate
-}
-
-// Foreign-flow radar over the full stored universe — every emiten with
+// Foreign-flow radar over the full stored universe — every issuer with
 // foreign-investor participation, not just insider-active ones.
 export async function getFlowRadar(windowDays = 14): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
-  const store = getStore();
-  const all = await store.listFlowUniverse();
-  if (!all.length) return { from: null, to: null, rows: [] };
-  const to = all.reduce((m, r) => (r.date > m ? r.date : m), all[0].date);
-  const from = new Date(new Date(to).getTime() - windowDays * 864e5).toISOString().slice(0, 10);
-
-  const bySym = new Map<string, FlowRadarRow & { nets: [string, number][] }>();
-  for (const r of all) {
-    if (r.date < from || r.date > to) continue;
-    let e = bySym.get(r.symbol);
-    if (!e) {
-      e = { symbol: r.symbol, days: 0, cumNet: 0, cumBuy: 0, cumSell: 0, lastDate: r.date, streak: 0, nets: [] };
-      bySym.set(r.symbol, e);
-    }
-    e.days++;
-    e.cumNet += r.netForeignInflow;
-    e.cumBuy += r.foreignBuyIdr;
-    e.cumSell += r.foreignSellIdr;
-    if (r.date > e.lastDate) e.lastDate = r.date;
-    e.nets.push([r.date, r.netForeignInflow]);
-  }
-  for (const e of bySym.values()) {
-    for (const [, net] of e.nets.sort((a, b) => b[0].localeCompare(a[0]))) {
-      if (net > 0) e.streak++;
-      else break;
-    }
-  }
-  const rows = [...bySym.values()].sort((a, b) => b.cumNet - a.cumNet);
-  return { from, to, rows };
+  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const to = derived.manifest.asOf;
+  const from = new Date(new Date(`${to}T00:00:00Z`).getTime() - (windowDays - 1) * 864e5).toISOString().slice(0, 10);
+  const referenceDates = [...new Set(snapshot.price
+    .filter((row) => row.symbol === BENCH && row.date >= from && row.date <= to)
+    .map((row) => row.date))].sort();
+  return { from, to, rows: rankFlowRows(snapshot.flow.filter((row) => row.date >= from && row.date <= to), referenceDates) };
 }
 
-export async function getCaseFeed(pattern?: string): Promise<CaseRecord[]> {
-  return getStore().listCases({ pattern, limit: 100 });
+export async function getCaseFeed(pattern?: string): Promise<DerivedCase[]> {
+  const derived = await loadDerived();
+  const cases = pattern ? derived.cases.filter((row) => row.pattern === (pattern as CandidatePattern)) : derived.cases;
+  return cases.slice(0, 100);
 }
 
-export async function getCase(id: string): Promise<CaseRecord | null> {
-  return getStore().getCase(decodeURIComponent(id));
+export async function getCase(id: string): Promise<DerivedCase | null> {
+  const decoded = decodeRouteParam(id);
+  if (!decoded) return null;
+  const derived = await loadDerived();
+  return derived.cases.find((row) => row.id === decoded) ?? null;
 }
 
 export async function getPersonDossier(holderRaw: string): Promise<PersonDossier | null> {
-  const store = getStore();
-  const holderName = decodeURIComponent(holderRaw);
-  const trades = await store.listInsiderTrades({ holderName });
+  const holderName = decodeRouteParam(holderRaw);
+  if (!holderName) return null;
+  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const trades = snapshot.insider.filter((trade) => trade.holderName === holderName);
   if (!trades.length) return null;
 
-  const bench = await store.listPriceDaily(BENCH);
-  void bench;
+  const bench = snapshot.price.filter((row) => row.symbol === BENCH);
   let sellThenDown = 0;
   let sellMeasured = 0;
   let buyThenUp = 0;
@@ -257,16 +181,10 @@ export async function getPersonDossier(holderRaw: string): Promise<PersonDossier
   const symbols = [...new Set(trades.map((t) => t.symbol))];
 
   for (const t of trades) {
-    const prices = await store.listPriceDaily(t.symbol);
-    if (prices.length < 10) continue;
-    const anchor = t.txnDate;
-    const base = [...prices].reverse().find((p) => p.date <= anchor)?.close;
-    const fwdDate = new Date(new Date(anchor).getTime() + 30 * 864e5).toISOString().slice(0, 10);
-    const lastDate = prices.at(-1)!.date;
-    if (lastDate < fwdDate) continue;
-    const fwd = prices.find((p) => p.date >= fwdDate)?.close;
-    if (!base || !fwd) continue;
-    const ret = ((fwd - base) / base) * 100;
+    const prices = snapshot.price.filter((row) => row.symbol === t.symbol);
+    const outcome = measureOutcome(prices, bench, t.txnDate, 30, derived.manifest.asOf);
+    if (outcome.status !== "complete" || outcome.issuerPct === null) continue;
+    const ret = outcome.issuerPct;
     if (t.txnType === "sell") {
       sellMeasured++;
       if (ret < 0) sellThenDown++;

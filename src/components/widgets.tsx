@@ -1,11 +1,13 @@
 // Small display widgets: ScoreNumber, ScoreMarker, ScoreBreakdown, CaseRow, Stat.
 
 import Link from "next/link";
-import type { CaseRecord, PositioningScore } from "@/lib/types";
-import { fmtIDR, fmtPct, PATTERN_LABEL, patternTagClass, scoreColor } from "./fmt";
+import type { DerivedCase } from "@/lib/derive";
+import type { ComponentKey, ScoreV2 } from "@/lib/types";
+import { fmtCurrency, fmtPct, PATTERN_LABEL, patternTagClass, scoreColor } from "./fmt";
 
-export function ScoreNumber({ score, size = "md" }: { score: number; size?: "sm" | "md" | "lg" }) {
+export function ScoreNumber({ score, size = "md" }: { score: number | null; size?: "sm" | "md" | "lg" }) {
   const sz = size === "lg" ? "text-3xl" : size === "sm" ? "text-sm" : "text-base";
+  if (score === null) return <span className={`mono faint ${sz}`}>Unavailable</span>;
   return (
     <span className={`mono font-bold tabular-nums ${sz} ${scoreColor(score)}`}>
       {score > 0 ? "+" : ""}
@@ -14,7 +16,8 @@ export function ScoreNumber({ score, size = "md" }: { score: number; size?: "sm"
   );
 }
 
-export function ScoreMarker({ score }: { score: number }) {
+export function ScoreMarker({ score }: { score: number | null }) {
+  if (score === null) return null;
   const pos = Math.max(0, Math.min(100, (score + 100) / 2));
   return (
     <div className="relative h-1 w-20 rounded-full bg-panel-2" title={`${score > 0 ? "+" : ""}${score}`}>
@@ -27,21 +30,22 @@ export function ScoreMarker({ score }: { score: number }) {
   );
 }
 
-const COMPONENT_META: { key: keyof PositioningScore["components"]; label: string; weight: number; hint: string }[] = [
-  { key: "insiderZ", label: "Insider net 90h", weight: 0.3, hint: "Transaksi insider bersih (Rp), cluster ditimbang lebih berat" },
-  { key: "foreignTrend", label: "Flow asing 90h", weight: 0.25, hint: "Net inflow kumulatif dinormalisasi market cap" },
-  { key: "instNetZ", label: "Kohort institusi 14h", weight: 0.2, hint: "Net buy broker institusi/asing 2 minggu" },
-  { key: "retailExodusZ", label: "Eksodus ritel", weight: 0.15, hint: "Perubahan jumlah pemegang saham bulanan" },
-  { key: "fclassShift", label: "Shift kelas asing", weight: 0.1, hint: "Δ institusi asing vs individu asing bulanan" },
+const COMPONENT_META: { key: ComponentKey; label: string; weight: number; hint: string }[] = [
+  { key: "insiderZ", label: "Reported ownership (90d)", weight: 0.3, hint: "Net reported transaction value within the inclusive 90-day window" },
+  { key: "foreignTrend", label: "Foreign flow (90d)", weight: 0.25, hint: "Cumulative net inflow normalized by an observed market cap" },
+  { key: "instNetZ", label: "Broker context (14d)", weight: 0.2, hint: "Eligible institutional or foreign broker net value" },
+  { key: "retailExodusZ", label: "Shareholder count change", weight: 0.15, hint: "Month-over-month reported shareholder count change" },
+  { key: "fclassShift", label: "Foreign holder-class shift", weight: 0.1, hint: "Foreign institutional classes minus foreign individual classes" },
 ];
 
-export function ScoreBreakdown({ score }: { score: PositioningScore }) {
+export function ScoreBreakdown({ score }: { score: ScoreV2 }) {
   return (
     <div className="space-y-3">
       {COMPONENT_META.map((m) => {
-        const z = score.components[m.key];
-        const pos = z >= 0;
-        const pct = Math.min(100, (Math.abs(z) / 3) * 100);
+        const component = score.components[m.key];
+        const z = component.z;
+        const pos = (z ?? 0) >= 0;
+        const pct = z === null ? 0 : Math.min(100, (Math.abs(z) / 3) * 100);
         return (
           <div key={m.key} title={`${m.hint} — bobot ${(m.weight * 100).toFixed(0)}%`}>
             <div className="flex items-baseline justify-between text-xs">
@@ -49,8 +53,7 @@ export function ScoreBreakdown({ score }: { score: PositioningScore }) {
                 {m.label} <span className="faint">{(m.weight * 100).toFixed(0)}%</span>
               </span>
               <span className={`mono ${pos ? "acc" : "dist"}`}>
-                {pos ? "+" : ""}
-                {z.toFixed(2)}σ
+                {z === null ? "Unavailable" : `${pos ? "+" : ""}${z.toFixed(2)}σ`}
               </span>
             </div>
             <div className="mt-1 h-[3px] rounded-full bg-panel-2">
@@ -62,15 +65,16 @@ export function ScoreBreakdown({ score }: { score: PositioningScore }) {
           </div>
         );
       })}
-      <p className="pt-1 text-[10px] faint">σ = z-score vs seluruh emiten terpantau. Di-clip ±3σ.</p>
+      <p className="pt-1 text-[10px] faint">σ = robust cohort z-score, clipped to ±3; unavailable components do not contribute.</p>
     </div>
   );
 }
 
-export function CaseRow({ c }: { c: CaseRecord }) {
-  const names = [...new Set(c.evidence.insiderTrades.map((t) => t.holderName))];
-  const val = c.evidence.insiderTrades.reduce((s, t) => s + t.value, 0);
-  const dir = c.outcome.fwd30dPct !== null && c.outcome.fwd30dPct < 0 ? "dist" : "acc";
+export function CaseRow({ c }: { c: DerivedCase }) {
+  const names = c.holders;
+  const val = c.insiderTrades.reduce((s, t) => s + t.value, 0);
+  const outcome30 = c.outcomes.find((outcome) => outcome.horizonDays === 30)!;
+  const dir = outcome30.status === "complete" && outcome30.issuerPct !== null && outcome30.issuerPct < 0 ? "dist" : "neutral";
   return (
     <Link
       href={`/kasus/${encodeURIComponent(c.id)}`}
@@ -84,15 +88,14 @@ export function CaseRow({ c }: { c: CaseRecord }) {
           <span className="mono text-sm font-bold">{c.symbol.replace(".JK", "")}</span>
           <span className="faint text-[11px]">{c.anchorDate}</span>
         </div>
-        <p className="mt-0.5 truncate text-xs dim">{c.narrative}</p>
+        <p className="mt-0.5 truncate text-xs dim">{names.length} distinct holders · {outcome30.status === "complete" ? "30-day outcome measured" : `30-day outcome ${outcome30.status}`}</p>
         <p className="mt-0.5 text-[11px] faint">
           {names.slice(0, 2).join(", ")}
-          {names.length > 2 ? ` +${names.length - 2}` : ""} · Rp{fmtIDR(val)}
+          {names.length > 2 ? ` +${names.length - 2}` : ""} · {fmtCurrency(val)}
         </p>
       </div>
       <div className="flex items-center gap-4 text-right">
-        <div className={`mono text-xs ${dir}`}>30h {fmtPct(c.outcome.fwd30dPct)}</div>
-        <ScoreNumber score={c.score} />
+        <div className={`mono text-xs ${dir}`}>30d {outcome30.status === "complete" ? fmtPct(outcome30.issuerPct, 1, "complete") : outcome30.status}</div>
       </div>
     </Link>
   );

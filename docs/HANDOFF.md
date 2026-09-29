@@ -1,83 +1,40 @@
-# HANDOFF — RADAR-X
+# RADAR-X handoff
 
-> Checkpoint lokal. Kalau folder ini dipindah/dibuka di mesin atau agent lain,
-> baca file ini dulu — semua konteks untuk melanjutkan ada di sini.
+## Actual status
 
-## Status per 2026-09-27
+This checkout is a local release candidate for Sectors Hackathon 2026 Track 3. The work is on branch `codex/radarx-readiness` in the isolated managed worktree. The original checkout was left untouched. The portal screenshot is still a draft; **Submit final** has not been clicked.
 
-**MVP selesai, live, dan kedua video submission sudah jadi file mp4.** Tinggal upload + sosmed + submit portal (user-only, ~15 mnt).
+The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated `radarx-v2` artifacts. The verified artifact contains 962 score rows (254 non-null), 171 bounded candidate patterns, 301 complete outcomes, 170 pending outcomes, and 42 unavailable outcomes. See [CLAIMS.md](CLAIMS.md) for traceable statements.
 
-| Item | Nilai |
-|---|---|
-| Repo publik | https://github.com/alfindigital/radar-x |
-| Live demo | https://radar-x-beta.vercel.app |
-| Vercel project | `muhammad-alfin-as-projects/radar-x` (auto-deploy dari `main`) |
-| Env di Vercel | `SECTORS_API_KEY` (secret, production) — sudah terpasang |
-| Track | **03 — Market Intelligence** |
-| Deadline submit | 30 Sep 2026, 23:59 WIB |
-| Data ter-backfill | 256 emiten scored (week 22 Sep; 509 recs total 2 minggu) · 1.513 insider trades · ~19,4rb flow · ~18,6rb harga · 2rb holders · 14,2rb broker rows · **244 kasus (190 outcome terukur)** |
-| Kredit terpakai | ~1.500 (estimasi) — **akses API dicabut 23 Sep (401 SUBSCRIPTION_DOES_NOT_ALLOW)** |
-| Teaser video | `Studio\video-motion\remotion\out\radarx-teaser-en.mp4` — 60.0s, 1920×1080, English |
-| Judging video | `Studio\video-motion\remotion\out\radarx-judging.mp4` — 140.5s (≤3 mnt), 1920×1080, English |
-| Video source | `Studio\video-motion\remotion\src\RadarX\` (compositions `RadarXTeaser` + `RadarXJudging`) |
+## Passed gates
 
-## Yang masih harus dilakukan (manual, user-only)
-
-1. Upload `radarx-teaser-en.mp4` → **public** (YouTube/Drive) → simpan URL.
-2. Upload `radarx-judging.mp4` → YouTube unlisted/public → simpan URL.
-   Preview lokal dulu: `node preview-server.mjs` di folder remotion → `localhost:4567/preview.html`.
-3. Post sosmed (IG/LinkedIn/Threads/TikTok) pakai caption EN di `docs/SUBMISSION.md`
-   + thumbnail dari https://canva.link/mexgt4g89m17xln + tag `@sectorsapp`.
-4. Isi form di https://hackathon.sectors.app/portal/submit → **SUBMIT TERAKHIR**.
-   Setelah submit: repo & app beku total. Satu-satunya commit yang boleh
-   = hapus credential yang bocor (notify #support Slack dulu).
-
-## Resume cepat (mesin/folder baru)
-
-```bash
-git clone https://github.com/alfindigital/radar-x
-cd radar-x
-cp .env.example .env.local   # isi SECTORS_API_KEY (key ada di .env.local lama / manager Sectors)
-npm install
-npm run dev                  # http://localhost:3000 — data/*.json sudah ikut repo
+```text
+npm test
+npm run audit:data
+npm run lint
+npm run typecheck
+npm run build
+npm run test:e2e
 ```
 
-Data `data/*.json` adalah snapshot beku per 22 Sep 2026 — langsung jalan tanpa ingest.
-Regenerasi penuh: `npm run backfill` (butuh ~850 kredit). Refresh harian:
-`npx tsx scripts/ingest.ts universe --from <tgl> --to <tgl>` (semua emiten, ~57 kredit/hari).
-**Kuota habis 23 Sep** — sisa hari universe Sep 15-18:
-`npx tsx scripts/ingest.ts universe --from 2026-09-15 --to 2026-09-18 --feed flow`
-Jalankan setelah reset/top-up, lalu `npm run compute` + commit sebelum submit.
+The latest browser run passed seven tests and intentionally skipped the desktop-only journey in the mobile project. It blocks Sectors and Arjum domains and does not use credentials.
 
-## Aturan main yang sering kelewat
+## Exact next actions
 
-- `SECTORS_API_KEY` hanya di `.env.local` / Vercel env — JANGAN pernah masuk git.
-- `.gitignore` adalah reverse allowlist (`*` default ignore). File baru di root
-  tidak ikut ter-commit kecuali di-`!unignore`. Folder `src/ scripts/ specs/ data/ docs/ public/` sudah diizinkan.
-- `dev.log`, `nul`, `tsconfig.tsbuildinfo`, `.next/`, `.vercel/` = artefak lokal, jangan commit.
-- Skor solo (lazy backfill) harus ditag ke `week` batch terakhir — kalau pakai tanggal
-  hari ini, board cuma nampilin emiten itu (sudah pernah kejadian, lihat commit 0853afe).
-- Di Vercel fs read-only → upsert dibungkus `Promise.allSettled`, data fetch dipakai in-memory.
+1. Review the current branch and [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md).
+2. If a public release is desired, obtain explicit approval for the concrete revision, then push/deploy through the approved channel and verify the same snapshot hash and method version.
+3. Record a real screen session for the one-minute teaser and the <=3-minute judging video; both must show the running app and the visible limitations.
+4. Upload videos and publish the required social post only after the user approves those external actions.
+5. Fill the portal draft with the public repository, video URLs, English one-sentence problem statement, Track 3, team snapshot, and social URL.
+6. The user performs the final review and clicks **Submit final**. Do not submit silently; submission freezes edits.
 
-## Peta file
+## Open blockers and limits
 
-```
-src/lib/sectors.ts     client API (server-only, retry 429)
-src/lib/db.ts          DataStore iface + JsonStore (data/*.json)
-src/lib/score.ts       positioning score 5 komponen z-robust
-src/lib/cases.ts       deteksi pola + outcome terukur + narasi
-src/lib/services.ts    service layer + lazy backfill
-scripts/ingest.ts      backfill (--only-missing untuk resume)
-scripts/compute.ts     hitung skor + kasus
-specs/                 PRODUCT_SPEC · TECH_SPEC · DESIGN_SPEC · PLAN (megaplan asli)
-docs/                  HANDOFF (file ini) · SUBMISSION (isi form portal)
-schema.sql             DDL Supabase (cadangan kalau mau DB real)
-```
+- Sectors API access/credits are exhausted for this sprint; no key was tested.
+- Arjum, ZPI, and Pluang enrichment is omitted because public redistribution terms and a task-scoped credential are not established.
+- Three external target-user usability sessions have not been performed.
+- Public repository age, deployment state, media URLs, social post, and portal fields are unverified.
 
-## Keputusan penting (jangan diubah tanpa alasan)
+## Do not submit before final review
 
-- Horizon produk = swing (mingguan-bulanan), BUKAN intraday.
-- Bahasa faktual netral — dilarang kata "insider trading"/tuduhan.
-- Tidak ada CTA beli/jual, target harga, atau eksekusi order (rules hackathon).
-- Harga dipakai untuk MENGUKUR outcome, bukan indikator teknikal.
-- UI: dark minimal ala Fey/Kraken; panel bertumpuk dihindari; angka mono tabular.
+Do not infer eligibility, public accessibility, video duration, or repository creation age from local files. Verify each external fact immediately before the user submits.

@@ -1,56 +1,20 @@
-# SESSION.md — RADAR-X checkpoint
+# RADAR-X session checkpoint
 
-Tanggal: 2026-09-26 (QA sweep pre-rekam — all green, T-4 hari ke deadline 30 Sep)
-Status: **MVP live · teaser 60s sudah jadi mp4 · pending judging video + sosmed + submit**
+Date: 2026-09-29
+Status: local release candidate; portal draft remains unsubmitted.
 
-Update 09-27: teaser diproduksi programmatic via Remotion, copy **English**
-(untuk juri internasional). File final:
-`Documents\Studio\video-motion\remotion\out\radarx-teaser-en.mp4` (1920×1080,
-60.0s, h264, 2.3MB). Versi ID lama masih ada: `radarx-teaser.mp4`.
-Source komposisi: `video-motion/remotion/src/RadarX/` (5 scene, data riil
-baked: TOWR cluster @437→404 ≈Rp98B, board GULA +84/SQMI −86, FILM "Exit
-Ahead" −14.3% vs IHSG −4.9%, LUCY +17.5%).
-Judging video juga programmatic: `RadarXJudging` 4215f/140.5s (≤3 mnt) —
-problem → board → score anatomy → TOWR dossier → FILM outcome → holder
-dossier (Verah W.S. Wong, TAMA @238→@190) → metodologi → outro.
-Output: `out/radarx-judging.mp4`. Caption sosmed EN siap di SUBMISSION.md.
-Tinggal: upload 2 video → post sosmed → submit portal → freeze.
+## Verified state
 
-Audit 09-26: lint+typecheck+build hijau (8 route), demo 200, 256 skor/244 kasus
-terverifikasi (190 outcome terukur). Naskah SUBMISSION.md diselaraskan ke data riil
-(TOWR = Bergerak Rombongan bukan Keluar Duluan; beat outcome pakai FILM -14,3% /
-LUCY +17,5%). API Sectors masih 401 — backfill Sep 15-18 tetap pending.
+- Branch: `codex/radarx-readiness` in the managed isolated worktree.
+- Snapshot as-of: 2026-09-22; derived engine: `radarx-v2`.
+- Derived artifacts: 962 score rows (254 non-null), 171 candidates, 301 complete outcomes, 170 pending, and 42 unavailable outcomes.
+- Runtime is provider-free and read-only; no API key was tested or persisted.
+- English UI, mobile navigation, status-aware outcomes, source links, methodology, claims, release checklist, CI, and Playwright checks are in the branch.
 
-Audit 09-23: git clean+sync origin/main, demo 200, API key live (962 emiten).
+## Verification
 
-Update 09-23 sore:
-- Snapshot di-refresh ke 22 Sep (256 skor, 235 kasus, +37 filing baru)
-- Endpoint universe ditambah: /v2/close/ + /v2/foreign-flow/ per hari bursa
-- Halaman baru /asing: Foreign Flow Radar ~700 emiten (8 hari universe: Sep 7-14, 21-22)
-- tickers.json kini berisi 962 emiten (board menampilkan universe benar)
-- ⚠️ AKSES API DICABUT per 23 Sep: 401 SUBSCRIPTION_DOES_NOT_ALLOW
-  (sebelumnya 429 INSUFFICIENT_CREDITS — sekarang subscription-nya sendiri
-  tidak mengizinkan; top-up kredit saja tidak cukup, perlu akses diaktifkan
-  ulang via Discord/admin Sectors).
-  Sisa hari universe yang belum tertarik: Sep 15-18. Jalankan ulang
-  `npx tsx scripts/ingest.ts universe --from 2026-09-15 --to 2026-09-18 --feed flow`
-  KALAU akses dipulihkan. Demo tidak terpengaruh — snapshot beku ikut repo.
+Run `npm ci`, then `npm test`, `npm run audit:data`, `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run test:e2e`. The exact evidence and limitations are recorded in [docs/verification/release-evidence.md](docs/verification/release-evidence.md).
 
-## State
+## Remaining user-controlled work
 
-- Repo: https://github.com/alfindigital/radar-x (publik, sinkron)
-- Live: https://radar-x-beta.vercel.app (Vercel, auto-deploy `main`, `SECTORS_API_KEY` terpasang)
-- Data: snapshot `data/*.json` per 19 Sep (253 emiten, 221 kasus) — ikut repo
-- Commit terakhir: lihat `git log -1`
-
-## Next actions (urutan, user-only)
-
-1. Rekam teaser 1 mnt + judging ≤3 mnt (naskah: `docs/SUBMISSION.md`)
-2. Post sosmed + tag `@sectorsapp` (caption siap di `docs/SUBMISSION.md`)
-3. Submit di portal → repo freeze permanen
-
-## Kalau dilanjut agent/mesin lain
-
-Baca `docs/HANDOFF.md` dulu — isinya aturan main, resume cepat, dan jebakan
-yang sudah pernah kejadian (week-tag lazy backfill, fs read-only Vercel,
-Tailwind v4 arbitrary-var di Windows).
+Deployment, repository publication, media upload, social posting, and final portal submission are not performed. The user must review the current revision and click **Submit final** only after every external URL and rule is verified.

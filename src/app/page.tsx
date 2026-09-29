@@ -4,28 +4,27 @@ import Link from "next/link";
 import { getRadarBoard } from "@/lib/services";
 import { CaseRow, ScoreMarker, ScoreNumber } from "@/components/widgets";
 import Sparkline from "@/components/Sparkline";
-import { fmtIDR } from "@/components/fmt";
+import { fmtCurrency } from "@/components/fmt";
+import { selectBoard } from "@/lib/board";
+import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  { key: "semua", label: "Semua" },
-  { key: "akumulasi", label: "Akumulasi" },
-  { key: "distribusi", label: "Distribusi" },
+  { key: "semua", label: "All" },
+  { key: "akumulasi", label: "Accumulation" },
+  { key: "distribusi", label: "Distribution" },
 ];
 
 export default async function BoardPage({ searchParams }: PageProps<"/">) {
   const { f } = await searchParams;
   const filter = typeof f === "string" ? f : "semua";
-  const { week, scores, sparks, recentInsider, topCases, universe } = await getRadarBoard();
+  const { week, asOf, scores, sparks, recentInsider, topCases, universe } = await getRadarBoard();
 
-  const shown =
-    filter === "akumulasi" ? scores.filter((s) => s.score >= 25)
-    : filter === "distribusi" ? scores.filter((s) => s.score <= -25)
-    : scores;
-
-  const nAcc = scores.filter((s) => s.score >= 25).length;
-  const nDist = scores.filter((s) => s.score <= -25).length;
+  const board = selectBoard(scores, filter === "akumulasi" ? "accumulation" : filter === "distribusi" ? "distribution" : "all", 120);
+  const shown = board.rows;
+  const nAcc = board.accumulation;
+  const nDist = board.distribution;
 
   return (
     <div className="space-y-8">
@@ -33,20 +32,21 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
         <div>
           <h1 className="text-xl font-bold tracking-tight">Radar Board</h1>
           <p className="mt-1 text-xs dim">
-            Peta posisi smart money — {scores.length} emiten dengan aktivitas insider terpantau dari{" "}
-            {universe} emiten IDX · minggu <span className="mono">{week ?? "—"}</span>
+            Reported ownership activity across {scores.length} tracked issuers from a {universe}-issuer IDX directory · as of <span className="mono">{week ?? "—"}</span>
           </p>
         </div>
         <div className="flex items-center gap-4 text-xs">
           <span className="tag">EOD {week ?? "—"}</span>
           <span className="dim">
-            <span className="acc">▲</span> {nAcc} akumulasi
+            <span className="acc">▲</span> {nAcc} accumulation
           </span>
           <span className="dim">
-            <span className="dist">▼</span> {nDist} distribusi
+            <span className="dist">▼</span> {nDist} distribution
           </span>
         </div>
       </div>
+
+      <DataStatus asOf={asOf} />
 
       <div className="grid gap-8 xl:grid-cols-[1fr_300px]">
         <section>
@@ -69,11 +69,11 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
               <thead>
                 <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
                   <th className="py-2 pr-4 font-medium">#</th>
-                  <th className="py-2 pr-4 font-medium">Emiten</th>
-                  <th className="py-2 pr-4 font-medium">Net flow asing 30h</th>
-                  <th className="hidden py-2 pr-4 font-medium text-right md:table-cell">Insider</th>
-                  <th className="hidden py-2 pr-4 font-medium text-right lg:table-cell">Institusi</th>
-                  <th className="py-2 pr-4 font-medium text-right">Skor</th>
+                  <th className="py-2 pr-4 font-medium">Issuer</th>
+                  <th className="py-2 pr-4 font-medium">Foreign flow</th>
+                  <th className="hidden py-2 pr-4 font-medium text-right md:table-cell">Reported ownership</th>
+                  <th className="hidden py-2 pr-4 font-medium text-right lg:table-cell">Broker context</th>
+                  <th className="py-2 pr-4 font-medium text-right">Index</th>
                   <th className="hidden py-2 font-medium sm:table-cell"></th>
                 </tr>
               </thead>
@@ -89,13 +89,11 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
                     <td className="py-2 pr-4">
                       <Sparkline values={sparks[s.symbol] ?? []} cumulative />
                     </td>
-                    <td className={`hidden py-3 pr-4 text-right md:table-cell ${s.components.insiderZ >= 0 ? "acc" : "dist"}`}>
-                      {s.components.insiderZ >= 0 ? "+" : ""}
-                      {s.components.insiderZ.toFixed(1)}σ
+                    <td className={`hidden py-3 pr-4 text-right md:table-cell ${(s.components.insiderZ.z ?? 0) >= 0 ? "acc" : "dist"}`}>
+                      {s.components.insiderZ.z === null ? "—" : `${s.components.insiderZ.z >= 0 ? "+" : ""}${s.components.insiderZ.z.toFixed(1)}σ`}
                     </td>
-                    <td className={`hidden py-3 pr-4 text-right lg:table-cell ${s.components.instNetZ >= 0 ? "acc" : "dist"}`}>
-                      {s.components.instNetZ >= 0 ? "+" : ""}
-                      {s.components.instNetZ.toFixed(1)}σ
+                    <td className={`hidden py-3 pr-4 text-right lg:table-cell ${(s.components.instNetZ.z ?? 0) >= 0 ? "acc" : "dist"}`}>
+                      {s.components.instNetZ.z === null ? "—" : `${s.components.instNetZ.z >= 0 ? "+" : ""}${s.components.instNetZ.z.toFixed(1)}σ`}
                     </td>
                     <td className="py-3 pr-4 text-right">
                       <ScoreNumber score={s.score} />
@@ -108,7 +106,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
                 {!shown.length && (
                   <tr>
                     <td colSpan={7} className="py-10 text-center dim">
-                      Skor belum dihitung. Jalankan <code className="mono">npx tsx scripts/compute.ts</code>.
+                      No candidates match this filter in the saved snapshot.
                     </td>
                   </tr>
                 )}
@@ -119,7 +117,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
 
         <aside className="space-y-8">
           <section>
-            <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Feed insider</h2>
+            <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Recent disclosures</h2>
             <div>
               {recentInsider.map((t, i) => (
                 <div key={i} className="row-hover flex items-center justify-between gap-3 border-b border-line/60 py-2.5">
@@ -140,27 +138,27 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
                     </Link>
                   </div>
                   <div className="shrink-0 text-right">
-                    <div className="mono text-[11px]">Rp{fmtIDR(t.value)}</div>
+                    <div className="mono text-[11px]">{fmtCurrency(t.value)}</div>
                     <div className="faint text-[10px]">{t.txnDate}</div>
                   </div>
                 </div>
               ))}
-              {!recentInsider.length && <p className="dim text-xs">Belum ada data insider.</p>}
+              {!recentInsider.length && <p className="dim text-xs">No recent reported ownership data.</p>}
             </div>
           </section>
 
           <section>
             <div className="mb-2 flex items-center justify-between">
-              <h2 className="text-[10px] font-semibold uppercase tracking-widest faint">Kasus teratas</h2>
+              <h2 className="text-[10px] font-semibold uppercase tracking-widest faint">Candidate patterns</h2>
               <Link href="/kasus" className="text-[11px] blue">
-                Semua →
+                All →
               </Link>
             </div>
             <div>
               {topCases.slice(0, 4).map((c) => (
                 <CaseRow key={c.id} c={c} />
               ))}
-              {!topCases.length && <p className="dim text-xs">Belum ada kasus terdeteksi.</p>}
+              {!topCases.length && <p className="dim text-xs">No candidate patterns detected.</p>}
             </div>
           </section>
         </aside>

@@ -3,6 +3,8 @@
 // Everything is descriptive statistics over public disclosures — no advice.
 
 import type {
+  Candidate,
+  CandidatePattern,
   CaseOutcome,
   CasePattern,
   CaseRecord,
@@ -68,6 +70,26 @@ interface Windows {
   bench: PriceDaily[];
 }
 
+function tradeKey(trade: InsiderTrade): string {
+  return [trade.symbol, trade.holderName, trade.holderType, trade.txnType, trade.txnDate, trade.amount, trade.price, trade.value, trade.pctBefore, trade.pctAfter, trade.sourceUrl ?? ""].join("|");
+}
+
+function stableHash(value: string): string {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
+export interface CandidateWindows {
+  insider: InsiderTrade[];
+  flow: FlowDaily[];
+  price: PriceDaily[];
+  bench?: PriceDaily[];
+}
+
 function evidenceStats(w: Windows, windowStart: string, anchor: string) {
   const flowWin = w.flow.filter((f) => f.date >= windowStart && f.date <= anchor);
   const flowBase = w.flow.filter((f) => f.date < windowStart).map((f) => f.netForeignInflow);
@@ -121,9 +143,73 @@ function narrative(c: Omit<CaseRecord, "id" | "createdAt" | "score" | "evidence"
   const dir = c.direction === "accumulate" ? "beli" : "jual";
   const res =
     c.fwd30 === null
-      ? "Hasil 30 hari belum terealisasi."
-      : `30 hari setelahnya saham bergerak ${c.fwd30 >= 0 ? "+" : ""}${c.fwd30.toFixed(1)}%.`;
-  return `${names} tercatat ${dir} sekitar Rp${val} (${c.nTrades} transaksi) pada ${c.symbol} sekitar ${c.anchorDate}. ${res}`;
+      ? "No 30-day outcome is available yet."
+      : `The issuer moved ${c.fwd30 >= 0 ? "+" : ""}${c.fwd30.toFixed(1)}% over the following 30 days.`;
+  return `${names} reported ${dir} activity of about Rp${val} (${c.nTrades} transactions) for ${c.symbol} around ${c.anchorDate}. ${res}`;
+}
+
+/**
+ * Find bounded disclosure patterns using only observations on or before each
+ * event anchor. Outcomes and post-anchor prices are deliberately absent.
+ */
+export function detectCandidates(symbol: string, w: CandidateWindows): Candidate[] {
+  const trades = [...w.insider]
+    .filter((trade) => trade.txnType === "buy" || trade.txnType === "sell")
+    .filter((trade, index, all) => all.findIndex((candidate) => tradeKey(candidate) === tradeKey(trade)) === index)
+    .sort((a, b) => a.txnDate.localeCompare(b.txnDate) || a.holderName.localeCompare(b.holderName));
+  if (!trades.length) return [];
+
+  const groups: { dir: "buy" | "sell"; items: InsiderTrade[] }[] = [];
+  for (const trade of trades) {
+    const direction = trade.txnType as "buy" | "sell";
+    const group = groups.at(-1);
+    const firstDate = group?.items[0]?.txnDate;
+    if (group && firstDate && group.dir === direction && trade.txnDate <= shiftDays(firstDate, 30)) {
+      group.items.push(trade);
+    } else {
+      groups.push({ dir: direction, items: [trade] });
+    }
+  }
+
+  const candidates: Candidate[] = [];
+  for (const group of groups) {
+    const firstDate = group.items[0].txnDate;
+    const anchorDate = group.items.at(-1)!.txnDate;
+    const windowStart = shiftDays(firstDate, -30);
+    const ev = evidenceStats(
+      { insider: w.insider, flow: w.flow, price: w.price, bench: w.bench ?? [] },
+      windowStart,
+      anchorDate,
+    );
+    const holders = [...new Set(group.items.map((trade) => trade.holderName))].sort();
+    const common = {
+      symbol,
+      direction: group.dir === "buy" ? ("accumulate" as const) : ("distribute" as const),
+      anchorDate,
+      windowStart,
+      windowEnd: anchorDate,
+      holders,
+      insiderTrades: group.items,
+      flowWindow: ev.flowWin,
+      priceWindow: ev.priceWin,
+      abnormalFlowZ: ev.abnormalFlowZ,
+      abnormalVolumeZ: ev.abnormalVolumeZ,
+      preDriftPct: ev.preDriftPct,
+    };
+    const eventHash = stableHash(group.items.map(tradeKey).sort().join("||"));
+    const patterns: CandidatePattern[] = [];
+    if (holders.length >= 3) patterns.push("CLUSTER_PATTERN");
+    if (group.dir === "buy") {
+      const prior = closeOnOrBefore(w.price, anchorDate);
+      const prior30 = closeOnOrBefore(w.price, shiftDays(anchorDate, -30));
+      if (prior !== null && prior30 !== null && prior < prior30) patterns.push("INSIDER_CONTRA_BUY");
+      if (ev.abnormalFlowZ > 1) patterns.push("STEALTH_ACCUMULATION");
+    }
+    for (const pattern of patterns) {
+      candidates.push({ ...common, id: `${symbol}:${group.dir}:${anchorDate}:${pattern}:${eventHash}`, pattern });
+    }
+  }
+  return candidates.sort((a, b) => a.anchorDate.localeCompare(b.anchorDate) || a.pattern.localeCompare(b.pattern) || a.id.localeCompare(b.id));
 }
 
 export function detectCases(symbol: string, w: Windows): CaseRecord[] {

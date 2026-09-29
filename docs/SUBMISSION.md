@@ -1,104 +1,62 @@
-# SUBMISSION — nilai siap paste ke portal
+# Sectors Hackathon submission draft
 
-Portal: https://hackathon.sectors.app/portal/submit
-(draft bisa disimpan berkali-kali; hanya Submit yang final → freeze)
+The portal is still a draft. This file contains English copy and a final-entry checklist; all external URLs remain blank until the user publishes and verifies them.
 
 ## Public repository URL
 
-```
-https://github.com/alfindigital/radar-x
+```text
+<verify the public repository URL immediately before submission>
 ```
 
-## Problem statement (satu kalimat)
+## One-sentence problem statement
 
-```
-RADAR-X membantu swing trader Indonesia melihat siapa (insider, institusi, asing) yang diam-diam mengakumulasi atau meninggalkan sebuah saham IDX dalam hitungan minggu — dari disclosure resmi, sebelum pergerakannya terlihat di harga.
+```text
+RADAR-X helps Indonesian equity researchers turn scattered reported-ownership disclosures into bounded, source-linked patterns and measured historical outcomes without hiding missing evidence.
 ```
 
 ## Track
 
-**Market Intelligence** (Track 03)
+**Track 3 — Market Intelligence**
 
-## Team participant names
+## Teaser video URL (one minute, public)
 
-Isi nama lengkapmu sendiri (solo).
-
-## Social media post URL
-
-Posting caption di bawah di IG / LinkedIn / Threads / TikTok,
-thumbnail dari https://canva.link/mexgt4g89m17xln, tag `@sectorsapp`,
-lalu paste URL post-nya.
-
-### Caption (paste-ready, EN — cocok dengan video English)
-
+```text
+<user to upload and paste the verified public URL>
 ```
-Sep 16, 2026: six TOWR insiders sold on the same day, at the same price — @437, ≈Rp98B in official IDX filings. Six days later the price was 404.
 
-RADAR-X catches signals like this across 256 issuers: who — insiders, institutions, foreign flow — is quietly accumulating or exiting a stock, measured over weeks and verified against real prices 30 days later.
+## Judging video URL (up to three minutes, public or unlisted)
 
-Not a technical indicator. Not a buy/sell recommendation. Just scattered public disclosures, assembled into one position map.
+```text
+<user to upload and paste the verified URL>
+```
 
-Built on the @sectorsapp Financial API for Sectors Hackathon 2026.
+## Social post URL
 
-Live: radar-x-beta.vercel.app
-Repo: github.com/alfindigital/radar-x
+```text
+<user to publish with the official Sectors tag/template and paste the URL>
+```
+
+## Factual English caption draft
+
+```text
+Public ownership disclosures are useful but scattered. RADAR-X turns a frozen Sectors snapshot into bounded reported-activity patterns, foreign-flow context, and matched issuer-versus-IHSG outcomes while keeping missing evidence visible.
+
+Current snapshot: 962 score rows, 171 candidate patterns, and 301 complete retrospective outcomes as of 22 September 2026. These are descriptive public-data statistics, not a forecast or buy/sell recommendation.
+
+Built for Sectors Hackathon 2026, Track 3 — Market Intelligence.
 
 #SectorsHackathon #IDX #MarketIntelligence
 ```
 
-### Caption (alternatif ID)
+## Final portal checklist
 
-```
-16 September 2026: 6 insider TOWR tercatat jual serentak di harga 437 — total ~Rp98 miliar, dari disclosure resmi IDX. Enam hari kemudian harganya 404.
-
-RADAR-X menangkap sinyal seperti ini di 256 emiten: siapa (insider, institusi, asing) yang diam-diam mengakumulasi atau meninggalkan saham, diukur dalam hitungan minggu dan diverifikasi hasilnya 30 hari kemudian.
-
-Bukan indikator teknikal. Bukan rekomendasi beli/jual. Murni data publik yang selama ini tersebar, dirangkai jadi satu peta posisi.
-
-Dibangun di atas @sectorsapp Financial API untuk Sectors Hackathon 2026.
-
-Coba: radar-x-beta.vercel.app
-Repo: github.com/alfindigital/radar-x
-
-#SectorsHackathon #IDX #SahamIndonesia
-```
-
-## Teaser video (1 menit, public)
-
-**Sudah jadi — programmatic Remotion, copy English, data riil baked-in.**
-File: `Studio\video-motion\remotion\out\radarx-teaser-en.mp4` (1920×1080, 60.0s, 2.3MB).
-Tinggal upload ke YouTube/Drive public → paste URL. Beat:
-
-```
-0:00  Hook        "SEP 16, 2026 — 6 insiders sold TOWR together, same price @437, ≈Rp98B"
-0:09  Board       "256 issuers · score −100..+100 · accumulation/distribution"
-0:26  Dossier     TOWR timeline: marker ▼ "6 insiders sold @437" → drop to 404, score −70
-0:40  Case        "Exit Ahead — FILM −14.3% vs IHSG −4.9%. Measured. Not predicted."
-0:50  Outro       radar sweep + RADAR-X + radar-x-beta.vercel.app + disclaimer
-```
-
-## Judging video (≤3 menit, public/unlisted YouTube/Vimeo/Drive/Loom)
-
-**Sudah jadi — programmatic Remotion, 140.5s.**
-File: `Studio\video-motion\remotion\out\radarx-judging.mp4` (1920×1080, 2:20).
-Tinggal upload → paste URL. Beat:
-
-```
-0:00   Problem: disclosures are public but scattered (3 feeds × ~900 issuers)
-0:14   Board: score −100..+100, ranked issuers, foreign-flow sparklines
-0:37   Score anatomy: 5 weighted components (insider 30 / foreign 25 /
-       instnet 20 / retail exodus 15 / fclass 10), z-scored
-0:59   TOWR dossier: 6 insiders sold @437 → 404 (−7.6%), score −70, Cluster Move
-1:20   FILM case: Exit Ahead, score 100, measured −14.3% vs IHSG −4.9%
-1:42   Person dossier: Verah Wahyudi S Wong — TAMA buys @238→@190 while price fell,
-       stake 9.62%→10.06% (+ ATAP 0.4%→4.9%)
-1:55   Methodology: Sectors API → snapshot → z-scores → patterns → outcome vs IHSG
-2:11   Outro: RADAR-X + URL + disclaimer
-```
-
-## Checklist sebelum klik Submit
-
-- [ ] Kedua video URL terisi dan bisa diakses publik/unlisted
-- [ ] Sosmed post live + URL-nya
-- [ ] Problem statement + track + nama peserta terisi
-- [ ] Tidak ada commit lagi yang direncanakan (freeze permanen setelah submit)
+- [ ] Every participant completed Sectors onboarding before code was written.
+- [ ] Public repository URL is verified and satisfies the organizer's age rule.
+- [ ] Teaser is public and exactly one minute or less.
+- [ ] Judging video is public/unlisted and no longer than three minutes.
+- [ ] Problem statement is one English sentence.
+- [ ] Track 3 is selected.
+- [ ] Team snapshot and participant names are accurate.
+- [ ] Social post is live, uses the required template/tag, and its URL is pasted.
+- [ ] The user reviewed [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) and [CLAIMS.md](CLAIMS.md).
+- [ ] The user clicks **Submit final** as the last action.

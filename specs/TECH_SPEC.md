@@ -1,5 +1,7 @@
 # TECH_SPEC — RADAR-X
 
+> **Current implementation note (2026-09-29):** Runtime services read `src/lib/snapshot.ts` and hash-verified `data/derived-v2` artifacts. No request-triggered lazy backfill, provider fetch, or runtime write is part of the release path. See `README.md` and `docs/verification/release-evidence.md` for the verified architecture.
+
 ## Arsitektur
 
 ```
