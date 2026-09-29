@@ -12,6 +12,9 @@ import type {
   PositioningScore,
   PriceDaily,
   ScoreComponents,
+  ComponentKey,
+  ComponentV2,
+  ScoreV2,
 } from "./types";
 
 const W = { insider: 0.3, foreign: 0.25, inst: 0.2, retail: 0.15, fclass: 0.1 } as const;
@@ -40,6 +43,22 @@ export interface RawComponents {
   dataPoints: number; // completeness indicator 0-5
 }
 
+const V2_WEIGHTS: Record<ComponentKey, number> = {
+  insiderZ: 0.3,
+  foreignTrend: 0.25,
+  instNetZ: 0.2,
+  retailExodusZ: 0.15,
+  fclassShift: 0.1,
+};
+
+interface RawV2 {
+  raw: number | null;
+  reason: string | null;
+  observedFrom: string | null;
+  observedTo: string | null;
+  observations: number;
+}
+
 function median(xs: number[]): number {
   if (xs.length === 0) return 0;
   const s = [...xs].sort((a, b) => a - b);
@@ -56,6 +75,138 @@ function mad(xs: number[], med: number): number {
 
 function daysBefore(anchor: string, days: number): string {
   return new Date(new Date(anchor).getTime() - days * 864e5).toISOString().slice(0, 10);
+}
+
+function inclusiveStart(anchor: string, days: number): string {
+  return daysBefore(anchor, days - 1);
+}
+
+function span<T extends { date?: string; txnDate?: string; month?: string }>(rows: T[]): { observedFrom: string | null; observedTo: string | null } {
+  const dates = rows.map((row) => row.date ?? row.txnDate ?? row.month).filter((date): date is string => Boolean(date)).sort();
+  return { observedFrom: dates[0] ?? null, observedTo: dates.at(-1) ?? null };
+}
+
+function missing(reason: string): RawV2 {
+  return { raw: null, reason, observedFrom: null, observedTo: null, observations: 0 };
+}
+
+function rawV2(d: SymbolData, key: ComponentKey, asOf: string): RawV2 {
+  if (key === "insiderZ") {
+    const rows = d.insider.filter((row) => row.txnDate >= inclusiveStart(asOf, 90) && row.txnDate <= asOf && row.txnType !== "others");
+    if (!rows.length) return missing("No reported ownership observations in the 90-day window.");
+    const raw = rows.reduce((sum, row) => sum + (row.txnType === "buy" ? row.value : -row.value), 0);
+    const dates = span(rows);
+    return { raw, reason: null, ...dates, observations: rows.length };
+  }
+
+  if (key === "foreignTrend") {
+    const rows = d.flow.filter((row) => row.date >= inclusiveStart(asOf, 90) && row.date <= asOf);
+    if (!rows.length) return missing("No foreign-flow observations in the 90-day window.");
+    const cap = [...d.price]
+      .filter((row) => row.date <= asOf && Number.isFinite(row.marketCap) && (row.marketCap ?? 0) > 0)
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .at(-1)?.marketCap;
+    if (!cap) return { ...missing("Market capitalization is unavailable for normalization."), observations: rows.length, ...span(rows) };
+    const raw = (rows.reduce((sum, row) => sum + row.netForeignInflow, 0) / cap) * 100;
+    const dates = span(rows);
+    return { raw, reason: null, ...dates, observations: rows.length };
+  }
+
+  if (key === "instNetZ") {
+    const rows = d.broker.filter((row) => row.date >= inclusiveStart(asOf, 14) && row.date <= asOf);
+    if (!rows.length) return missing("Broker observations are unavailable in the 14-day window.");
+    const eligible = d.instBrokers.size
+      ? rows.filter((row) => d.instBrokers.has(row.brokerCode))
+      : rows.filter((row) => Number.isFinite(row.foreignBuyVal) || Number.isFinite(row.foreignSellVal));
+    if (!eligible.length) return missing("No eligible institutional broker observations are available.");
+    const raw = eligible.reduce((sum, row) => sum + (d.instBrokers.size ? row.netVal : (row.foreignBuyVal ?? 0) - (row.foreignSellVal ?? 0)), 0);
+    const dates = span(eligible);
+    return { raw, reason: null, ...dates, observations: eligible.length };
+  }
+
+  const holders = d.holders.filter((row) => row.month <= asOf).sort((a, b) => a.month.localeCompare(b.month));
+  if (holders.length < 2) return missing("Two holder-composition months before the as-of date are required.");
+  const current = holders.at(-1)!;
+  const previous = holders.at(-2)!;
+  const dates = span([previous, current]);
+  if (key === "retailExodusZ") {
+    if (!Number.isFinite(current.changeInShareholders)) return { ...missing("Shareholder-count change is invalid."), ...dates, observations: 2 };
+    return { raw: -current.changeInShareholders, reason: null, ...dates, observations: 2 };
+  }
+  const currentInstitutional = (current.foreign["mutual_fund_f"] ?? NaN) + (current.foreign["financial_institutions_f"] ?? NaN);
+  const previousInstitutional = (previous.foreign["mutual_fund_f"] ?? NaN) + (previous.foreign["financial_institutions_f"] ?? NaN);
+  const currentIndividual = current.foreign["individual_f"] ?? NaN;
+  const previousIndividual = previous.foreign["individual_f"] ?? NaN;
+  if (![currentInstitutional, previousInstitutional, currentIndividual, previousIndividual].every(Number.isFinite)) {
+    return { ...missing("Foreign holder-class fields are incomplete."), ...dates, observations: 2 };
+  }
+  return { raw: (currentInstitutional - previousInstitutional) - (currentIndividual - previousIndividual), reason: null, ...dates, observations: 2 };
+}
+
+function quantile(sorted: number[], q: number): number {
+  if (sorted.length === 1) return sorted[0];
+  const index = (sorted.length - 1) * q;
+  const lower = Math.floor(index);
+  const upper = Math.ceil(index);
+  if (lower === upper) return sorted[lower];
+  return sorted[lower] + (sorted[upper] - sorted[lower]) * (index - lower);
+}
+
+export function standardize(values: (number | null)[]): (number | null)[] {
+  const valid = values.filter((value): value is number => value !== null && Number.isFinite(value));
+  if (valid.length < 5) return values.map(() => null);
+  const sorted = [...valid].sort((a, b) => a - b);
+  const medianValue = quantile(sorted, 0.5);
+  const iqr = quantile(sorted, 0.75) - quantile(sorted, 0.25);
+  const scale = iqr / 1.349;
+  return values.map((value) => {
+    if (value === null || !Number.isFinite(value)) return null;
+    if (scale === 0) return 0;
+    return Math.max(-3, Math.min(3, (value - medianValue) / scale));
+  });
+}
+
+export function computeScoresV2(data: SymbolData[], asOf: string): ScoreV2[] {
+  const keys = Object.keys(V2_WEIGHTS) as ComponentKey[];
+  const rawRows = data.map((row) => Object.fromEntries(keys.map((key) => [key, rawV2(row, key, asOf)])) as Record<ComponentKey, RawV2>);
+  const zRows = Object.fromEntries(keys.map((key) => [key, standardize(rawRows.map((row) => row[key].raw))])) as Record<ComponentKey, (number | null)[]>;
+
+  return data.map((row, index) => {
+    const components = {} as Record<ComponentKey, ComponentV2>;
+    let coverageWeight = 0;
+    let rankable = 0;
+    let weighted = 0;
+    for (const key of keys) {
+      const raw = rawRows[index][key];
+      const z = zRows[key][index];
+      const status = raw.raw === null ? "missing" : z === null ? "unrankable" : "available";
+      const contribution = z === null ? 0 : z * V2_WEIGHTS[key] * (100 / 3);
+      if (status === "available") {
+        coverageWeight += V2_WEIGHTS[key];
+        rankable++;
+        weighted += contribution;
+      }
+      components[key] = {
+        raw: raw.raw,
+        z,
+        weight: V2_WEIGHTS[key],
+        contribution,
+        status,
+        reason: raw.reason ?? (status === "unrankable" ? "Fewer than five valid cohort observations." : null),
+        observedFrom: raw.observedFrom,
+        observedTo: raw.observedTo,
+        observations: raw.observations,
+      };
+    }
+    return {
+      symbol: row.symbol,
+      asOf,
+      score: rankable >= 2 ? Math.round(Math.max(-100, Math.min(100, weighted))) : null,
+      coverageWeight,
+      components,
+      methodVersion: "radarx-v2" as const,
+    };
+  }).sort((a, b) => a.symbol.localeCompare(b.symbol));
 }
 
 export function rawComponents(d: SymbolData, anchor: string): RawComponents {

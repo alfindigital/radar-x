@@ -152,6 +152,29 @@ export interface PositioningScore {
   computedAt: string;
 }
 
+export type ComponentKey = "insiderZ" | "foreignTrend" | "instNetZ" | "retailExodusZ" | "fclassShift";
+
+export interface ComponentV2 {
+  raw: number | null;
+  z: number | null;
+  weight: number;
+  contribution: number;
+  status: "available" | "missing" | "unrankable";
+  reason: string | null;
+  observedFrom: string | null;
+  observedTo: string | null;
+  observations: number;
+}
+
+export interface ScoreV2 {
+  symbol: string;
+  asOf: string;
+  score: number | null;
+  coverageWeight: number;
+  components: Record<ComponentKey, ComponentV2>;
+  methodVersion: "radarx-v2";
+}
+
 export interface MeasuredOutcome {
   status: "complete" | "pending" | "unavailable";
   reason: string | null;
