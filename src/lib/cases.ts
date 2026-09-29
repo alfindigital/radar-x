@@ -70,6 +70,19 @@ interface Windows {
   bench: PriceDaily[];
 }
 
+function tradeKey(trade: InsiderTrade): string {
+  return [trade.symbol, trade.holderName, trade.holderType, trade.txnType, trade.txnDate, trade.amount, trade.price, trade.value, trade.pctBefore, trade.pctAfter, trade.sourceUrl ?? ""].join("|");
+}
+
+function stableHash(value: string): string {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
 export interface CandidateWindows {
   insider: InsiderTrade[];
   flow: FlowDaily[];
@@ -142,6 +155,7 @@ function narrative(c: Omit<CaseRecord, "id" | "createdAt" | "score" | "evidence"
 export function detectCandidates(symbol: string, w: CandidateWindows): Candidate[] {
   const trades = [...w.insider]
     .filter((trade) => trade.txnType === "buy" || trade.txnType === "sell")
+    .filter((trade, index, all) => all.findIndex((candidate) => tradeKey(candidate) === tradeKey(trade)) === index)
     .sort((a, b) => a.txnDate.localeCompare(b.txnDate) || a.holderName.localeCompare(b.holderName));
   if (!trades.length) return [];
 
@@ -182,6 +196,7 @@ export function detectCandidates(symbol: string, w: CandidateWindows): Candidate
       abnormalVolumeZ: ev.abnormalVolumeZ,
       preDriftPct: ev.preDriftPct,
     };
+    const eventHash = stableHash(group.items.map(tradeKey).sort().join("||"));
     const patterns: CandidatePattern[] = [];
     if (holders.length >= 3) patterns.push("CLUSTER_PATTERN");
     if (group.dir === "buy") {
@@ -191,7 +206,7 @@ export function detectCandidates(symbol: string, w: CandidateWindows): Candidate
       if (ev.abnormalFlowZ > 1) patterns.push("STEALTH_ACCUMULATION");
     }
     for (const pattern of patterns) {
-      candidates.push({ ...common, id: `${symbol}:${anchorDate}:${pattern}`, pattern });
+      candidates.push({ ...common, id: `${symbol}:${group.dir}:${anchorDate}:${pattern}:${eventHash}`, pattern });
     }
   }
   return candidates.sort((a, b) => a.anchorDate.localeCompare(b.anchorDate) || a.pattern.localeCompare(b.pattern) || a.id.localeCompare(b.id));

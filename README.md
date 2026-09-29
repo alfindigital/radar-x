@@ -1,67 +1,75 @@
 # RADAR-X
 
-**Live demo: https://radar-x-beta.vercel.app**
+RADAR-X is an evidence-first market-intelligence workflow for Indonesian equities. It turns a frozen Sectors snapshot into bounded reported-ownership patterns, a coverage-aware positioning index, foreign-flow context, and retrospective issuer-versus-IHSG outcomes.
 
-Peta posisi smart money IDX untuk swing trader: siapa (insider, institusi, asing) sedang
-diam-diam mengakumulasi atau meninggalkan saham dalam hitungan minggu — dari disclosure resmi
-via **Sectors Financial API v2**. Track 3 Market Intelligence, Sectors Hackathon 2026.
+**Track:** Sectors Hackathon 2026, Track 3 — Market Intelligence
+**Current verified snapshot:** through 2026-09-22
+**Submission deadline in the current rules:** 8 October 2026, 23:59 WIB
 
-> Bukan nasihat investasi. Statistik deskriptif atas data publik. DYOR.
+The repository is designed to run without credentials or network access. The checked-in raw snapshot is read-only at runtime; generated v2 artifacts are hash-verified before the app serves them. Provider ingestion is optional and is not required for the demo.
 
-Contoh nyata: pada 16 Sep 2026, disclosure mencatat 6 insider TOWR menjual serentak @437
-(total ~Rp98 miliar) — RADAR-X menandainya *Bergerak Rombongan*, skor -70, bucket distribusi;
-enam hari kemudian harga 404 (-7,6%). 256 emiten terpantau, 240+ kasus terdeteksi, outcome
-30 hari diukur dari harga riil begitu window-nya terealisasi.
-Foreign Flow Radar memantau ~700 emiten dengan aktivitas asing dari feed full-universe harian.
+## Research workflow
+
+1. **Scan the Board.** Filter the full 962-issuer cohort by accumulation or distribution and inspect component coverage rather than a hidden truncated page.
+2. **Open evidence.** Follow an issuer or candidate pattern to see the bounded event window, holder names, transaction date, feed report date, safe source links, foreign flow, and missing observations.
+3. **Measure the past.** Read the 7-, 30-, and 60-day matched-session outcomes. Incomplete horizons stay Pending or Unavailable and are never shown as zero.
 
 ## Quick start
 
 ```bash
-cp .env.example .env.local   # isi SECTORS_API_KEY
-npm install
-npm run ingest               # backfill: filings 6 bln + watchlist (flow/price/holders/broker) + ihsg
-npm run compute              # positioning scores + case detection → data/*.json
-npm run dev                  # http://localhost:3000
+npm ci
+npm run dev
+# open http://localhost:3000
 ```
 
-Ingest boros kredit sekali saja (one-time backfill ~800); refresh mingguan ~150.
-Resume aman: semua job idempotent, `--only-missing` melompati yang sudah ada.
+No API key is required for the saved-snapshot workflow. To regenerate derived artifacts offline, use an explicit date and keep the output under `data/`:
 
-## Halaman
-
-| Route | Isi |
-|---|---|
-| `/` | RADAR Board — ranking Positioning Score -100..+100 + feed insider + kasus teratas |
-| `/asing` | Foreign Flow Radar — net flow asing kumulatif untuk seluruh emiten IDX |
-| `/saham/[ticker]` | Dossier emiten — timeline harga+insider+flow, breakdown skor, komposisi pemilik |
-| `/kasus`, `/kasus/[id]` | Case feed pola terdeteksi + hasil 30 hari terukur |
-| `/orang/[holder]` | Dossier orang — histori disclosure + frekuensi historis |
-| `/metodologi` | Formula, definisi pola, sumber, disclaimer |
-
-## Struktur
-
-```
-src/lib/sectors.ts    API client (server-only, 429 backoff, no ?q= — 3 kredit)
-src/lib/db.ts         DataStore interface + JsonStore (data/*.json)
-src/lib/score.ts      positioning score: 5 robust z-components berbobot
-src/lib/cases.ts      deteksi pola + case score + outcome terukur + narasi
-src/lib/services.ts   service layer + lazy backfill (ticker baru → fetch live)
-scripts/ingest.ts     backfill/refresh (tsx)
-scripts/compute.ts    hitung skor + kasus
-specs/                PRODUCT_SPEC / TECH_SPEC / DESIGN_SPEC
-schema.sql            DDL Supabase (saat DATA_SOURCE=supabase disambung)
+```bash
+npm run compute -- --as-of 2026-09-22 --output data/derived-v2
 ```
 
-## Engine
+Provider ingestion and any supplemental provider are intentionally outside the release path. Do not run them without explicit access, terms, and budget approval.
 
-`score = 0.30·insider_z + 0.25·foreign_trend + 0.20·instnet_z + 0.15·retail_exodus_z + 0.10·fclass_shift`
-→ ×33.3 → -100..+100. Z robust (median/MAD, clip ±3σ) lintas emiten per minggu.
-Pola: Keluar Duluan · Akumulasi Diam-diam · Beli Saat Turun · Bergerak Rombongan.
+## Architecture and lineage
 
-## Catatan
+```text
+data/*.json (frozen Sectors snapshot)
+        │
+        ├── snapshot/provenance validation + SHA-256 manifest
+        ├── score.ts       → radarx-v2 positioning components
+        ├── cases.ts       → bounded candidate patterns
+        ├── outcomes.ts    → matched issuer/IHSG retrospective windows
+        └── derive.ts      → data/derived-v2/{scores,cases,manifest}.json
+                              │
+                              └── services.ts → Next.js research pages
+```
 
-- Kode baru untuk hackathon; tidak ada migrasi dari project lain.
-- Key tidak pernah masuk repo: `.env.local` ke-ignore oleh allowlist `.gitignore`.
-- `data/*.json` = snapshot beku hasil ingest (disclosure publik, regeneratable via
-  `npm run backfill`); dikomit agar demo Vercel jalan tanpa Supabase. Di prod, lazy
-  backfill tetap bisa fetch live (write best-effort, fs serverless read-only).
+The current manifest records 962 score rows (254 non-null scores), 171 candidate patterns, 301 complete outcomes, 170 pending outcomes, and 42 unavailable paired outcomes. These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
+
+## Method limits
+
+- Scores are cross-sectional descriptive comparisons, not forecasts or recommendations.
+- Components use robust interpolated-IQR standardization and publish only with at least two rankable components.
+- Candidate membership stops at the anchor event; post-anchor prices can affect only the separate retrospective outcome.
+- Outcomes use the first common issuer and IHSG observed sessions within the documented seven-day tolerance. Missing evidence remains visible.
+- Legacy flat-OHLC or zero-volume observations may be marked `legacy-unknown`; publication timing is not independently verified for every legacy row.
+- Sectors data is the core evidence source. Optional Arjum, ZPI, or Pluang enrichment is omitted from this release because public redistribution terms and current credentials are not established here.
+
+RADAR-X is public-data research, not investment advice, a buy/sell recommendation, or an allegation about any person. Historical outcomes do not predict future returns.
+
+## Verification
+
+```bash
+npm test
+npm run audit:data
+npm run lint
+npm run typecheck
+npm run build
+npm run test:e2e
+```
+
+The browser suite runs against the local snapshot, blocks Sectors and Arjum domains, and covers desktop and mobile navigation, distribution rows, issuer search, source URLs, case outcome states, and unknown issuers. See [release evidence](docs/verification/release-evidence.md) and [claims](docs/CLAIMS.md) for the latest recorded run.
+
+## Competition handoff
+
+The portal remains a draft. The final submission requires a public repository URL, a one-minute public teaser, a public or unlisted judging video of at most three minutes, an English one-sentence problem statement, Track 3, a team snapshot, and a required social post URL. Do not click **Submit final** until the release checklist is reviewed by the user.

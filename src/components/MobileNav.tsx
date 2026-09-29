@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSyncExternalStore } from "react";
 
 const NAV = [
   { href: "/", label: "Board" },
@@ -12,10 +13,15 @@ const NAV = [
 
 export default function MobileNav() {
   const pathname = usePathname();
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  );
   return (
     <nav aria-label="Primary navigation" className="grid grid-cols-4 gap-1 border-b border-line bg-panel px-2 py-2 md:hidden">
       {NAV.map((item) => {
-        const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        const active = mounted && (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href));
         return (
           <Link
             key={item.href}

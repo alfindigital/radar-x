@@ -34,5 +34,12 @@
 !data/derived-v2/*.json
 !tests
 !tests/**
+!playwright.config.ts
+!\.github
+!\.github/**
+
+test-results
+playwright-report
+blob-report
 
 .vercel

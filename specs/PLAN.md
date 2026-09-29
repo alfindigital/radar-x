@@ -5,6 +5,8 @@ created: 2026-09-18T14:18:14Z
 ---
 # RADAR-X — Megaplan Sectors Hackathon 2026
 
+> **Historical plan — superseded on 2026-09-29.** The current execution plan and release evidence are in `docs/superpowers/plans/2026-09-29-hackathon-readiness.md`, `docs/RELEASE-CHECKLIST.md`, and `docs/verification/release-evidence.md`. Current competition deadline is 8 October 2026, 23:59 WIB; older dates in this document are not authoritative.
+
 Radar posisi smart money IDX untuk swing trader: deteksi akumulasi/distribusi orang dalam, institusi, dan asing dalam horizon mingguan — dari data disclosure resmi Sectors API — sebelum beritanya keluar. Track 3 Market Intelligence, solo, Next.js + Supabase di Vercel.
 
 ---

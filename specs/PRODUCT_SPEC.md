@@ -1,5 +1,7 @@
 # PRODUCT_SPEC — RADAR-X
 
+> **Superseded working spec note (2026-09-29):** The executable product is the English `radarx-v2` snapshot workflow documented in `README.md`, `docs/CLAIMS.md`, and `src/app/metodologi/page.tsx`. This historical product spec is retained for context; its older “smart money” wording and headline examples are not release claims.
+
 ## Problem (1 kalimat, submit-ready)
 
 RADAR-X memberi investor swing Indonesia peta posisi smart money — siapa (insider, institusi, asing)

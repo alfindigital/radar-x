@@ -158,7 +158,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "AKRA.JK:2026-05-06:CLUSTER_PATTERN",
+    "id": "AKRA.JK:buy:2026-05-06:CLUSTER_PATTERN:e63037ca",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -635,7 +635,7 @@
     "abnormalFlowZ": 11.321134158472688,
     "abnormalVolumeZ": 0.6162259639818176,
     "preDriftPct": -0.2819992296010536,
-    "id": "AKRA.JK:2026-08-12:STEALTH_ACCUMULATION",
+    "id": "AKRA.JK:buy:2026-08-12:STEALTH_ACCUMULATION:349142c1",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -1233,7 +1233,7 @@
     "abnormalFlowZ": 0.12256909775506551,
     "abnormalVolumeZ": -0.6588687982679852,
     "preDriftPct": -1.7127690707394612,
-    "id": "AKRA.JK:2026-09-08:CLUSTER_PATTERN",
+    "id": "AKRA.JK:sell:2026-09-08:CLUSTER_PATTERN:3da1f6ac",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -1785,7 +1785,7 @@
     "abnormalFlowZ": -39232844451.631996,
     "abnormalVolumeZ": 47550361.97670759,
     "preDriftPct": 0,
-    "id": "AMMN.JK:2026-07-20:CLUSTER_PATTERN",
+    "id": "AMMN.JK:buy:2026-07-20:CLUSTER_PATTERN:1d908ca3",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -2005,7 +2005,7 @@
     "abnormalFlowZ": -5620456455.872423,
     "abnormalVolumeZ": 29988691.03826611,
     "preDriftPct": 0,
-    "id": "ARCI.JK:2026-06-29:CLUSTER_PATTERN",
+    "id": "ARCI.JK:buy:2026-06-29:CLUSTER_PATTERN:b20c1f68",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -2253,7 +2253,7 @@
     "abnormalFlowZ": -46420549506.43894,
     "abnormalVolumeZ": 41956778.63213274,
     "preDriftPct": 0,
-    "id": "ASII.JK:2026-06-26:CLUSTER_PATTERN",
+    "id": "ASII.JK:buy:2026-06-26:CLUSTER_PATTERN:aac1608f",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -2863,7 +2863,7 @@
     "abnormalFlowZ": -6308687.464505289,
     "abnormalVolumeZ": 200759.76566263902,
     "preDriftPct": 0,
-    "id": "ATIC.JK:2026-07-29:CLUSTER_PATTERN",
+    "id": "ATIC.JK:buy:2026-07-29:CLUSTER_PATTERN:2856633a",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -3053,7 +3053,7 @@
     "abnormalFlowZ": 16862.26898691488,
     "abnormalVolumeZ": 505952.380952381,
     "preDriftPct": 0,
-    "id": "ATLA.JK:2026-06-25:STEALTH_ACCUMULATION",
+    "id": "ATLA.JK:buy:2026-06-25:STEALTH_ACCUMULATION:a3e95131",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -3185,7 +3185,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "AVIA.JK:2026-04-27:CLUSTER_PATTERN",
+    "id": "AVIA.JK:buy:2026-04-27:CLUSTER_PATTERN:9ab9381b",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -4034,7 +4034,7 @@
     "abnormalFlowZ": 572727523.4127871,
     "abnormalVolumeZ": 32274060.048948757,
     "preDriftPct": -48.33735766099066,
-    "id": "BAIK.JK:2026-08-19:INSIDER_CONTRA_BUY",
+    "id": "BAIK.JK:buy:2026-08-19:INSIDER_CONTRA_BUY:a21d317e",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -4883,7 +4883,7 @@
     "abnormalFlowZ": 572727523.4127871,
     "abnormalVolumeZ": 32274060.048948757,
     "preDriftPct": -48.33735766099066,
-    "id": "BAIK.JK:2026-08-19:STEALTH_ACCUMULATION",
+    "id": "BAIK.JK:buy:2026-08-19:STEALTH_ACCUMULATION:a21d317e",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -5255,7 +5255,7 @@
     "abnormalFlowZ": 392568388.8649935,
     "abnormalVolumeZ": 41270376.36584379,
     "preDriftPct": 0,
-    "id": "BBKP.JK:2026-07-10:STEALTH_ACCUMULATION",
+    "id": "BBKP.JK:buy:2026-07-10:STEALTH_ACCUMULATION:e634b05f",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -5847,7 +5847,7 @@
     "abnormalFlowZ": 431102.2761118205,
     "abnormalVolumeZ": 36.627780808098585,
     "preDriftPct": -0.7485959606124206,
-    "id": "BBMD.JK:2026-08-14:CLUSTER_PATTERN",
+    "id": "BBMD.JK:buy:2026-08-14:CLUSTER_PATTERN:9dcd1a0c",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -6439,7 +6439,7 @@
     "abnormalFlowZ": 431102.2761118205,
     "abnormalVolumeZ": 36.627780808098585,
     "preDriftPct": -0.7485959606124206,
-    "id": "BBMD.JK:2026-08-14:STEALTH_ACCUMULATION",
+    "id": "BBMD.JK:buy:2026-08-14:STEALTH_ACCUMULATION:9dcd1a0c",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -6631,7 +6631,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "BCIC.JK:2026-05-26:CLUSTER_PATTERN",
+    "id": "BCIC.JK:buy:2026-05-26:CLUSTER_PATTERN:cbd26c9a",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -6834,7 +6834,7 @@
     "abnormalFlowZ": -21325446.360890348,
     "abnormalVolumeZ": 10886038.041278835,
     "preDriftPct": 0,
-    "id": "BCIC.JK:2026-06-26:CLUSTER_PATTERN",
+    "id": "BCIC.JK:buy:2026-06-26:CLUSTER_PATTERN:63637572",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -7378,7 +7378,7 @@
     "abnormalFlowZ": -7848216.925592607,
     "abnormalVolumeZ": 4930597.495045087,
     "preDriftPct": 0,
-    "id": "BCIC.JK:2026-07-27:INSIDER_CONTRA_BUY",
+    "id": "BCIC.JK:buy:2026-07-27:INSIDER_CONTRA_BUY:171546b5",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -7837,7 +7837,7 @@
     "abnormalFlowZ": -7.146936251098537,
     "abnormalVolumeZ": -0.41251988507837906,
     "preDriftPct": -9.492676708692475,
-    "id": "BCIC.JK:2026-07-27:INSIDER_CONTRA_BUY",
+    "id": "BCIC.JK:buy:2026-07-27:INSIDER_CONTRA_BUY:198f34cc",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -8312,7 +8312,7 @@
     "abnormalFlowZ": 1.9113336607613378,
     "abnormalVolumeZ": -0.16481564618019598,
     "preDriftPct": -1.1549582001179157,
-    "id": "BCIC.JK:2026-08-26:CLUSTER_PATTERN",
+    "id": "BCIC.JK:buy:2026-08-26:CLUSTER_PATTERN:65d0e115",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -8787,7 +8787,7 @@
     "abnormalFlowZ": 1.9113336607613378,
     "abnormalVolumeZ": -0.16481564618019598,
     "preDriftPct": -1.1549582001179157,
-    "id": "BCIC.JK:2026-08-26:STEALTH_ACCUMULATION",
+    "id": "BCIC.JK:buy:2026-08-26:STEALTH_ACCUMULATION:65d0e115",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -8903,7 +8903,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "BIKE.JK:2026-04-30:CLUSTER_PATTERN",
+    "id": "BIKE.JK:sell:2026-04-30:CLUSTER_PATTERN:b79e2cc2",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -9361,7 +9361,7 @@
     "abnormalFlowZ": -279981848.0135484,
     "abnormalVolumeZ": 879650.6137865912,
     "preDriftPct": 0,
-    "id": "BIRD.JK:2026-07-17:CLUSTER_PATTERN",
+    "id": "BIRD.JK:buy:2026-07-17:CLUSTER_PATTERN:f394481d",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -9838,7 +9838,7 @@
     "abnormalFlowZ": 1454354213.8766541,
     "abnormalVolumeZ": 60756.95458624389,
     "preDriftPct": -7.078498256036838,
-    "id": "BIRD.JK:2026-07-23:INSIDER_CONTRA_BUY",
+    "id": "BIRD.JK:buy:2026-07-23:INSIDER_CONTRA_BUY:6a616e24",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -10315,7 +10315,7 @@
     "abnormalFlowZ": 1454354213.8766541,
     "abnormalVolumeZ": 60756.95458624389,
     "preDriftPct": -7.078498256036838,
-    "id": "BIRD.JK:2026-07-23:STEALTH_ACCUMULATION",
+    "id": "BIRD.JK:buy:2026-07-23:STEALTH_ACCUMULATION:6a616e24",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -10495,7 +10495,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "BJBR.JK:2026-05-11:CLUSTER_PATTERN",
+    "id": "BJBR.JK:buy:2026-05-11:CLUSTER_PATTERN:33bfffcc",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -10982,7 +10982,7 @@
     "abnormalFlowZ": 101185172.42363806,
     "abnormalVolumeZ": 3738321.390879298,
     "preDriftPct": 0,
-    "id": "BJTM.JK:2026-07-14:CLUSTER_PATTERN",
+    "id": "BJTM.JK:buy:2026-07-14:CLUSTER_PATTERN:4f6731ca",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -11469,7 +11469,7 @@
     "abnormalFlowZ": 101185172.42363806,
     "abnormalVolumeZ": 3738321.390879298,
     "preDriftPct": 0,
-    "id": "BJTM.JK:2026-07-14:STEALTH_ACCUMULATION",
+    "id": "BJTM.JK:buy:2026-07-14:STEALTH_ACCUMULATION:4f6731ca",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -11929,7 +11929,7 @@
     "abnormalFlowZ": 1.001022612501897,
     "abnormalVolumeZ": 1.6519689851629824,
     "preDriftPct": 4.220319146938447,
-    "id": "BKSL.JK:2026-07-28:STEALTH_ACCUMULATION",
+    "id": "BKSL.JK:buy:2026-07-28:STEALTH_ACCUMULATION:35cf5d30",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -12347,7 +12347,7 @@
     "abnormalFlowZ": 0.9851759080352706,
     "abnormalVolumeZ": 0.9457817027258116,
     "preDriftPct": -8.831222914240303,
-    "id": "BKSL.JK:2026-09-14:INSIDER_CONTRA_BUY",
+    "id": "BKSL.JK:buy:2026-09-14:INSIDER_CONTRA_BUY:7da51130",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -12816,7 +12816,7 @@
     "abnormalFlowZ": 0.8262248665947898,
     "abnormalVolumeZ": 0.7056590589794124,
     "preDriftPct": -11.883681178670342,
-    "id": "BKSL.JK:2026-09-17:INSIDER_CONTRA_BUY",
+    "id": "BKSL.JK:buy:2026-09-17:INSIDER_CONTRA_BUY:08e0b053",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -13276,7 +13276,7 @@
     "abnormalFlowZ": 5.270143733247106,
     "abnormalVolumeZ": -10.11805414031312,
     "preDriftPct": -1.2195099339605204,
-    "id": "BMRI.JK:2026-07-28:STEALTH_ACCUMULATION",
+    "id": "BMRI.JK:buy:2026-07-28:STEALTH_ACCUMULATION:d197bd8a",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -13760,7 +13760,7 @@
     "abnormalFlowZ": 1.5568940407845986,
     "abnormalVolumeZ": -0.3318913689135731,
     "preDriftPct": -0.1996874719629389,
-    "id": "BMRI.JK:2026-09-07:STEALTH_ACCUMULATION",
+    "id": "BMRI.JK:buy:2026-09-07:STEALTH_ACCUMULATION:c2c1a78a",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -14219,7 +14219,7 @@
     "abnormalFlowZ": -7.309498808564974,
     "abnormalVolumeZ": 1.3393541574376429,
     "preDriftPct": -8.659341130255012,
-    "id": "BUKA.JK:2026-09-04:INSIDER_CONTRA_BUY",
+    "id": "BUKA.JK:buy:2026-09-04:INSIDER_CONTRA_BUY:ab4899ab",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -14354,7 +14354,7 @@
     "abnormalFlowZ": 7035458360.777944,
     "abnormalVolumeZ": 83685316.3361662,
     "preDriftPct": 0,
-    "id": "BULL.JK:2026-06-23:STEALTH_ACCUMULATION",
+    "id": "BULL.JK:buy:2026-06-23:STEALTH_ACCUMULATION:ef824142",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -14557,7 +14557,7 @@
     "abnormalFlowZ": 345905477.7008313,
     "abnormalVolumeZ": 171174.51324250194,
     "preDriftPct": 0,
-    "id": "BYAN.JK:2026-06-29:STEALTH_ACCUMULATION",
+    "id": "BYAN.JK:buy:2026-06-29:STEALTH_ACCUMULATION:270da06a",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -15034,7 +15034,7 @@
     "abnormalFlowZ": 2.6637222624871053,
     "abnormalVolumeZ": 1.9625761610928103,
     "preDriftPct": -12.131378951435227,
-    "id": "CBRE.JK:2026-08-06:INSIDER_CONTRA_BUY",
+    "id": "CBRE.JK:buy:2026-08-06:INSIDER_CONTRA_BUY:b5f6e9ba",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -15511,7 +15511,7 @@
     "abnormalFlowZ": 2.6637222624871053,
     "abnormalVolumeZ": 1.9625761610928103,
     "preDriftPct": -12.131378951435227,
-    "id": "CBRE.JK:2026-08-06:STEALTH_ACCUMULATION",
+    "id": "CBRE.JK:buy:2026-08-06:STEALTH_ACCUMULATION:b5f6e9ba",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -15850,7 +15850,7 @@
     "abnormalFlowZ": 164079072.1567012,
     "abnormalVolumeZ": 175938092.12506098,
     "preDriftPct": 0,
-    "id": "CUAN.JK:2026-07-08:CLUSTER_PATTERN",
+    "id": "CUAN.JK:buy:2026-07-08:CLUSTER_PATTERN:d3b03bc3",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -16189,7 +16189,7 @@
     "abnormalFlowZ": 164079072.1567012,
     "abnormalVolumeZ": 175938092.12506098,
     "preDriftPct": 0,
-    "id": "CUAN.JK:2026-07-08:STEALTH_ACCUMULATION",
+    "id": "CUAN.JK:buy:2026-07-08:STEALTH_ACCUMULATION:d3b03bc3",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -16238,254 +16238,6 @@
         "issuerPct": 55.833333333333336,
         "benchmarkPct": 12.706516801591988,
         "excessPp": 43.12681653174135,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "CYBR.JK",
-    "direction": "distribute",
-    "anchorDate": "2026-06-02",
-    "windowStart": "2026-05-03",
-    "windowEnd": "2026-06-02",
-    "holders": [
-      "Andri Hutama Putra",
-      "Doni Mora",
-      "Mb Investment Management"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Andri Hutama Putra",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-02",
-        "filedAt": "2026-06-16T10:13:51",
-        "amount": 901200,
-        "price": 598.924,
-        "value": 539750000,
-        "pctBefore": 0.251,
-        "pctAfter": 0.244,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-16062026-6307-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Doni Mora",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-02",
-        "filedAt": "2026-06-03T16:06:21",
-        "amount": 150000,
-        "price": 600,
-        "value": 90000000,
-        "pctBefore": 0.043,
-        "pctAfter": 0.041,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-03062026-8225-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Mb Investment Management",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-02",
-        "filedAt": "2026-06-04T15:47:52",
-        "amount": 4200,
-        "price": 610,
-        "value": 2562000,
-        "pctBefore": 26.243,
-        "pctAfter": 26.243,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-04062026-2815-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [],
-    "priceWindow": [],
-    "abnormalFlowZ": 0,
-    "abnormalVolumeZ": 0,
-    "preDriftPct": 0,
-    "id": "CYBR.JK:2026-06-02:CLUSTER_PATTERN",
-    "pattern": "CLUSTER_PATTERN",
-    "outcomes": [
-      {
-        "status": "unavailable",
-        "reason": "No common start session within seven days of the anchor.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": null,
-        "targetDate": null,
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": null,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "unavailable",
-        "reason": "No common start session within seven days of the anchor.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": null,
-        "targetDate": null,
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": null,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "unavailable",
-        "reason": "No common start session within seven days of the anchor.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": null,
-        "targetDate": null,
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": null,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "CYBR.JK",
-    "direction": "distribute",
-    "anchorDate": "2026-06-15",
-    "windowStart": "2026-05-11",
-    "windowEnd": "2026-06-15",
-    "holders": [
-      "Andri Hutama Putra",
-      "Doni Mora",
-      "Inv Management",
-      "Mb Investment Management"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Inv Management",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-10",
-        "filedAt": "2026-06-17T14:47:11",
-        "amount": 10000000,
-        "price": 460,
-        "value": 4600000000,
-        "pctBefore": 38.7,
-        "pctAfter": 38.628,
-        "clusterHint": "cluster-sell",
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-17062026-0050-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Mb Investment Management",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-11",
-        "filedAt": "2026-06-16T09:51:17",
-        "amount": 200000,
-        "price": 600,
-        "value": 120000000,
-        "pctBefore": 26.243,
-        "pctAfter": 26.238,
-        "clusterHint": "cluster-sell",
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-16062026-4944-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Andri Hutama Putra",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-15",
-        "filedAt": "2026-07-13T18:08:49",
-        "amount": 835300,
-        "price": 623.974,
-        "value": 521205500,
-        "pctBefore": 0.244,
-        "pctAfter": 0.238,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-13072026-7959-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "CYBR.JK",
-        "holderName": "Doni Mora",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-15",
-        "filedAt": "2026-06-17T14:39:06",
-        "amount": 99600,
-        "price": 625,
-        "value": 62250000,
-        "pctBefore": 0.041,
-        "pctAfter": 0.04,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-17062026-9332-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [],
-    "priceWindow": [],
-    "abnormalFlowZ": 0,
-    "abnormalVolumeZ": 0,
-    "preDriftPct": 0,
-    "id": "CYBR.JK:2026-06-15:CLUSTER_PATTERN",
-    "pattern": "CLUSTER_PATTERN",
-    "outcomes": [
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": "2026-06-22",
-        "targetDate": "2026-06-29",
-        "endDate": "2026-06-29",
-        "elapsedDays": 7,
-        "startClose": 655,
-        "endClose": 610,
-        "issuerPct": -6.870229007633588,
-        "benchmarkPct": -4.837583725838642,
-        "excessPp": -2.032645281794946,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": "2026-06-22",
-        "targetDate": "2026-07-22",
-        "endDate": "2026-07-22",
-        "elapsedDays": 30,
-        "startClose": 655,
-        "endClose": 575,
-        "issuerPct": -12.213740458015266,
-        "benchmarkPct": 3.560520477578561,
-        "excessPp": -15.774260935593826,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": "2026-06-22",
-        "targetDate": "2026-08-21",
-        "endDate": "2026-08-21",
-        "elapsedDays": 60,
-        "startClose": 655,
-        "endClose": 550,
-        "issuerPct": -16.030534351145036,
-        "benchmarkPct": 6.686622993808744,
-        "excessPp": -22.71715734495378,
         "adjustmentBasis": "unverified"
       }
     ]
@@ -16723,7 +16475,7 @@
     "abnormalFlowZ": 458632107.9915626,
     "abnormalVolumeZ": 14619236.476460272,
     "preDriftPct": 0,
-    "id": "CYBR.JK:2026-07-03:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-07-03:STEALTH_ACCUMULATION:1cdfad2b",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -17079,7 +16831,7 @@
     "abnormalFlowZ": 441022459.9409677,
     "abnormalVolumeZ": 15000890.32780251,
     "preDriftPct": 0,
-    "id": "CYBR.JK:2026-07-10:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-07-10:STEALTH_ACCUMULATION:057d949a",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -17471,7 +17223,7 @@
     "abnormalFlowZ": 378623980.9134693,
     "abnormalVolumeZ": 15736881.154728182,
     "preDriftPct": 0,
-    "id": "CYBR.JK:2026-07-15:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-07-15:STEALTH_ACCUMULATION:bb5b2e8f",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -18113,7 +17865,7 @@
     "abnormalFlowZ": 590618994.1989168,
     "abnormalVolumeZ": 15545741.715005172,
     "preDriftPct": -18.746517833654966,
-    "id": "CYBR.JK:2026-07-31:INSIDER_CONTRA_BUY",
+    "id": "CYBR.JK:buy:2026-07-31:INSIDER_CONTRA_BUY:5d115569",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -18755,7 +18507,7 @@
     "abnormalFlowZ": 590618994.1989168,
     "abnormalVolumeZ": 15545741.715005172,
     "preDriftPct": -18.746517833654966,
-    "id": "CYBR.JK:2026-07-31:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-07-31:STEALTH_ACCUMULATION:5d115569",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -19281,7 +19033,7 @@
     "abnormalFlowZ": 2.8837579176422734,
     "abnormalVolumeZ": 0.6539730328817867,
     "preDriftPct": -6.716891080626253,
-    "id": "CYBR.JK:2026-08-11:INSIDER_CONTRA_BUY",
+    "id": "CYBR.JK:buy:2026-08-11:INSIDER_CONTRA_BUY:743818c2",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -19807,7 +19559,7 @@
     "abnormalFlowZ": 2.8837579176422734,
     "abnormalVolumeZ": 0.6539730328817867,
     "preDriftPct": -6.716891080626253,
-    "id": "CYBR.JK:2026-08-11:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-08-11:STEALTH_ACCUMULATION:743818c2",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -20316,7 +20068,7 @@
     "abnormalFlowZ": 2.518061395443278,
     "abnormalVolumeZ": 0.2379871953829198,
     "preDriftPct": -8.080671550417126,
-    "id": "CYBR.JK:2026-08-26:INSIDER_CONTRA_BUY",
+    "id": "CYBR.JK:buy:2026-08-26:INSIDER_CONTRA_BUY:326724d7",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -20825,7 +20577,7 @@
     "abnormalFlowZ": 2.518061395443278,
     "abnormalVolumeZ": 0.2379871953829198,
     "preDriftPct": -8.080671550417126,
-    "id": "CYBR.JK:2026-08-26:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-08-26:STEALTH_ACCUMULATION:326724d7",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -21375,7 +21127,7 @@
     "abnormalFlowZ": 1.0878597210664702,
     "abnormalVolumeZ": 0.38863433978756556,
     "preDriftPct": -10.890810425422107,
-    "id": "CYBR.JK:2026-09-08:INSIDER_CONTRA_BUY",
+    "id": "CYBR.JK:buy:2026-09-08:INSIDER_CONTRA_BUY:8d432dcf",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -21925,7 +21677,7 @@
     "abnormalFlowZ": 1.0878597210664702,
     "abnormalVolumeZ": 0.38863433978756556,
     "preDriftPct": -10.890810425422107,
-    "id": "CYBR.JK:2026-09-08:STEALTH_ACCUMULATION",
+    "id": "CYBR.JK:buy:2026-09-08:STEALTH_ACCUMULATION:8d432dcf",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -22343,7 +22095,7 @@
     "abnormalFlowZ": 0.3630003666314557,
     "abnormalVolumeZ": 0.17417946722538688,
     "preDriftPct": -8.324466157483547,
-    "id": "CYBR.JK:2026-09-14:INSIDER_CONTRA_BUY",
+    "id": "CYBR.JK:buy:2026-09-14:INSIDER_CONTRA_BUY:593f8d60",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -22392,6 +22144,254 @@
         "issuerPct": null,
         "benchmarkPct": null,
         "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "CYBR.JK",
+    "direction": "distribute",
+    "anchorDate": "2026-06-02",
+    "windowStart": "2026-05-03",
+    "windowEnd": "2026-06-02",
+    "holders": [
+      "Andri Hutama Putra",
+      "Doni Mora",
+      "Mb Investment Management"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Andri Hutama Putra",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-02",
+        "filedAt": "2026-06-16T10:13:51",
+        "amount": 901200,
+        "price": 598.924,
+        "value": 539750000,
+        "pctBefore": 0.251,
+        "pctAfter": 0.244,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-16062026-6307-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Doni Mora",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-02",
+        "filedAt": "2026-06-03T16:06:21",
+        "amount": 150000,
+        "price": 600,
+        "value": 90000000,
+        "pctBefore": 0.043,
+        "pctAfter": 0.041,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-03062026-8225-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Mb Investment Management",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-02",
+        "filedAt": "2026-06-04T15:47:52",
+        "amount": 4200,
+        "price": 610,
+        "value": 2562000,
+        "pctBefore": 26.243,
+        "pctAfter": 26.243,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-04062026-2815-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [],
+    "priceWindow": [],
+    "abnormalFlowZ": 0,
+    "abnormalVolumeZ": 0,
+    "preDriftPct": 0,
+    "id": "CYBR.JK:sell:2026-06-02:CLUSTER_PATTERN:0c9d6c35",
+    "pattern": "CLUSTER_PATTERN",
+    "outcomes": [
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "CYBR.JK",
+    "direction": "distribute",
+    "anchorDate": "2026-06-15",
+    "windowStart": "2026-05-11",
+    "windowEnd": "2026-06-15",
+    "holders": [
+      "Andri Hutama Putra",
+      "Doni Mora",
+      "Inv Management",
+      "Mb Investment Management"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Inv Management",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-10",
+        "filedAt": "2026-06-17T14:47:11",
+        "amount": 10000000,
+        "price": 460,
+        "value": 4600000000,
+        "pctBefore": 38.7,
+        "pctAfter": 38.628,
+        "clusterHint": "cluster-sell",
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-17062026-0050-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Mb Investment Management",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-11",
+        "filedAt": "2026-06-16T09:51:17",
+        "amount": 200000,
+        "price": 600,
+        "value": 120000000,
+        "pctBefore": 26.243,
+        "pctAfter": 26.238,
+        "clusterHint": "cluster-sell",
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-16062026-4944-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Andri Hutama Putra",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-15",
+        "filedAt": "2026-07-13T18:08:49",
+        "amount": 835300,
+        "price": 623.974,
+        "value": 521205500,
+        "pctBefore": 0.244,
+        "pctAfter": 0.238,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-13072026-7959-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "CYBR.JK",
+        "holderName": "Doni Mora",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-15",
+        "filedAt": "2026-06-17T14:39:06",
+        "amount": 99600,
+        "price": 625,
+        "value": 62250000,
+        "pctBefore": 0.041,
+        "pctAfter": 0.04,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-17062026-9332-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [],
+    "priceWindow": [],
+    "abnormalFlowZ": 0,
+    "abnormalVolumeZ": 0,
+    "preDriftPct": 0,
+    "id": "CYBR.JK:sell:2026-06-15:CLUSTER_PATTERN:7a7570b6",
+    "pattern": "CLUSTER_PATTERN",
+    "outcomes": [
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": "2026-06-22",
+        "targetDate": "2026-06-29",
+        "endDate": "2026-06-29",
+        "elapsedDays": 7,
+        "startClose": 655,
+        "endClose": 610,
+        "issuerPct": -6.870229007633588,
+        "benchmarkPct": -4.837583725838642,
+        "excessPp": -2.032645281794946,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": "2026-06-22",
+        "targetDate": "2026-07-22",
+        "endDate": "2026-07-22",
+        "elapsedDays": 30,
+        "startClose": 655,
+        "endClose": 575,
+        "issuerPct": -12.213740458015266,
+        "benchmarkPct": 3.560520477578561,
+        "excessPp": -15.774260935593826,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": "2026-06-22",
+        "targetDate": "2026-08-21",
+        "endDate": "2026-08-21",
+        "elapsedDays": 60,
+        "startClose": 655,
+        "endClose": 550,
+        "issuerPct": -16.030534351145036,
+        "benchmarkPct": 6.686622993808744,
+        "excessPp": -22.71715734495378,
         "adjustmentBasis": "unverified"
       }
     ]
@@ -22701,7 +22701,7 @@
     "abnormalFlowZ": 528424473.8972076,
     "abnormalVolumeZ": 2196955.517334413,
     "preDriftPct": 0,
-    "id": "DATA.JK:2026-07-13:STEALTH_ACCUMULATION",
+    "id": "DATA.JK:buy:2026-07-13:STEALTH_ACCUMULATION:c532ce7c",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -23059,7 +23059,7 @@
     "abnormalFlowZ": 46973188.99231081,
     "abnormalVolumeZ": 51709442.027519226,
     "preDriftPct": 0,
-    "id": "DEWI.JK:2026-07-13:STEALTH_ACCUMULATION",
+    "id": "DEWI.JK:buy:2026-07-13:STEALTH_ACCUMULATION:ad991c37",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -23108,137 +23108,6 @@
         "issuerPct": 40.17094017094017,
         "benchmarkPct": 8.339651815996524,
         "excessPp": 31.831288354943645,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "DILD.JK",
-    "direction": "distribute",
-    "anchorDate": "2026-06-09",
-    "windowStart": "2026-04-26",
-    "windowEnd": "2026-06-09",
-    "holders": [
-      "Bina Yatra Sentosa",
-      "Cgs International Securities Singapore",
-      "Graha Intan Mandiri"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "DILD.JK",
-        "holderName": "Cgs International Securities Singapore",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-05-26",
-        "filedAt": "2026-06-02T08:57:46",
-        "amount": 500000000,
-        "price": 123,
-        "value": 61500000000,
-        "pctBefore": 15.02,
-        "pctAfter": 10.2,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-02062026-1199-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "DILD.JK",
-        "holderName": "Cgs International Securities Singapore",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-02",
-        "filedAt": "2026-06-03T17:50:16",
-        "amount": 470000000,
-        "price": 123,
-        "value": 57810000000,
-        "pctBefore": 10.2,
-        "pctAfter": 5.66,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-03062026-6748-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "DILD.JK",
-        "holderName": "Bina Yatra Sentosa",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-09",
-        "filedAt": "2026-07-09T16:01:28",
-        "amount": 1240489375,
-        "price": 115.576,
-        "value": 143370626450,
-        "pctBefore": 11.97,
-        "pctAfter": 0,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-09072026-2172-00.pdf-0.pdf"
-      },
-      {
-        "symbol": "DILD.JK",
-        "holderName": "Graha Intan Mandiri",
-        "holderType": "insider",
-        "txnType": "sell",
-        "txnDate": "2026-06-09",
-        "filedAt": "2026-07-09T14:27:23",
-        "amount": 260000000,
-        "price": 105,
-        "value": 27300000000,
-        "pctBefore": 2.52,
-        "pctAfter": 0.01,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-09072026-5290-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [],
-    "priceWindow": [],
-    "abnormalFlowZ": 0,
-    "abnormalVolumeZ": 0,
-    "preDriftPct": 0,
-    "id": "DILD.JK:2026-06-09:CLUSTER_PATTERN",
-    "pattern": "CLUSTER_PATTERN",
-    "outcomes": [
-      {
-        "status": "unavailable",
-        "reason": "No common start session within seven days of the anchor.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": null,
-        "targetDate": null,
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": null,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "unavailable",
-        "reason": "No common start session within seven days of the anchor.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": null,
-        "targetDate": null,
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": null,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "unavailable",
-        "reason": "No common start session within seven days of the anchor.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": null,
-        "targetDate": null,
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": null,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
         "adjustmentBasis": "unverified"
       }
     ]
@@ -23633,7 +23502,7 @@
     "abnormalFlowZ": 4.872566353457722,
     "abnormalVolumeZ": 2.989165784377571,
     "preDriftPct": -0.9233792527494948,
-    "id": "DILD.JK:2026-08-26:STEALTH_ACCUMULATION",
+    "id": "DILD.JK:buy:2026-08-26:STEALTH_ACCUMULATION:4265ba03",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -23678,6 +23547,137 @@
         "endDate": null,
         "elapsedDays": null,
         "startClose": 117,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "DILD.JK",
+    "direction": "distribute",
+    "anchorDate": "2026-06-09",
+    "windowStart": "2026-04-26",
+    "windowEnd": "2026-06-09",
+    "holders": [
+      "Bina Yatra Sentosa",
+      "Cgs International Securities Singapore",
+      "Graha Intan Mandiri"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "DILD.JK",
+        "holderName": "Cgs International Securities Singapore",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-05-26",
+        "filedAt": "2026-06-02T08:57:46",
+        "amount": 500000000,
+        "price": 123,
+        "value": 61500000000,
+        "pctBefore": 15.02,
+        "pctAfter": 10.2,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-02062026-1199-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "DILD.JK",
+        "holderName": "Cgs International Securities Singapore",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-02",
+        "filedAt": "2026-06-03T17:50:16",
+        "amount": 470000000,
+        "price": 123,
+        "value": 57810000000,
+        "pctBefore": 10.2,
+        "pctAfter": 5.66,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-03062026-6748-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "DILD.JK",
+        "holderName": "Bina Yatra Sentosa",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-09",
+        "filedAt": "2026-07-09T16:01:28",
+        "amount": 1240489375,
+        "price": 115.576,
+        "value": 143370626450,
+        "pctBefore": 11.97,
+        "pctAfter": 0,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-09072026-2172-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "DILD.JK",
+        "holderName": "Graha Intan Mandiri",
+        "holderType": "insider",
+        "txnType": "sell",
+        "txnDate": "2026-06-09",
+        "filedAt": "2026-07-09T14:27:23",
+        "amount": 260000000,
+        "price": 105,
+        "value": 27300000000,
+        "pctBefore": 2.52,
+        "pctAfter": 0.01,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-09072026-5290-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [],
+    "priceWindow": [],
+    "abnormalFlowZ": 0,
+    "abnormalVolumeZ": 0,
+    "preDriftPct": 0,
+    "id": "DILD.JK:sell:2026-06-09:CLUSTER_PATTERN:547c16e8",
+    "pattern": "CLUSTER_PATTERN",
+    "outcomes": [
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
         "endClose": null,
         "issuerPct": null,
         "benchmarkPct": null,
@@ -24042,7 +24042,7 @@
     "abnormalFlowZ": 1.3545195497503226,
     "abnormalVolumeZ": 9.016930212824096,
     "preDriftPct": 2.5029252364139456,
-    "id": "DYAN.JK:2026-08-31:STEALTH_ACCUMULATION",
+    "id": "DYAN.JK:buy:2026-08-31:STEALTH_ACCUMULATION:723b5fa0",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -24494,7 +24494,7 @@
     "abnormalFlowZ": 1.1381737219888457,
     "abnormalVolumeZ": -1.9034480646722776,
     "preDriftPct": -10.177668809570758,
-    "id": "EMMI.JK:2026-09-09:INSIDER_CONTRA_BUY",
+    "id": "EMMI.JK:buy:2026-09-09:INSIDER_CONTRA_BUY:6d71317b",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -24946,7 +24946,7 @@
     "abnormalFlowZ": 1.1381737219888457,
     "abnormalVolumeZ": -1.9034480646722776,
     "preDriftPct": -10.177668809570758,
-    "id": "EMMI.JK:2026-09-09:STEALTH_ACCUMULATION",
+    "id": "EMMI.JK:buy:2026-09-09:STEALTH_ACCUMULATION:6d71317b",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -25423,7 +25423,7 @@
     "abnormalFlowZ": -4.639466025829195,
     "abnormalVolumeZ": 1.2680132592472602,
     "preDriftPct": -17.698296814262697,
-    "id": "ENRG.JK:2026-08-13:INSIDER_CONTRA_BUY",
+    "id": "ENRG.JK:buy:2026-08-13:INSIDER_CONTRA_BUY:02506b6a",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -25472,6 +25472,960 @@
         "issuerPct": null,
         "benchmarkPct": null,
         "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "EPAC.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-07-23",
+    "windowStart": "2026-06-23",
+    "windowEnd": "2026-07-23",
+    "holders": [
+      "Triple Berkah Bersama"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "EPAC.JK",
+        "holderName": "Triple Berkah Bersama",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-07-23",
+        "filedAt": "2026-07-23T12:52:16",
+        "amount": 600004300,
+        "price": 12,
+        "value": 7200051600,
+        "pctBefore": 20.678,
+        "pctAfter": 38.841,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-23072026-1735-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-23",
+        "netForeignInflow": 330240300,
+        "foreignBuyIdr": 653056600,
+        "foreignSellIdr": 322816300
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-24",
+        "netForeignInflow": -379756000,
+        "foreignBuyIdr": 1756417300,
+        "foreignSellIdr": 2136173300
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-25",
+        "netForeignInflow": 133502700,
+        "foreignBuyIdr": 371763300,
+        "foreignSellIdr": 238260600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-26",
+        "netForeignInflow": 517202300,
+        "foreignBuyIdr": 1087570900,
+        "foreignSellIdr": 570368600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-29",
+        "netForeignInflow": -701401400,
+        "foreignBuyIdr": 6048267500,
+        "foreignSellIdr": 6749668900
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-30",
+        "netForeignInflow": -167445000,
+        "foreignBuyIdr": 4147237400,
+        "foreignSellIdr": 4314682400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-01",
+        "netForeignInflow": 467008000,
+        "foreignBuyIdr": 1333775200,
+        "foreignSellIdr": 866767200
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-02",
+        "netForeignInflow": 330926700,
+        "foreignBuyIdr": 1143846500,
+        "foreignSellIdr": 812919800
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-03",
+        "netForeignInflow": -184106300,
+        "foreignBuyIdr": 1337103000,
+        "foreignSellIdr": 1521209300
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-06",
+        "netForeignInflow": 704784900,
+        "foreignBuyIdr": 3631255800,
+        "foreignSellIdr": 2926470900
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-07",
+        "netForeignInflow": -651033700,
+        "foreignBuyIdr": 1825234800,
+        "foreignSellIdr": 2476268500
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-08",
+        "netForeignInflow": -52081500,
+        "foreignBuyIdr": 1539047100,
+        "foreignSellIdr": 1591128600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-09",
+        "netForeignInflow": 120030200,
+        "foreignBuyIdr": 2272473800,
+        "foreignSellIdr": 2152443600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-10",
+        "netForeignInflow": 261574000,
+        "foreignBuyIdr": 1225415500,
+        "foreignSellIdr": 963841500
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-13",
+        "netForeignInflow": 851236800,
+        "foreignBuyIdr": 2097830400,
+        "foreignSellIdr": 1246593600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-14",
+        "netForeignInflow": -1790175200,
+        "foreignBuyIdr": 1634564400,
+        "foreignSellIdr": 3424739600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-15",
+        "netForeignInflow": -69951300,
+        "foreignBuyIdr": 76997100,
+        "foreignSellIdr": 146948400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-16",
+        "netForeignInflow": -18139000,
+        "foreignBuyIdr": 596900400,
+        "foreignSellIdr": 615039400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-17",
+        "netForeignInflow": 529244000,
+        "foreignBuyIdr": 6220949900,
+        "foreignSellIdr": 5691705900
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-20",
+        "netForeignInflow": 2185061100,
+        "foreignBuyIdr": 7093157700,
+        "foreignSellIdr": 4908096600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-21",
+        "netForeignInflow": -1690977200,
+        "foreignBuyIdr": 3299015000,
+        "foreignSellIdr": 4989992200
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-22",
+        "netForeignInflow": -73463200,
+        "foreignBuyIdr": 785275200,
+        "foreignSellIdr": 858738400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-23",
+        "netForeignInflow": -888046100,
+        "foreignBuyIdr": 1641394200,
+        "foreignSellIdr": 2529440300
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-23",
+        "open": 68,
+        "high": 74,
+        "low": 66,
+        "close": 70,
+        "volume": 141357400,
+        "marketCap": 231238000000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-24",
+        "open": 70,
+        "high": 76,
+        "low": 64,
+        "close": 64,
+        "volume": 248574100,
+        "marketCap": 211417600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-25",
+        "open": 69,
+        "high": 71,
+        "low": 63,
+        "close": 68,
+        "volume": 87261200,
+        "marketCap": 224631200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-26",
+        "open": 68,
+        "high": 76,
+        "low": 68,
+        "close": 73,
+        "volume": 158031900,
+        "marketCap": 241148200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-29",
+        "open": 74,
+        "high": 85,
+        "low": 70,
+        "close": 81,
+        "volume": 969232800,
+        "marketCap": 267575400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-30",
+        "open": 81,
+        "high": 85,
+        "low": 69,
+        "close": 69,
+        "volume": 856849100,
+        "marketCap": 227934600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-01",
+        "open": 70,
+        "high": 73,
+        "low": 67,
+        "close": 69,
+        "volume": 148828700,
+        "marketCap": 227934600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-02",
+        "open": 70,
+        "high": 71,
+        "low": 65,
+        "close": 71,
+        "volume": 105019900,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-03",
+        "open": 72,
+        "high": 75,
+        "low": 68,
+        "close": 73,
+        "volume": 190552200,
+        "marketCap": 241148200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-06",
+        "open": 73,
+        "high": 81,
+        "low": 68,
+        "close": 78,
+        "volume": 1614650900,
+        "marketCap": 257665200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-07",
+        "open": 78,
+        "high": 80,
+        "low": 72,
+        "close": 74,
+        "volume": 871273600,
+        "marketCap": 244451600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-08",
+        "open": 74,
+        "high": 78,
+        "low": 72,
+        "close": 74,
+        "volume": 414484700,
+        "marketCap": 244451600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-09",
+        "open": 74,
+        "high": 78,
+        "low": 71,
+        "close": 71,
+        "volume": 469767900,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-10",
+        "open": 71,
+        "high": 74,
+        "low": 70,
+        "close": 73,
+        "volume": 141000300,
+        "marketCap": 241148200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-13",
+        "open": 73,
+        "high": 75,
+        "low": 71,
+        "close": 72,
+        "volume": 184945200,
+        "marketCap": 237844800000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-14",
+        "open": 72,
+        "high": 77,
+        "low": 69,
+        "close": 71,
+        "volume": 467515700,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-15",
+        "open": 71,
+        "high": 71,
+        "low": 68,
+        "close": 69,
+        "volume": 69696400,
+        "marketCap": 227934600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-16",
+        "open": 69,
+        "high": 70,
+        "low": 66,
+        "close": 70,
+        "volume": 83083900,
+        "marketCap": 231238000000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-17",
+        "open": 69,
+        "high": 75,
+        "low": 68,
+        "close": 68,
+        "volume": 2129403100,
+        "marketCap": 224631200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-20",
+        "open": 69,
+        "high": 74,
+        "low": 68,
+        "close": 71,
+        "volume": 1051303900,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-21",
+        "open": 71,
+        "high": 73,
+        "low": 67,
+        "close": 68,
+        "volume": 868828600,
+        "marketCap": 224631200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-22",
+        "open": 68,
+        "high": 69,
+        "low": 66,
+        "close": 66,
+        "volume": 109285800,
+        "marketCap": 218024400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-23",
+        "open": 66,
+        "high": 67,
+        "low": 63,
+        "close": 65,
+        "volume": 177446800,
+        "marketCap": 214721000000
+      }
+    ],
+    "abnormalFlowZ": 1111847686.3233202,
+    "abnormalVolumeZ": 248010167.21505702,
+    "preDriftPct": -10.649926827465409,
+    "id": "EPAC.JK:buy:2026-07-23:INSIDER_CONTRA_BUY:7b02dee0",
+    "pattern": "INSIDER_CONTRA_BUY",
+    "outcomes": [
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": "2026-07-23",
+        "targetDate": "2026-07-30",
+        "endDate": "2026-07-30",
+        "elapsedDays": 7,
+        "startClose": 65,
+        "endClose": 61,
+        "issuerPct": -6.153846153846154,
+        "benchmarkPct": -2.0418313524068634,
+        "excessPp": -4.11201480143929,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": "2026-07-23",
+        "targetDate": "2026-08-22",
+        "endDate": "2026-08-24",
+        "elapsedDays": 32,
+        "startClose": 65,
+        "endClose": 57,
+        "issuerPct": -12.307692307692308,
+        "benchmarkPct": 2.9508602189187627,
+        "excessPp": -15.258552526611071,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": "2026-07-23",
+        "targetDate": "2026-09-21",
+        "endDate": "2026-09-21",
+        "elapsedDays": 60,
+        "startClose": 65,
+        "endClose": 50,
+        "issuerPct": -23.076923076923077,
+        "benchmarkPct": 1.0991541034162842,
+        "excessPp": -24.176077180339362,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "EPAC.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-07-23",
+    "windowStart": "2026-06-23",
+    "windowEnd": "2026-07-23",
+    "holders": [
+      "Triple Berkah Bersama"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "EPAC.JK",
+        "holderName": "Triple Berkah Bersama",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-07-23",
+        "filedAt": "2026-07-23T12:52:16",
+        "amount": 600004300,
+        "price": 12,
+        "value": 7200051600,
+        "pctBefore": 20.678,
+        "pctAfter": 38.841,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-23072026-1735-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-23",
+        "netForeignInflow": 330240300,
+        "foreignBuyIdr": 653056600,
+        "foreignSellIdr": 322816300
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-24",
+        "netForeignInflow": -379756000,
+        "foreignBuyIdr": 1756417300,
+        "foreignSellIdr": 2136173300
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-25",
+        "netForeignInflow": 133502700,
+        "foreignBuyIdr": 371763300,
+        "foreignSellIdr": 238260600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-26",
+        "netForeignInflow": 517202300,
+        "foreignBuyIdr": 1087570900,
+        "foreignSellIdr": 570368600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-29",
+        "netForeignInflow": -701401400,
+        "foreignBuyIdr": 6048267500,
+        "foreignSellIdr": 6749668900
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-30",
+        "netForeignInflow": -167445000,
+        "foreignBuyIdr": 4147237400,
+        "foreignSellIdr": 4314682400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-01",
+        "netForeignInflow": 467008000,
+        "foreignBuyIdr": 1333775200,
+        "foreignSellIdr": 866767200
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-02",
+        "netForeignInflow": 330926700,
+        "foreignBuyIdr": 1143846500,
+        "foreignSellIdr": 812919800
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-03",
+        "netForeignInflow": -184106300,
+        "foreignBuyIdr": 1337103000,
+        "foreignSellIdr": 1521209300
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-06",
+        "netForeignInflow": 704784900,
+        "foreignBuyIdr": 3631255800,
+        "foreignSellIdr": 2926470900
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-07",
+        "netForeignInflow": -651033700,
+        "foreignBuyIdr": 1825234800,
+        "foreignSellIdr": 2476268500
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-08",
+        "netForeignInflow": -52081500,
+        "foreignBuyIdr": 1539047100,
+        "foreignSellIdr": 1591128600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-09",
+        "netForeignInflow": 120030200,
+        "foreignBuyIdr": 2272473800,
+        "foreignSellIdr": 2152443600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-10",
+        "netForeignInflow": 261574000,
+        "foreignBuyIdr": 1225415500,
+        "foreignSellIdr": 963841500
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-13",
+        "netForeignInflow": 851236800,
+        "foreignBuyIdr": 2097830400,
+        "foreignSellIdr": 1246593600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-14",
+        "netForeignInflow": -1790175200,
+        "foreignBuyIdr": 1634564400,
+        "foreignSellIdr": 3424739600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-15",
+        "netForeignInflow": -69951300,
+        "foreignBuyIdr": 76997100,
+        "foreignSellIdr": 146948400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-16",
+        "netForeignInflow": -18139000,
+        "foreignBuyIdr": 596900400,
+        "foreignSellIdr": 615039400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-17",
+        "netForeignInflow": 529244000,
+        "foreignBuyIdr": 6220949900,
+        "foreignSellIdr": 5691705900
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-20",
+        "netForeignInflow": 2185061100,
+        "foreignBuyIdr": 7093157700,
+        "foreignSellIdr": 4908096600
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-21",
+        "netForeignInflow": -1690977200,
+        "foreignBuyIdr": 3299015000,
+        "foreignSellIdr": 4989992200
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-22",
+        "netForeignInflow": -73463200,
+        "foreignBuyIdr": 785275200,
+        "foreignSellIdr": 858738400
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-23",
+        "netForeignInflow": -888046100,
+        "foreignBuyIdr": 1641394200,
+        "foreignSellIdr": 2529440300
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-23",
+        "open": 68,
+        "high": 74,
+        "low": 66,
+        "close": 70,
+        "volume": 141357400,
+        "marketCap": 231238000000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-24",
+        "open": 70,
+        "high": 76,
+        "low": 64,
+        "close": 64,
+        "volume": 248574100,
+        "marketCap": 211417600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-25",
+        "open": 69,
+        "high": 71,
+        "low": 63,
+        "close": 68,
+        "volume": 87261200,
+        "marketCap": 224631200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-26",
+        "open": 68,
+        "high": 76,
+        "low": 68,
+        "close": 73,
+        "volume": 158031900,
+        "marketCap": 241148200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-29",
+        "open": 74,
+        "high": 85,
+        "low": 70,
+        "close": 81,
+        "volume": 969232800,
+        "marketCap": 267575400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-06-30",
+        "open": 81,
+        "high": 85,
+        "low": 69,
+        "close": 69,
+        "volume": 856849100,
+        "marketCap": 227934600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-01",
+        "open": 70,
+        "high": 73,
+        "low": 67,
+        "close": 69,
+        "volume": 148828700,
+        "marketCap": 227934600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-02",
+        "open": 70,
+        "high": 71,
+        "low": 65,
+        "close": 71,
+        "volume": 105019900,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-03",
+        "open": 72,
+        "high": 75,
+        "low": 68,
+        "close": 73,
+        "volume": 190552200,
+        "marketCap": 241148200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-06",
+        "open": 73,
+        "high": 81,
+        "low": 68,
+        "close": 78,
+        "volume": 1614650900,
+        "marketCap": 257665200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-07",
+        "open": 78,
+        "high": 80,
+        "low": 72,
+        "close": 74,
+        "volume": 871273600,
+        "marketCap": 244451600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-08",
+        "open": 74,
+        "high": 78,
+        "low": 72,
+        "close": 74,
+        "volume": 414484700,
+        "marketCap": 244451600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-09",
+        "open": 74,
+        "high": 78,
+        "low": 71,
+        "close": 71,
+        "volume": 469767900,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-10",
+        "open": 71,
+        "high": 74,
+        "low": 70,
+        "close": 73,
+        "volume": 141000300,
+        "marketCap": 241148200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-13",
+        "open": 73,
+        "high": 75,
+        "low": 71,
+        "close": 72,
+        "volume": 184945200,
+        "marketCap": 237844800000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-14",
+        "open": 72,
+        "high": 77,
+        "low": 69,
+        "close": 71,
+        "volume": 467515700,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-15",
+        "open": 71,
+        "high": 71,
+        "low": 68,
+        "close": 69,
+        "volume": 69696400,
+        "marketCap": 227934600000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-16",
+        "open": 69,
+        "high": 70,
+        "low": 66,
+        "close": 70,
+        "volume": 83083900,
+        "marketCap": 231238000000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-17",
+        "open": 69,
+        "high": 75,
+        "low": 68,
+        "close": 68,
+        "volume": 2129403100,
+        "marketCap": 224631200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-20",
+        "open": 69,
+        "high": 74,
+        "low": 68,
+        "close": 71,
+        "volume": 1051303900,
+        "marketCap": 234541400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-21",
+        "open": 71,
+        "high": 73,
+        "low": 67,
+        "close": 68,
+        "volume": 868828600,
+        "marketCap": 224631200000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-22",
+        "open": 68,
+        "high": 69,
+        "low": 66,
+        "close": 66,
+        "volume": 109285800,
+        "marketCap": 218024400000
+      },
+      {
+        "symbol": "EPAC.JK",
+        "date": "2026-07-23",
+        "open": 66,
+        "high": 67,
+        "low": 63,
+        "close": 65,
+        "volume": 177446800,
+        "marketCap": 214721000000
+      }
+    ],
+    "abnormalFlowZ": 1111847686.3233202,
+    "abnormalVolumeZ": 248010167.21505702,
+    "preDriftPct": -10.649926827465409,
+    "id": "EPAC.JK:buy:2026-07-23:STEALTH_ACCUMULATION:7b02dee0",
+    "pattern": "STEALTH_ACCUMULATION",
+    "outcomes": [
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": "2026-07-23",
+        "targetDate": "2026-07-30",
+        "endDate": "2026-07-30",
+        "elapsedDays": 7,
+        "startClose": 65,
+        "endClose": 61,
+        "issuerPct": -6.153846153846154,
+        "benchmarkPct": -2.0418313524068634,
+        "excessPp": -4.11201480143929,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": "2026-07-23",
+        "targetDate": "2026-08-22",
+        "endDate": "2026-08-24",
+        "elapsedDays": 32,
+        "startClose": 65,
+        "endClose": 57,
+        "issuerPct": -12.307692307692308,
+        "benchmarkPct": 2.9508602189187627,
+        "excessPp": -15.258552526611071,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": "2026-07-23",
+        "targetDate": "2026-09-21",
+        "endDate": "2026-09-21",
+        "elapsedDays": 60,
+        "startClose": 65,
+        "endClose": 50,
+        "issuerPct": -23.076923076923077,
+        "benchmarkPct": 1.0991541034162842,
+        "excessPp": -24.176077180339362,
         "adjustmentBasis": "unverified"
       }
     ]
@@ -25949,962 +26903,8 @@
     "abnormalFlowZ": -81194763.86921515,
     "abnormalVolumeZ": 328624069.76482755,
     "preDriftPct": 0,
-    "id": "EPAC.JK:2026-07-23:CLUSTER_PATTERN",
+    "id": "EPAC.JK:sell:2026-07-23:CLUSTER_PATTERN:e90e851b",
     "pattern": "CLUSTER_PATTERN",
-    "outcomes": [
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": "2026-07-23",
-        "targetDate": "2026-07-30",
-        "endDate": "2026-07-30",
-        "elapsedDays": 7,
-        "startClose": 65,
-        "endClose": 61,
-        "issuerPct": -6.153846153846154,
-        "benchmarkPct": -2.0418313524068634,
-        "excessPp": -4.11201480143929,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": "2026-07-23",
-        "targetDate": "2026-08-22",
-        "endDate": "2026-08-24",
-        "elapsedDays": 32,
-        "startClose": 65,
-        "endClose": 57,
-        "issuerPct": -12.307692307692308,
-        "benchmarkPct": 2.9508602189187627,
-        "excessPp": -15.258552526611071,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": "2026-07-23",
-        "targetDate": "2026-09-21",
-        "endDate": "2026-09-21",
-        "elapsedDays": 60,
-        "startClose": 65,
-        "endClose": 50,
-        "issuerPct": -23.076923076923077,
-        "benchmarkPct": 1.0991541034162842,
-        "excessPp": -24.176077180339362,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "EPAC.JK",
-    "direction": "accumulate",
-    "anchorDate": "2026-07-23",
-    "windowStart": "2026-06-23",
-    "windowEnd": "2026-07-23",
-    "holders": [
-      "Triple Berkah Bersama"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "EPAC.JK",
-        "holderName": "Triple Berkah Bersama",
-        "holderType": "insider",
-        "txnType": "buy",
-        "txnDate": "2026-07-23",
-        "filedAt": "2026-07-23T12:52:16",
-        "amount": 600004300,
-        "price": 12,
-        "value": 7200051600,
-        "pctBefore": 20.678,
-        "pctAfter": 38.841,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-23072026-1735-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-23",
-        "netForeignInflow": 330240300,
-        "foreignBuyIdr": 653056600,
-        "foreignSellIdr": 322816300
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-24",
-        "netForeignInflow": -379756000,
-        "foreignBuyIdr": 1756417300,
-        "foreignSellIdr": 2136173300
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-25",
-        "netForeignInflow": 133502700,
-        "foreignBuyIdr": 371763300,
-        "foreignSellIdr": 238260600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-26",
-        "netForeignInflow": 517202300,
-        "foreignBuyIdr": 1087570900,
-        "foreignSellIdr": 570368600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-29",
-        "netForeignInflow": -701401400,
-        "foreignBuyIdr": 6048267500,
-        "foreignSellIdr": 6749668900
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-30",
-        "netForeignInflow": -167445000,
-        "foreignBuyIdr": 4147237400,
-        "foreignSellIdr": 4314682400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-01",
-        "netForeignInflow": 467008000,
-        "foreignBuyIdr": 1333775200,
-        "foreignSellIdr": 866767200
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-02",
-        "netForeignInflow": 330926700,
-        "foreignBuyIdr": 1143846500,
-        "foreignSellIdr": 812919800
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-03",
-        "netForeignInflow": -184106300,
-        "foreignBuyIdr": 1337103000,
-        "foreignSellIdr": 1521209300
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-06",
-        "netForeignInflow": 704784900,
-        "foreignBuyIdr": 3631255800,
-        "foreignSellIdr": 2926470900
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-07",
-        "netForeignInflow": -651033700,
-        "foreignBuyIdr": 1825234800,
-        "foreignSellIdr": 2476268500
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-08",
-        "netForeignInflow": -52081500,
-        "foreignBuyIdr": 1539047100,
-        "foreignSellIdr": 1591128600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-09",
-        "netForeignInflow": 120030200,
-        "foreignBuyIdr": 2272473800,
-        "foreignSellIdr": 2152443600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-10",
-        "netForeignInflow": 261574000,
-        "foreignBuyIdr": 1225415500,
-        "foreignSellIdr": 963841500
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-13",
-        "netForeignInflow": 851236800,
-        "foreignBuyIdr": 2097830400,
-        "foreignSellIdr": 1246593600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-14",
-        "netForeignInflow": -1790175200,
-        "foreignBuyIdr": 1634564400,
-        "foreignSellIdr": 3424739600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-15",
-        "netForeignInflow": -69951300,
-        "foreignBuyIdr": 76997100,
-        "foreignSellIdr": 146948400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-16",
-        "netForeignInflow": -18139000,
-        "foreignBuyIdr": 596900400,
-        "foreignSellIdr": 615039400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-17",
-        "netForeignInflow": 529244000,
-        "foreignBuyIdr": 6220949900,
-        "foreignSellIdr": 5691705900
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-20",
-        "netForeignInflow": 2185061100,
-        "foreignBuyIdr": 7093157700,
-        "foreignSellIdr": 4908096600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-21",
-        "netForeignInflow": -1690977200,
-        "foreignBuyIdr": 3299015000,
-        "foreignSellIdr": 4989992200
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-22",
-        "netForeignInflow": -73463200,
-        "foreignBuyIdr": 785275200,
-        "foreignSellIdr": 858738400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-23",
-        "netForeignInflow": -888046100,
-        "foreignBuyIdr": 1641394200,
-        "foreignSellIdr": 2529440300
-      }
-    ],
-    "priceWindow": [
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-23",
-        "open": 68,
-        "high": 74,
-        "low": 66,
-        "close": 70,
-        "volume": 141357400,
-        "marketCap": 231238000000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-24",
-        "open": 70,
-        "high": 76,
-        "low": 64,
-        "close": 64,
-        "volume": 248574100,
-        "marketCap": 211417600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-25",
-        "open": 69,
-        "high": 71,
-        "low": 63,
-        "close": 68,
-        "volume": 87261200,
-        "marketCap": 224631200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-26",
-        "open": 68,
-        "high": 76,
-        "low": 68,
-        "close": 73,
-        "volume": 158031900,
-        "marketCap": 241148200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-29",
-        "open": 74,
-        "high": 85,
-        "low": 70,
-        "close": 81,
-        "volume": 969232800,
-        "marketCap": 267575400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-30",
-        "open": 81,
-        "high": 85,
-        "low": 69,
-        "close": 69,
-        "volume": 856849100,
-        "marketCap": 227934600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-01",
-        "open": 70,
-        "high": 73,
-        "low": 67,
-        "close": 69,
-        "volume": 148828700,
-        "marketCap": 227934600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-02",
-        "open": 70,
-        "high": 71,
-        "low": 65,
-        "close": 71,
-        "volume": 105019900,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-03",
-        "open": 72,
-        "high": 75,
-        "low": 68,
-        "close": 73,
-        "volume": 190552200,
-        "marketCap": 241148200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-06",
-        "open": 73,
-        "high": 81,
-        "low": 68,
-        "close": 78,
-        "volume": 1614650900,
-        "marketCap": 257665200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-07",
-        "open": 78,
-        "high": 80,
-        "low": 72,
-        "close": 74,
-        "volume": 871273600,
-        "marketCap": 244451600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-08",
-        "open": 74,
-        "high": 78,
-        "low": 72,
-        "close": 74,
-        "volume": 414484700,
-        "marketCap": 244451600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-09",
-        "open": 74,
-        "high": 78,
-        "low": 71,
-        "close": 71,
-        "volume": 469767900,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-10",
-        "open": 71,
-        "high": 74,
-        "low": 70,
-        "close": 73,
-        "volume": 141000300,
-        "marketCap": 241148200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-13",
-        "open": 73,
-        "high": 75,
-        "low": 71,
-        "close": 72,
-        "volume": 184945200,
-        "marketCap": 237844800000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-14",
-        "open": 72,
-        "high": 77,
-        "low": 69,
-        "close": 71,
-        "volume": 467515700,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-15",
-        "open": 71,
-        "high": 71,
-        "low": 68,
-        "close": 69,
-        "volume": 69696400,
-        "marketCap": 227934600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-16",
-        "open": 69,
-        "high": 70,
-        "low": 66,
-        "close": 70,
-        "volume": 83083900,
-        "marketCap": 231238000000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-17",
-        "open": 69,
-        "high": 75,
-        "low": 68,
-        "close": 68,
-        "volume": 2129403100,
-        "marketCap": 224631200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-20",
-        "open": 69,
-        "high": 74,
-        "low": 68,
-        "close": 71,
-        "volume": 1051303900,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-21",
-        "open": 71,
-        "high": 73,
-        "low": 67,
-        "close": 68,
-        "volume": 868828600,
-        "marketCap": 224631200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-22",
-        "open": 68,
-        "high": 69,
-        "low": 66,
-        "close": 66,
-        "volume": 109285800,
-        "marketCap": 218024400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-23",
-        "open": 66,
-        "high": 67,
-        "low": 63,
-        "close": 65,
-        "volume": 177446800,
-        "marketCap": 214721000000
-      }
-    ],
-    "abnormalFlowZ": 1111847686.3233202,
-    "abnormalVolumeZ": 248010167.21505702,
-    "preDriftPct": -10.649926827465409,
-    "id": "EPAC.JK:2026-07-23:INSIDER_CONTRA_BUY",
-    "pattern": "INSIDER_CONTRA_BUY",
-    "outcomes": [
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": "2026-07-23",
-        "targetDate": "2026-07-30",
-        "endDate": "2026-07-30",
-        "elapsedDays": 7,
-        "startClose": 65,
-        "endClose": 61,
-        "issuerPct": -6.153846153846154,
-        "benchmarkPct": -2.0418313524068634,
-        "excessPp": -4.11201480143929,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": "2026-07-23",
-        "targetDate": "2026-08-22",
-        "endDate": "2026-08-24",
-        "elapsedDays": 32,
-        "startClose": 65,
-        "endClose": 57,
-        "issuerPct": -12.307692307692308,
-        "benchmarkPct": 2.9508602189187627,
-        "excessPp": -15.258552526611071,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": "2026-07-23",
-        "targetDate": "2026-09-21",
-        "endDate": "2026-09-21",
-        "elapsedDays": 60,
-        "startClose": 65,
-        "endClose": 50,
-        "issuerPct": -23.076923076923077,
-        "benchmarkPct": 1.0991541034162842,
-        "excessPp": -24.176077180339362,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "EPAC.JK",
-    "direction": "accumulate",
-    "anchorDate": "2026-07-23",
-    "windowStart": "2026-06-23",
-    "windowEnd": "2026-07-23",
-    "holders": [
-      "Triple Berkah Bersama"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "EPAC.JK",
-        "holderName": "Triple Berkah Bersama",
-        "holderType": "insider",
-        "txnType": "buy",
-        "txnDate": "2026-07-23",
-        "filedAt": "2026-07-23T12:52:16",
-        "amount": 600004300,
-        "price": 12,
-        "value": 7200051600,
-        "pctBefore": 20.678,
-        "pctAfter": 38.841,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-23072026-1735-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-23",
-        "netForeignInflow": 330240300,
-        "foreignBuyIdr": 653056600,
-        "foreignSellIdr": 322816300
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-24",
-        "netForeignInflow": -379756000,
-        "foreignBuyIdr": 1756417300,
-        "foreignSellIdr": 2136173300
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-25",
-        "netForeignInflow": 133502700,
-        "foreignBuyIdr": 371763300,
-        "foreignSellIdr": 238260600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-26",
-        "netForeignInflow": 517202300,
-        "foreignBuyIdr": 1087570900,
-        "foreignSellIdr": 570368600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-29",
-        "netForeignInflow": -701401400,
-        "foreignBuyIdr": 6048267500,
-        "foreignSellIdr": 6749668900
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-30",
-        "netForeignInflow": -167445000,
-        "foreignBuyIdr": 4147237400,
-        "foreignSellIdr": 4314682400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-01",
-        "netForeignInflow": 467008000,
-        "foreignBuyIdr": 1333775200,
-        "foreignSellIdr": 866767200
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-02",
-        "netForeignInflow": 330926700,
-        "foreignBuyIdr": 1143846500,
-        "foreignSellIdr": 812919800
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-03",
-        "netForeignInflow": -184106300,
-        "foreignBuyIdr": 1337103000,
-        "foreignSellIdr": 1521209300
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-06",
-        "netForeignInflow": 704784900,
-        "foreignBuyIdr": 3631255800,
-        "foreignSellIdr": 2926470900
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-07",
-        "netForeignInflow": -651033700,
-        "foreignBuyIdr": 1825234800,
-        "foreignSellIdr": 2476268500
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-08",
-        "netForeignInflow": -52081500,
-        "foreignBuyIdr": 1539047100,
-        "foreignSellIdr": 1591128600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-09",
-        "netForeignInflow": 120030200,
-        "foreignBuyIdr": 2272473800,
-        "foreignSellIdr": 2152443600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-10",
-        "netForeignInflow": 261574000,
-        "foreignBuyIdr": 1225415500,
-        "foreignSellIdr": 963841500
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-13",
-        "netForeignInflow": 851236800,
-        "foreignBuyIdr": 2097830400,
-        "foreignSellIdr": 1246593600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-14",
-        "netForeignInflow": -1790175200,
-        "foreignBuyIdr": 1634564400,
-        "foreignSellIdr": 3424739600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-15",
-        "netForeignInflow": -69951300,
-        "foreignBuyIdr": 76997100,
-        "foreignSellIdr": 146948400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-16",
-        "netForeignInflow": -18139000,
-        "foreignBuyIdr": 596900400,
-        "foreignSellIdr": 615039400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-17",
-        "netForeignInflow": 529244000,
-        "foreignBuyIdr": 6220949900,
-        "foreignSellIdr": 5691705900
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-20",
-        "netForeignInflow": 2185061100,
-        "foreignBuyIdr": 7093157700,
-        "foreignSellIdr": 4908096600
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-21",
-        "netForeignInflow": -1690977200,
-        "foreignBuyIdr": 3299015000,
-        "foreignSellIdr": 4989992200
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-22",
-        "netForeignInflow": -73463200,
-        "foreignBuyIdr": 785275200,
-        "foreignSellIdr": 858738400
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-23",
-        "netForeignInflow": -888046100,
-        "foreignBuyIdr": 1641394200,
-        "foreignSellIdr": 2529440300
-      }
-    ],
-    "priceWindow": [
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-23",
-        "open": 68,
-        "high": 74,
-        "low": 66,
-        "close": 70,
-        "volume": 141357400,
-        "marketCap": 231238000000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-24",
-        "open": 70,
-        "high": 76,
-        "low": 64,
-        "close": 64,
-        "volume": 248574100,
-        "marketCap": 211417600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-25",
-        "open": 69,
-        "high": 71,
-        "low": 63,
-        "close": 68,
-        "volume": 87261200,
-        "marketCap": 224631200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-26",
-        "open": 68,
-        "high": 76,
-        "low": 68,
-        "close": 73,
-        "volume": 158031900,
-        "marketCap": 241148200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-29",
-        "open": 74,
-        "high": 85,
-        "low": 70,
-        "close": 81,
-        "volume": 969232800,
-        "marketCap": 267575400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-06-30",
-        "open": 81,
-        "high": 85,
-        "low": 69,
-        "close": 69,
-        "volume": 856849100,
-        "marketCap": 227934600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-01",
-        "open": 70,
-        "high": 73,
-        "low": 67,
-        "close": 69,
-        "volume": 148828700,
-        "marketCap": 227934600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-02",
-        "open": 70,
-        "high": 71,
-        "low": 65,
-        "close": 71,
-        "volume": 105019900,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-03",
-        "open": 72,
-        "high": 75,
-        "low": 68,
-        "close": 73,
-        "volume": 190552200,
-        "marketCap": 241148200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-06",
-        "open": 73,
-        "high": 81,
-        "low": 68,
-        "close": 78,
-        "volume": 1614650900,
-        "marketCap": 257665200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-07",
-        "open": 78,
-        "high": 80,
-        "low": 72,
-        "close": 74,
-        "volume": 871273600,
-        "marketCap": 244451600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-08",
-        "open": 74,
-        "high": 78,
-        "low": 72,
-        "close": 74,
-        "volume": 414484700,
-        "marketCap": 244451600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-09",
-        "open": 74,
-        "high": 78,
-        "low": 71,
-        "close": 71,
-        "volume": 469767900,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-10",
-        "open": 71,
-        "high": 74,
-        "low": 70,
-        "close": 73,
-        "volume": 141000300,
-        "marketCap": 241148200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-13",
-        "open": 73,
-        "high": 75,
-        "low": 71,
-        "close": 72,
-        "volume": 184945200,
-        "marketCap": 237844800000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-14",
-        "open": 72,
-        "high": 77,
-        "low": 69,
-        "close": 71,
-        "volume": 467515700,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-15",
-        "open": 71,
-        "high": 71,
-        "low": 68,
-        "close": 69,
-        "volume": 69696400,
-        "marketCap": 227934600000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-16",
-        "open": 69,
-        "high": 70,
-        "low": 66,
-        "close": 70,
-        "volume": 83083900,
-        "marketCap": 231238000000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-17",
-        "open": 69,
-        "high": 75,
-        "low": 68,
-        "close": 68,
-        "volume": 2129403100,
-        "marketCap": 224631200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-20",
-        "open": 69,
-        "high": 74,
-        "low": 68,
-        "close": 71,
-        "volume": 1051303900,
-        "marketCap": 234541400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-21",
-        "open": 71,
-        "high": 73,
-        "low": 67,
-        "close": 68,
-        "volume": 868828600,
-        "marketCap": 224631200000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-22",
-        "open": 68,
-        "high": 69,
-        "low": 66,
-        "close": 66,
-        "volume": 109285800,
-        "marketCap": 218024400000
-      },
-      {
-        "symbol": "EPAC.JK",
-        "date": "2026-07-23",
-        "open": 66,
-        "high": 67,
-        "low": 63,
-        "close": 65,
-        "volume": 177446800,
-        "marketCap": 214721000000
-      }
-    ],
-    "abnormalFlowZ": 1111847686.3233202,
-    "abnormalVolumeZ": 248010167.21505702,
-    "preDriftPct": -10.649926827465409,
-    "id": "EPAC.JK:2026-07-23:STEALTH_ACCUMULATION",
-    "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
         "status": "complete",
@@ -27429,7 +27429,7 @@
     "abnormalFlowZ": 3011322743.8284097,
     "abnormalVolumeZ": 3834935.92337785,
     "preDriftPct": -35.46513693635038,
-    "id": "FILM.JK:2026-07-24:INSIDER_CONTRA_BUY",
+    "id": "FILM.JK:buy:2026-07-24:INSIDER_CONTRA_BUY:20e481d0",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -27955,7 +27955,7 @@
     "abnormalFlowZ": 3011322743.8284097,
     "abnormalVolumeZ": 3834935.92337785,
     "preDriftPct": -35.46513693635038,
-    "id": "FILM.JK:2026-07-24:STEALTH_ACCUMULATION",
+    "id": "FILM.JK:buy:2026-07-24:STEALTH_ACCUMULATION:20e481d0",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -28432,7 +28432,7 @@
     "abnormalFlowZ": 5.328824904356823,
     "abnormalVolumeZ": 8.693049573085686,
     "preDriftPct": -39.74195248880809,
-    "id": "FILM.JK:2026-07-29:INSIDER_CONTRA_BUY",
+    "id": "FILM.JK:buy:2026-07-29:INSIDER_CONTRA_BUY:988c53d9",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -28909,7 +28909,7 @@
     "abnormalFlowZ": 5.328824904356823,
     "abnormalVolumeZ": 8.693049573085686,
     "preDriftPct": -39.74195248880809,
-    "id": "FILM.JK:2026-07-29:STEALTH_ACCUMULATION",
+    "id": "FILM.JK:buy:2026-07-29:STEALTH_ACCUMULATION:988c53d9",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -29386,7 +29386,7 @@
     "abnormalFlowZ": -2.068801688069686,
     "abnormalVolumeZ": 5.093254948431664,
     "preDriftPct": -48.39453812109539,
-    "id": "FILM.JK:2026-08-07:INSIDER_CONTRA_BUY",
+    "id": "FILM.JK:buy:2026-08-07:INSIDER_CONTRA_BUY:eda28657",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -29863,7 +29863,7 @@
     "abnormalFlowZ": -0.5289321770556229,
     "abnormalVolumeZ": 9.654280197627036,
     "preDriftPct": -48.148778956380816,
-    "id": "FILM.JK:2026-08-13:INSIDER_CONTRA_BUY",
+    "id": "FILM.JK:buy:2026-08-13:INSIDER_CONTRA_BUY:4ed31bf8",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -30338,7 +30338,7 @@
     "abnormalFlowZ": -7.170279702004748,
     "abnormalVolumeZ": 10.419327468942427,
     "preDriftPct": -15.061793155332644,
-    "id": "FILM.JK:2026-09-04:INSIDER_CONTRA_BUY",
+    "id": "FILM.JK:buy:2026-09-04:INSIDER_CONTRA_BUY:4b35157f",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -30790,7 +30790,7 @@
     "abnormalFlowZ": 1.578131335171127,
     "abnormalVolumeZ": 0.27494124587250385,
     "preDriftPct": -4.840645533340673,
-    "id": "FORE.JK:2026-09-16:INSIDER_CONTRA_BUY",
+    "id": "FORE.JK:buy:2026-09-16:INSIDER_CONTRA_BUY:2fc094d9",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -31242,7 +31242,7 @@
     "abnormalFlowZ": 1.578131335171127,
     "abnormalVolumeZ": 0.27494124587250385,
     "preDriftPct": -4.840645533340673,
-    "id": "FORE.JK:2026-09-16:STEALTH_ACCUMULATION",
+    "id": "FORE.JK:buy:2026-09-16:STEALTH_ACCUMULATION:2fc094d9",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -31887,7 +31887,7 @@
     "abnormalFlowZ": 268858276.0665898,
     "abnormalVolumeZ": 7053449.177121274,
     "preDriftPct": 0,
-    "id": "FUJI.JK:2026-08-04:STEALTH_ACCUMULATION",
+    "id": "FUJI.JK:buy:2026-08-04:STEALTH_ACCUMULATION:0dcded31",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -32625,7 +32625,7 @@
     "abnormalFlowZ": -10.988923334027689,
     "abnormalVolumeZ": 15.718188100727549,
     "preDriftPct": 3.5273829417069993,
-    "id": "GMFI.JK:2026-09-16:INSIDER_CONTRA_BUY",
+    "id": "GMFI.JK:buy:2026-09-16:INSIDER_CONTRA_BUY:07fc4005",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -32773,7 +32773,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "GOOD.JK:2026-04-16:CLUSTER_PATTERN",
+    "id": "GOOD.JK:buy:2026-04-16:CLUSTER_PATTERN:bf8368cf",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -33283,7 +33283,7 @@
     "abnormalFlowZ": 6.519597193739652,
     "abnormalVolumeZ": 6.255402171360622,
     "preDriftPct": -6.370392751284538,
-    "id": "GOOD.JK:2026-08-13:STEALTH_ACCUMULATION",
+    "id": "GOOD.JK:buy:2026-08-13:STEALTH_ACCUMULATION:4deed819",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -34335,7 +34335,7 @@
     "abnormalFlowZ": 1.9824492634711002,
     "abnormalVolumeZ": -0.03751549976347993,
     "preDriftPct": -3.2662685911194673,
-    "id": "GOTO.JK:2026-09-11:STEALTH_ACCUMULATION",
+    "id": "GOTO.JK:buy:2026-09-11:STEALTH_ACCUMULATION:aa35388d",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -34489,7 +34489,7 @@
     "abnormalFlowZ": 6761668.690138945,
     "abnormalVolumeZ": 2714133.9538648324,
     "preDriftPct": 0,
-    "id": "GSMF.JK:2026-06-25:STEALTH_ACCUMULATION",
+    "id": "GSMF.JK:buy:2026-06-25:STEALTH_ACCUMULATION:4837310d",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -34907,7 +34907,7 @@
     "abnormalFlowZ": 1.4426266933638352,
     "abnormalVolumeZ": -0.3545189918660796,
     "preDriftPct": 1.4213822550134387,
-    "id": "GULA.JK:2026-09-07:STEALTH_ACCUMULATION",
+    "id": "GULA.JK:buy:2026-09-07:STEALTH_ACCUMULATION:b6b045f8",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -35143,7 +35143,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "HEAL.JK:2026-06-04:CLUSTER_PATTERN",
+    "id": "HEAL.JK:buy:2026-06-04:CLUSTER_PATTERN:f489aad6",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -35667,7 +35667,7 @@
     "abnormalFlowZ": -7990967598.487807,
     "abnormalVolumeZ": 4545185.260128603,
     "preDriftPct": 0,
-    "id": "HEAL.JK:2026-07-23:INSIDER_CONTRA_BUY",
+    "id": "HEAL.JK:buy:2026-07-23:INSIDER_CONTRA_BUY:c88bce4f",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -36591,7 +36591,7 @@
     "abnormalFlowZ": -23.59201615565697,
     "abnormalVolumeZ": 5.362598642097496,
     "preDriftPct": -34.77595721063837,
-    "id": "HEAL.JK:2026-09-04:CLUSTER_PATTERN",
+    "id": "HEAL.JK:buy:2026-09-04:CLUSTER_PATTERN:befa9a57",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -37515,7 +37515,7 @@
     "abnormalFlowZ": -23.59201615565697,
     "abnormalVolumeZ": 5.362598642097496,
     "preDriftPct": -34.77595721063837,
-    "id": "HEAL.JK:2026-09-04:INSIDER_CONTRA_BUY",
+    "id": "HEAL.JK:buy:2026-09-04:INSIDER_CONTRA_BUY:befa9a57",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -38017,7 +38017,7 @@
     "abnormalFlowZ": -11.233384981504543,
     "abnormalVolumeZ": 4.7680587455147565,
     "preDriftPct": -15.516610388977913,
-    "id": "HEAL.JK:2026-09-11:INSIDER_CONTRA_BUY",
+    "id": "HEAL.JK:buy:2026-09-11:INSIDER_CONTRA_BUY:2f8e4923",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -38510,7 +38510,7 @@
     "abnormalFlowZ": -16821076.900733113,
     "abnormalVolumeZ": 105666.3088933073,
     "preDriftPct": -6.209772387310968,
-    "id": "HELI.JK:2026-07-23:INSIDER_CONTRA_BUY",
+    "id": "HELI.JK:buy:2026-07-23:INSIDER_CONTRA_BUY:001b2378",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -38970,7 +38970,7 @@
     "abnormalFlowZ": 5.7123954001922845,
     "abnormalVolumeZ": 1.2101594809413405,
     "preDriftPct": -14.745632933767732,
-    "id": "IATA.JK:2026-07-28:INSIDER_CONTRA_BUY",
+    "id": "IATA.JK:buy:2026-07-28:INSIDER_CONTRA_BUY:a95301b8",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -39430,7 +39430,7 @@
     "abnormalFlowZ": 5.7123954001922845,
     "abnormalVolumeZ": 1.2101594809413405,
     "preDriftPct": -14.745632933767732,
-    "id": "IATA.JK:2026-07-28:STEALTH_ACCUMULATION",
+    "id": "IATA.JK:buy:2026-07-28:STEALTH_ACCUMULATION:a95301b8",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -40024,7 +40024,7 @@
     "abnormalFlowZ": 175519873.85910177,
     "abnormalVolumeZ": 8211867.664912991,
     "preDriftPct": 0,
-    "id": "IMPC.JK:2026-07-17:CLUSTER_PATTERN",
+    "id": "IMPC.JK:buy:2026-07-17:CLUSTER_PATTERN:f0570580",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -40618,7 +40618,7 @@
     "abnormalFlowZ": 175519873.85910177,
     "abnormalVolumeZ": 8211867.664912991,
     "preDriftPct": 0,
-    "id": "IMPC.JK:2026-07-17:STEALTH_ACCUMULATION",
+    "id": "IMPC.JK:buy:2026-07-17:STEALTH_ACCUMULATION:f0570580",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -41061,7 +41061,7 @@
     "abnormalFlowZ": 67.27902028616404,
     "abnormalVolumeZ": -0.4829777930532653,
     "preDriftPct": 3.6254518753605565,
-    "id": "INPP.JK:2026-09-02:STEALTH_ACCUMULATION",
+    "id": "INPP.JK:buy:2026-09-02:STEALTH_ACCUMULATION:20cf8b15",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -41772,7 +41772,7 @@
     "abnormalFlowZ": 1.776030993777302,
     "abnormalVolumeZ": -0.7128439291332301,
     "preDriftPct": -6.858021948208914,
-    "id": "JECX.JK:2026-09-01:STEALTH_ACCUMULATION",
+    "id": "JECX.JK:buy:2026-09-01:STEALTH_ACCUMULATION:c8fab995",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -42215,7 +42215,7 @@
     "abnormalFlowZ": 3.617460026465314,
     "abnormalVolumeZ": -0.30782113320177706,
     "preDriftPct": 1.4253786267862862,
-    "id": "JSMR.JK:2026-09-02:STEALTH_ACCUMULATION",
+    "id": "JSMR.JK:buy:2026-09-02:STEALTH_ACCUMULATION:7ad97aed",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -42692,7 +42692,7 @@
     "abnormalFlowZ": 2.033367416100831,
     "abnormalVolumeZ": 15.87458846612556,
     "preDriftPct": -51.938504413112966,
-    "id": "KDTN.JK:2026-07-29:INSIDER_CONTRA_BUY",
+    "id": "KDTN.JK:buy:2026-07-29:INSIDER_CONTRA_BUY:925bc108",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -43169,7 +43169,7 @@
     "abnormalFlowZ": 2.033367416100831,
     "abnormalVolumeZ": 15.87458846612556,
     "preDriftPct": -51.938504413112966,
-    "id": "KDTN.JK:2026-07-29:STEALTH_ACCUMULATION",
+    "id": "KDTN.JK:buy:2026-07-29:STEALTH_ACCUMULATION:925bc108",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -43644,7 +43644,7 @@
     "abnormalFlowZ": -1.8609395421562946,
     "abnormalVolumeZ": 4.745791804797204,
     "preDriftPct": -31.923349293357546,
-    "id": "KDTN.JK:2026-08-04:INSIDER_CONTRA_BUY",
+    "id": "KDTN.JK:buy:2026-08-04:INSIDER_CONTRA_BUY:0e2a571f",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -44096,7 +44096,7 @@
     "abnormalFlowZ": 2.4166234971281693,
     "abnormalVolumeZ": 1.6218350367421408,
     "preDriftPct": 2.6970762375099326,
-    "id": "KDTN.JK:2026-09-16:STEALTH_ACCUMULATION",
+    "id": "KDTN.JK:buy:2026-09-16:STEALTH_ACCUMULATION:8b78c5db",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -44581,7 +44581,7 @@
     "abnormalFlowZ": 1.4261190481015729,
     "abnormalVolumeZ": 4.772242420470798,
     "preDriftPct": 72.7385051344064,
-    "id": "KETR.JK:2026-09-17:STEALTH_ACCUMULATION",
+    "id": "KETR.JK:buy:2026-09-17:STEALTH_ACCUMULATION:5f208948",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -44729,7 +44729,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "KLBF.JK:2026-04-29:CLUSTER_PATTERN",
+    "id": "KLBF.JK:buy:2026-04-29:CLUSTER_PATTERN:dfdd42b2",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -44968,7 +44968,7 @@
     "abnormalFlowZ": 99758464.85903144,
     "abnormalVolumeZ": 13860043.167408608,
     "preDriftPct": 0,
-    "id": "KRYA.JK:2026-07-02:STEALTH_ACCUMULATION",
+    "id": "KRYA.JK:buy:2026-07-02:STEALTH_ACCUMULATION:ed72bc09",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -45602,7 +45602,7 @@
     "abnormalFlowZ": -456478.6413766678,
     "abnormalVolumeZ": 39325.621655649986,
     "preDriftPct": 0,
-    "id": "LFLO.JK:2026-07-23:CLUSTER_PATTERN",
+    "id": "LFLO.JK:buy:2026-07-23:CLUSTER_PATTERN:dc28eb3a",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -46236,7 +46236,7 @@
     "abnormalFlowZ": -456478.6413766678,
     "abnormalVolumeZ": 39325.621655649986,
     "preDriftPct": 0,
-    "id": "LFLO.JK:2026-07-23:INSIDER_CONTRA_BUY",
+    "id": "LFLO.JK:buy:2026-07-23:INSIDER_CONTRA_BUY:dc28eb3a",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -46662,7 +46662,7 @@
     "abnormalFlowZ": 38.91766695012349,
     "abnormalVolumeZ": 2.4047811160072348,
     "preDriftPct": 1.2808827018137858,
-    "id": "LUCY.JK:2026-08-24:STEALTH_ACCUMULATION",
+    "id": "LUCY.JK:buy:2026-08-24:STEALTH_ACCUMULATION:b32e35ce",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -47171,7 +47171,7 @@
     "abnormalFlowZ": -28.146013452097534,
     "abnormalVolumeZ": -0.08273974810526111,
     "preDriftPct": -7.297791409461292,
-    "id": "MAPI.JK:2026-07-29:CLUSTER_PATTERN",
+    "id": "MAPI.JK:buy:2026-07-29:CLUSTER_PATTERN:29bf572f",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -47680,7 +47680,7 @@
     "abnormalFlowZ": -28.146013452097534,
     "abnormalVolumeZ": -0.08273974810526111,
     "preDriftPct": -7.297791409461292,
-    "id": "MAPI.JK:2026-07-29:INSIDER_CONTRA_BUY",
+    "id": "MAPI.JK:buy:2026-07-29:INSIDER_CONTRA_BUY:29bf572f",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -48132,7 +48132,7 @@
     "abnormalFlowZ": 0.6014124780848092,
     "abnormalVolumeZ": 0.8631850776428817,
     "preDriftPct": -7.128655941083742,
-    "id": "MAYA.JK:2026-09-10:INSIDER_CONTRA_BUY",
+    "id": "MAYA.JK:buy:2026-09-10:INSIDER_CONTRA_BUY:4677248b",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -48667,7 +48667,7 @@
     "abnormalFlowZ": -0.2657602954823484,
     "abnormalVolumeZ": 0.7159197609543112,
     "preDriftPct": -4.583546589915572,
-    "id": "MAYA.JK:2026-09-15:CLUSTER_PATTERN",
+    "id": "MAYA.JK:sell:2026-09-15:CLUSTER_PATTERN:e2a4bc3a",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -48989,7 +48989,7 @@
     "abnormalFlowZ": 241535727.3570547,
     "abnormalVolumeZ": 827785.6468366383,
     "preDriftPct": 0,
-    "id": "MDLA.JK:2026-07-07:CLUSTER_PATTERN",
+    "id": "MDLA.JK:buy:2026-07-07:CLUSTER_PATTERN:e6fc95cb",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -49311,7 +49311,7 @@
     "abnormalFlowZ": 241535727.3570547,
     "abnormalVolumeZ": 827785.6468366383,
     "preDriftPct": 0,
-    "id": "MDLA.JK:2026-07-07:STEALTH_ACCUMULATION",
+    "id": "MDLA.JK:buy:2026-07-07:STEALTH_ACCUMULATION:e6fc95cb",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -49780,7 +49780,7 @@
     "abnormalFlowZ": -3.9477114228778674,
     "abnormalVolumeZ": 2.7083864215642244,
     "preDriftPct": -1.6971199523601088,
-    "id": "MDLA.JK:2026-09-18:INSIDER_CONTRA_BUY",
+    "id": "MDLA.JK:buy:2026-09-18:INSIDER_CONTRA_BUY:4691976d",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -50133,7 +50133,7 @@
     "abnormalFlowZ": -24681.489225956993,
     "abnormalVolumeZ": 4856.333468231485,
     "preDriftPct": 0,
-    "id": "MICE.JK:2026-07-01:CLUSTER_PATTERN",
+    "id": "MICE.JK:buy:2026-07-01:CLUSTER_PATTERN:30d7c6df",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -50610,7 +50610,7 @@
     "abnormalFlowZ": 3.2856352121883727,
     "abnormalVolumeZ": 0.32677820795922213,
     "preDriftPct": -19.442387896548286,
-    "id": "MSIE.JK:2026-07-24:INSIDER_CONTRA_BUY",
+    "id": "MSIE.JK:buy:2026-07-24:INSIDER_CONTRA_BUY:65461775",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -51087,7 +51087,7 @@
     "abnormalFlowZ": 3.2856352121883727,
     "abnormalVolumeZ": 0.32677820795922213,
     "preDriftPct": -19.442387896548286,
-    "id": "MSIE.JK:2026-07-24:STEALTH_ACCUMULATION",
+    "id": "MSIE.JK:buy:2026-07-24:STEALTH_ACCUMULATION:65461775",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -51919,7 +51919,7 @@
     "abnormalFlowZ": 95939.20212519178,
     "abnormalVolumeZ": 11.399915790850637,
     "preDriftPct": 76.64762944858178,
-    "id": "NICK.JK:2026-09-02:STEALTH_ACCUMULATION",
+    "id": "NICK.JK:buy:2026-09-02:STEALTH_ACCUMULATION:b854f906",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -52209,7 +52209,7 @@
     "abnormalFlowZ": 108910122.66320923,
     "abnormalVolumeZ": 5069388.236881155,
     "preDriftPct": 0,
-    "id": "NSSS.JK:2026-07-07:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-07-07:STEALTH_ACCUMULATION:8726e17f",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -52582,7 +52582,7 @@
     "abnormalFlowZ": 731434641.8454068,
     "abnormalVolumeZ": 5373874.443545124,
     "preDriftPct": 0,
-    "id": "NSSS.JK:2026-07-13:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-07-13:STEALTH_ACCUMULATION:f560c684",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -52974,7 +52974,7 @@
     "abnormalFlowZ": 1433150981.4720116,
     "abnormalVolumeZ": 5635636.344559858,
     "preDriftPct": 0,
-    "id": "NSSS.JK:2026-07-15:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-07-15:STEALTH_ACCUMULATION:4ce87498",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -53500,7 +53500,7 @@
     "abnormalFlowZ": 920113044.6512884,
     "abnormalVolumeZ": 5826089.302576555,
     "preDriftPct": 35.44849049901619,
-    "id": "NSSS.JK:2026-07-24:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-07-24:STEALTH_ACCUMULATION:60156d2c",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -53992,7 +53992,7 @@
     "abnormalFlowZ": 4.815437927578616,
     "abnormalVolumeZ": -0.9964458108342577,
     "preDriftPct": 72.36414985214452,
-    "id": "NSSS.JK:2026-07-29:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-07-29:STEALTH_ACCUMULATION:295ec6a4",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -54467,7 +54467,7 @@
     "abnormalFlowZ": 3.317148141087701,
     "abnormalVolumeZ": 1.5281636040965452,
     "preDriftPct": 51.317366347737604,
-    "id": "NSSS.JK:2026-08-04:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-08-04:STEALTH_ACCUMULATION:af4a32a3",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -55008,7 +55008,7 @@
     "abnormalFlowZ": 2.897141170590883,
     "abnormalVolumeZ": 1.8480188758391565,
     "preDriftPct": 60.205280946914556,
-    "id": "NSSS.JK:2026-08-07:STEALTH_ACCUMULATION",
+    "id": "NSSS.JK:buy:2026-08-07:STEALTH_ACCUMULATION:726c0a9c",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -55517,7 +55517,7 @@
     "abnormalFlowZ": 0.0810345538640074,
     "abnormalVolumeZ": 0.9157907050734779,
     "preDriftPct": -13.73330211181568,
-    "id": "NSSS.JK:2026-09-01:INSIDER_CONTRA_BUY",
+    "id": "NSSS.JK:buy:2026-09-01:INSIDER_CONTRA_BUY:6bd62418",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -55960,7 +55960,7 @@
     "abnormalFlowZ": -2.6172298053766867,
     "abnormalVolumeZ": -0.05493759203116354,
     "preDriftPct": -15.155735364412738,
-    "id": "NSSS.JK:2026-09-03:INSIDER_CONTRA_BUY",
+    "id": "NSSS.JK:buy:2026-09-03:INSIDER_CONTRA_BUY:2028f36f",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -56403,7 +56403,7 @@
     "abnormalFlowZ": -3.0605324038285833,
     "abnormalVolumeZ": 0.1315997123777634,
     "preDriftPct": -23.47415594506983,
-    "id": "NSSS.JK:2026-09-04:INSIDER_CONTRA_BUY",
+    "id": "NSSS.JK:buy:2026-09-04:INSIDER_CONTRA_BUY:72b52f07",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -56847,7 +56847,7 @@
     "abnormalFlowZ": 0.0803198178887479,
     "abnormalVolumeZ": -1.0137257030505402,
     "preDriftPct": -12.446602185474692,
-    "id": "NSSS.JK:2026-09-21:INSIDER_CONTRA_BUY",
+    "id": "NSSS.JK:buy:2026-09-21:INSIDER_CONTRA_BUY:cd5dba21",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -57368,7 +57368,7 @@
     "abnormalFlowZ": 420326454.1470348,
     "abnormalVolumeZ": 22816622.824767303,
     "preDriftPct": 0,
-    "id": "OMED.JK:2026-07-17:CLUSTER_PATTERN",
+    "id": "OMED.JK:buy:2026-07-17:CLUSTER_PATTERN:3d045bd4",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -57889,7 +57889,7 @@
     "abnormalFlowZ": 420326454.1470348,
     "abnormalVolumeZ": 22816622.824767303,
     "preDriftPct": 0,
-    "id": "OMED.JK:2026-07-17:STEALTH_ACCUMULATION",
+    "id": "OMED.JK:buy:2026-07-17:STEALTH_ACCUMULATION:3d045bd4",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -58366,7 +58366,7 @@
     "abnormalFlowZ": 1.453524156254863,
     "abnormalVolumeZ": 3.3308435460678867,
     "preDriftPct": -9.625205158638881,
-    "id": "PACK.JK:2026-07-30:STEALTH_ACCUMULATION",
+    "id": "PACK.JK:buy:2026-07-30:STEALTH_ACCUMULATION:36630222",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -58857,7 +58857,7 @@
     "abnormalFlowZ": 14.453596150136269,
     "abnormalVolumeZ": -0.7939301285380138,
     "preDriftPct": -6.1326029378673175,
-    "id": "PANS.JK:2026-08-10:CLUSTER_PATTERN",
+    "id": "PANS.JK:buy:2026-08-10:CLUSTER_PATTERN:4234d166",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -59348,7 +59348,7 @@
     "abnormalFlowZ": 14.453596150136269,
     "abnormalVolumeZ": -0.7939301285380138,
     "preDriftPct": -6.1326029378673175,
-    "id": "PANS.JK:2026-08-10:STEALTH_ACCUMULATION",
+    "id": "PANS.JK:buy:2026-08-10:STEALTH_ACCUMULATION:4234d166",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -59736,7 +59736,7 @@
     "abnormalFlowZ": -438641878.71649796,
     "abnormalVolumeZ": 22430212.68941949,
     "preDriftPct": 0,
-    "id": "PGAS.JK:2026-07-10:CLUSTER_PATTERN",
+    "id": "PGAS.JK:buy:2026-07-10:CLUSTER_PATTERN:a92f5726",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -59785,415 +59785,6 @@
         "issuerPct": 5.1194539249146755,
         "benchmarkPct": 12.863532938579025,
         "excessPp": -7.74407901366435,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "PKPK.JK",
-    "direction": "accumulate",
-    "anchorDate": "2026-07-16",
-    "windowStart": "2026-06-16",
-    "windowEnd": "2026-07-16",
-    "holders": [
-      "Deli Pratama Nusantara"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "PKPK.JK",
-        "holderName": "Deli Pratama Nusantara",
-        "holderType": "insider",
-        "txnType": "buy",
-        "txnDate": "2026-07-16",
-        "filedAt": "2026-07-16T15:05:24",
-        "amount": 288000000,
-        "price": 1600,
-        "value": 460800000000,
-        "pctBefore": 0,
-        "pctAfter": 24,
-        "clusterHint": null,
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-16072026-8936-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-22",
-        "netForeignInflow": -265889000,
-        "foreignBuyIdr": 186948000,
-        "foreignSellIdr": 452837000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-23",
-        "netForeignInflow": 82002000,
-        "foreignBuyIdr": 278325000,
-        "foreignSellIdr": 196323000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-24",
-        "netForeignInflow": 127691000,
-        "foreignBuyIdr": 523393000,
-        "foreignSellIdr": 395702000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-25",
-        "netForeignInflow": 1081011000,
-        "foreignBuyIdr": 1807671000,
-        "foreignSellIdr": 726660000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-26",
-        "netForeignInflow": -944456000,
-        "foreignBuyIdr": 305594000,
-        "foreignSellIdr": 1250050000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-29",
-        "netForeignInflow": -485782000,
-        "foreignBuyIdr": 60151000,
-        "foreignSellIdr": 545933000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-30",
-        "netForeignInflow": 2289362000,
-        "foreignBuyIdr": 3869332000,
-        "foreignSellIdr": 1579970000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-01",
-        "netForeignInflow": -964441000,
-        "foreignBuyIdr": 411193000,
-        "foreignSellIdr": 1375634000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-02",
-        "netForeignInflow": -464957000,
-        "foreignBuyIdr": 1114651000,
-        "foreignSellIdr": 1579608000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-03",
-        "netForeignInflow": -769049000,
-        "foreignBuyIdr": 592641000,
-        "foreignSellIdr": 1361690000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-06",
-        "netForeignInflow": -635105000,
-        "foreignBuyIdr": 387237000,
-        "foreignSellIdr": 1022342000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-07",
-        "netForeignInflow": -10516000,
-        "foreignBuyIdr": 263410000,
-        "foreignSellIdr": 273926000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-08",
-        "netForeignInflow": -430020000,
-        "foreignBuyIdr": 478341000,
-        "foreignSellIdr": 908361000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-09",
-        "netForeignInflow": 362196000,
-        "foreignBuyIdr": 450424000,
-        "foreignSellIdr": 88228000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-10",
-        "netForeignInflow": 393751000,
-        "foreignBuyIdr": 629300000,
-        "foreignSellIdr": 235549000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-13",
-        "netForeignInflow": -55284000,
-        "foreignBuyIdr": 267400000,
-        "foreignSellIdr": 322684000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-14",
-        "netForeignInflow": 168435000,
-        "foreignBuyIdr": 510617000,
-        "foreignSellIdr": 342182000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-15",
-        "netForeignInflow": 1235675000,
-        "foreignBuyIdr": 1461051000,
-        "foreignSellIdr": 225376000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-16",
-        "netForeignInflow": 3325080000,
-        "foreignBuyIdr": 5171946000,
-        "foreignSellIdr": 1846866000
-      }
-    ],
-    "priceWindow": [
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-22",
-        "open": 2640,
-        "high": 2710,
-        "low": 2580,
-        "close": 2580,
-        "volume": 740800,
-        "marketCap": 3096000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-23",
-        "open": 2580,
-        "high": 2630,
-        "low": 2530,
-        "close": 2600,
-        "volume": 643900,
-        "marketCap": 3120000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-24",
-        "open": 2630,
-        "high": 2690,
-        "low": 2580,
-        "close": 2620,
-        "volume": 860000,
-        "marketCap": 3144000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-25",
-        "open": 2630,
-        "high": 2920,
-        "low": 2570,
-        "close": 2880,
-        "volume": 2097700,
-        "marketCap": 3456000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-26",
-        "open": 2890,
-        "high": 2950,
-        "low": 2750,
-        "close": 2810,
-        "volume": 1361700,
-        "marketCap": 3372000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-29",
-        "open": 2880,
-        "high": 2890,
-        "low": 2750,
-        "close": 2820,
-        "volume": 598400,
-        "marketCap": 3384000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-06-30",
-        "open": 2820,
-        "high": 3290,
-        "low": 2700,
-        "close": 3080,
-        "volume": 6054600,
-        "marketCap": 3696000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-01",
-        "open": 3080,
-        "high": 3200,
-        "low": 3050,
-        "close": 3200,
-        "volume": 1774700,
-        "marketCap": 3840000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-02",
-        "open": 3260,
-        "high": 3450,
-        "low": 3200,
-        "close": 3290,
-        "volume": 4194400,
-        "marketCap": 3948000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-03",
-        "open": 3340,
-        "high": 3380,
-        "low": 3130,
-        "close": 3310,
-        "volume": 2189500,
-        "marketCap": 3972000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-06",
-        "open": 3290,
-        "high": 3390,
-        "low": 3180,
-        "close": 3300,
-        "volume": 1663000,
-        "marketCap": 3960000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-07",
-        "open": 3290,
-        "high": 3300,
-        "low": 3200,
-        "close": 3290,
-        "volume": 708600,
-        "marketCap": 3948000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-08",
-        "open": 3290,
-        "high": 3300,
-        "low": 3040,
-        "close": 3160,
-        "volume": 1746600,
-        "marketCap": 3792000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-09",
-        "open": 3060,
-        "high": 3200,
-        "low": 3060,
-        "close": 3190,
-        "volume": 651400,
-        "marketCap": 3828000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-10",
-        "open": 3230,
-        "high": 3250,
-        "low": 3130,
-        "close": 3180,
-        "volume": 866900,
-        "marketCap": 3816000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-13",
-        "open": 3180,
-        "high": 3190,
-        "low": 3090,
-        "close": 3160,
-        "volume": 519100,
-        "marketCap": 3792000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-14",
-        "open": 3160,
-        "high": 3170,
-        "low": 3100,
-        "close": 3150,
-        "volume": 685800,
-        "marketCap": 3780000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-15",
-        "open": 3140,
-        "high": 3240,
-        "low": 3080,
-        "close": 3210,
-        "volume": 1087800,
-        "marketCap": 3852000000000
-      },
-      {
-        "symbol": "PKPK.JK",
-        "date": "2026-07-16",
-        "open": 3220,
-        "high": 3540,
-        "low": 3200,
-        "close": 3500,
-        "volume": 5263900,
-        "marketCap": 4200000000000
-      }
-    ],
-    "abnormalFlowZ": 625098919.31731,
-    "abnormalVolumeZ": 1196646.0059497184,
-    "preDriftPct": 0,
-    "id": "PKPK.JK:2026-07-16:STEALTH_ACCUMULATION",
-    "pattern": "STEALTH_ACCUMULATION",
-    "outcomes": [
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": "2026-07-16",
-        "targetDate": "2026-07-23",
-        "endDate": "2026-07-23",
-        "elapsedDays": 7,
-        "startClose": 3500,
-        "endClose": 3950,
-        "issuerPct": 12.857142857142856,
-        "benchmarkPct": 3.390551960484651,
-        "excessPp": 9.466590896658206,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": "2026-07-16",
-        "targetDate": "2026-08-15",
-        "endDate": "2026-08-18",
-        "elapsedDays": 33,
-        "startClose": 3500,
-        "endClose": 3670,
-        "issuerPct": 4.857142857142857,
-        "benchmarkPct": 5.592817796509584,
-        "excessPp": -0.735674939366727,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": "2026-07-16",
-        "targetDate": "2026-09-14",
-        "endDate": "2026-09-14",
-        "elapsedDays": 60,
-        "startClose": 3500,
-        "endClose": 4250,
-        "issuerPct": 21.428571428571427,
-        "benchmarkPct": 6.982144848023379,
-        "excessPp": 14.446426580548048,
         "adjustmentBasis": "unverified"
       }
     ]
@@ -60570,7 +60161,416 @@
     "abnormalFlowZ": 625098919.31731,
     "abnormalVolumeZ": 1196646.0059497184,
     "preDriftPct": 0,
-    "id": "PKPK.JK:2026-07-16:STEALTH_ACCUMULATION",
+    "id": "PKPK.JK:buy:2026-07-16:STEALTH_ACCUMULATION:1cb9fa57",
+    "pattern": "STEALTH_ACCUMULATION",
+    "outcomes": [
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": "2026-07-16",
+        "targetDate": "2026-07-23",
+        "endDate": "2026-07-23",
+        "elapsedDays": 7,
+        "startClose": 3500,
+        "endClose": 3950,
+        "issuerPct": 12.857142857142856,
+        "benchmarkPct": 3.390551960484651,
+        "excessPp": 9.466590896658206,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": "2026-07-16",
+        "targetDate": "2026-08-15",
+        "endDate": "2026-08-18",
+        "elapsedDays": 33,
+        "startClose": 3500,
+        "endClose": 3670,
+        "issuerPct": 4.857142857142857,
+        "benchmarkPct": 5.592817796509584,
+        "excessPp": -0.735674939366727,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": "2026-07-16",
+        "targetDate": "2026-09-14",
+        "endDate": "2026-09-14",
+        "elapsedDays": 60,
+        "startClose": 3500,
+        "endClose": 4250,
+        "issuerPct": 21.428571428571427,
+        "benchmarkPct": 6.982144848023379,
+        "excessPp": 14.446426580548048,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "PKPK.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-07-16",
+    "windowStart": "2026-06-16",
+    "windowEnd": "2026-07-16",
+    "holders": [
+      "Deli Pratama Nusantara"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "PKPK.JK",
+        "holderName": "Deli Pratama Nusantara",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-07-16",
+        "filedAt": "2026-07-16T15:05:24",
+        "amount": 288000000,
+        "price": 1600,
+        "value": 460800000000,
+        "pctBefore": 0,
+        "pctAfter": 24,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-16072026-8936-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-22",
+        "netForeignInflow": -265889000,
+        "foreignBuyIdr": 186948000,
+        "foreignSellIdr": 452837000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-23",
+        "netForeignInflow": 82002000,
+        "foreignBuyIdr": 278325000,
+        "foreignSellIdr": 196323000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-24",
+        "netForeignInflow": 127691000,
+        "foreignBuyIdr": 523393000,
+        "foreignSellIdr": 395702000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-25",
+        "netForeignInflow": 1081011000,
+        "foreignBuyIdr": 1807671000,
+        "foreignSellIdr": 726660000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-26",
+        "netForeignInflow": -944456000,
+        "foreignBuyIdr": 305594000,
+        "foreignSellIdr": 1250050000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-29",
+        "netForeignInflow": -485782000,
+        "foreignBuyIdr": 60151000,
+        "foreignSellIdr": 545933000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-30",
+        "netForeignInflow": 2289362000,
+        "foreignBuyIdr": 3869332000,
+        "foreignSellIdr": 1579970000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-01",
+        "netForeignInflow": -964441000,
+        "foreignBuyIdr": 411193000,
+        "foreignSellIdr": 1375634000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-02",
+        "netForeignInflow": -464957000,
+        "foreignBuyIdr": 1114651000,
+        "foreignSellIdr": 1579608000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-03",
+        "netForeignInflow": -769049000,
+        "foreignBuyIdr": 592641000,
+        "foreignSellIdr": 1361690000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-06",
+        "netForeignInflow": -635105000,
+        "foreignBuyIdr": 387237000,
+        "foreignSellIdr": 1022342000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-07",
+        "netForeignInflow": -10516000,
+        "foreignBuyIdr": 263410000,
+        "foreignSellIdr": 273926000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-08",
+        "netForeignInflow": -430020000,
+        "foreignBuyIdr": 478341000,
+        "foreignSellIdr": 908361000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-09",
+        "netForeignInflow": 362196000,
+        "foreignBuyIdr": 450424000,
+        "foreignSellIdr": 88228000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-10",
+        "netForeignInflow": 393751000,
+        "foreignBuyIdr": 629300000,
+        "foreignSellIdr": 235549000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-13",
+        "netForeignInflow": -55284000,
+        "foreignBuyIdr": 267400000,
+        "foreignSellIdr": 322684000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-14",
+        "netForeignInflow": 168435000,
+        "foreignBuyIdr": 510617000,
+        "foreignSellIdr": 342182000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-15",
+        "netForeignInflow": 1235675000,
+        "foreignBuyIdr": 1461051000,
+        "foreignSellIdr": 225376000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-16",
+        "netForeignInflow": 3325080000,
+        "foreignBuyIdr": 5171946000,
+        "foreignSellIdr": 1846866000
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-22",
+        "open": 2640,
+        "high": 2710,
+        "low": 2580,
+        "close": 2580,
+        "volume": 740800,
+        "marketCap": 3096000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-23",
+        "open": 2580,
+        "high": 2630,
+        "low": 2530,
+        "close": 2600,
+        "volume": 643900,
+        "marketCap": 3120000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-24",
+        "open": 2630,
+        "high": 2690,
+        "low": 2580,
+        "close": 2620,
+        "volume": 860000,
+        "marketCap": 3144000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-25",
+        "open": 2630,
+        "high": 2920,
+        "low": 2570,
+        "close": 2880,
+        "volume": 2097700,
+        "marketCap": 3456000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-26",
+        "open": 2890,
+        "high": 2950,
+        "low": 2750,
+        "close": 2810,
+        "volume": 1361700,
+        "marketCap": 3372000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-29",
+        "open": 2880,
+        "high": 2890,
+        "low": 2750,
+        "close": 2820,
+        "volume": 598400,
+        "marketCap": 3384000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-06-30",
+        "open": 2820,
+        "high": 3290,
+        "low": 2700,
+        "close": 3080,
+        "volume": 6054600,
+        "marketCap": 3696000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-01",
+        "open": 3080,
+        "high": 3200,
+        "low": 3050,
+        "close": 3200,
+        "volume": 1774700,
+        "marketCap": 3840000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-02",
+        "open": 3260,
+        "high": 3450,
+        "low": 3200,
+        "close": 3290,
+        "volume": 4194400,
+        "marketCap": 3948000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-03",
+        "open": 3340,
+        "high": 3380,
+        "low": 3130,
+        "close": 3310,
+        "volume": 2189500,
+        "marketCap": 3972000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-06",
+        "open": 3290,
+        "high": 3390,
+        "low": 3180,
+        "close": 3300,
+        "volume": 1663000,
+        "marketCap": 3960000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-07",
+        "open": 3290,
+        "high": 3300,
+        "low": 3200,
+        "close": 3290,
+        "volume": 708600,
+        "marketCap": 3948000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-08",
+        "open": 3290,
+        "high": 3300,
+        "low": 3040,
+        "close": 3160,
+        "volume": 1746600,
+        "marketCap": 3792000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-09",
+        "open": 3060,
+        "high": 3200,
+        "low": 3060,
+        "close": 3190,
+        "volume": 651400,
+        "marketCap": 3828000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-10",
+        "open": 3230,
+        "high": 3250,
+        "low": 3130,
+        "close": 3180,
+        "volume": 866900,
+        "marketCap": 3816000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-13",
+        "open": 3180,
+        "high": 3190,
+        "low": 3090,
+        "close": 3160,
+        "volume": 519100,
+        "marketCap": 3792000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-14",
+        "open": 3160,
+        "high": 3170,
+        "low": 3100,
+        "close": 3150,
+        "volume": 685800,
+        "marketCap": 3780000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-15",
+        "open": 3140,
+        "high": 3240,
+        "low": 3080,
+        "close": 3210,
+        "volume": 1087800,
+        "marketCap": 3852000000000
+      },
+      {
+        "symbol": "PKPK.JK",
+        "date": "2026-07-16",
+        "open": 3220,
+        "high": 3540,
+        "low": 3200,
+        "close": 3500,
+        "volume": 5263900,
+        "marketCap": 4200000000000
+      }
+    ],
+    "abnormalFlowZ": 625098919.31731,
+    "abnormalVolumeZ": 1196646.0059497184,
+    "preDriftPct": 0,
+    "id": "PKPK.JK:buy:2026-07-16:STEALTH_ACCUMULATION:5e9e079d",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -61022,7 +61022,7 @@
     "abnormalFlowZ": 1.5977435397327906,
     "abnormalVolumeZ": -0.1846113375197507,
     "preDriftPct": 11.665799965995102,
-    "id": "PKPK.JK:2026-09-09:STEALTH_ACCUMULATION",
+    "id": "PKPK.JK:buy:2026-09-09:STEALTH_ACCUMULATION:df0dcef1",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -61154,7 +61154,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "PNGO.JK:2026-05-04:CLUSTER_PATTERN",
+    "id": "PNGO.JK:sell:2026-05-04:CLUSTER_PATTERN:1218fa94",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -61823,7 +61823,7 @@
     "abnormalFlowZ": 3.288658455623883,
     "abnormalVolumeZ": 1.4129288095045989,
     "preDriftPct": 14.997701783067768,
-    "id": "RLCO.JK:2026-09-07:INSIDER_CONTRA_BUY",
+    "id": "RLCO.JK:buy:2026-09-07:INSIDER_CONTRA_BUY:2472f1f2",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -62492,7 +62492,7 @@
     "abnormalFlowZ": 3.288658455623883,
     "abnormalVolumeZ": 1.4129288095045989,
     "preDriftPct": 14.997701783067768,
-    "id": "RLCO.JK:2026-09-07:STEALTH_ACCUMULATION",
+    "id": "RLCO.JK:buy:2026-09-07:STEALTH_ACCUMULATION:2472f1f2",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -62910,7 +62910,7 @@
     "abnormalFlowZ": 0.8431809276243138,
     "abnormalVolumeZ": -0.43797155301403723,
     "preDriftPct": -4.735220037749622,
-    "id": "RLCO.JK:2026-09-14:INSIDER_CONTRA_BUY",
+    "id": "RLCO.JK:buy:2026-09-14:INSIDER_CONTRA_BUY:926de787",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -63344,7 +63344,7 @@
     "abnormalFlowZ": -1.3838183011459282,
     "abnormalVolumeZ": 0.9177477518388736,
     "preDriftPct": -4.169461465024912,
-    "id": "SDRA.JK:2026-09-07:INSIDER_CONTRA_BUY",
+    "id": "SDRA.JK:buy:2026-09-07:INSIDER_CONTRA_BUY:f8bc5286",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -63993,7 +63993,7 @@
     "abnormalFlowZ": 28710609.08989638,
     "abnormalVolumeZ": 1833552.5428301634,
     "preDriftPct": 0,
-    "id": "SINI.JK:2026-07-23:CLUSTER_PATTERN",
+    "id": "SINI.JK:buy:2026-07-23:CLUSTER_PATTERN:4eb541ae",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -64642,7 +64642,7 @@
     "abnormalFlowZ": 28710609.08989638,
     "abnormalVolumeZ": 1833552.5428301634,
     "preDriftPct": 0,
-    "id": "SINI.JK:2026-07-23:INSIDER_CONTRA_BUY",
+    "id": "SINI.JK:buy:2026-07-23:INSIDER_CONTRA_BUY:4eb541ae",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -65291,7 +65291,7 @@
     "abnormalFlowZ": 28710609.08989638,
     "abnormalVolumeZ": 1833552.5428301634,
     "preDriftPct": 0,
-    "id": "SINI.JK:2026-07-23:STEALTH_ACCUMULATION",
+    "id": "SINI.JK:buy:2026-07-23:STEALTH_ACCUMULATION:4eb541ae",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -65351,6 +65351,493 @@
     "windowStart": "2026-07-12",
     "windowEnd": "2026-08-11",
     "holders": [
+      "Hendrikus Yulidar Putra Karim"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "SINI.JK",
+        "holderName": "Hendrikus Yulidar Putra Karim",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-08-11",
+        "filedAt": "2026-08-11T18:45:54",
+        "amount": 90000000,
+        "price": 5070,
+        "value": 456300000000,
+        "pctBefore": 0,
+        "pctAfter": 7.48,
+        "clusterHint": "cluster-buy",
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-11082026-9910-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-13",
+        "netForeignInflow": 0,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-14",
+        "netForeignInflow": 147500000,
+        "foreignBuyIdr": 147500000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-15",
+        "netForeignInflow": 14092500,
+        "foreignBuyIdr": 14092500,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-16",
+        "netForeignInflow": 0,
+        "foreignBuyIdr": 11950000,
+        "foreignSellIdr": 11950000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-17",
+        "netForeignInflow": -850000,
+        "foreignBuyIdr": 11300000,
+        "foreignSellIdr": 12150000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-20",
+        "netForeignInflow": 5600000,
+        "foreignBuyIdr": 11350000,
+        "foreignSellIdr": 5750000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-21",
+        "netForeignInflow": -9487500,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 9487500
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-22",
+        "netForeignInflow": 7545000,
+        "foreignBuyIdr": 7545000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-23",
+        "netForeignInflow": 13600000,
+        "foreignBuyIdr": 13600000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-24",
+        "netForeignInflow": 12872500,
+        "foreignBuyIdr": 12872500,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-27",
+        "netForeignInflow": 31670000,
+        "foreignBuyIdr": 31670000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-28",
+        "netForeignInflow": 159700000,
+        "foreignBuyIdr": 159700000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-29",
+        "netForeignInflow": 70000000,
+        "foreignBuyIdr": 70000000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-30",
+        "netForeignInflow": 5640000,
+        "foreignBuyIdr": 5640000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-31",
+        "netForeignInflow": 74500000,
+        "foreignBuyIdr": 74500000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-03",
+        "netForeignInflow": 1263465000,
+        "foreignBuyIdr": 1263465000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-04",
+        "netForeignInflow": 6457500,
+        "foreignBuyIdr": 6457500,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-05",
+        "netForeignInflow": 2407425000,
+        "foreignBuyIdr": 2407425000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-06",
+        "netForeignInflow": 584000000,
+        "foreignBuyIdr": 584000000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-07",
+        "netForeignInflow": 222650000,
+        "foreignBuyIdr": 222650000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-10",
+        "netForeignInflow": 583380000,
+        "foreignBuyIdr": 583380000,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-11",
+        "netForeignInflow": 10375000,
+        "foreignBuyIdr": 10375000,
+        "foreignSellIdr": 0
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-13",
+        "open": 7400,
+        "high": 7400,
+        "low": 7125,
+        "close": 7400,
+        "volume": 2824700,
+        "marketCap": 3559400000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-14",
+        "open": 7425,
+        "high": 7425,
+        "low": 7000,
+        "close": 7350,
+        "volume": 2577100,
+        "marketCap": 3535350000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-15",
+        "open": 6925,
+        "high": 6925,
+        "low": 6625,
+        "close": 6625,
+        "volume": 2886200,
+        "marketCap": 3186625000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-16",
+        "open": 6550,
+        "high": 6550,
+        "low": 5975,
+        "close": 5975,
+        "volume": 6851900,
+        "marketCap": 3618554936775
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-17",
+        "open": 5650,
+        "high": 6150,
+        "low": 5500,
+        "close": 6150,
+        "volume": 10463100,
+        "marketCap": 4481972892000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-20",
+        "open": 6350,
+        "high": 6350,
+        "low": 5600,
+        "close": 5750,
+        "volume": 11350600,
+        "marketCap": 4826330666250
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-21",
+        "open": 5775,
+        "high": 6325,
+        "low": 5775,
+        "close": 6325,
+        "volume": 3166300,
+        "marketCap": 7069705904800
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-22",
+        "open": 6925,
+        "high": 6950,
+        "low": 6200,
+        "close": 6200,
+        "volume": 10854700,
+        "marketCap": 7392948051200
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-23",
+        "open": 6800,
+        "high": 6800,
+        "low": 6800,
+        "close": 6800,
+        "volume": 5226200,
+        "marketCap": 8108394636800,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-24",
+        "open": 6775,
+        "high": 7475,
+        "low": 6775,
+        "close": 7475,
+        "volume": 5489600,
+        "marketCap": 8988687500000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-27",
+        "open": 7775,
+        "high": 7775,
+        "low": 7475,
+        "close": 7700,
+        "volume": 2472800,
+        "marketCap": 9259250000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-28",
+        "open": 7700,
+        "high": 7800,
+        "low": 7225,
+        "close": 7225,
+        "volume": 2117700,
+        "marketCap": 8688062500000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-29",
+        "open": 6900,
+        "high": 7100,
+        "low": 6725,
+        "close": 7000,
+        "volume": 1755100,
+        "marketCap": 8417500000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-30",
+        "open": 7050,
+        "high": 7175,
+        "low": 7050,
+        "close": 7150,
+        "volume": 859700,
+        "marketCap": 8597875000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-07-31",
+        "open": 7150,
+        "high": 7450,
+        "low": 7150,
+        "close": 7450,
+        "volume": 948000,
+        "marketCap": 8958625000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-03",
+        "open": 7500,
+        "high": 7500,
+        "low": 7350,
+        "close": 7350,
+        "volume": 1498200,
+        "marketCap": 8838375000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-04",
+        "open": 7250,
+        "high": 7250,
+        "low": 7175,
+        "close": 7175,
+        "volume": 637500,
+        "marketCap": 8627937500000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-05",
+        "open": 7175,
+        "high": 7325,
+        "low": 7175,
+        "close": 7300,
+        "volume": 1043100,
+        "marketCap": 8778250000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-06",
+        "open": 7300,
+        "high": 7300,
+        "low": 7300,
+        "close": 7300,
+        "volume": 632100,
+        "marketCap": 8778250000000,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-07",
+        "open": 7300,
+        "high": 7300,
+        "low": 7300,
+        "close": 7300,
+        "volume": 591200,
+        "marketCap": 8778250000000,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-10",
+        "open": 7350,
+        "high": 7350,
+        "low": 7050,
+        "close": 7050,
+        "volume": 1415700,
+        "marketCap": 8477625000000
+      },
+      {
+        "symbol": "SINI.JK",
+        "date": "2026-08-11",
+        "open": 7050,
+        "high": 7050,
+        "low": 6700,
+        "close": 6700,
+        "volume": 2182000,
+        "marketCap": 8056750000000
+      }
+    ],
+    "abnormalFlowZ": 806748145.7248635,
+    "abnormalVolumeZ": 6.384303227686473,
+    "preDriftPct": -20.988305653439816,
+    "id": "SINI.JK:buy:2026-08-11:INSIDER_CONTRA_BUY:c76ca0bc",
+    "pattern": "INSIDER_CONTRA_BUY",
+    "outcomes": [
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": "2026-08-11",
+        "targetDate": "2026-08-18",
+        "endDate": "2026-08-18",
+        "elapsedDays": 7,
+        "startClose": 6700,
+        "endClose": 7175,
+        "issuerPct": 7.08955223880597,
+        "benchmarkPct": 2.902895396848692,
+        "excessPp": 4.186656841957278,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "complete",
+        "reason": null,
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": "2026-08-11",
+        "targetDate": "2026-09-10",
+        "endDate": "2026-09-10",
+        "elapsedDays": 30,
+        "startClose": 6700,
+        "endClose": 13550,
+        "issuerPct": 102.23880597014924,
+        "benchmarkPct": 5.128655941083742,
+        "excessPp": 97.11015002906551,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "pending",
+        "reason": "The full forward horizon has not elapsed as of the snapshot.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": "2026-08-11",
+        "targetDate": "2026-10-10",
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": 6700,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "SINI.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-08-11",
+    "windowStart": "2026-07-12",
+    "windowEnd": "2026-08-11",
+    "holders": [
       "Deli Indonesia Raya"
     ],
     "insiderTrades": [
@@ -65778,7 +66265,7 @@
     "abnormalFlowZ": 806748145.7248635,
     "abnormalVolumeZ": 6.384303227686473,
     "preDriftPct": -20.988305653439816,
-    "id": "SINI.JK:2026-08-11:INSIDER_CONTRA_BUY",
+    "id": "SINI.JK:buy:2026-08-11:INSIDER_CONTRA_BUY:f149b8f9",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -66265,494 +66752,7 @@
     "abnormalFlowZ": 806748145.7248635,
     "abnormalVolumeZ": 6.384303227686473,
     "preDriftPct": -20.988305653439816,
-    "id": "SINI.JK:2026-08-11:INSIDER_CONTRA_BUY",
-    "pattern": "INSIDER_CONTRA_BUY",
-    "outcomes": [
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 7,
-        "startDate": "2026-08-11",
-        "targetDate": "2026-08-18",
-        "endDate": "2026-08-18",
-        "elapsedDays": 7,
-        "startClose": 6700,
-        "endClose": 7175,
-        "issuerPct": 7.08955223880597,
-        "benchmarkPct": 2.902895396848692,
-        "excessPp": 4.186656841957278,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "complete",
-        "reason": null,
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 30,
-        "startDate": "2026-08-11",
-        "targetDate": "2026-09-10",
-        "endDate": "2026-09-10",
-        "elapsedDays": 30,
-        "startClose": 6700,
-        "endClose": 13550,
-        "issuerPct": 102.23880597014924,
-        "benchmarkPct": 5.128655941083742,
-        "excessPp": 97.11015002906551,
-        "adjustmentBasis": "unverified"
-      },
-      {
-        "status": "pending",
-        "reason": "The full forward horizon has not elapsed as of the snapshot.",
-        "basis": "transaction-relative-retrospective",
-        "horizonDays": 60,
-        "startDate": "2026-08-11",
-        "targetDate": "2026-10-10",
-        "endDate": null,
-        "elapsedDays": null,
-        "startClose": 6700,
-        "endClose": null,
-        "issuerPct": null,
-        "benchmarkPct": null,
-        "excessPp": null,
-        "adjustmentBasis": "unverified"
-      }
-    ]
-  },
-  {
-    "symbol": "SINI.JK",
-    "direction": "accumulate",
-    "anchorDate": "2026-08-11",
-    "windowStart": "2026-07-12",
-    "windowEnd": "2026-08-11",
-    "holders": [
-      "Deli Indonesia Raya"
-    ],
-    "insiderTrades": [
-      {
-        "symbol": "SINI.JK",
-        "holderName": "Deli Indonesia Raya",
-        "holderType": "insider",
-        "txnType": "buy",
-        "txnDate": "2026-08-11",
-        "filedAt": "2026-08-11T18:42:36",
-        "amount": 60000000,
-        "price": 5070,
-        "value": 304200000000,
-        "pctBefore": 2.49,
-        "pctAfter": 7.48,
-        "clusterHint": "cluster-buy",
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-11082026-9170-00.pdf-0.pdf"
-      }
-    ],
-    "flowWindow": [
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-13",
-        "netForeignInflow": 0,
-        "foreignBuyIdr": 0,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-14",
-        "netForeignInflow": 147500000,
-        "foreignBuyIdr": 147500000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-15",
-        "netForeignInflow": 14092500,
-        "foreignBuyIdr": 14092500,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-16",
-        "netForeignInflow": 0,
-        "foreignBuyIdr": 11950000,
-        "foreignSellIdr": 11950000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-17",
-        "netForeignInflow": -850000,
-        "foreignBuyIdr": 11300000,
-        "foreignSellIdr": 12150000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-20",
-        "netForeignInflow": 5600000,
-        "foreignBuyIdr": 11350000,
-        "foreignSellIdr": 5750000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-21",
-        "netForeignInflow": -9487500,
-        "foreignBuyIdr": 0,
-        "foreignSellIdr": 9487500
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-22",
-        "netForeignInflow": 7545000,
-        "foreignBuyIdr": 7545000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-23",
-        "netForeignInflow": 13600000,
-        "foreignBuyIdr": 13600000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-24",
-        "netForeignInflow": 12872500,
-        "foreignBuyIdr": 12872500,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-27",
-        "netForeignInflow": 31670000,
-        "foreignBuyIdr": 31670000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-28",
-        "netForeignInflow": 159700000,
-        "foreignBuyIdr": 159700000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-29",
-        "netForeignInflow": 70000000,
-        "foreignBuyIdr": 70000000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-30",
-        "netForeignInflow": 5640000,
-        "foreignBuyIdr": 5640000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-31",
-        "netForeignInflow": 74500000,
-        "foreignBuyIdr": 74500000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-03",
-        "netForeignInflow": 1263465000,
-        "foreignBuyIdr": 1263465000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-04",
-        "netForeignInflow": 6457500,
-        "foreignBuyIdr": 6457500,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-05",
-        "netForeignInflow": 2407425000,
-        "foreignBuyIdr": 2407425000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-06",
-        "netForeignInflow": 584000000,
-        "foreignBuyIdr": 584000000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-07",
-        "netForeignInflow": 222650000,
-        "foreignBuyIdr": 222650000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-10",
-        "netForeignInflow": 583380000,
-        "foreignBuyIdr": 583380000,
-        "foreignSellIdr": 0
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-11",
-        "netForeignInflow": 10375000,
-        "foreignBuyIdr": 10375000,
-        "foreignSellIdr": 0
-      }
-    ],
-    "priceWindow": [
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-13",
-        "open": 7400,
-        "high": 7400,
-        "low": 7125,
-        "close": 7400,
-        "volume": 2824700,
-        "marketCap": 3559400000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-14",
-        "open": 7425,
-        "high": 7425,
-        "low": 7000,
-        "close": 7350,
-        "volume": 2577100,
-        "marketCap": 3535350000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-15",
-        "open": 6925,
-        "high": 6925,
-        "low": 6625,
-        "close": 6625,
-        "volume": 2886200,
-        "marketCap": 3186625000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-16",
-        "open": 6550,
-        "high": 6550,
-        "low": 5975,
-        "close": 5975,
-        "volume": 6851900,
-        "marketCap": 3618554936775
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-17",
-        "open": 5650,
-        "high": 6150,
-        "low": 5500,
-        "close": 6150,
-        "volume": 10463100,
-        "marketCap": 4481972892000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-20",
-        "open": 6350,
-        "high": 6350,
-        "low": 5600,
-        "close": 5750,
-        "volume": 11350600,
-        "marketCap": 4826330666250
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-21",
-        "open": 5775,
-        "high": 6325,
-        "low": 5775,
-        "close": 6325,
-        "volume": 3166300,
-        "marketCap": 7069705904800
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-22",
-        "open": 6925,
-        "high": 6950,
-        "low": 6200,
-        "close": 6200,
-        "volume": 10854700,
-        "marketCap": 7392948051200
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-23",
-        "open": 6800,
-        "high": 6800,
-        "low": 6800,
-        "close": 6800,
-        "volume": 5226200,
-        "marketCap": 8108394636800,
-        "observationKind": "legacy-unknown",
-        "fieldSources": {
-          "open": "legacy-unknown",
-          "high": "legacy-unknown",
-          "low": "legacy-unknown",
-          "close": "legacy-unknown",
-          "volume": "legacy-unknown",
-          "marketCap": "legacy-unknown"
-        }
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-24",
-        "open": 6775,
-        "high": 7475,
-        "low": 6775,
-        "close": 7475,
-        "volume": 5489600,
-        "marketCap": 8988687500000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-27",
-        "open": 7775,
-        "high": 7775,
-        "low": 7475,
-        "close": 7700,
-        "volume": 2472800,
-        "marketCap": 9259250000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-28",
-        "open": 7700,
-        "high": 7800,
-        "low": 7225,
-        "close": 7225,
-        "volume": 2117700,
-        "marketCap": 8688062500000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-29",
-        "open": 6900,
-        "high": 7100,
-        "low": 6725,
-        "close": 7000,
-        "volume": 1755100,
-        "marketCap": 8417500000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-30",
-        "open": 7050,
-        "high": 7175,
-        "low": 7050,
-        "close": 7150,
-        "volume": 859700,
-        "marketCap": 8597875000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-07-31",
-        "open": 7150,
-        "high": 7450,
-        "low": 7150,
-        "close": 7450,
-        "volume": 948000,
-        "marketCap": 8958625000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-03",
-        "open": 7500,
-        "high": 7500,
-        "low": 7350,
-        "close": 7350,
-        "volume": 1498200,
-        "marketCap": 8838375000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-04",
-        "open": 7250,
-        "high": 7250,
-        "low": 7175,
-        "close": 7175,
-        "volume": 637500,
-        "marketCap": 8627937500000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-05",
-        "open": 7175,
-        "high": 7325,
-        "low": 7175,
-        "close": 7300,
-        "volume": 1043100,
-        "marketCap": 8778250000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-06",
-        "open": 7300,
-        "high": 7300,
-        "low": 7300,
-        "close": 7300,
-        "volume": 632100,
-        "marketCap": 8778250000000,
-        "observationKind": "legacy-unknown",
-        "fieldSources": {
-          "open": "legacy-unknown",
-          "high": "legacy-unknown",
-          "low": "legacy-unknown",
-          "close": "legacy-unknown",
-          "volume": "legacy-unknown",
-          "marketCap": "legacy-unknown"
-        }
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-07",
-        "open": 7300,
-        "high": 7300,
-        "low": 7300,
-        "close": 7300,
-        "volume": 591200,
-        "marketCap": 8778250000000,
-        "observationKind": "legacy-unknown",
-        "fieldSources": {
-          "open": "legacy-unknown",
-          "high": "legacy-unknown",
-          "low": "legacy-unknown",
-          "close": "legacy-unknown",
-          "volume": "legacy-unknown",
-          "marketCap": "legacy-unknown"
-        }
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-10",
-        "open": 7350,
-        "high": 7350,
-        "low": 7050,
-        "close": 7050,
-        "volume": 1415700,
-        "marketCap": 8477625000000
-      },
-      {
-        "symbol": "SINI.JK",
-        "date": "2026-08-11",
-        "open": 7050,
-        "high": 7050,
-        "low": 6700,
-        "close": 6700,
-        "volume": 2182000,
-        "marketCap": 8056750000000
-      }
-    ],
-    "abnormalFlowZ": 806748145.7248635,
-    "abnormalVolumeZ": 6.384303227686473,
-    "preDriftPct": -20.988305653439816,
-    "id": "SINI.JK:2026-08-11:STEALTH_ACCUMULATION",
+    "id": "SINI.JK:buy:2026-08-11:STEALTH_ACCUMULATION:c76ca0bc",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -66812,23 +66812,23 @@
     "windowStart": "2026-07-12",
     "windowEnd": "2026-08-11",
     "holders": [
-      "Hendrikus Yulidar Putra Karim"
+      "Deli Indonesia Raya"
     ],
     "insiderTrades": [
       {
         "symbol": "SINI.JK",
-        "holderName": "Hendrikus Yulidar Putra Karim",
+        "holderName": "Deli Indonesia Raya",
         "holderType": "insider",
         "txnType": "buy",
         "txnDate": "2026-08-11",
-        "filedAt": "2026-08-11T18:45:54",
-        "amount": 90000000,
+        "filedAt": "2026-08-11T18:42:36",
+        "amount": 60000000,
         "price": 5070,
-        "value": 456300000000,
-        "pctBefore": 0,
+        "value": 304200000000,
+        "pctBefore": 2.49,
         "pctAfter": 7.48,
         "clusterHint": "cluster-buy",
-        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-11082026-9910-00.pdf-0.pdf"
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-11082026-9170-00.pdf-0.pdf"
       }
     ],
     "flowWindow": [
@@ -67239,7 +67239,7 @@
     "abnormalFlowZ": 806748145.7248635,
     "abnormalVolumeZ": 6.384303227686473,
     "preDriftPct": -20.988305653439816,
-    "id": "SINI.JK:2026-08-11:STEALTH_ACCUMULATION",
+    "id": "SINI.JK:buy:2026-08-11:STEALTH_ACCUMULATION:f149b8f9",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -67867,7 +67867,7 @@
     "abnormalFlowZ": -108742154.88849093,
     "abnormalVolumeZ": 3426543.604739712,
     "preDriftPct": 0,
-    "id": "SOLA.JK:2026-08-03:INSIDER_CONTRA_BUY",
+    "id": "SOLA.JK:buy:2026-08-03:INSIDER_CONTRA_BUY:334477e4",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -68098,7 +68098,7 @@
     "abnormalFlowZ": 79677856.62746158,
     "abnormalVolumeZ": 2868533.319843518,
     "preDriftPct": 0,
-    "id": "SQMI.JK:2026-07-01:STEALTH_ACCUMULATION",
+    "id": "SQMI.JK:buy:2026-07-01:STEALTH_ACCUMULATION:f710e085",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -68844,7 +68844,7 @@
     "abnormalFlowZ": 7.838251107066427,
     "abnormalVolumeZ": 1.271414907788653,
     "preDriftPct": 2.1137570979205464,
-    "id": "SRTG.JK:2026-09-18:INSIDER_CONTRA_BUY",
+    "id": "SRTG.JK:buy:2026-09-18:INSIDER_CONTRA_BUY:30be6485",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -69590,7 +69590,7 @@
     "abnormalFlowZ": 7.838251107066427,
     "abnormalVolumeZ": 1.271414907788653,
     "preDriftPct": 2.1137570979205464,
-    "id": "SRTG.JK:2026-09-18:STEALTH_ACCUMULATION",
+    "id": "SRTG.JK:buy:2026-09-18:STEALTH_ACCUMULATION:30be6485",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -70131,7 +70131,7 @@
     "abnormalFlowZ": -8.101895720310935,
     "abnormalVolumeZ": -0.4005681121072936,
     "preDriftPct": -9.766698769794491,
-    "id": "SUPA.JK:2026-08-12:CLUSTER_PATTERN",
+    "id": "SUPA.JK:buy:2026-08-12:CLUSTER_PATTERN:7347644f",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -70672,7 +70672,7 @@
     "abnormalFlowZ": -8.101895720310935,
     "abnormalVolumeZ": -0.4005681121072936,
     "preDriftPct": -9.766698769794491,
-    "id": "SUPA.JK:2026-08-12:INSIDER_CONTRA_BUY",
+    "id": "SUPA.JK:buy:2026-08-12:INSIDER_CONTRA_BUY:7347644f",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -71013,7 +71013,7 @@
     "abnormalFlowZ": 32684677.505561616,
     "abnormalVolumeZ": 5721214.982688071,
     "preDriftPct": 0,
-    "id": "SURI.JK:2026-07-10:STEALTH_ACCUMULATION",
+    "id": "SURI.JK:buy:2026-07-10:STEALTH_ACCUMULATION:9dfa9253",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -71490,7 +71490,7 @@
     "abnormalFlowZ": 17.499383312711032,
     "abnormalVolumeZ": 12.369578991878399,
     "preDriftPct": 49.87716045436445,
-    "id": "TAMA.JK:2026-08-06:STEALTH_ACCUMULATION",
+    "id": "TAMA.JK:buy:2026-08-06:STEALTH_ACCUMULATION:f5a74813",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -72149,7 +72149,7 @@
     "abnormalFlowZ": 68.75785882759298,
     "abnormalVolumeZ": 4.366162451458738,
     "preDriftPct": -33.29055494169414,
-    "id": "TAMA.JK:2026-09-08:INSIDER_CONTRA_BUY",
+    "id": "TAMA.JK:buy:2026-09-08:INSIDER_CONTRA_BUY:3f0af5c8",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -72808,7 +72808,7 @@
     "abnormalFlowZ": 68.75785882759298,
     "abnormalVolumeZ": 4.366162451458738,
     "preDriftPct": -33.29055494169414,
-    "id": "TAMA.JK:2026-09-08:STEALTH_ACCUMULATION",
+    "id": "TAMA.JK:buy:2026-09-08:STEALTH_ACCUMULATION:3f0af5c8",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -73260,7 +73260,7 @@
     "abnormalFlowZ": 14.044939339378809,
     "abnormalVolumeZ": 3.9429973025742573,
     "preDriftPct": 21.275838440938728,
-    "id": "TAPG.JK:2026-09-10:STEALTH_ACCUMULATION",
+    "id": "TAPG.JK:buy:2026-09-10:STEALTH_ACCUMULATION:85c922a3",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -73792,7 +73792,7 @@
     "abnormalFlowZ": -0.83951582476625,
     "abnormalVolumeZ": 2.484086629327566,
     "preDriftPct": 11.248704789138483,
-    "id": "TOWR.JK:2026-09-16:CLUSTER_PATTERN",
+    "id": "TOWR.JK:sell:2026-09-16:CLUSTER_PATTERN:37f4b445",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -73908,7 +73908,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "TPIA.JK:2026-06-12:CLUSTER_PATTERN",
+    "id": "TPIA.JK:buy:2026-06-12:CLUSTER_PATTERN:579c71cf",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -74351,7 +74351,7 @@
     "abnormalFlowZ": 260.76945679721985,
     "abnormalVolumeZ": 0.6969797193791225,
     "preDriftPct": -3.4043067942181744,
-    "id": "TRIS.JK:2026-08-27:STEALTH_ACCUMULATION",
+    "id": "TRIS.JK:buy:2026-08-27:STEALTH_ACCUMULATION:b2cbd62a",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -74794,7 +74794,7 @@
     "abnormalFlowZ": 260.76945679721985,
     "abnormalVolumeZ": 0.6969797193791225,
     "preDriftPct": -3.4043067942181744,
-    "id": "TRIS.JK:2026-08-27:STEALTH_ACCUMULATION",
+    "id": "TRIS.JK:buy:2026-08-27:STEALTH_ACCUMULATION:c8f96ae4",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -75271,7 +75271,7 @@
     "abnormalFlowZ": 2283574.591665532,
     "abnormalVolumeZ": 9.580795952071613,
     "preDriftPct": -8.196597044894004,
-    "id": "TRJA.JK:2026-08-12:INSIDER_CONTRA_BUY",
+    "id": "TRJA.JK:buy:2026-08-12:INSIDER_CONTRA_BUY:77b07b32",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -75748,7 +75748,7 @@
     "abnormalFlowZ": 2283574.591665532,
     "abnormalVolumeZ": 9.580795952071613,
     "preDriftPct": -8.196597044894004,
-    "id": "TRJA.JK:2026-08-12:STEALTH_ACCUMULATION",
+    "id": "TRJA.JK:buy:2026-08-12:STEALTH_ACCUMULATION:77b07b32",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -75880,7 +75880,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "TRUK.JK:2026-04-07:CLUSTER_PATTERN",
+    "id": "TRUK.JK:buy:2026-04-07:CLUSTER_PATTERN:2c202a8f",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -76374,7 +76374,7 @@
     "abnormalFlowZ": 35613200.426425576,
     "abnormalVolumeZ": 3.3192074768326387,
     "preDriftPct": 128.29667657369447,
-    "id": "TRUK.JK:2026-09-18:STEALTH_ACCUMULATION",
+    "id": "TRUK.JK:buy:2026-09-18:STEALTH_ACCUMULATION:7b3bb5e6",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -76834,7 +76834,7 @@
     "abnormalFlowZ": 1.6785053756297545,
     "abnormalVolumeZ": 0.8271074050423516,
     "preDriftPct": 3.186391361920661,
-    "id": "TSPC.JK:2026-08-19:STEALTH_ACCUMULATION",
+    "id": "TSPC.JK:buy:2026-08-19:STEALTH_ACCUMULATION:ecdc8bb3",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -77286,7 +77286,7 @@
     "abnormalFlowZ": 27.097706025714945,
     "abnormalVolumeZ": 15.724406475501123,
     "preDriftPct": 81.42596590765577,
-    "id": "VICI.JK:2026-09-10:STEALTH_ACCUMULATION",
+    "id": "VICI.JK:buy:2026-09-10:STEALTH_ACCUMULATION:f2b419cd",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -77402,7 +77402,7 @@
     "abnormalFlowZ": 0,
     "abnormalVolumeZ": 0,
     "preDriftPct": 0,
-    "id": "VISI.JK:2026-06-10:CLUSTER_PATTERN",
+    "id": "VISI.JK:buy:2026-06-10:CLUSTER_PATTERN:fe9ea275",
     "pattern": "CLUSTER_PATTERN",
     "outcomes": [
       {
@@ -77997,7 +77997,7 @@
     "abnormalFlowZ": -254108990.22061825,
     "abnormalVolumeZ": 1138347.35808947,
     "preDriftPct": 0,
-    "id": "WINS.JK:2026-07-30:INSIDER_CONTRA_BUY",
+    "id": "WINS.JK:buy:2026-07-30:INSIDER_CONTRA_BUY:491a28b9",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -78474,7 +78474,7 @@
     "abnormalFlowZ": 10.6548822742549,
     "abnormalVolumeZ": 1.98773396762896,
     "preDriftPct": -9.303335854534929,
-    "id": "WINS.JK:2026-08-12:INSIDER_CONTRA_BUY",
+    "id": "WINS.JK:buy:2026-08-12:INSIDER_CONTRA_BUY:87e3d761",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -78951,7 +78951,7 @@
     "abnormalFlowZ": 10.6548822742549,
     "abnormalVolumeZ": 1.98773396762896,
     "preDriftPct": -9.303335854534929,
-    "id": "WINS.JK:2026-08-12:STEALTH_ACCUMULATION",
+    "id": "WINS.JK:buy:2026-08-12:STEALTH_ACCUMULATION:87e3d761",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {

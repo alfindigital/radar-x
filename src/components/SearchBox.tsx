@@ -47,6 +47,7 @@ export function SearchBox() {
         />
       </div>
       {error && <p className="mt-1 text-[11px] text-dist" role="alert">{error}</p>}
+      <button type="submit" className="sr-only">Open issuer</button>
     </form>
   );
 }

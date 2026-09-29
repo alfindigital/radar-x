@@ -1,5 +1,5 @@
 // Service layer — the only thing UI/route handlers talk to.
-// Reads the store; lazy-backfills a ticker on demand (24h cache).
+// Reads the verified local snapshot and derived-v2 artifacts; never fetches or writes during a request.
 
 import { loadDerived, type DerivedCase } from "./derive";
 import { rankFlowRows, type FlowRadarRow } from "./flow";
