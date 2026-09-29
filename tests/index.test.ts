@@ -7,3 +7,4 @@ import "./cases.test";
 import "./outcomes.test";
 import "./score.test";
 import "./compute.test";
+import "./flow.test";

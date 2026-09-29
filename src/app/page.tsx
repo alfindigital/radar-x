@@ -87,13 +87,11 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
                     <td className="py-2 pr-4">
                       <Sparkline values={sparks[s.symbol] ?? []} cumulative />
                     </td>
-                    <td className={`hidden py-3 pr-4 text-right md:table-cell ${s.components.insiderZ >= 0 ? "acc" : "dist"}`}>
-                      {s.components.insiderZ >= 0 ? "+" : ""}
-                      {s.components.insiderZ.toFixed(1)}σ
+                    <td className={`hidden py-3 pr-4 text-right md:table-cell ${(s.components.insiderZ.z ?? 0) >= 0 ? "acc" : "dist"}`}>
+                      {s.components.insiderZ.z === null ? "—" : `${s.components.insiderZ.z >= 0 ? "+" : ""}${s.components.insiderZ.z.toFixed(1)}σ`}
                     </td>
-                    <td className={`hidden py-3 pr-4 text-right lg:table-cell ${s.components.instNetZ >= 0 ? "acc" : "dist"}`}>
-                      {s.components.instNetZ >= 0 ? "+" : ""}
-                      {s.components.instNetZ.toFixed(1)}σ
+                    <td className={`hidden py-3 pr-4 text-right lg:table-cell ${(s.components.instNetZ.z ?? 0) >= 0 ? "acc" : "dist"}`}>
+                      {s.components.instNetZ.z === null ? "—" : `${s.components.instNetZ.z >= 0 ? "+" : ""}${s.components.instNetZ.z.toFixed(1)}σ`}
                     </td>
                     <td className="py-3 pr-4 text-right">
                       <ScoreNumber score={s.score} />

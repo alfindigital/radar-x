@@ -114,7 +114,7 @@ export async function loadDerived(dataDir = path.join(process.cwd(), "data", "de
   if (manifest.schemaVersion !== 2 || manifest.engineVersion !== "radarx-v2") throw new Error("derived manifest version is unsupported");
   const content = {} as { scores: ScoreV2[]; cases: DerivedCase[] };
   for (const file of ["scores.json", "cases.json"] as const) {
-    const bytes = await readFile(path.join(dataDir, file));
+    const bytes = await readFile(path.join(/*turbopackIgnore: true*/ dataDir, file));
     const meta = manifest.files.find((item) => item.path === file);
     if (!meta || (meta.sha256 && meta.sha256 !== digest(bytes))) throw new Error(`derived ${file} hash mismatch`);
     content[file.slice(0, -5) as "scores" | "cases"] = JSON.parse(bytes.toString("utf8"));

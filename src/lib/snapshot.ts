@@ -92,7 +92,7 @@ export async function loadSnapshot(dataDir = DEFAULT_DATA_DIR): Promise<Snapshot
   for (const [file] of DATA_FILES) {
     let bytes: Buffer;
     try {
-      bytes = await readFile(path.join(dataDir, file));
+      bytes = await readFile(path.join(/*turbopackIgnore: true*/ dataDir, file));
     } catch (error) {
       throw new Error(`${file}: unable to read snapshot file`, { cause: error });
     }

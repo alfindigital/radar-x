@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { getIssuerDossier, getRadarBoard } from "../src/lib/services";
-import { JsonStore } from "../src/lib/db";
+import { loadDerived } from "../src/lib/derive";
+import { loadSnapshot } from "../src/lib/snapshot";
 
 test("board reads the complete latest cohort without an upstream request", async () => {
   const originalFetch = globalThis.fetch;
@@ -10,9 +11,9 @@ test("board reads the complete latest cohort without an upstream request", async
   }) as typeof fetch;
   try {
     const board = await getRadarBoard();
-    const expected = await new JsonStore().latestScores();
-    assert.equal(board.scores.length, expected.length);
-    assert.equal(new Set(board.scores.map((row) => row.symbol)).size, expected.length);
+    const expected = await loadDerived();
+    assert.equal(board.scores.length, expected.scores.length);
+    assert.deepEqual(board.scores, expected.scores);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -32,4 +33,14 @@ test("unknown issuer is explicit and does not trigger a provider fetch", async (
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("known issuers use the verified derived-v2 score and do not mutate the snapshot", async () => {
+  const before = await loadSnapshot();
+  const dossier = await getIssuerDossier("BBCA");
+  const after = await loadSnapshot();
+  assert.equal(dossier.status, "available");
+  assert.equal(dossier.asOf, "2026-09-22");
+  assert.equal(dossier.score?.methodVersion, "radarx-v2");
+  assert.equal(after.manifest.inputHash, before.manifest.inputHash);
 });

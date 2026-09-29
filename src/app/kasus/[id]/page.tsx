@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCase, getIssuerDossier } from "@/lib/services";
 import TimelineChart from "@/components/TimelineChart";
-import { ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
+import { Stat } from "@/components/widgets";
 import { fmtIDR, fmtPct, fmtShares, PATTERN_LABEL, patternTagClass } from "@/components/fmt";
 
 export const dynamic = "force-dynamic";
@@ -15,7 +15,10 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
   if (!c) notFound();
 
   const d = await getIssuerDossier(c.symbol);
-  const names = [...new Set(c.evidence.insiderTrades.map((t) => t.holderName))];
+  const names = c.holders;
+  const outcome7 = c.outcomes.find((outcome) => outcome.horizonDays === 7)!;
+  const outcome30 = c.outcomes.find((outcome) => outcome.horizonDays === 30)!;
+  const outcome60 = c.outcomes.find((outcome) => outcome.horizonDays === 60)!;
 
   return (
     <div className="space-y-6">
@@ -25,8 +28,6 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
           <Link href={`/saham/${c.symbol.replace(".JK", "")}`} className="mono text-2xl font-bold">
             {c.symbol.replace(".JK", "")}
           </Link>
-          <ScoreNumber score={c.score} size="lg" />
-          <ScoreMarker score={c.score} />
         </div>
         <p className="mt-1 text-xs dim">
           Jangkar {c.anchorDate} · window {c.windowStart} → {c.windowEnd}
@@ -34,21 +35,21 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
       </div>
 
       <section className="border-l-2 border-line pl-4">
-        <p className="text-sm leading-relaxed dim">{c.narrative}</p>
+        <p className="text-sm leading-relaxed dim">Candidate pattern from reported transactions; retrospective outcomes are measured separately and do not establish intent.</p>
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-        <Stat label="Return 7 hari" value={fmtPct(c.outcome.fwd7dPct)} />
+        <Stat label="Return 7 hari" value={outcome7.status === "complete" ? fmtPct(outcome7.issuerPct) : outcome7.status} />
         <Stat
           label="Return 30 hari"
-          value={fmtPct(c.outcome.fwd30dPct)}
-          sub={c.outcome.benchmarkFwd30dPct !== null ? `IHSG ${fmtPct(c.outcome.benchmarkFwd30dPct)}` : undefined}
+          value={outcome30.status === "complete" ? fmtPct(outcome30.issuerPct) : outcome30.status}
+          sub={outcome30.status === "complete" && outcome30.benchmarkPct !== null ? `IHSG ${fmtPct(outcome30.benchmarkPct)}` : undefined}
         />
-        <Stat label="Return 60 hari" value={fmtPct(c.outcome.fwd60dPct)} />
+        <Stat label="Return 60 hari" value={outcome60.status === "complete" ? fmtPct(outcome60.issuerPct) : outcome60.status} />
         <Stat
           label="Flow abnormal (z)"
-          value={`${c.evidence.abnormalFlowZ >= 0 ? "+" : ""}${c.evidence.abnormalFlowZ.toFixed(1)}σ`}
-          sub={`volume ${c.evidence.abnormalVolumeZ >= 0 ? "+" : ""}${c.evidence.abnormalVolumeZ.toFixed(1)}σ · pre-drift ${fmtPct(c.evidence.preDriftPct)}`}
+          value={`${c.abnormalFlowZ >= 0 ? "+" : ""}${c.abnormalFlowZ.toFixed(1)}σ`}
+          sub={`volume ${c.abnormalVolumeZ >= 0 ? "+" : ""}${c.abnormalVolumeZ.toFixed(1)}σ · pre-drift ${fmtPct(c.preDriftPct)}`}
         />
       </div>
 
@@ -71,7 +72,7 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
             </tr>
           </thead>
           <tbody className="mono">
-            {c.evidence.insiderTrades.map((t, i) => (
+            {c.insiderTrades.map((t, i) => (
               <tr key={i} className="border-b border-line/40">
                 <td className="py-1.5 pr-3 faint">{t.txnDate}</td>
                 <td className="max-w-[240px] truncate py-1.5 pr-3">
