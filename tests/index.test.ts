@@ -6,3 +6,4 @@ import "./price-merge.test";
 import "./cases.test";
 import "./outcomes.test";
 import "./score.test";
+import "./compute.test";

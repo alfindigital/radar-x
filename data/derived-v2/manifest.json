@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "radarx-v2",
+  "asOf": "2026-09-22",
+  "inputHash": "abd41f5889f62c60deb695af54b1003a82b368e456a0e373193f5c4fa83636c3",
+  "generatedAt": "2026-09-29T14:01:44.396Z",
+  "files": [
+    {
+      "path": "scores.json",
+      "rows": 962,
+      "sha256": "e6801377e6d69fc279317c5f3e744c28a1b2b3b141b775671f8009f0e8dd8834"
+    },
+    {
+      "path": "cases.json",
+      "rows": 171,
+      "sha256": "00d84d41d61300e044f7b9e643a3fa63bde9f3a9a87fe6687a7eaecb58254666"
+    }
+  ],
+  "limitations": [
+    "Derived analytics use the immutable local Sectors snapshot and do not call an upstream provider.",
+    "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete."
+  ]
+}
