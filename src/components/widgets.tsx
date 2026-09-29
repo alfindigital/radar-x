@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { DerivedCase } from "@/lib/derive";
 import type { ComponentKey, ScoreV2 } from "@/lib/types";
-import { fmtIDR, fmtPct, PATTERN_LABEL, patternTagClass, scoreColor } from "./fmt";
+import { fmtCurrency, fmtPct, PATTERN_LABEL, patternTagClass, scoreColor } from "./fmt";
 
 export function ScoreNumber({ score, size = "md" }: { score: number | null; size?: "sm" | "md" | "lg" }) {
   const sz = size === "lg" ? "text-3xl" : size === "sm" ? "text-sm" : "text-base";
@@ -31,11 +31,11 @@ export function ScoreMarker({ score }: { score: number | null }) {
 }
 
 const COMPONENT_META: { key: ComponentKey; label: string; weight: number; hint: string }[] = [
-  { key: "insiderZ", label: "Insider net 90h", weight: 0.3, hint: "Transaksi insider bersih (Rp), cluster ditimbang lebih berat" },
-  { key: "foreignTrend", label: "Flow asing 90h", weight: 0.25, hint: "Net inflow kumulatif dinormalisasi market cap" },
-  { key: "instNetZ", label: "Kohort institusi 14h", weight: 0.2, hint: "Net buy broker institusi/asing 2 minggu" },
-  { key: "retailExodusZ", label: "Eksodus ritel", weight: 0.15, hint: "Perubahan jumlah pemegang saham bulanan" },
-  { key: "fclassShift", label: "Shift kelas asing", weight: 0.1, hint: "Δ institusi asing vs individu asing bulanan" },
+  { key: "insiderZ", label: "Reported ownership (90d)", weight: 0.3, hint: "Net reported transaction value within the inclusive 90-day window" },
+  { key: "foreignTrend", label: "Foreign flow (90d)", weight: 0.25, hint: "Cumulative net inflow normalized by an observed market cap" },
+  { key: "instNetZ", label: "Broker context (14d)", weight: 0.2, hint: "Eligible institutional or foreign broker net value" },
+  { key: "retailExodusZ", label: "Shareholder count change", weight: 0.15, hint: "Month-over-month reported shareholder count change" },
+  { key: "fclassShift", label: "Foreign holder-class shift", weight: 0.1, hint: "Foreign institutional classes minus foreign individual classes" },
 ];
 
 export function ScoreBreakdown({ score }: { score: ScoreV2 }) {
@@ -91,11 +91,11 @@ export function CaseRow({ c }: { c: DerivedCase }) {
         <p className="mt-0.5 truncate text-xs dim">{names.length} distinct holders · {outcome30.status === "complete" ? "30-day outcome measured" : `30-day outcome ${outcome30.status}`}</p>
         <p className="mt-0.5 text-[11px] faint">
           {names.slice(0, 2).join(", ")}
-          {names.length > 2 ? ` +${names.length - 2}` : ""} · Rp{fmtIDR(val)}
+          {names.length > 2 ? ` +${names.length - 2}` : ""} · {fmtCurrency(val)}
         </p>
       </div>
       <div className="flex items-center gap-4 text-right">
-        <div className={`mono text-xs ${dir}`}>30d {outcome30.status === "complete" ? fmtPct(outcome30.issuerPct) : outcome30.status}</div>
+        <div className={`mono text-xs ${dir}`}>30d {outcome30.status === "complete" ? fmtPct(outcome30.issuerPct, 1, "complete") : outcome30.status}</div>
       </div>
     </Link>
   );

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import { SearchBox } from "@/components/SearchBox";
+import MobileNav from "@/components/MobileNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,14 +18,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "RADAR-X — Smart Money Positioning IDX",
   description:
-    "Peta posisi smart money IDX: siapa (insider, institusi, asing) sedang mengakumulasi atau meninggalkan saham — dari data disclosure resmi. Informasi publik, bukan nasihat investasi.",
+    "A reproducible market-intelligence view of Indonesian equity disclosures, foreign flow, broker context, and measured historical outcomes.",
 };
 
 const NAV = [
   { href: "/", label: "Board", icon: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" },
-  { href: "/asing", label: "Asing", icon: "M3 17l6-6 4 4 8-8M15 7h6v6" },
-  { href: "/kasus", label: "Kasus", icon: "M4 6h16M4 12h16M4 18h10" },
-  { href: "/metodologi", label: "Metodologi", icon: "M12 8h.01M12 12v4m9-4a9 9 0 1 1-18 0 9 9 0 0 1 18 0" },
+  { href: "/asing", label: "Foreign flow", icon: "M3 17l6-6 4 4 8-8M15 7h6v6" },
+  { href: "/kasus", label: "Cases", icon: "M4 6h16M4 12h16M4 18h10" },
+  { href: "/metodologi", label: "Methodology", icon: "M12 8h.01M12 12v4m9-4a9 9 0 1 1-18 0 9 9 0 0 1 18 0" },
 ];
 
 function Sidebar() {
@@ -61,7 +62,7 @@ function Sidebar() {
         ))}
       </nav>
       <div className="border-t border-line p-4">
-        <p className="text-[10px] leading-relaxed faint">Sectors API · IDX disclosures · EOD</p>
+        <p className="text-[10px] leading-relaxed faint">Sectors data · IDX disclosures · EOD</p>
       </div>
     </aside>
   );
@@ -74,7 +75,7 @@ function Topbar() {
         RADAR<span className="acc">-X</span>
       </Link>
       <SearchBox />
-      <div className="ml-auto hidden text-[10px] faint sm:block">Data end-of-day · bukan nasihat investasi</div>
+      <div className="ml-auto hidden text-[10px] faint sm:block">End-of-day data · research only</div>
     </header>
   );
 }
@@ -83,9 +84,9 @@ function Footer() {
   return (
     <footer className="border-t border-line px-4 py-6 md:px-8">
       <p className="max-w-3xl text-[11px] leading-relaxed faint">
-        RADAR-X menyajikan statistik deskriptif atas disclosure publik IDX via Sectors Financial API. Ini bukan
-        nasihat investasi, bukan rekomendasi beli/jual, dan bukan tuduhan atas pihak manapun. Semua keputusan
-        investasi adalah tanggung jawabmu — lakukan riset sendiri (DYOR).
+        RADAR-X presents descriptive statistics from public IDX disclosures via Sectors data. It is not investment
+        advice, a buy/sell recommendation, or an allegation about any person. Historical outcomes do not predict
+        future returns.
       </p>
       <p className="mt-2 text-[10px] faint">Sectors Hackathon 2026 · Track Market Intelligence</p>
     </footer>
@@ -94,11 +95,12 @@ function Footer() {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full">
         <Sidebar />
         <div className="flex min-h-screen w-full flex-col md:pl-[200px]">
           <Topbar />
+          <MobileNav />
           <main className="w-full flex-1 px-4 py-6 md:px-8">{children}</main>
           <Footer />
         </div>

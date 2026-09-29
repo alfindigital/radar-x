@@ -1,6 +1,4 @@
-// Foreign Flow Radar — seluruh emiten IDX dengan aktivitas investor asing,
-// di-ranking berdasarkan net inflow kumulatif. Berbeda dengan Board (composite
-// score insider-active), halaman ini murni pilar asing — coverage ~700 emiten.
+// Foreign Flow Radar — signed foreign-flow ranking with benchmark-session coverage.
 
 import Link from "next/link";
 import { getFlowRadar } from "@/lib/services";
@@ -8,7 +6,7 @@ import { fmtIDR } from "@/components/fmt";
 
 export const dynamic = "force-dynamic";
 
-function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: string; days: number; cumNet: number; streak: number }[]; sign: "acc" | "dist" }) {
+function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: string; days: number; observations: number; expectedSessions: number; missingSessions: number; cumNet: number; streak: number; streakStatus: string }[]; sign: "acc" | "dist" }) {
   return (
     <section>
       <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">{title}</h2>
@@ -17,10 +15,10 @@ function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: strin
           <thead>
             <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
               <th className="py-2 pr-4 font-medium">#</th>
-              <th className="py-2 pr-4 font-medium">Emiten</th>
+              <th className="py-2 pr-4 font-medium">Issuer</th>
               <th className="py-2 pr-4 font-medium text-right">Net flow</th>
-              <th className="hidden py-2 pr-4 font-medium text-right sm:table-cell">Hari aktif</th>
-              <th className="hidden py-2 font-medium text-right md:table-cell">Streak beli</th>
+              <th className="hidden py-2 pr-4 font-medium text-right sm:table-cell">Observed / expected</th>
+              <th className="hidden py-2 font-medium text-right md:table-cell">Positive streak</th>
             </tr>
           </thead>
           <tbody className="mono text-xs">
@@ -33,11 +31,11 @@ function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: strin
                   </Link>
                 </td>
                 <td className={`py-2.5 pr-4 text-right ${sign === "acc" ? "acc" : "dist"}`}>
-                  {r.cumNet >= 0 ? "+" : "-"}Rp{fmtIDR(Math.abs(r.cumNet))}
+                  {r.cumNet >= 0 ? "+Rp" : "−Rp"}{fmtIDR(Math.abs(r.cumNet))}
                 </td>
-                <td className="hidden py-2.5 pr-4 text-right dim sm:table-cell">{r.days}</td>
+                <td className="hidden py-2.5 pr-4 text-right dim sm:table-cell">{r.observations}/{r.expectedSessions} {r.missingSessions ? `· ${r.missingSessions} missing` : ""}</td>
                 <td className="hidden py-2.5 text-right md:table-cell">
-                  {r.streak >= 3 ? <span className="acc">{r.streak}×</span> : <span className="faint">{r.streak || "—"}</span>}
+                  {r.streak >= 3 ? <span className="acc">{r.streak}×</span> : <span className="faint">{r.streak || "—"}</span>} <span className="faint">{r.streakStatus}</span>
                 </td>
               </tr>
             ))}
@@ -58,20 +56,18 @@ export default async function AsingPage() {
       <div>
         <h1 className="text-xl font-bold tracking-tight">Foreign Flow Radar</h1>
         <p className="mt-1 text-xs dim">
-          Net flow investor asing kumulatif — <span className="mono">{rows.length}</span> emiten dengan
-          aktivitas asing, <span className="mono">{from ?? "—"}</span> → <span className="mono">{to ?? "—"}</span>.
-          Atribusi berdasarkan origin investor, bukan broker.
+          Signed net foreign flow — <span className="mono">{rows.length}</span> issuers with observations, <span className="mono">{from ?? "—"}</span> → <span className="mono">{to ?? "—"}</span>.
+          The benchmark-observed IHSG sessions define expected coverage; missing issuer rows are unknown, not zero.
         </p>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <FlowTable title="Akumulasi asing terbesar" rows={acc} sign="acc" />
-        <FlowTable title="Distribusi asing terbesar" rows={dist} sign="dist" />
+        <FlowTable title="Largest foreign accumulation" rows={acc} sign="acc" />
+        <FlowTable title="Largest foreign distribution" rows={dist} sign="dist" />
       </div>
 
       <p className="text-[11px] leading-relaxed faint">
-        Emiten tanpa partisipasi asing pada hari bursa tidak muncul. Statistik deskriptif atas data publik —
-        bukan nasihat investasi.
+        Issuers without saved foreign-flow rows do not appear. Positive streaks are marked incomplete when a reference session is missing.
       </p>
     </div>
   );

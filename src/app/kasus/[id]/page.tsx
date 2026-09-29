@@ -5,9 +5,15 @@ import { notFound } from "next/navigation";
 import { getCase, getIssuerDossier } from "@/lib/services";
 import TimelineChart from "@/components/TimelineChart";
 import { Stat } from "@/components/widgets";
-import { fmtIDR, fmtPct, fmtShares, PATTERN_LABEL, patternTagClass } from "@/components/fmt";
+import { fmtCurrency, fmtPct, fmtShares, PATTERN_LABEL, patternTagClass } from "@/components/fmt";
+import { safeSourceUrl } from "@/lib/provenance";
+import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
+
+function outcomeDisplay(outcome: { status: "complete" | "pending" | "unavailable"; issuerPct: number | null }) {
+  return outcome.status === "complete" ? fmtPct(outcome.issuerPct, 1, "complete") : fmtPct(null, 1, outcome.status);
+}
 
 export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
   const { id } = await params;
@@ -30,7 +36,7 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
           </Link>
         </div>
         <p className="mt-1 text-xs dim">
-          Jangkar {c.anchorDate} · window {c.windowStart} → {c.windowEnd}
+          Anchor {c.anchorDate} · bounded window {c.windowStart} → {c.windowEnd}
         </p>
       </div>
 
@@ -39,19 +45,21 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-        <Stat label="Return 7 hari" value={outcome7.status === "complete" ? fmtPct(outcome7.issuerPct) : outcome7.status} />
+        <Stat label="7-day return" value={outcomeDisplay(outcome7)} />
         <Stat
-          label="Return 30 hari"
-          value={outcome30.status === "complete" ? fmtPct(outcome30.issuerPct) : outcome30.status}
-          sub={outcome30.status === "complete" && outcome30.benchmarkPct !== null ? `IHSG ${fmtPct(outcome30.benchmarkPct)}` : undefined}
+          label="30-day return"
+          value={outcomeDisplay(outcome30)}
+          sub={outcome30.status === "complete" && outcome30.benchmarkPct !== null ? `IHSG ${fmtPct(outcome30.benchmarkPct, 1, "complete")}` : undefined}
         />
-        <Stat label="Return 60 hari" value={outcome60.status === "complete" ? fmtPct(outcome60.issuerPct) : outcome60.status} />
+        <Stat label="60-day return" value={outcomeDisplay(outcome60)} />
         <Stat
-          label="Flow abnormal (z)"
+          label="Abnormal flow (z)"
           value={`${c.abnormalFlowZ >= 0 ? "+" : ""}${c.abnormalFlowZ.toFixed(1)}σ`}
-          sub={`volume ${c.abnormalVolumeZ >= 0 ? "+" : ""}${c.abnormalVolumeZ.toFixed(1)}σ · pre-drift ${fmtPct(c.preDriftPct)}`}
+          sub={`volume ${c.abnormalVolumeZ >= 0 ? "+" : ""}${c.abnormalVolumeZ.toFixed(1)}σ · pre-drift ${fmtPct(c.preDriftPct, 1, "complete")}`}
         />
       </div>
+
+      <DataStatus asOf={d.asOf} />
 
       <section className="panel p-4">
         <h2 className="section-label mb-3">Timeline</h2>
@@ -59,16 +67,18 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
       </section>
 
       <section>
-        <h2 className="section-label mb-3">Transaksi insider dalam pola ini</h2>
-        <table className="w-full text-xs">
+        <h2 className="section-label mb-3">Reported ownership transactions in this pattern</h2>
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[720px] text-xs">
           <thead>
             <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
-              <th className="py-2 pr-3 font-medium">Tanggal</th>
-              <th className="py-2 pr-3 font-medium">Nama</th>
-              <th className="py-2 pr-3 font-medium">Tipe</th>
-              <th className="py-2 pr-3 font-medium text-right">Lembar</th>
-              <th className="py-2 pr-3 font-medium text-right">Nilai</th>
-              <th className="py-2 font-medium text-right">% sblm → ssdh</th>
+              <th className="py-2 pr-3 font-medium">Transaction date</th>
+              <th className="py-2 pr-3 font-medium">Holder</th>
+              <th className="py-2 pr-3 font-medium">Type</th>
+              <th className="py-2 pr-3 font-medium text-right">Shares</th>
+              <th className="py-2 pr-3 font-medium text-right">Value</th>
+              <th className="py-2 pr-3 font-medium text-right">Ownership before → after</th>
+              <th className="py-2 font-medium text-right">Source</th>
             </tr>
           </thead>
           <tbody className="mono">
@@ -80,17 +90,21 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
                 </td>
                 <td className={`py-1.5 pr-3 ${t.txnType === "buy" ? "acc" : "dist"}`}>{t.txnType.toUpperCase()}</td>
                 <td className="py-1.5 pr-3 text-right">{fmtShares(t.amount)}</td>
-                <td className="py-1.5 pr-3 text-right">Rp{fmtIDR(t.value)}</td>
+                <td className="py-1.5 pr-3 text-right">{fmtCurrency(t.value)}</td>
                 <td className="py-1.5 text-right faint">
                   {t.pctBefore !== null && t.pctAfter !== null ? `${t.pctBefore}% → ${t.pctAfter}%` : "—"}
+                </td>
+                <td className="py-1.5 text-right">
+                  {(() => { const url = safeSourceUrl(t.sourceUrl); return url ? <a href={url} target="_blank" rel="noreferrer" className="blue">Open</a> : <span className="faint">Unavailable</span>; })()}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         <p className="mt-3 text-[10px] faint">
-          Pihak terlibat: {names.join(", ")}. Sumber: disclosure IDX via Sectors API.
+          Involved holders: {names.join(", ")}. Source: IDX disclosure data via Sectors.
         </p>
+        </div>
       </section>
     </div>
   );

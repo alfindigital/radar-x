@@ -4,14 +4,15 @@ import { getIssuerDossier } from "@/lib/services";
 import TimelineChart from "@/components/TimelineChart";
 import TradesTable from "@/components/TradesTable";
 import { CaseRow, ScoreBreakdown, ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
-import { fmtIDR, fmtNum, fmtShares } from "@/components/fmt";
+import { fmtCurrency, fmtNum, fmtShares } from "@/components/fmt";
 import type { HoldersMonthly } from "@/lib/types";
+import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
 
 function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
   if (holders.length < 2) {
-    return <p className="dim py-6 text-center text-xs">Data komposisi bulanan belum cukup.</p>;
+    return <p className="dim py-6 text-center text-xs">Not enough monthly holder observations.</p>;
   }
   const sorted = [...holders].sort((a, b) => a.month.localeCompare(b.month));
   const inst = (h: HoldersMonthly) =>
@@ -25,8 +26,8 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
     <div className="space-y-4">
       <div>
         <div className="mb-1 flex justify-between text-[10px] faint">
-          <span>kepemilikan institusi asing (rdana + lemb.keu)</span>
-          <span className="blue">per bulan</span>
+          <span>foreign institutional holders</span>
+          <span className="blue">monthly</span>
         </div>
         <div className="flex h-16 items-end gap-1">
           {sorted.map((h) => (
@@ -37,14 +38,14 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
                 height: `${Math.max(3, (inst(h) / maxInst) * 100)}%`,
                 backgroundColor: "color-mix(in srgb, var(--sky) 70%, transparent)",
               }}
-              title={`${h.month}: ${fmtShares(inst(h))} lembar`}
+              title={`${h.month}: ${fmtShares(inst(h))} shares`}
             />
           ))}
         </div>
       </div>
       <div>
         <div className="mb-1 flex justify-between text-[10px] faint">
-          <span>kepemilikan individu (lokal + asing)</span>
+          <span>individual holders (local + foreign)</span>
         </div>
         <div className="flex h-12 items-end gap-1">
           {sorted.map((h) => (
@@ -55,14 +56,14 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
                 height: `${Math.max(3, (indiv(h) / maxInd) * 100)}%`,
                 backgroundColor: "color-mix(in srgb, var(--watch) 60%, transparent)",
               }}
-              title={`${h.month}: ${fmtShares(indiv(h))} lembar`}
+              title={`${h.month}: ${fmtShares(indiv(h))} shares`}
             />
           ))}
         </div>
       </div>
       <div>
         <div className="mb-1 flex justify-between text-[10px] faint">
-          <span>Δ jumlah pemegang saham (ritel kabur/masuk)</span>
+          <span>Δ reported shareholder count</span>
         </div>
         <div className="flex h-10 items-center gap-1">
           {sorted.map((h) => {
@@ -87,7 +88,7 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
         </div>
         <div className="mt-1 flex justify-between text-[9px] faint">
           <span>{sorted[0].month.slice(0, 7)}</span>
-          <span>hijau = ritel berkurang · merah = ritel bertambah</span>
+          <span>green = count down · red = count up</span>
           <span>{sorted.at(-1)!.month.slice(0, 7)}</span>
         </div>
       </div>
@@ -122,7 +123,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
             )}
           </div>
           <p className="mt-1 text-xs dim">
-            {d.ticker?.name !== d.ticker?.symbol ? d.ticker?.name : ""} {d.lazy && <span className="tag">live fetch</span>}
+            {d.ticker?.name !== d.ticker?.symbol ? d.ticker?.name : ""} <span className="tag">{d.status}</span>
           </p>
         </div>
         <div className="mono text-right text-xs dim">
@@ -136,51 +137,53 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
                     {priceChg.toFixed(1)}%
                   </span>
                 )}{" "}
-                90h · {lastPrice.date}
+                90d · {lastPrice.date}
               </div>
             </>
           )}
         </div>
       </div>
 
+      <DataStatus asOf={d.asOf} detail={d.status === "known-uncovered" ? "The issuer is listed but has no disclosure-derived coverage." : undefined} />
+
       <section className="panel p-4">
         <TimelineChart price={d.price} flow={d.flow} insider={d.insider} />
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-        <Stat label="Insider beli 90h" value={`Rp${fmtIDR(buyVal)}`} />
-        <Stat label="Insider jual 90h" value={`Rp${fmtIDR(sellVal)}`} />
+        <Stat label="Insider buys (90d)" value={fmtCurrency(buyVal)} />
+        <Stat label="Insider sells (90d)" value={fmtCurrency(sellVal)} />
         <Stat
-          label="Net flow asing 90h"
-          value={`Rp${fmtIDR(netFlow)}`}
-          sub={netFlow >= 0 ? "asing net buyer" : "asing net seller"}
+          label="Net foreign flow (90d)"
+          value={fmtCurrency(netFlow)}
+          sub={netFlow >= 0 ? "net foreign buyer" : "net foreign seller"}
         />
         <Stat
-          label="Jumlah pemegang saham"
+          label="Reported shareholders"
           value={d.holders.length ? fmtNum(d.holders.at(-1)!.nShareholders) : "—"}
-          sub={d.holders.length ? `Δ ${fmtNum(d.holders.at(-1)!.changeInShareholders)} bln lalu` : undefined}
+          sub={d.holders.length ? `Δ ${fmtNum(d.holders.at(-1)!.changeInShareholders)} last month` : undefined}
         />
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
         <section>
-          <h2 className="section-label mb-4">Kenapa skornya segini</h2>
-          {d.score ? <ScoreBreakdown score={d.score} /> : <p className="dim py-4 text-xs">Skor belum dihitung untuk emiten ini.</p>}
+          <h2 className="section-label mb-4">Index evidence</h2>
+          {d.score ? <ScoreBreakdown score={d.score} /> : <p className="dim py-4 text-xs">No disclosure-derived index is available for this issuer.</p>}
         </section>
         <section>
-          <h2 className="section-label mb-4">Komposisi pemilik (bulanan)</h2>
+          <h2 className="section-label mb-4">Holder composition (monthly)</h2>
           <HoldersChart holders={d.holders} />
         </section>
       </div>
 
       <section>
-        <h2 className="section-label mb-3">Transaksi insider tercatat</h2>
+        <h2 className="section-label mb-3">Reported ownership transactions</h2>
         <TradesTable trades={insider90} limit={30} />
       </section>
 
       {d.cases.length > 0 && (
         <section>
-          <h2 className="section-label mb-2">Kasus terdeteksi di emiten ini</h2>
+          <h2 className="section-label mb-2">Candidate patterns for this issuer</h2>
           <div>
             {d.cases.map((c) => (
               <CaseRow key={c.id} c={c} />

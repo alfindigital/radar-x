@@ -8,3 +8,5 @@ import "./outcomes.test";
 import "./score.test";
 import "./compute.test";
 import "./flow.test";
+import "./format.test";
+import "./chart-geometry.test";

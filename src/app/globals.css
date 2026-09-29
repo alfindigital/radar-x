@@ -8,7 +8,7 @@
   --color-line-2: #242f3a;
   --color-ink: #e8ecf1;
   --color-ink-dim: #97a3b2;
-  --color-ink-faint: #5b6876;
+  --color-ink-faint: #8190a0;
   --color-acc: #34d399;
   --color-dist: #f87171;
   --color-watch: #fbbf24;
@@ -23,7 +23,7 @@
   --line-2: #242f3a;
   --ink: #e8ecf1;
   --ink-dim: #97a3b2;
-  --ink-faint: #5b6876;
+  --ink-faint: #8190a0;
   --acc: #34d399;
   --dist: #f87171;
   --watch: #fbbf24;
@@ -39,6 +39,15 @@ body {
   color: var(--ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-feature-settings: "ss01", "cv11";
+  overflow-x: hidden;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
 }
 
 .mono {
