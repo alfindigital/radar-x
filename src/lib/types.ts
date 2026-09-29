@@ -152,6 +152,23 @@ export interface PositioningScore {
   computedAt: string;
 }
 
+export interface MeasuredOutcome {
+  status: "complete" | "pending" | "unavailable";
+  reason: string | null;
+  basis: "transaction-relative-retrospective";
+  horizonDays: 7 | 30 | 60;
+  startDate: string | null;
+  targetDate: string | null;
+  endDate: string | null;
+  elapsedDays: number | null;
+  startClose: number | null;
+  endClose: number | null;
+  issuerPct: number | null;
+  benchmarkPct: number | null;
+  excessPp: number | null;
+  adjustmentBasis: "unverified";
+}
+
 export interface SourceFileMeta {
   path: string;
   provider: "sectors";
