@@ -15,6 +15,7 @@ This file records the latest local release-candidate checks. It does not certify
 
 | Command | Result | Notes |
 |---|---|---|
+| `npm ci` | PASS | 403 packages installed; zero vulnerabilities. |
 | `npm test` | PASS | 37 tests passed. |
 | `npm run audit:data` | PASS | Eight required raw files present; no duplicate rows; lag/zero-volume limitations reported. |
 | `npm run lint` | PASS | ESLint exit 0. |

@@ -26,6 +26,7 @@ Status: local release candidate on branch `codex/radarx-readiness`. The portal i
 ## Verification commands
 
 ```text
+npm ci                        passed (403 packages, 0 vulnerabilities)
 npm test                       37 passed
 npm run audit:data             passed (8 files, 0 missing, 0 duplicate rows)
 npm run lint                   passed
