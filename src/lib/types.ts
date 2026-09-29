@@ -39,7 +39,18 @@ export interface PriceDaily {
   close: number;
   volume: number;
   marketCap: number | null;
+  observationKind?: "ohlcv" | "close-only" | "legacy-unknown";
+  fieldSources?: Partial<Record<"open" | "high" | "low" | "close" | "volume" | "marketCap", "sectors-daily" | "sectors-close" | "legacy-unknown" | "arjum">>;
 }
+
+/** A normalized observation that can represent a close-only or partially known row. */
+export type PriceObservation = Omit<PriceDaily, "open" | "high" | "low" | "close" | "volume"> & {
+  open: number | null;
+  high: number | null;
+  low: number | null;
+  close: number | null;
+  volume: number | null;
+};
 
 /** One broker row inside broker-summary data */
 export interface BrokerSummaryRow {
@@ -120,6 +131,51 @@ export interface PositioningScore {
   score: number; // -100..100
   components: ScoreComponents;
   computedAt: string;
+}
+
+export interface SourceFileMeta {
+  path: string;
+  provider: "sectors";
+  sha256: string;
+  rows: number;
+  minDate: string | null;
+  maxDate: string | null;
+  retrievedAt: string | null;
+  auditedAt: string;
+  provenanceStatus: "legacy-normalized";
+  limitations: string[];
+}
+
+export interface SnapshotManifest {
+  schemaVersion: 2;
+  engineVersion: "radarx-v2";
+  asOf: string | null;
+  files: SourceFileMeta[];
+  inputHash: string;
+  generatedAt: string;
+}
+
+export interface SnapshotIndexes {
+  insiderBySymbol: Record<string, number[]>;
+  flowBySymbol: Record<string, number[]>;
+  priceBySymbol: Record<string, number[]>;
+  brokerBySymbol: Record<string, number[]>;
+  holdersBySymbol: Record<string, number[]>;
+  casesBySymbol: Record<string, number[]>;
+  scoresBySymbol: Record<string, number[]>;
+}
+
+export interface Snapshot {
+  tickers: Ticker[];
+  insider: InsiderTrade[];
+  flow: FlowDaily[];
+  price: PriceDaily[];
+  broker: BrokerSummaryRow[];
+  holders: HoldersMonthly[];
+  cases: CaseRecord[];
+  scores: PositioningScore[];
+  indexes: SnapshotIndexes;
+  manifest: SnapshotManifest;
 }
 
 export interface Ticker {

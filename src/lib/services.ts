@@ -2,9 +2,7 @@
 // Reads the store; lazy-backfills a ticker on demand (24h cache).
 
 import { getStore } from "./db";
-import { api } from "./sectors";
-import { rawComponents, computeScores, type SymbolData } from "./score";
-import { detectCases } from "./cases";
+import type { SymbolData } from "./score";
 import type {
   BrokerSummaryRow,
   CaseRecord,
@@ -28,6 +26,7 @@ export interface RadarBoard {
 }
 
 export interface IssuerDossier {
+  status: "available" | "known-uncovered" | "unknown";
   ticker: Ticker | null;
   score: PositioningScore | null;
   insider: InsiderTrade[];
@@ -98,87 +97,32 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
   const symbol = symbolRaw.toUpperCase().endsWith(".JK")
     ? symbolRaw.toUpperCase()
     : `${symbolRaw.toUpperCase()}.JK`;
-
-  let data = await loadSymbol(symbol);
-  let lazy = false;
-
-  // Lazy backfill: unknown ticker with no stored data → fetch live once.
-  // Fetched rows are used in-memory; persistence is best-effort (serverless fs is read-only).
-  if (!data.insider.length && !data.price.length) {
-    lazy = true;
-    try {
-      const start = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
-      const [flowRes, priceRes, holdersRes] = await Promise.all([
-        api.foreignFlowSymbol(symbol).catch(() => null),
-        api.daily(symbol, { start }).catch(() => null),
-        api.shareholdersComposition(symbol).catch(() => null),
-      ]);
-      const priceRows: PriceDaily[] = (priceRes ?? []).map((r) => ({
-        symbol: r.symbol ?? symbol,
-        date: r.date,
-        open: r.open,
-        high: r.high,
-        low: r.low,
-        close: r.close,
-        volume: r.volume,
-        marketCap: r.market_cap,
-      }));
-      const flowRows: FlowDaily[] = (flowRes?.data ?? []).map((r) => ({
-        symbol: flowRes?.symbol ?? symbol,
-        date: r.date,
-        netForeignInflow: r.net_foreign_inflow,
-        foreignBuyIdr: r.foreign_buy_idr,
-        foreignSellIdr: r.foreign_sell_idr,
-      }));
-      const holderRows: HoldersMonthly[] = (holdersRes?.data ?? []).map((r) => {
-        const local: Record<string, number> = {};
-        const foreign: Record<string, number> = {};
-        for (const [k, v] of Object.entries(r)) {
-          if (k.endsWith("_l") && typeof v === "number") local[k] = v;
-          if (k.endsWith("_f") && typeof v === "number") foreign[k] = v;
-        }
-        return {
-          symbol,
-          month: r.date,
-          sharesNumber: r.shares_number,
-          nShareholders: r.numbers_of_shareholders,
-          changeInShareholders: r.change_in_shareholders,
-          local,
-          foreign,
-        };
-      });
-      await Promise.allSettled([
-        priceRows.length ? store.upsertPriceDaily(priceRows) : null,
-        flowRows.length ? store.upsertFlowDaily(flowRows) : null,
-        holderRows.length ? store.upsertHolders(holderRows) : null,
-      ]);
-      data = { ...data, price: priceRows, flow: flowRows, holders: holderRows };
-      // recompute this symbol's score solo — tag with the latest batch week so it
-      // joins the cohort instead of becoming its own "latest week"
-      const existing = await store.latestScores(500);
-      const anchor = existing[0]?.week ?? new Date().toISOString().slice(0, 10);
-      const raw = rawComponents(data, anchor);
-      const rebuilt = computeScores([{ data, raw }], anchor);
-      if (rebuilt.length) await store.upsertScores(rebuilt).catch(() => {});
-      const cases = detectCases(symbol, {
-        insider: data.insider,
-        flow: data.flow,
-        price: data.price,
-        bench: await store.listPriceDaily(BENCH),
-      });
-      if (cases.length) await store.upsertCases(cases).catch(() => {});
-    } catch {
-      // keep whatever we have — empty dossier renders an honest empty state
-    }
-  }
-
-  const [score, cases, tickers] = await Promise.all([
-    store.getScore(symbol),
-    store.listCases({ symbol }),
+  const [data, tickers] = await Promise.all([
+    loadSymbol(symbol),
     store.listTickers(),
   ]);
+  const ticker = tickers.find((t) => t.symbol === symbol) ?? null;
+  if (!ticker) {
+    return {
+      status: "unknown",
+      ticker: null,
+      score: null,
+      insider: [],
+      flow: [],
+      price: [],
+      broker: [],
+      holders: [],
+      cases: [],
+      lazy: false,
+    };
+  }
+  const [score, cases] = await Promise.all([
+    store.getScore(symbol),
+    store.listCases({ symbol }),
+  ]);
   return {
-    ticker: tickers.find((t) => t.symbol === symbol) ?? { symbol, name: symbol, subSector: null },
+    status: data.insider.length || data.price.length || data.flow.length ? "available" : "known-uncovered",
+    ticker,
     score,
     insider: data.insider,
     flow: data.flow,
@@ -186,7 +130,7 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
     broker: data.broker,
     holders: data.holders,
     cases,
-    lazy,
+    lazy: false,
   };
 }
 

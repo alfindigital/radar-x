@@ -30,6 +30,8 @@
 # regeneratable via `npm run backfill`). No secrets inside.
 !data
 !data/*.json
+!data/derived-v2
+!data/derived-v2/*.json
 !tests
 !tests/**
 
