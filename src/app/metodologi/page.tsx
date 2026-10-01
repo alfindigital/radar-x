@@ -54,7 +54,8 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Data lineage and coverage</h2>
         <p className="dim">
           The public app reads a hash-verified local Sectors snapshot and generated v2 artifacts. The snapshot includes
-          parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, and a benchmark-observed IHSG series.
+          parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, a benchmark-observed IHSG
+          series, and a saved subsector-aggregate artifact used by the sector rotation board.
           Retrieval times and historical publication availability are not verified for legacy rows. Ambiguous flat-OHLC or zero-volume
           observations are marked <span className="mono">legacy-unknown</span>.
         </p>

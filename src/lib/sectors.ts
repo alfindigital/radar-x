@@ -197,6 +197,64 @@ export interface NewsRow {
   tags?: string[];
 }
 
+// ---- Subsector report & taxonomy (GET /v2/subsector/report/{slug}/) ----
+// Sections are billed per-requested-section; callers pass only what they need.
+
+export interface SubsectorTaxonomyRow {
+  sector: string;
+  subsector: string;
+}
+
+export interface SubsectorStatistics {
+  total_companies: number;
+  filtered_median_pe: number | null;
+  filtered_weighted_avg_pe: number | null;
+  min_company_pe: number | null;
+  max_company_pe: number | null;
+}
+
+export interface SubsectorMarketCap {
+  total_market_cap: number | null;
+  avg_market_cap: number | null;
+  quarterly_market_cap?: {
+    prev_ttm_mcap?: Record<string, number>;
+    current_ttm_mcap?: Record<string, number>;
+    current_ttm_mcap_pavg?: Record<string, number>;
+  };
+  mcap_summary?: {
+    mcap_change?: { "1w"?: number; "1y"?: number; ytd?: number };
+    monthly_performance?: Record<string, number>;
+    performance_quantile?: number;
+  };
+}
+
+export interface SubsectorStability {
+  weighted_max_drawdown: number | null;
+  weighted_rsd_close: number | null;
+}
+
+export interface SubsectorChangeCompany {
+  name: string;
+  pe: number | null;
+  "1mth": number | null;
+  "1yr": number | null;
+  last_close: number | null;
+}
+
+export interface SubsectorCompanies {
+  top_companies?: Record<string, Record<string, { name: string } & Record<string, unknown>>>;
+  top_change_companies?: Record<string, SubsectorChangeCompany>;
+}
+
+export interface SubsectorReport {
+  sector: string;
+  sub_sector: string;
+  statistics?: SubsectorStatistics;
+  market_cap?: SubsectorMarketCap;
+  stability?: SubsectorStability;
+  companies?: SubsectorCompanies;
+}
+
 // ---- Typed helpers ----
 
 export const api = {
@@ -220,6 +278,14 @@ export const api = {
     sectorsGet<UniverseResponse<UniverseCloseRow>>("/v2/close/", p as Record<string, string | number>),
   flowUniverse: (p: { date?: string; limit?: number; offset?: number }) =>
     sectorsGet<UniverseResponse<UniverseFlowRow>>("/v2/foreign-flow/", p as Record<string, string | number>),
+  subsectors: () => sectorsGet<SubsectorTaxonomyRow[]>("/v2/subsectors/"),
+  // 1 credit per requested section. Available: statistics, market_cap,
+  // stability, valuation, growth, companies.
+  subsectorReport: (subSector: string, sections?: string[]) =>
+    sectorsGet<SubsectorReport>(
+      `/v2/subsector/report/${encodeURIComponent(subSector)}/`,
+      sections?.length ? { sections: sections.join(",") } : undefined,
+    ),
 };
 
 // Pull every page of a full-universe daily feed (~25-32 credits/day).

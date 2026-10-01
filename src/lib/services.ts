@@ -4,6 +4,7 @@
 import { loadDerived, type DerivedCase } from "./derive";
 import { rankFlowRows, type FlowRadarRow } from "./flow";
 import { measureOutcome } from "./outcomes";
+import { loadRotation, type RotationSubsector } from "./rotation";
 import { loadSnapshot } from "./snapshot";
 import type { SymbolData } from "./score";
 import type {
@@ -151,6 +152,51 @@ export async function getFlowRadar(windowDays = 14): Promise<{ from: string | nu
     .filter((row) => row.symbol === BENCH && row.date >= from && row.date <= to)
     .map((row) => row.date))].sort();
   return { from, to, rows: rankFlowRows(snapshot.flow.filter((row) => row.date >= from && row.date <= to), referenceDates) };
+}
+
+export interface RotationBoard {
+  asOf: string | null;
+  generatedAt: string;
+  flowDate: string | null;
+  sectors: { slug: string; label: string; subs: RotationSubsector[] }[];
+  limitations: string[];
+}
+
+// Sector/subsector aggregate context — a saved artifact, never fetched live.
+export async function getSectorRotation(): Promise<RotationBoard | null> {
+  const rot = await loadRotation();
+  if (!rot) return null;
+  const groups = new Map<string, { slug: string; label: string; subs: RotationSubsector[] }>();
+  for (const s of rot.subsectors) {
+    const g = groups.get(s.sectorSlug) ?? { slug: s.sectorSlug, label: s.sector, subs: [] };
+    g.subs.push(s);
+    groups.set(s.sectorSlug, g);
+  }
+  const sectors = [...groups.values()].sort((a, b) => a.label.localeCompare(b.label));
+  for (const g of sectors) g.subs.sort((a, b) => (b.mcapChange1w ?? -Infinity) - (a.mcapChange1w ?? -Infinity));
+  const flowDate = rot.subsectors.find((s) => s.flowDate)?.flowDate ?? null;
+  return { asOf: rot.asOf, generatedAt: rot.generatedAt, flowDate, sectors, limitations: rot.limitations };
+}
+
+export interface SubsectorDetail {
+  row: RotationSubsector;
+  memberScores: { symbol: string; score: number | null }[];
+}
+
+// Subsector drill-down: aggregate row + member issuers paired with their
+// latest saved positioning score (null = issuer outside the scored cohort).
+export async function getSubsectorDetail(slugRaw: string): Promise<SubsectorDetail | null> {
+  const slug = decodeRouteParam(slugRaw)?.toLowerCase() ?? "";
+  const rot = await loadRotation();
+  const row = rot?.subsectors.find((s) => s.slug === slug);
+  if (!rot || !row) return null;
+  const derived = await loadDerived();
+  const memberScores = row.members.map((symbol) => ({
+    symbol,
+    score: derived.scores.find((s) => s.symbol === symbol)?.score ?? null,
+  }));
+  memberScores.sort((a, b) => (b.score ?? -Infinity) - (a.score ?? -Infinity));
+  return { row, memberScores };
 }
 
 export async function getCaseFeed(pattern?: string): Promise<DerivedCase[]> {

@@ -20,6 +20,8 @@ try {
 
 import { api, universeAll, type FilingRaw } from "../src/lib/sectors";
 import { getStore } from "../src/lib/db";
+import { loadRotation, type RotationSubsector, type SectorRotationArtifact } from "../src/lib/rotation";
+import { writeFile } from "fs/promises";
 import type {
   BrokerSummaryRow,
   FlowDaily,
@@ -348,8 +350,123 @@ async function ingestUniverse() {
   console.log(`universe: +${priceRows} prices, +${flowRowsN} flows (${calls} calls)`);
 }
 
+// Sector rotation context: /v2/subsectors/ + /v2/subsector/report/{slug}/ per
+// subsector → data/sector_rotation.json. Each requested section costs 1 credit
+// per subsector (default 4 sections × 33 subsectors ≈ 133 credits). Member
+// lists are fetched once via companies?where=sub_sector=… and reused on later
+// refreshes unless --refresh-members is passed. Latest stored foreign-flow day
+// is aggregated per subsector from the local snapshot at no API cost.
+async function ingestRotation() {
+  const sections = (flag("sections", "market_cap,statistics,stability,companies") ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const existing = await loadRotation();
+  const refreshMembers = args.includes("--refresh-members");
+
+  const taxonomy = await api.subsectors();
+  let calls = 1;
+
+  const flowRows = await store.listFlowUniverse();
+  const latestFlowDate = flowRows.reduce<string | null>((m, r) => (!m || r.date > m ? r.date : m), null);
+  const flowBySymbol = new Map<string, number>();
+  for (const r of flowRows) {
+    if (r.date === latestFlowDate) flowBySymbol.set(r.symbol, r.netForeignInflow);
+  }
+
+  const rows: RotationSubsector[] = [];
+  for (const t of taxonomy) {
+    let rep;
+    try {
+      rep = await api.subsectorReport(t.subsector, sections);
+    } catch (e) {
+      console.warn(`rotation ${t.subsector}: ${e instanceof Error ? e.message : e}`);
+      continue;
+    }
+    calls++;
+
+    let members = existing?.subsectors.find((s) => s.slug === t.subsector)?.members ?? [];
+    if (refreshMembers || members.length === 0) {
+      members = [];
+      let offset = 0;
+       
+      while (true) {
+        const res = await api.companies({ where: `sub_sector = '${t.subsector}'`, limit: 100, offset });
+        calls++;
+        members.push(...res.results.map((r) => r.symbol));
+        if (!res.pagination.has_next || res.results.length === 0) break;
+        offset = res.pagination.next_offset ?? offset + res.results.length;
+      }
+    }
+
+    const mc = rep.market_cap;
+    const chg = mc?.mcap_summary?.mcap_change;
+    const topChange = Object.entries(rep.companies?.top_change_companies ?? {})
+      .map(([symbol, c]) => ({
+        symbol,
+        name: c.name,
+        pe: c.pe,
+        chg1m: c["1mth"],
+        chg1y: c["1yr"],
+        lastClose: c.last_close,
+      }))
+      .sort((a, b) => (b.chg1m ?? -Infinity) - (a.chg1m ?? -Infinity))
+      .slice(0, 8);
+
+    const netFlow = members.reduce((sum, sym) => sum + (flowBySymbol.get(sym) ?? 0), 0);
+    const hasFlow = members.some((sym) => flowBySymbol.has(sym));
+
+    rows.push({
+      slug: t.subsector,
+      sector: rep.sector ?? t.sector,
+      sectorSlug: t.sector,
+      subSector: rep.sub_sector ?? t.subsector,
+      companyCount: rep.statistics?.total_companies ?? null,
+      medianPe: rep.statistics?.filtered_median_pe ?? null,
+      weightedPe: rep.statistics?.filtered_weighted_avg_pe ?? null,
+      mcapTotal: mc?.total_market_cap ?? null,
+      mcapChange1w: chg?.["1w"] ?? null,
+      mcapChange1y: chg?.["1y"] ?? null,
+      mcapChangeYtd: chg?.ytd ?? null,
+      perfQuantile: mc?.mcap_summary?.performance_quantile ?? null,
+      monthlyPerf: mc?.mcap_summary?.monthly_performance ?? null,
+      maxDrawdown: rep.stability?.weighted_max_drawdown ?? null,
+      rsd: rep.stability?.weighted_rsd_close ?? null,
+      topChange,
+      members: members.sort(),
+      netForeignFlow: hasFlow ? netFlow : null,
+      flowDate: hasFlow ? latestFlowDate : null,
+    });
+  }
+
+  const asOf = rows
+    .flatMap((r) => Object.keys(r.monthlyPerf ?? {}))
+    .sort()
+    .at(-1) ?? latestFlowDate;
+
+  const artifact: SectorRotationArtifact = {
+    schemaVersion: 1,
+    engineVersion: "radarx-v2",
+    asOf,
+    generatedAt: new Date().toISOString(),
+    source: "sectors",
+    sections,
+    creditsEst: calls,
+    subsectors: rows.sort((a, b) => a.sectorSlug.localeCompare(b.sectorSlug) || a.slug.localeCompare(b.slug)),
+    limitations: [
+      "Subsector aggregates are provider-weighted; a single large issuer can dominate mcap_change.",
+      "netForeignFlow aggregates the latest stored foreign-flow session over member symbols; symbols without stored flow rows count as zero.",
+      "Member lists refresh only with --refresh-members; new listings between refreshes are unmapped.",
+    ],
+  };
+  await writeFile(path.join(process.cwd(), "data", "sector_rotation.json"), JSON.stringify(artifact));
+  await store.log("ingest_rotation", calls, rows.length, "ok");
+  console.log(`rotation: ${rows.length} subsectors, asOf=${asOf} (${calls} calls)`);
+}
+
 const commands: Record<string, () => Promise<void>> = {
   universe: ingestUniverse,
+  rotation: ingestRotation,
   filings: ingestFilings,
   tickers: ingestTickers,
   flows: ingestFlows,

@@ -6,6 +6,12 @@ This checkout contains the merged Sectors Hackathon 2026 Track 3 release candida
 
 The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated `radarx-v2` artifacts. The verified artifact contains 962 score rows (254 non-null), 171 bounded candidate patterns, 301 complete outcomes, 170 pending outcomes, and 42 unavailable outcomes. See [CLAIMS.md](CLAIMS.md) for traceable statements.
 
+### Sector rotation board (added 2026-10-01)
+
+- New route `/rotasi` (+ `/rotasi/[sub]` drill-down) reads `data/sector_rotation.json`, a saved artifact covering all 33 IDX subsectors: market-cap change (1w/1y/YTD + monthly series), median/weighted PE, weighted max drawdown and RSD, top 1-month movers, member issuers, and net foreign flow aggregated from the saved flow session.
+- Refresh with `npm run ingest -- rotation` (≈69 credits for the default `market_cap,statistics,stability,companies` section set + member mapping). Member lists are reused across refreshes; pass `--refresh-members` to rebuild them. Sections are selectable via `--sections a,b,c` — each requested section bills once per subsector.
+- Navigation gained a "Sectors" entry on desktop and mobile.
+
 ## Passed gates
 
 ```text
