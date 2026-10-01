@@ -277,6 +277,33 @@ export interface CompanyReport {
   overview?: CompanyReportOverview;
 }
 
+// ---- Market boards (idx-total, index-daily, brokers, free-float) ----
+
+export interface IdxTotalRow {
+  date: string;
+  idx_total_market_cap: number;
+}
+
+export interface IndexDailyRow {
+  index_code: string;
+  date: string;
+  price: number;
+}
+
+export interface BrokerRegistryRow {
+  code: string;
+  name: string;
+  is_foreign: boolean;
+  cohort: string; // retail | institutional | mixed
+  license_type?: string;
+}
+
+export interface FreeFloatRow {
+  symbol: string;
+  company_name: string;
+  free_float: number | null; // fraction
+}
+
 // ---- Typed helpers ----
 
 export const api = {
@@ -286,6 +313,7 @@ export const api = {
     sectorsGet<ForeignFlowSymbolResponse>(`/v2/foreign-flow/${encodeURIComponent(symbol)}/`),
   daily: (symbol: string, p: { start?: string; end?: string } = {}) =>
     sectorsGet<DailyRow[]>(`/v2/daily/${encodeURIComponent(symbol)}/`, p as Record<string, string | number>),
+  indexDailyAll: () => sectorsGet<IndexDailyRow[]>("/v2/index-daily/"),
   indexDailyRange: (code: string, p: { start?: string; end?: string } = {}) =>
     sectorsGet<{ index_code: string; date: string; price: number }[]>(`/v2/index-daily/${encodeURIComponent(code)}/`, p as Record<string, string | number>),
   brokerSummary: (symbol: string) => sectorsGet<BrokerSummaryResponse>(`/v2/broker-summary/${encodeURIComponent(symbol)}/`),
@@ -315,6 +343,11 @@ export const api = {
       `/v2/company/report/${encodeURIComponent(symbol)}/`,
       sections?.length ? { sections: sections.join(",") } : undefined,
     ),
+  idxTotal: () => sectorsGet<IdxTotalRow[]>("/v2/idx-total/"),
+  brokers: () => sectorsGet<BrokerRegistryRow[]>("/v2/brokers/"),
+  // Requires exactly one taxonomy filter; iterate sub_sector slugs for full IDX.
+  freeFloat: (subSector: string) =>
+    sectorsGet<FreeFloatRow[]>("/v2/free-float/", { sub_sector: subSector }),
 };
 
 // Pull every page of a full-universe daily feed (~25-32 credits/day).

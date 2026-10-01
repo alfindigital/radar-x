@@ -11,6 +11,10 @@ The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated
 - New route `/rotasi` (+ `/rotasi/[sub]` drill-down) reads `data/sector_rotation.json`, a saved artifact covering all 33 IDX subsectors: market-cap change (1w/1y/YTD + monthly series), median/weighted PE, weighted max drawdown and RSD, top 1-month movers, member issuers, and net foreign flow aggregated from the saved flow session.
 - Refresh with `npm run ingest -- rotation` (≈69 credits for the default `market_cap,statistics,stability,companies` section set + member mapping). Member lists are reused across refreshes; pass `--refresh-members` to rebuild them. Sections are selectable via `--sections a,b,c` — each requested section bills once per subsector.
 - Issuer taxonomy map (added 2026-10-01): `data/taxonomy.json` covers all 962 issuers — sector/subsector/industry/sub-industry labels + slugs, listing board, market cap, listing date — built from `company/report/{symbol}?sections=overview` (~962 credits, one-time; incremental on re-run, `--full` to force). Member tables on `/rotasi/[sub]` join it to show each issuer's industry.
+
+### Market boards snapshot (added 2026-10-01)
+
+`npm run ingest -- boards` (~56 calls) writes five artifacts: `data/broker_registry.json` (88 brokers: code/name/is_foreign/cohort/licenses), `data/idx_total.json` (daily IDX aggregate mcap, ~1mo), `data/index_daily.json` (17 indices × ~90d history; KLSE has no history feed), `data/free_float.json` (961 issuers; BIMA has no float row), and `data/top_changes.json` — a dated gainers/losers snapshot accreted per session (endpoint is current-only, no date param; first capture 2026-09-30). Daily cadence for top_changes/idx_total/index list; free-float monthly-ish; brokers static. Monthly-cadence layers (ownership, shareholders-composition) deliberately deferred to mid-October when the September EOM files publish.
 - Navigation gained a "Sectors" entry on desktop and mobile.
 
 ## Passed gates

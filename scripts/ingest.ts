@@ -546,10 +546,92 @@ async function ingestTaxonomy() {
   console.log(`taxonomy: ${rows.length} mapped, ${misses.length} missed, asOf=${asOf} (${calls} calls)`);
 }
 
+// Market boards snapshot: index-daily history (≤90d window per index),
+// idx-total series, broker registry, free-float per subsector, and a dated
+// top-changes snapshot (accreted daily — the endpoint is current-snapshot only,
+// no date param, so history must be captured going forward). ≈55 calls total.
+async function ingestBoards() {
+  const dir = (f: string) => path.join(process.cwd(), "data", f);
+  let calls = 0;
+  const now = new Date().toISOString();
+  const asOf = now.slice(0, 10);
+  const meta = { schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const };
+
+  // --- brokers registry (1 call, static) ---
+  const brokers = await api.brokers();
+  calls++;
+  await writeFile(dir("broker_registry.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: brokers }));
+  console.log(`brokers: ${brokers.length}`);
+
+  // --- idx-total (~1 month of daily IDX aggregate mcap) ---
+  const idxTotal = await api.idxTotal();
+  calls++;
+  await writeFile(dir("idx_total.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: idxTotal }));
+  console.log(`idx-total: ${idxTotal.length} rows ${idxTotal[0]?.date}..${idxTotal.at(-1)?.date}`);
+
+  // --- index-daily history per index (≤90d window; codes from live list) ---
+  const idxCodesResp = await api.indexDailyAll();
+  calls++;
+  // API path codes are lowercase and strip non-alphanumerics (SRI-KEHATI → srikehati).
+  const idxCodes = [...new Set(idxCodesResp.map((r) => r.index_code.toLowerCase().replace(/[^a-z0-9]/g, "")))];
+  const idxRows: { indexCode: string; date: string; price: number }[] = [];
+  for (const code of idxCodes) {
+    try {
+      const rows = await api.indexDailyRange(code, { start: "2026-07-01" });
+      calls++;
+      idxRows.push(...rows.map((r) => ({ indexCode: r.index_code, date: r.date, price: r.price })));
+    } catch (e) {
+      calls++;
+      console.warn(`index ${code}: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+  await writeFile(dir("index_daily.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: idxRows }));
+  console.log(`index-daily: ${idxRows.length} rows across ${idxCodes.length} indices`);
+
+  // --- free-float per subsector (33 calls ≈ full IDX) ---
+  const taxonomy = await api.subsectors();
+  calls++;
+  const ffRows: { symbol: string; companyName: string; freeFloat: number | null; subSector: string }[] = [];
+  for (const t of taxonomy) {
+    try {
+      const rows = await api.freeFloat(t.subsector);
+      calls++;
+      ffRows.push(...rows.map((r) => ({ symbol: r.symbol, companyName: r.company_name, freeFloat: r.free_float, subSector: t.subsector })));
+    } catch (e) {
+      calls++;
+      console.warn(`freefloat ${t.subsector}: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+  await writeFile(dir("free_float.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: ffRows }));
+  console.log(`free-float: ${ffRows.length} rows`);
+
+  // --- top-changes daily snapshot (accrete by session date) ---
+  const tc = await api.topChanges();
+  calls++;
+  const tcFile = dir("top_changes.json");
+  let tcArtifact: { snapshots: { date: string; fetchedAt: string; topGainers: unknown; topLosers: unknown }[] } & Record<string, unknown> = { ...meta, snapshots: [] };
+  try {
+    tcArtifact = JSON.parse(readFileSync(tcFile, "utf8"));
+  } catch { /* first run */ }
+  const sessionDate =
+    (Object.values((tc.top_gainers as Record<string, { latest_close_date?: string }[]>)["1d"] ?? [])[0] as { latest_close_date?: string } | undefined)
+      ?.latest_close_date ?? asOf;
+  if (!tcArtifact.snapshots.some((s) => s.date === sessionDate)) {
+    tcArtifact.snapshots.push({ date: sessionDate, fetchedAt: now, topGainers: tc.top_gainers, topLosers: tc.top_losers });
+    tcArtifact.asOf = sessionDate;
+  }
+  await writeFile(tcFile, JSON.stringify(tcArtifact));
+  console.log(`top-changes: ${tcArtifact.snapshots.length} sessions, latest=${sessionDate}`);
+
+  await store.log("ingest_boards", calls, brokers.length + idxTotal.length + idxRows.length + ffRows.length, "ok");
+  console.log(`boards done (${calls} calls)`);
+}
+
 const commands: Record<string, () => Promise<void>> = {
   universe: ingestUniverse,
   rotation: ingestRotation,
   taxonomy: ingestTaxonomy,
+  boards: ingestBoards,
   filings: ingestFilings,
   tickers: ingestTickers,
   flows: ingestFlows,
