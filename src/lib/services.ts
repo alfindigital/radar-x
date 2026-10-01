@@ -5,6 +5,7 @@ import { loadDerived, type DerivedCase } from "./derive";
 import { rankFlowRows, type FlowRadarRow } from "./flow";
 import { measureOutcome } from "./outcomes";
 import { loadRotation, type RotationSubsector } from "./rotation";
+import { loadTaxonomy, taxonomyBySymbol } from "./taxonomy";
 import { loadSnapshot } from "./snapshot";
 import type { SymbolData } from "./score";
 import type {
@@ -180,7 +181,7 @@ export async function getSectorRotation(): Promise<RotationBoard | null> {
 
 export interface SubsectorDetail {
   row: RotationSubsector;
-  memberScores: { symbol: string; score: number | null }[];
+  memberScores: { symbol: string; score: number | null; industry: string | null }[];
 }
 
 // Subsector drill-down: aggregate row + member issuers paired with their
@@ -191,9 +192,11 @@ export async function getSubsectorDetail(slugRaw: string): Promise<SubsectorDeta
   const row = rot?.subsectors.find((s) => s.slug === slug);
   if (!rot || !row) return null;
   const derived = await loadDerived();
+  const taxMap = taxonomyBySymbol(await loadTaxonomy());
   const memberScores = row.members.map((symbol) => ({
     symbol,
     score: derived.scores.find((s) => s.symbol === symbol)?.score ?? null,
+    industry: taxMap.get(symbol)?.industry ?? null,
   }));
   memberScores.sort((a, b) => (b.score ?? -Infinity) - (a.score ?? -Infinity));
   return { row, memberScores };

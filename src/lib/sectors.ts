@@ -255,6 +255,28 @@ export interface SubsectorReport {
   companies?: SubsectorCompanies;
 }
 
+// ---- Company report (GET /v2/company/report/{symbol}/) ----
+// Sections are billed per-requested-section; callers pass only what they need.
+
+export interface CompanyReportOverview {
+  listing_board?: string | null;
+  industry?: string | null;
+  sub_industry?: string | null;
+  sector?: string | null;
+  sub_sector?: string | null;
+  market_cap?: number | null;
+  market_cap_rank?: number | null;
+  listing_date?: string | null;
+  last_close_price?: number | null;
+  latest_close_date?: string | null;
+}
+
+export interface CompanyReport {
+  symbol: string;
+  company_name?: string;
+  overview?: CompanyReportOverview;
+}
+
 // ---- Typed helpers ----
 
 export const api = {
@@ -284,6 +306,13 @@ export const api = {
   subsectorReport: (subSector: string, sections?: string[]) =>
     sectorsGet<SubsectorReport>(
       `/v2/subsector/report/${encodeURIComponent(subSector)}/`,
+      sections?.length ? { sections: sections.join(",") } : undefined,
+    ),
+  // 1 credit per requested section. Available: overview, ownership, management,
+  // financials, valuation, dividend, and more (see Sectors docs).
+  companyReport: (symbol: string, sections?: string[]) =>
+    sectorsGet<CompanyReport>(
+      `/v2/company/report/${encodeURIComponent(symbol)}/`,
       sections?.length ? { sections: sections.join(",") } : undefined,
     ),
 };

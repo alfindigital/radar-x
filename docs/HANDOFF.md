@@ -10,6 +10,7 @@ The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated
 
 - New route `/rotasi` (+ `/rotasi/[sub]` drill-down) reads `data/sector_rotation.json`, a saved artifact covering all 33 IDX subsectors: market-cap change (1w/1y/YTD + monthly series), median/weighted PE, weighted max drawdown and RSD, top 1-month movers, member issuers, and net foreign flow aggregated from the saved flow session.
 - Refresh with `npm run ingest -- rotation` (≈69 credits for the default `market_cap,statistics,stability,companies` section set + member mapping). Member lists are reused across refreshes; pass `--refresh-members` to rebuild them. Sections are selectable via `--sections a,b,c` — each requested section bills once per subsector.
+- Issuer taxonomy map (added 2026-10-01): `data/taxonomy.json` covers all 962 issuers — sector/subsector/industry/sub-industry labels + slugs, listing board, market cap, listing date — built from `company/report/{symbol}?sections=overview` (~962 credits, one-time; incremental on re-run, `--full` to force). Member tables on `/rotasi/[sub]` join it to show each issuer's industry.
 - Navigation gained a "Sectors" entry on desktop and mobile.
 
 ## Passed gates

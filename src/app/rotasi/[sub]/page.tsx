@@ -127,6 +127,7 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
               <thead>
                 <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
                   <th className="py-2 pr-4 font-medium">Issuer</th>
+                  <th className="hidden py-2 pr-4 font-medium sm:table-cell">Industry</th>
                   <th className="py-2 font-medium text-right">Index</th>
                 </tr>
               </thead>
@@ -138,11 +139,12 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
                         {m.symbol.replace(".JK", "")}
                       </Link>
                     </td>
+                    <td className="hidden py-2 pr-4 dim sm:table-cell">{m.industry ?? "—"}</td>
                     <td className="py-2 text-right"><ScoreNumber score={m.score} size="sm" /></td>
                   </tr>
                 ))}
                 {!memberScores.length && (
-                  <tr><td colSpan={2} className="py-8 text-center dim">Member list not ingested — run ingest rotation --refresh-members.</td></tr>
+                  <tr><td colSpan={3} className="py-8 text-center dim">Member list not ingested — run ingest rotation --refresh-members.</td></tr>
                 )}
               </tbody>
             </table>

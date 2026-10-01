@@ -1,6 +1,7 @@
 // RADAR-X ingest pipeline. Usage:
 //   npx tsx scripts/ingest.ts filings [--months 6] [--full]
 //   npx tsx scripts/ingest.ts tickers
+//   npx tsx scripts/ingest.ts taxonomy [--full] [--limit N]
 //   npx tsx scripts/ingest.ts flows|prices|holders|broker [--limit N]
 // Env: reads .env.local (SECTORS_API_KEY, DATA_SOURCE)
 
@@ -21,6 +22,7 @@ try {
 import { api, universeAll, type FilingRaw } from "../src/lib/sectors";
 import { getStore } from "../src/lib/db";
 import { loadRotation, type RotationSubsector, type SectorRotationArtifact } from "../src/lib/rotation";
+import { loadTaxonomy, slugifyTaxonomy, type TaxonomyArtifact, type TaxonomyRow } from "../src/lib/taxonomy";
 import { writeFile } from "fs/promises";
 import type {
   BrokerSummaryRow,
@@ -464,9 +466,90 @@ async function ingestRotation() {
   console.log(`rotation: ${rows.length} subsectors, asOf=${asOf} (${calls} calls)`);
 }
 
+// Per-issuer taxonomy: company/report/{symbol}?sections=overview for every
+// symbol in the universe → data/taxonomy.json. Mostly static data; re-run is
+// incremental — symbols already stored are skipped unless --full is passed.
+// Universe comes from sector_rotation.json members (0 calls) or, when absent,
+// the companies directory (~10 calls). ~1 credit per symbol.
+async function ingestTaxonomy() {
+  const rotation = await loadRotation();
+  const existing = await loadTaxonomy();
+  const done = new Set(existing?.rows.map((r) => r.symbol) ?? []);
+
+  let universe = rotation?.subsectors.flatMap((s) => s.members) ?? [];
+  let calls = 0;
+  if (universe.length === 0) {
+    let offset = 0;
+    while (true) {
+      const res = await api.companies({ limit: 100, offset });
+      calls++;
+      universe.push(...res.results.map((r) => r.symbol));
+      if (!res.pagination.has_next || res.results.length === 0) break;
+      offset = res.pagination.next_offset ?? offset + res.results.length;
+    }
+  }
+  universe = [...new Set(universe)].sort();
+
+  const limit = Number(flag("limit", "0")) || 0;
+  const pending = args.includes("--full")
+    ? universe
+    : universe.filter((s) => !done.has(s) || existing?.misses.includes(s));
+  const targets = limit > 0 ? pending.slice(0, limit) : pending;
+
+  const rows: TaxonomyRow[] = args.includes("--full") ? [] : [...(existing?.rows ?? [])];
+  const misses: string[] = args.includes("--full") ? [] : [...(existing?.misses ?? [])];
+
+  for (let i = 0; i < targets.length; i++) {
+    const sym = targets[i];
+    try {
+      const rep = await api.companyReport(sym, ["overview"]);
+      calls++;
+      const o = rep.overview ?? {};
+      rows.push({
+        symbol: rep.symbol ?? sym,
+        companyName: rep.company_name ?? null,
+        sector: o.sector ?? null,
+        subSector: o.sub_sector ?? null,
+        industry: o.industry ?? null,
+        subIndustry: o.sub_industry ?? null,
+        sectorSlug: slugifyTaxonomy(o.sector),
+        subSectorSlug: slugifyTaxonomy(o.sub_sector),
+        listingBoard: o.listing_board ?? null,
+        marketCap: o.market_cap ?? null,
+        listingDate: o.listing_date ?? null,
+      });
+      const mi = misses.indexOf(sym);
+      if (mi >= 0) misses.splice(mi, 1);
+    } catch (e) {
+      calls++;
+      if (!misses.includes(sym)) misses.push(sym);
+      console.warn(`taxonomy ${sym}: ${e instanceof Error ? e.message : e}`);
+    }
+    if ((i + 1) % 100 === 0 || i === targets.length - 1) {
+      console.log(`taxonomy: ${i + 1}/${targets.length} (${calls} calls)`);
+    }
+  }
+
+  const asOf = new Date().toISOString().slice(0, 10);
+  const artifact: TaxonomyArtifact = {
+    schemaVersion: 1,
+    engineVersion: "radarx-v2",
+    asOf,
+    generatedAt: new Date().toISOString(),
+    source: "sectors",
+    creditsEst: calls,
+    rows: rows.sort((a, b) => a.symbol.localeCompare(b.symbol)),
+    misses: misses.sort(),
+  };
+  await writeFile(path.join(process.cwd(), "data", "taxonomy.json"), JSON.stringify(artifact) + "\n");
+  await store.log("ingest_taxonomy", calls, rows.length, "ok");
+  console.log(`taxonomy: ${rows.length} mapped, ${misses.length} missed, asOf=${asOf} (${calls} calls)`);
+}
+
 const commands: Record<string, () => Promise<void>> = {
   universe: ingestUniverse,
   rotation: ingestRotation,
+  taxonomy: ingestTaxonomy,
   filings: ingestFilings,
   tickers: ingestTickers,
   flows: ingestFlows,
