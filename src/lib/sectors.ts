@@ -246,6 +246,32 @@ export interface SubsectorCompanies {
   top_change_companies?: Record<string, SubsectorChangeCompany>;
 }
 
+// valuation: yearly pb/pe/ps/pcf; the latest year also carries cross-subsector ranks.
+export interface SubsectorValuation {
+  historical_valuation?: Record<string, {
+    pb: number | null;
+    pe: number | null;
+    ps: number | null;
+    pcf: number | null;
+    pb_rank?: number | null;
+    pe_rank?: number | null;
+    ps_rank?: number | null;
+    pcf_rank?: number | null;
+  }>;
+}
+
+export interface SubsectorGrowth {
+  weighted_avg_growth_data?: Record<string, {
+    avg_annual_earning_growth: number | null;
+    avg_annual_revenue_growth: number | null;
+  }>;
+  growth_forecasts?: Record<string, {
+    base_year: number | null;
+    eps_growth: number | null;
+    revenue_growth: number | null;
+  }>;
+}
+
 export interface SubsectorReport {
   sector: string;
   sub_sector: string;
@@ -253,6 +279,8 @@ export interface SubsectorReport {
   market_cap?: SubsectorMarketCap;
   stability?: SubsectorStability;
   companies?: SubsectorCompanies;
+  valuation?: SubsectorValuation;
+  growth?: SubsectorGrowth;
 }
 
 // ---- Company report (GET /v2/company/report/{symbol}/) ----

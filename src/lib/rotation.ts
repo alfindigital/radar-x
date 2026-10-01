@@ -34,6 +34,21 @@ export interface RotationSubsector {
   members: string[]; // .JK symbols belonging to this subsector
   netForeignFlow: number | null; // latest stored foreign-flow day, summed over members (IDR)
   flowDate: string | null;
+  // valuation/growth sections — present only when ingested with those sections
+  valuationLatest: {
+    year: string;
+    pb: number | null;
+    pe: number | null;
+    ps: number | null;
+    pcf: number | null;
+    pbRank: number | null;
+    peRank: number | null;
+    psRank: number | null;
+    pcfRank: number | null;
+  } | null;
+  valuationHist: Record<string, { pb: number | null; pe: number | null; ps: number | null; pcf: number | null }> | null;
+  growthHist: Record<string, { earnGrowth: number | null; revGrowth: number | null }> | null;
+  growthForecast: { year: string; epsGrowth: number | null; revGrowth: number | null } | null;
 }
 
 export interface SectorRotationArtifact {

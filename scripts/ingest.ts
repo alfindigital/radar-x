@@ -420,6 +420,13 @@ async function ingestRotation() {
     const netFlow = members.reduce((sum, sym) => sum + (flowBySymbol.get(sym) ?? 0), 0);
     const hasFlow = members.some((sym) => flowBySymbol.has(sym));
 
+    const vHist = rep.valuation?.historical_valuation ?? null;
+    const vYear = vHist ? Object.keys(vHist).sort().at(-1) : undefined;
+    const v = vYear ? vHist![vYear] : null;
+    const gHist = rep.growth?.weighted_avg_growth_data ?? null;
+    const fYears = rep.growth?.growth_forecasts ? Object.keys(rep.growth.growth_forecasts).sort() : [];
+    const gF = fYears.length ? rep.growth!.growth_forecasts![fYears.at(-1)!] : null;
+
     rows.push({
       slug: t.subsector,
       sector: rep.sector ?? t.sector,
@@ -440,6 +447,27 @@ async function ingestRotation() {
       members: members.sort(),
       netForeignFlow: hasFlow ? netFlow : null,
       flowDate: hasFlow ? latestFlowDate : null,
+      valuationLatest: vYear && v
+        ? {
+            year: vYear,
+            pb: v.pb, pe: v.pe, ps: v.ps, pcf: v.pcf,
+            pbRank: v.pb_rank ?? null, peRank: v.pe_rank ?? null,
+            psRank: v.ps_rank ?? null, pcfRank: v.pcf_rank ?? null,
+          }
+        : null,
+      valuationHist: vHist
+        ? Object.fromEntries(
+            Object.entries(vHist).map(([y, r]) => [y, { pb: r.pb, pe: r.pe, ps: r.ps, pcf: r.pcf }]),
+          )
+        : null,
+      growthHist: gHist
+        ? Object.fromEntries(
+            Object.entries(gHist).map(([y, r]) => [y, { earnGrowth: r.avg_annual_earning_growth, revGrowth: r.avg_annual_revenue_growth }]),
+          )
+        : null,
+      growthForecast: gF && fYears.length
+        ? { year: fYears.at(-1)!, epsGrowth: gF.eps_growth, revGrowth: gF.revenue_growth }
+        : null,
     });
   }
 

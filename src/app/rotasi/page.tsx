@@ -21,6 +21,12 @@ function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
     `${s.subSector} (${s.companyCount ?? "—"} issuers)`,
     `mcap Δ1w ${v === null ? "—" : `${(v * 100).toFixed(1)}%`} · YTD ${s.mcapChangeYtd === null ? "—" : `${(s.mcapChangeYtd * 100).toFixed(1)}%`}`,
     `median PE ${s.medianPe === null ? "—" : s.medianPe.toFixed(1)}x · max DD ${s.maxDrawdown === null ? "—" : `${(s.maxDrawdown * 100).toFixed(0)}%`}`,
+    s.valuationLatest
+      ? `PB ${s.valuationLatest.pb === null ? "—" : s.valuationLatest.pb.toFixed(2)}x (rank ${s.valuationLatest.pbRank ?? "—"}/33) · PS ${s.valuationLatest.ps === null ? "—" : s.valuationLatest.ps.toFixed(2)}x`
+      : "valuation: not ingested",
+    s.growthForecast
+      ? `forecast ${s.growthForecast.year}: EPS ${s.growthForecast.epsGrowth === null ? "—" : `${(s.growthForecast.epsGrowth * 100).toFixed(0)}%`} · rev ${s.growthForecast.revGrowth === null ? "—" : `${(s.growthForecast.revGrowth * 100).toFixed(0)}%`}`
+      : "growth forecast: not ingested",
     s.netForeignFlow === null ? "foreign flow: no stored rows" : `net foreign flow ${s.flowDate}: ${s.netForeignFlow >= 0 ? "+" : "−"}Rp${fmtIDR(Math.abs(s.netForeignFlow))}`,
   ].join("\n");
   return (
@@ -111,6 +117,7 @@ export default async function RotasiPage() {
                 <th className="py-2 pr-4 font-medium text-right">Δ 1w</th>
                 <th className="hidden py-2 pr-4 font-medium text-right sm:table-cell">Δ YTD</th>
                 <th className="hidden py-2 pr-4 font-medium text-right lg:table-cell">Median PE</th>
+                <th className="hidden py-2 pr-4 font-medium text-right lg:table-cell">PB</th>
                 <th className="hidden py-2 pr-4 font-medium text-right lg:table-cell">Max DD</th>
                 <th className="hidden py-2 pr-4 font-medium text-right md:table-cell">Net foreign</th>
                 <th className="hidden py-2 font-medium text-right xl:table-cell">Total mcap</th>
@@ -136,6 +143,12 @@ export default async function RotasiPage() {
                     </td>
                     <td className="hidden py-2.5 pr-4 text-right dim lg:table-cell">
                       {s.medianPe === null ? "—" : `${s.medianPe.toFixed(1)}×`}
+                    </td>
+                    <td
+                      className="hidden py-2.5 pr-4 text-right dim lg:table-cell"
+                      title={s.valuationLatest ? `PB rank ${s.valuationLatest.pbRank ?? "—"} of 33 subsectors` : undefined}
+                    >
+                      {s.valuationLatest?.pb == null ? "—" : `${s.valuationLatest.pb.toFixed(2)}×`}
                     </td>
                     <td className="hidden py-2.5 pr-4 text-right dist lg:table-cell">
                       {s.maxDrawdown === null ? "—" : `${(s.maxDrawdown * 100).toFixed(0)}%`}

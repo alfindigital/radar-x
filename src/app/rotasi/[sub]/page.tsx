@@ -59,6 +59,95 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
         <Stat label="Max drawdown" value={row.maxDrawdown === null ? "—" : `${(row.maxDrawdown * 100).toFixed(0)}%`} sub={row.rsd === null ? undefined : `RSD ${row.rsd.toFixed(2)}`} />
       </div>
 
+      {(row.valuationLatest || row.growthHist || row.growthForecast) && (
+        <section>
+          <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Valuation &amp; growth (provider aggregates)</h2>
+          <div className="grid gap-8 lg:grid-cols-2">
+            {row.valuationHist && (
+              <div>
+                <p className="mb-2 text-[10px] faint">yearly valuation — PB / PE / PS / PCF</p>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+                      <th className="py-1.5 pr-4 font-medium">Year</th>
+                      <th className="py-1.5 pr-4 font-medium text-right">PB</th>
+                      <th className="py-1.5 pr-4 font-medium text-right">PE</th>
+                      <th className="py-1.5 pr-4 font-medium text-right">PS</th>
+                      <th className="py-1.5 font-medium text-right">PCF</th>
+                    </tr>
+                  </thead>
+                  <tbody className="mono text-xs">
+                    {Object.entries(row.valuationHist)
+                      .sort(([a], [b]) => a.localeCompare(b))
+                      .map(([year, v]) => (
+                        <tr key={year} className={`border-b border-line/60 ${year === row.valuationLatest?.year ? "bg-line/10" : ""}`}>
+                          <td className="py-1.5 pr-4 dim">
+                            {year}
+                            {year === row.valuationLatest?.year && row.valuationLatest.pbRank !== null && (
+                              <span className="faint ml-2 text-[9px]">PB rank {row.valuationLatest.pbRank}/33</span>
+                            )}
+                          </td>
+                          <td className="py-1.5 pr-4 text-right">{v.pb === null ? "—" : `${v.pb.toFixed(2)}×`}</td>
+                          <td className="py-1.5 pr-4 text-right">{v.pe === null ? "—" : `${v.pe.toFixed(1)}×`}</td>
+                          <td className="py-1.5 pr-4 text-right">{v.ps === null ? "—" : `${v.ps.toFixed(2)}×`}</td>
+                          <td className="py-1.5 text-right">{v.pcf === null ? "—" : `${v.pcf.toFixed(2)}×`}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div>
+              {row.growthHist && (
+                <div>
+                  <p className="mb-2 text-[10px] faint">weighted yearly growth — earnings / revenue</p>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+                        <th className="py-1.5 pr-4 font-medium">Year</th>
+                        <th className="py-1.5 pr-4 font-medium text-right">Earnings</th>
+                        <th className="py-1.5 font-medium text-right">Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody className="mono text-xs">
+                      {Object.entries(row.growthHist)
+                        .sort(([a], [b]) => a.localeCompare(b))
+                        .slice(-6)
+                        .map(([year, g]) => (
+                          <tr key={year} className="border-b border-line/60">
+                            <td className="py-1.5 pr-4 dim">{year}</td>
+                            <td className={`py-1.5 pr-4 text-right ${g.earnGrowth === null ? "faint" : g.earnGrowth >= 0 ? "acc" : "dist"}`}>
+                              {g.earnGrowth === null ? "—" : fmtPct(g.earnGrowth * 100, 0, "complete")}
+                            </td>
+                            <td className={`py-1.5 text-right ${g.revGrowth === null ? "faint" : g.revGrowth >= 0 ? "acc" : "dist"}`}>
+                              {g.revGrowth === null ? "—" : fmtPct(g.revGrowth * 100, 0, "complete")}
+                            </td>
+                          </tr>
+                        ))}
+                      {row.growthForecast && (
+                        <tr className="bg-line/10">
+                          <td className="py-1.5 pr-4 dim">
+                            {row.growthForecast.year}
+                            <span className="faint ml-2 text-[9px]">forecast</span>
+                          </td>
+                          <td className={`py-1.5 pr-4 text-right ${row.growthForecast.epsGrowth === null ? "faint" : row.growthForecast.epsGrowth >= 0 ? "acc" : "dist"}`}>
+                            {row.growthForecast.epsGrowth === null ? "—" : fmtPct(row.growthForecast.epsGrowth * 100, 0, "complete")}
+                          </td>
+                          <td className={`py-1.5 text-right ${row.growthForecast.revGrowth === null ? "faint" : row.growthForecast.revGrowth >= 0 ? "acc" : "dist"}`}>
+                            {row.growthForecast.revGrowth === null ? "—" : fmtPct(row.growthForecast.revGrowth * 100, 0, "complete")}
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       <div className="grid gap-8 lg:grid-cols-2">
         <section>
           <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Strongest 1-month movers</h2>
