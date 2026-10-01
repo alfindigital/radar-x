@@ -1,11 +1,13 @@
 // Issuer Dossier — hero timeline + score breakdown + holders composition + cases.
 
 import { getIssuerDossier } from "@/lib/services";
+import Link from "next/link";
 import TimelineChart from "@/components/TimelineChart";
 import TradesTable from "@/components/TradesTable";
 import { CaseRow, ScoreBreakdown, ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
 import { fmtCurrency, fmtNum, fmtShares } from "@/components/fmt";
 import type { HoldersMonthly } from "@/lib/types";
+import type { IssuerOwnership } from "@/lib/ownership";
 import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
@@ -96,6 +98,133 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
   );
 }
 
+function OwnershipSection({ o, covered }: { o: IssuerOwnership; covered: boolean }) {
+  if (!covered) {
+    return (
+      <p className="dim py-4 text-xs">
+        This issuer is outside the current ownership-snapshot coverage; the rolling ingest fills coverage progressively.
+      </p>
+    );
+  }
+  const holders = [...o.holders].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
+  const flows = [...o.instFlow].sort((a, b) => a.month.localeCompare(b.month));
+  const maxFlow = Math.max(...flows.map((f) => Math.abs(f.netTransaction)), 1);
+  const latestTxnMonth = o.instTxn.reduce((m, t) => (t.month > m ? t.month : m), "");
+  const latestTxns = o.instTxn.filter((t) => t.month === latestTxnMonth);
+  const buyers = latestTxns.filter((t) => t.side === "buy").sort((a, b) => b.changeAmount - a.changeAmount);
+  const sellers = latestTxns.filter((t) => t.side === "sell").sort((a, b) => b.changeAmount - a.changeAmount);
+
+  return (
+    <div className="space-y-6">
+      {(o.groups.length > 0 || o.whales.length > 0) && (
+        <div className="flex flex-wrap gap-2">
+          {o.groups.map((g) => (
+            <span key={g} className="tag blue">
+              {g}
+            </span>
+          ))}
+          {o.whales.map((w) => (
+            <Link key={w} href={`/orang/${encodeURIComponent(w)}`} className="tag hover:border-line">
+              {w}
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <div className="grid gap-8 lg:grid-cols-2">
+        <div>
+          <p className="mb-2 text-[10px] faint">major reported holders</p>
+          {holders.length === 0 ? (
+            <p className="dim py-3 text-xs">No named holders reported.</p>
+          ) : (
+            <table className="w-full text-xs">
+              <tbody>
+                {holders.map((h) => (
+                  <tr key={h.name} className="border-b border-line/40 last:border-0">
+                    <td className="py-1.5 pr-3">
+                      {h.holderSymbol ? (
+                        <Link href={`/saham/${h.holderSymbol.replace(".JK", "")}`} className="blue hover:underline">
+                          {h.name}
+                        </Link>
+                      ) : (
+                        h.name
+                      )}
+                    </td>
+                    <td className="mono py-1.5 text-right">{h.pct == null ? "—" : `${h.pct.toFixed(2)}%`}</td>
+                    <td className="mono dim py-1.5 pl-3 text-right">{h.value == null ? "" : fmtCurrency(h.value)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        <div>
+          <p className="mb-2 flex justify-between text-[10px] faint">
+            <span>institutional net transactions</span>
+            <span className="blue">monthly</span>
+          </p>
+          {flows.length === 0 ? (
+            <p className="dim py-3 text-xs">No institutional transaction flow reported.</p>
+          ) : (
+            <div className="space-y-1">
+              <div className="flex h-16 items-center gap-1">
+                {flows.map((f) => {
+                  const hgt = Math.max(4, (Math.abs(f.netTransaction) / maxFlow) * 50);
+                  const up = f.netTransaction >= 0;
+                  return (
+                    <div key={f.month} className="flex flex-1 flex-col items-center justify-center" title={`${f.month.slice(0, 7)}: ${fmtNum(f.netTransaction)} shares`}>
+                      <div className={up ? "w-full rounded-t" : "w-full rounded-b"}
+                        style={{
+                          height: hgt,
+                          backgroundColor: up
+                            ? "color-mix(in srgb, var(--acc) 70%, transparent)"
+                            : "color-mix(in srgb, var(--dist) 70%, transparent)",
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between text-[9px] faint">
+                <span>{flows[0].month.slice(0, 7)}</span>
+                <span>green = net institutional buy</span>
+                <span>{flows.at(-1)!.month.slice(0, 7)}</span>
+              </div>
+            </div>
+          )}
+
+          {latestTxns.length > 0 && (
+            <div className="mt-4">
+              <p className="mb-2 text-[10px] faint">top institutional movers · {latestTxnMonth.slice(0, 7)}</p>
+              <div className="grid gap-x-6 sm:grid-cols-2">
+                <div>
+                  {buyers.map((t) => (
+                    <div key={`b-${t.name}`} className="flex items-baseline justify-between gap-2 py-0.5 text-xs">
+                      <span className="truncate">{t.name}</span>
+                      <span className="mono acc shrink-0">+{fmtShares(t.changeAmount)}</span>
+                    </div>
+                  ))}
+                  {buyers.length === 0 && <p className="dim text-xs">—</p>}
+                </div>
+                <div>
+                  {sellers.map((t) => (
+                    <div key={`s-${t.name}`} className="flex items-baseline justify-between gap-2 py-0.5 text-xs">
+                      <span className="truncate">{t.name}</span>
+                      <span className="mono dist shrink-0">−{fmtShares(t.changeAmount)}</span>
+                    </div>
+                  ))}
+                  {sellers.length === 0 && <p className="dim text-xs">—</p>}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function DossierPage({ params }: PageProps<"/saham/[ticker]">) {
   const { ticker } = await params;
   const d = await getIssuerDossier(ticker);
@@ -150,7 +279,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
         <TimelineChart price={d.price} flow={d.flow} insider={d.insider} />
       </section>
 
-      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-5">
         <Stat label="Insider buys (90d)" value={fmtCurrency(buyVal)} />
         <Stat label="Insider sells (90d)" value={fmtCurrency(sellVal)} />
         <Stat
@@ -162,6 +291,11 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
           label="Reported shareholders"
           value={d.holders.length ? fmtNum(d.holders.at(-1)!.nShareholders) : "—"}
           sub={d.holders.length ? `Δ ${fmtNum(d.holders.at(-1)!.changeInShareholders)} last month` : undefined}
+        />
+        <Stat
+          label="Free float"
+          value={d.freeFloat == null ? "—" : `${(d.freeFloat * 100).toFixed(1)}%`}
+          sub={d.freeFloat != null && d.freeFloat < 0.25 ? "low float — thin public liquidity" : undefined}
         />
       </div>
 
@@ -175,6 +309,11 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
           <HoldersChart holders={d.holders} />
         </section>
       </div>
+
+      <section>
+        <h2 className="section-label mb-3">Reported ownership</h2>
+        <OwnershipSection o={d.ownership} covered={d.ownershipCovered} />
+      </section>
 
       <section>
         <h2 className="section-label mb-3">Reported ownership transactions</h2>

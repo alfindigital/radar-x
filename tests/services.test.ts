@@ -37,10 +37,11 @@ test("unknown issuer is explicit and does not trigger a provider fetch", async (
 
 test("known issuers use the verified derived-v2 score and do not mutate the snapshot", async () => {
   const before = await loadSnapshot();
+  const derived = await loadDerived();
   const dossier = await getIssuerDossier("BBCA");
   const after = await loadSnapshot();
   assert.equal(dossier.status, "available");
-  assert.equal(dossier.asOf, "2026-09-22");
+  assert.equal(dossier.asOf, derived.manifest.asOf);
   assert.equal(dossier.score?.methodVersion, "radarx-v2");
   assert.equal(after.manifest.inputHash, before.manifest.inputHash);
 });

@@ -4,6 +4,7 @@
 import { loadDerived, type DerivedCase } from "./derive";
 import { rankFlowRows, type FlowRadarRow } from "./flow";
 import { measureOutcome } from "./outcomes";
+import { loadOwnership, loadFreeFloat, ownershipForSymbol, freeFloatForSymbol, type IssuerOwnership } from "./ownership";
 import { loadRotation, type RotationSubsector } from "./rotation";
 import { loadTaxonomy, taxonomyBySymbol } from "./taxonomy";
 import { loadSnapshot } from "./snapshot";
@@ -41,6 +42,9 @@ export interface IssuerDossier {
   broker: BrokerSummaryRow[];
   holders: HoldersMonthly[];
   cases: DerivedCase[];
+  ownership: IssuerOwnership;
+  ownershipCovered: boolean; // false = issuer outside current rolling coverage
+  freeFloat: number | null; // 0-1 fraction, provider's latest value
   lazy: boolean; // true = fetched live this visit
   asOf: string;
 }
@@ -104,8 +108,15 @@ function decodeRouteParam(value: string): string | null {
   }
 }
 
+const EMPTY_OWNERSHIP: IssuerOwnership = { holders: [], whales: [], groups: [], instFlow: [], instTxn: [] };
+
 export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier> {
-  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const [snapshot, derived, ownership, freeFloat] = await Promise.all([
+    loadSnapshot(),
+    loadDerived(),
+    loadOwnership(),
+    loadFreeFloat(),
+  ]);
   const decoded = decodeRouteParam(symbolRaw);
   const normalized = decoded?.toUpperCase() ?? "";
   const symbol = normalized.endsWith(".JK") ? normalized : `${normalized}.JK`;
@@ -122,6 +133,9 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
       broker: [],
       holders: [],
       cases: [],
+      ownership: EMPTY_OWNERSHIP,
+      ownershipCovered: false,
+      freeFloat: null,
       lazy: false,
       asOf: derived.manifest.asOf,
     };
@@ -138,6 +152,9 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
     broker: data.broker,
     holders: data.holders,
     cases,
+    ownership: ownershipForSymbol(ownership, symbol),
+    ownershipCovered: ownership ? symbol in ownership.refreshed : false,
+    freeFloat: freeFloatForSymbol(freeFloat, symbol),
     lazy: false,
     asOf: derived.manifest.asOf,
   };

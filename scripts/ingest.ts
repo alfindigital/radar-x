@@ -76,8 +76,10 @@ function mapFiling(f: FilingRaw): InsiderTrade | null {
 }
 
 async function ingestFilings() {
-  const months = Number(flag("months", "6"));
-  const chunks = monthChunks(months);
+  // --from/--to (inclusive) overrides --months for targeted gap-fills.
+  const from = flag("from");
+  const to = flag("to", new Date().toISOString().slice(0, 10));
+  const chunks = from ? [{ start: from, end: to! }] : monthChunks(Number(flag("months", "6")));
   let totalAdded = 0;
   let calls = 0;
   for (const c of chunks) {
@@ -93,7 +95,7 @@ async function ingestFilings() {
     }
   }
   await store.log("ingest_filings", calls, totalAdded, "ok");
-  console.log(`filings: +${totalAdded} rows (${calls} calls, ${months}mo)`);
+  console.log(`filings: +${totalAdded} rows (${calls} calls, ${chunks.length}mo)`);
 }
 
 async function ingestTickers() {
