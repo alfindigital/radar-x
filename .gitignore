@@ -2,6 +2,7 @@
 # Protects secrets and machine files from ever entering the public repo.
 *
 !.gitignore
+!.gitattributes
 !.env.example
 !package.json
 !package-lock.json

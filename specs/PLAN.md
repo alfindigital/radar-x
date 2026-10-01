@@ -7,7 +7,7 @@ created: 2026-09-18T14:18:14Z
 
 > **Historical plan — superseded on 2026-09-29.** The current execution plan and release evidence are in `docs/superpowers/plans/2026-09-29-hackathon-readiness.md`, `docs/RELEASE-CHECKLIST.md`, and `docs/verification/release-evidence.md`. Current competition deadline is 8 October 2026, 23:59 WIB; older dates in this document are not authoritative.
 
-Radar posisi smart money IDX untuk swing trader: deteksi akumulasi/distribusi orang dalam, institusi, dan asing dalam horizon mingguan — dari data disclosure resmi Sectors API — sebelum beritanya keluar. Track 3 Market Intelligence, solo, Next.js + Supabase di Vercel.
+Radar posisi kepemilikan institusional & orang dalam IDX untuk investor dan analis pasar: deteksi pergeseran posisi investor orang dalam (insider), institusi, dan aliran asing dalam horizon mingguan — dari data disclosure resmi Sectors API — dengan verifikasi berbasis bukti empiris dan audit komparatif historis. Track 3 Market Intelligence, solo, Next.js + Supabase di Vercel.
 
 ---
 
@@ -25,7 +25,7 @@ Radar posisi smart money IDX untuk swing trader: deteksi akumulasi/distribusi or
 
 ## 2. Konsep Produk
 
-**Problem statement (submit, 1 kalimat):** "RADAR-X memberi investor swing Indonesia peta posisi smart money — siapa (insider, institusi, asing) sedang diam-diam mengakumulasi atau meninggalkan sebuah saham IDX dalam hitungan minggu, sebelum pergerakannya terlihat."
+**Problem statement (submit, 1 kalimat):** "RADAR-X helps Indonesian equity researchers turn scattered reported-ownership disclosures into bounded, source-linked patterns and measured historical outcomes without hiding missing evidence."
 
 **Kenapa ini menjawab 3 kriteria juri:**
 - **Usability (40%)**: pertanyaan nyata swing trader — "saham ini lagi dikumpul atau ditinggal orang dalam?" — dijawab dengan skor + bukti, bukan tabel mentah. Update mingguan, cocok ritme swing.

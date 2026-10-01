@@ -36,6 +36,9 @@ RADAR-X helps Indonesian equity researchers turn scattered reported-ownership di
 <user to publish with the official Sectors tag/template and paste the URL>
 ```
 
+- **Project Thumbnail Design (Canva):** [Edit RADAR-X Cover](https://www.canva.com/design/DAHUfZI9dJI/rcFmHic2Nn5Hdqj7DLwfmw/edit?utm_content=DAHUfZI9dJI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+
 ## Factual English caption draft
 
 ```text

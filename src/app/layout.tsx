@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RADAR-X — Smart Money Positioning IDX",
+  title: "RADAR-X — Institutional & Insider Ownership Positioning IDX",
   description:
-    "A reproducible market-intelligence view of Indonesian equity disclosures, foreign flow, broker context, and measured historical outcomes.",
+    "A reproducible market-intelligence view of Indonesian equity disclosures, foreign flow disparity, institutional positioning, and measured historical outcomes.",
 };
 
 const NAV = [

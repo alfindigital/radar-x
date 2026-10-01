@@ -4,9 +4,7 @@
 
 ## Problem (1 kalimat, submit-ready)
 
-RADAR-X memberi investor swing Indonesia peta posisi smart money — siapa (insider, institusi, asing)
-sedang diam-diam mengakumulasi atau meninggalkan sebuah saham IDX dalam hitungan minggu, sebelum
-pergerakannya terlihat.
+RADAR-X helps Indonesian equity researchers turn scattered reported-ownership disclosures into bounded, source-linked patterns and measured historical outcomes without hiding missing evidence.
 
 ## Pengguna
 

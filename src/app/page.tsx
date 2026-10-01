@@ -11,9 +11,9 @@ import DataStatus from "@/components/DataStatus";
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  { key: "semua", label: "All" },
-  { key: "akumulasi", label: "Accumulation" },
-  { key: "distribusi", label: "Distribution" },
+  { key: "semua", label: "All Cohorts" },
+  { key: "akumulasi", label: "Positive Disparity (Accumulation)" },
+  { key: "distribusi", label: "Negative Disparity (Distribution)" },
 ];
 
 export default async function BoardPage({ searchParams }: PageProps<"/">) {
@@ -38,10 +38,10 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
         <div className="flex items-center gap-4 text-xs">
           <span className="tag">EOD {week ?? "—"}</span>
           <span className="dim">
-            <span className="acc">▲</span> {nAcc} accumulation
+            <span className="acc">▲</span> {nAcc} positive positioning
           </span>
           <span className="dim">
-            <span className="dist">▼</span> {nDist} distribution
+            <span className="dist">▼</span> {nDist} negative positioning
           </span>
         </div>
       </div>
