@@ -271,10 +271,33 @@ export interface CompanyReportOverview {
   latest_close_date?: string | null;
 }
 
+export interface OwnershipShareholder {
+  name: string;
+  symbol?: string; // present when the holder is itself a listed issuer
+  share_amount?: number;
+  share_percentage?: string; // fraction as string, e.g. "0.54942"
+  share_value?: number;
+}
+
+export interface OwnershipTopTxn {
+  date?: string;
+  top_buyers?: { name: string; changeAmount: number }[];
+  top_sellers?: { name: string; changeAmount: number }[];
+}
+
+export interface OwnershipBlock {
+  major_shareholders?: OwnershipShareholder[];
+  top_transactions?: OwnershipTopTxn;
+  institutional_transaction_flow?: { date: string; net_transaction: number }[];
+  whale_investors?: string[];
+  conglomerates_group?: string[];
+}
+
 export interface CompanyReport {
   symbol: string;
   company_name?: string;
   overview?: CompanyReportOverview;
+  ownership?: OwnershipBlock;
 }
 
 // ---- Market boards (idx-total, index-daily, brokers, free-float) ----

@@ -14,7 +14,11 @@ The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated
 
 ### Market boards snapshot (added 2026-10-01)
 
-`npm run ingest -- boards` (~56 calls) writes five artifacts: `data/broker_registry.json` (88 brokers: code/name/is_foreign/cohort/licenses), `data/idx_total.json` (daily IDX aggregate mcap, ~1mo), `data/index_daily.json` (17 indices × ~90d history; KLSE has no history feed), `data/free_float.json` (961 issuers; BIMA has no float row), and `data/top_changes.json` — a dated gainers/losers snapshot accreted per session (endpoint is current-only, no date param; first capture 2026-09-30). Daily cadence for top_changes/idx_total/index list; free-float monthly-ish; brokers static. Monthly-cadence layers (ownership, shareholders-composition) deliberately deferred to mid-October when the September EOM files publish.
+`npm run ingest -- boards` (~56 calls) writes five artifacts: `data/broker_registry.json` (88 brokers: code/name/is_foreign/cohort/licenses), `data/idx_total.json` (daily IDX aggregate mcap, ~1mo), `data/index_daily.json` (17 indices; kept to 2026-09-01+; KLSE has no history feed), `data/free_float.json` (961 issuers; BIMA has no float row), and `data/top_changes.json` — a dated gainers/losers snapshot accreted per session (endpoint is current-only, no date param; first capture 2026-09-30). `boards --lite` is the daily mode (3 calls: top-changes + idx-total merge + latest index closes). Free-float monthly-ish; brokers static.
+
+### Rolling ownership ingest (added 2026-10-01)
+
+`npm run ingest -- ownership --limit N` pulls `company/report?sections=ownership` for the N least-recently-fetched symbols → `data/ownership.json` (holders/whales/conglomerate groups/inst flow/top txn, all flat rows keyed by symbol). 1 credit per symbol per refresh. A Windows scheduled task `RadarX-DailyIngest` (daily 18:00, until 2026-10-11 ≈ submission+3) runs `boards --lite` + `filings` + `ownership --limit 100`, logging to `logs/daily-*.log`. Delete after the freeze: `schtasks /delete /tn RadarX-DailyIngest /f`. NOTE: key-1 hit `SUBSCRIPTION_DOES_NOT_ALLOW` (quota wall) mid-run on 2026-10-01 after ~1.0k same-day calls — `.env.local` was switched to vault key-2; key-3 remains spare. `shareholders-composition` bulk still deferred to mid-October EOM publication.
 - Navigation gained a "Sectors" entry on desktop and mobile.
 
 ## Passed gates

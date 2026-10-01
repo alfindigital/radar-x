@@ -546,6 +546,29 @@ async function ingestTaxonomy() {
   console.log(`taxonomy: ${rows.length} mapped, ${misses.length} missed, asOf=${asOf} (${calls} calls)`);
 }
 
+async function ingestTopChanges(
+  dir: (f: string) => string,
+  meta: Record<string, unknown>,
+  now: string,
+  asOf: string,
+): Promise<void> {
+  const tc = await api.topChanges();
+  const tcFile = dir("top_changes.json");
+  let tcArtifact: { snapshots: { date: string; fetchedAt: string; topGainers: unknown; topLosers: unknown }[] } & Record<string, unknown> = { ...meta, snapshots: [] };
+  try {
+    tcArtifact = JSON.parse(readFileSync(tcFile, "utf8"));
+  } catch { /* first run */ }
+  const sessionDate =
+    (Object.values((tc.top_gainers as Record<string, { latest_close_date?: string }[]>)["1d"] ?? [])[0] as { latest_close_date?: string } | undefined)
+      ?.latest_close_date ?? asOf;
+  if (!tcArtifact.snapshots.some((s) => s.date === sessionDate)) {
+    tcArtifact.snapshots.push({ date: sessionDate, fetchedAt: now, topGainers: tc.top_gainers, topLosers: tc.top_losers });
+    tcArtifact.asOf = sessionDate;
+  }
+  await writeFile(tcFile, JSON.stringify(tcArtifact));
+  console.log(`top-changes: ${tcArtifact.snapshots.length} sessions, latest=${sessionDate}`);
+}
+
 // Market boards snapshot: index-daily history (≤90d window per index),
 // idx-total series, broker registry, free-float per subsector, and a dated
 // top-changes snapshot (accreted daily — the endpoint is current-snapshot only,
@@ -556,6 +579,42 @@ async function ingestBoards() {
   const now = new Date().toISOString();
   const asOf = now.slice(0, 10);
   const meta = { schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const };
+  const lite = args.includes("--lite"); // daily mode: 3 calls — top-changes + idx-total + latest index closes merged in
+
+  if (lite) {
+    // --- idx-total: append new dates ---
+    const idxTotal = await api.idxTotal();
+    calls++;
+    const itFile = dir("idx_total.json");
+    let itArt: { rows: { date: string; idx_total_market_cap: number }[] } & Record<string, unknown> = { ...meta, rows: [] };
+    try { itArt = JSON.parse(readFileSync(itFile, "utf8")); } catch { /* first run */ }
+    const itHave = new Set(itArt.rows.map((r) => r.date));
+    const itNew = idxTotal.filter((r) => !itHave.has(r.date));
+    itArt.rows.push(...itNew);
+    itArt.asOf = itArt.rows.at(-1)?.date ?? asOf;
+    itArt.generatedAt = now;
+    await writeFile(itFile, JSON.stringify(itArt));
+
+    // --- latest index closes merged into history ---
+    const idxLatest = await api.indexDailyAll();
+    calls++;
+    const idFile = dir("index_daily.json");
+    let idArt: { rows: { indexCode: string; date: string; price: number }[] } & Record<string, unknown> = { ...meta, rows: [] };
+    try { idArt = JSON.parse(readFileSync(idFile, "utf8")); } catch { /* first run */ }
+    const idHave = new Set(idArt.rows.map((r) => `${r.indexCode}|${r.date}`));
+    const idNew = idxLatest.filter((r) => !idHave.has(`${r.index_code}|${r.date}`));
+    idArt.rows.push(...idNew.map((r) => ({ indexCode: r.index_code, date: r.date, price: r.price })));
+    idArt.asOf = idArt.rows.map((r) => r.date).sort().at(-1) ?? asOf;
+    idArt.generatedAt = now;
+    await writeFile(idFile, JSON.stringify(idArt));
+    console.log(`boards --lite: idx-total +${itNew.length} dates, index +${idNew.length} closes`);
+
+    // --- top-changes dated snapshot ---
+    await ingestTopChanges(dir, meta, now, asOf);
+    calls++;
+    await store.log("ingest_boards_lite", calls, itNew.length + idNew.length, "ok");
+    return;
+  }
 
   // --- brokers registry (1 call, static) ---
   const brokers = await api.brokers();
@@ -606,25 +665,98 @@ async function ingestBoards() {
   console.log(`free-float: ${ffRows.length} rows`);
 
   // --- top-changes daily snapshot (accrete by session date) ---
-  const tc = await api.topChanges();
+  await ingestTopChanges(dir, meta, now, asOf);
   calls++;
-  const tcFile = dir("top_changes.json");
-  let tcArtifact: { snapshots: { date: string; fetchedAt: string; topGainers: unknown; topLosers: unknown }[] } & Record<string, unknown> = { ...meta, snapshots: [] };
-  try {
-    tcArtifact = JSON.parse(readFileSync(tcFile, "utf8"));
-  } catch { /* first run */ }
-  const sessionDate =
-    (Object.values((tc.top_gainers as Record<string, { latest_close_date?: string }[]>)["1d"] ?? [])[0] as { latest_close_date?: string } | undefined)
-      ?.latest_close_date ?? asOf;
-  if (!tcArtifact.snapshots.some((s) => s.date === sessionDate)) {
-    tcArtifact.snapshots.push({ date: sessionDate, fetchedAt: now, topGainers: tc.top_gainers, topLosers: tc.top_losers });
-    tcArtifact.asOf = sessionDate;
-  }
-  await writeFile(tcFile, JSON.stringify(tcArtifact));
-  console.log(`top-changes: ${tcArtifact.snapshots.length} sessions, latest=${sessionDate}`);
 
   await store.log("ingest_boards", calls, brokers.length + idxTotal.length + idxRows.length + ffRows.length, "ok");
   console.log(`boards done (${calls} calls)`);
+}
+
+// Ownership layer: company/report/{symbol}?sections=ownership →
+// data/ownership.json. Rolling refresh — the N least-recently-fetched symbols
+// are pulled each run (default 100, --limit N, --full for all). Time-series
+// blocks (institutional flow, top transactions) update on the provider's EOM
+// cycle, so a rolling daily pull catches new monthly rows as they publish.
+async function ingestOwnership() {
+  const file = path.join(process.cwd(), "data", "ownership.json");
+  const art = {
+    schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const,
+    asOf: null as string | null, generatedAt: "", creditsEst: 0,
+    refreshed: {} as Record<string, string>,
+    holders: [] as { symbol: string; name: string; holderSymbol: string | null; pct: number | null; amount: number | null; value: number | null }[],
+    whales: [] as { symbol: string; name: string }[],
+    groups: [] as { symbol: string; group: string }[],
+    instFlow: [] as { symbol: string; month: string; netTransaction: number }[],
+    instTxn: [] as { symbol: string; month: string; side: string; name: string; changeAmount: number }[],
+    misses: [] as string[],
+  };
+  try {
+    const prev = JSON.parse(readFileSync(file, "utf8"));
+    Object.assign(art, prev);
+  } catch { /* first run */ }
+
+  const tax = await loadTaxonomy();
+  let universe = tax?.rows.map((r) => r.symbol) ?? [];
+  if (!universe.length) {
+    const rot = await loadRotation();
+    universe = [...new Set(rot?.subsectors.flatMap((s) => s.members) ?? [])];
+  }
+
+  const limit = Number(flag("limit", "100")) || 100;
+  const sorted = [...universe].sort((a, b) => (art.refreshed[a] ?? "").localeCompare(art.refreshed[b] ?? ""));
+  const targets = args.includes("--full") ? universe : sorted.slice(0, limit);
+
+  let calls = 0;
+  const now = new Date().toISOString();
+  for (let i = 0; i < targets.length; i++) {
+    const sym = targets[i];
+    try {
+      const rep = await api.companyReport(sym, ["ownership"]);
+      calls++;
+      const o = rep.ownership ?? {};
+      const clean = <T extends { symbol: string }>(rows: T[]) => rows.filter((r) => r.symbol !== sym);
+      art.holders = clean(art.holders);
+      art.whales = clean(art.whales);
+      art.groups = clean(art.groups);
+      art.instFlow = clean(art.instFlow);
+      art.instTxn = clean(art.instTxn);
+
+      for (const h of o.major_shareholders ?? []) {
+        art.holders.push({
+          symbol: sym, name: h.name, holderSymbol: h.symbol ?? null,
+          pct: h.share_percentage == null ? null : Number(h.share_percentage),
+          amount: h.share_amount ?? null, value: h.share_value ?? null,
+        });
+      }
+      for (const w of o.whale_investors ?? []) art.whales.push({ symbol: sym, name: w });
+      for (const g of o.conglomerates_group ?? []) art.groups.push({ symbol: sym, group: g });
+      for (const f of o.institutional_transaction_flow ?? [])
+        art.instFlow.push({ symbol: sym, month: f.date, netTransaction: f.net_transaction });
+      const tt = o.top_transactions;
+      for (const b of tt?.top_buyers ?? [])
+        art.instTxn.push({ symbol: sym, month: tt?.date ?? "", side: "buy", name: b.name, changeAmount: b.changeAmount });
+      for (const s of tt?.top_sellers ?? [])
+        art.instTxn.push({ symbol: sym, month: tt?.date ?? "", side: "sell", name: s.name, changeAmount: s.changeAmount });
+
+      art.refreshed[sym] = now;
+      const mi = art.misses.indexOf(sym);
+      if (mi >= 0) art.misses.splice(mi, 1);
+    } catch (e) {
+      calls++;
+      if (!art.misses.includes(sym)) art.misses.push(sym);
+      console.warn(`ownership ${sym}: ${e instanceof Error ? e.message : e}`);
+    }
+    if ((i + 1) % 50 === 0 || i === targets.length - 1) {
+      console.log(`ownership: ${i + 1}/${targets.length} (${calls} calls)`);
+    }
+  }
+
+  art.asOf = now.slice(0, 10);
+  art.generatedAt = now;
+  art.creditsEst = calls;
+  await writeFile(file, JSON.stringify(art));
+  await store.log("ingest_ownership", calls, targets.length, "ok");
+  console.log(`ownership: ${targets.length} refreshed, ${Object.keys(art.refreshed).length} covered, ${art.misses.length} misses (${calls} calls)`);
 }
 
 const commands: Record<string, () => Promise<void>> = {
@@ -632,6 +764,7 @@ const commands: Record<string, () => Promise<void>> = {
   rotation: ingestRotation,
   taxonomy: ingestTaxonomy,
   boards: ingestBoards,
+  ownership: ingestOwnership,
   filings: ingestFilings,
   tickers: ingestTickers,
   flows: ingestFlows,
