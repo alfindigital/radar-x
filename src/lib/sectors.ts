@@ -386,6 +386,77 @@ export interface FreeFloatRow {
   free_float: number | null; // fraction
 }
 
+// ---- Extended IDX feeds (suspensions, corporate actions, broker boards, LK) ----
+
+export interface Page<T> {
+  results: T[];
+  pagination?: { total_count?: number; showing?: number; has_next?: boolean; next_offset?: number };
+}
+
+export interface SuspensionRow {
+  symbol: string;
+  suspension_date?: string;
+  reason?: string;
+  pdf_url?: string;
+}
+
+// /v2/corporate-actions/?type=X → { start, end, [type]: event[] }. Event fields
+// vary per action type (dividend vs right_issue vs agm) — keep them raw.
+export type CorporateActionsCalendar = {
+  start?: string;
+  end?: string;
+} & Record<string, unknown>;
+
+export interface BrokersTopResponse {
+  date: string;
+  metric: string;
+  origin: string;
+  cohort: string;
+  foreign: boolean;
+  results: {
+    rank: number;
+    broker_code: string;
+    gross?: number;
+    net?: number;
+    foreign_gross?: number;
+    foreign_net?: number;
+  }[];
+}
+
+// /v2/most-traded/ → { "YYYY-MM-DD": [{symbol, company_name, volume, price}, …] }
+export type MostTradedResponse = Record<
+  string,
+  { symbol: string; company_name?: string; volume?: number; price?: number }[]
+>;
+
+export interface BrokerSummaryTopResponse {
+  symbol: string;
+  start: string;
+  end: string;
+  origin?: string;
+  cohort?: string;
+  top_buyers?: { rank: number; broker_code: string; net_idr?: number; buy_idr?: number; sell_idr?: number }[];
+  top_sellers?: { rank: number; broker_code: string; net_idr?: number; buy_idr?: number; sell_idr?: number }[];
+}
+
+export interface QuarterlyDateRow {
+  symbol: string;
+  date: string;
+  quarter?: string;
+}
+
+// /v2/company/corporate-actions/{symbol}/ → full history keyed by action type.
+export interface CompanyCorporateActions {
+  symbol: string;
+  corporate_actions: Record<string, unknown[]>;
+}
+
+export interface SegmentsResponse {
+  symbol: string;
+  financial_year?: number;
+  revenue_breakdown?: { value: number; source: string; target: string }[];
+}
+
 // ---- Typed helpers ----
 
 export const api = {
@@ -430,6 +501,28 @@ export const api = {
   // Requires exactly one taxonomy filter; iterate sub_sector slugs for full IDX.
   freeFloat: (subSector: string) =>
     sectorsGet<FreeFloatRow[]>("/v2/free-float/", { sub_sector: subSector }),
+  suspensions: (p?: { limit?: number; offset?: number }) =>
+    sectorsGet<Page<SuspensionRow>>("/v2/suspensions/", p as Record<string, string | number> | undefined),
+  // 1 credit per requested action type. Types: dividend, upcoming_dividend,
+  // bonus, right_issue, stock_split, warrant, agm.
+  corporateActionsCalendar: (type: string) =>
+    sectorsGet<CorporateActionsCalendar>("/v2/corporate-actions/", { type }),
+  brokersTop: (p?: { date?: string; metric?: string; origin?: string; cohort?: string }) =>
+    sectorsGet<BrokersTopResponse>("/v2/brokers/top/", p as Record<string, string | number> | undefined),
+  mostTraded: () => sectorsGet<MostTradedResponse>("/v2/most-traded/"),
+  brokerSummaryTop: (symbol: string) =>
+    sectorsGet<BrokerSummaryTopResponse>(`/v2/broker-summary/${encodeURIComponent(symbol)}/top/`),
+  quarterlyFinancialDates: (p?: { limit?: number; offset?: number; since?: string }) =>
+    sectorsGet<Page<QuarterlyDateRow>>("/v2/companies/quarterly-financial-dates/", p as Record<string, string | number> | undefined),
+  quarterlyFinancials: (symbol: string) =>
+    sectorsGet<Record<string, unknown>[]>(`/v2/financials/quarterly/${encodeURIComponent(symbol)}/`),
+  companyCorporateActions: (symbol: string) =>
+    sectorsGet<CompanyCorporateActions>(`/v2/company/corporate-actions/${encodeURIComponent(symbol)}/`),
+  // Returns { symbol: { financial_year: [2022, …] } } — a plain dict, not a page.
+  companiesWithSegments: () =>
+    sectorsGet<Record<string, { financial_year?: number[] }>>("/v2/companies/list_companies_with_segments/"),
+  segments: (symbol: string, p?: { financial_year?: number }) =>
+    sectorsGet<SegmentsResponse>(`/v2/company/get-segments/${encodeURIComponent(symbol)}/`, p as Record<string, string | number> | undefined),
 };
 
 // Pull every page of a full-universe daily feed (~25-32 credits/day).

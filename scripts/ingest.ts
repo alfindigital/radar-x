@@ -816,6 +816,178 @@ async function ingestOwnership() {
   console.log(`ownership: ${targets.length} refreshed, ${Object.keys(art.refreshed).length} covered, ${art.misses.length} misses (${calls} calls)`);
 }
 
+// Cheap market-wide extras: suspensions history, corporate-actions calendar
+// (7 types), broker leaderboard, most-traded, quarterly financial dates.
+// ≈25 calls; safe to re-run (accreting artifacts dedupe by date).
+async function ingestExtras() {
+  const dir = (f: string) => path.join(process.cwd(), "data", f);
+  const now = new Date().toISOString();
+  const asOf = now.slice(0, 10);
+  const meta = { schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const };
+  const read = <T extends object>(f: string, init: T): T & { asOf: string | null; generatedAt: string } => {
+    try { return JSON.parse(readFileSync(dir(f), "utf8")); } catch { return init as T & { asOf: string | null; generatedAt: string }; }
+  };
+  let calls = 0;
+
+  // --- suspensions: full paginated backfill, dedupe by symbol+date ---
+  {
+    const art = read("suspensions.json", { ...meta, rows: [] as Record<string, unknown>[] });
+    const have = new Set(art.rows.map((r) => `${r.symbol}|${r.suspension_date}`));
+    let offset = 0;
+    let added = 0;
+    while (true) {
+      const res = await api.suspensions({ limit: 100, offset });
+      calls++;
+      for (const r of res.results) {
+        const key = `${r.symbol}|${r.suspension_date}`;
+        if (!have.has(key)) { art.rows.push(r as unknown as Record<string, unknown>); added++; }
+      }
+      if (!res.pagination?.has_next || res.results.length === 0) break;
+      offset = res.pagination.next_offset ?? offset + res.results.length;
+    }
+    art.asOf = asOf; art.generatedAt = now;
+    await writeFile(dir("suspensions.json"), JSON.stringify(art));
+    console.log(`suspensions: +${added} rows → ${art.rows.length} total`);
+  }
+
+  // --- corporate-actions calendar: 7 types, one call each ---
+  {
+    const types = ["dividend", "upcoming_dividend", "bonus", "right_issue", "stock_split", "warrant", "agm"];
+    const cal: Record<string, unknown> = { ...meta, asOf, generatedAt: now, types: {} };
+    for (const t of types) {
+      try {
+        const res = await api.corporateActionsCalendar(t);
+        calls++;
+        (cal.types as Record<string, unknown>)[t] = res;
+        console.log(`corp-actions ${t}: ${Array.isArray(res[t]) ? res[t].length : "?"} events`);
+      } catch (e) {
+        calls++;
+        console.warn(`corp-actions ${t}: ${e instanceof Error ? e.message : e}`);
+      }
+    }
+    await writeFile(dir("corporate_actions.json"), JSON.stringify(cal));
+  }
+
+  // --- brokers/top: daily leaderboard, accreted by session date ---
+  {
+    const res = await api.brokersTop();
+    calls++;
+    const art = read("brokers_top.json", { ...meta, sessions: [] as Record<string, unknown>[] });
+    if (!art.sessions.some((s) => s.date === res.date)) art.sessions.push(res as unknown as Record<string, unknown>);
+    art.asOf = res.date; art.generatedAt = now;
+    await writeFile(dir("brokers_top.json"), JSON.stringify(art));
+    console.log(`brokers/top: ${art.sessions.length} sessions, latest=${res.date} (${res.results.length} brokers)`);
+  }
+
+  // --- most-traded: dict keyed by date (~10 days per call), accreted ---
+  {
+    const res = await api.mostTraded();
+    calls++;
+    const art = read("most_traded.json", { ...meta, days: {} as Record<string, unknown> });
+    let added = 0;
+    for (const [date, rows] of Object.entries(res)) {
+      if (!art.days[date]) { art.days[date] = rows; added++; }
+    }
+    art.asOf = Object.keys(art.days).sort().at(-1) ?? asOf;
+    art.generatedAt = now;
+    await writeFile(dir("most_traded.json"), JSON.stringify(art));
+    console.log(`most-traded: +${added} days → ${Object.keys(art.days).length} total`);
+  }
+
+  // --- quarterly financial dates feed (LK freshness for all emiten) ---
+  {
+    const rows: Record<string, unknown>[] = [];
+    let offset = 0;
+    while (true) {
+      const res = await api.quarterlyFinancialDates({ limit: 100, offset });
+      calls++;
+      rows.push(...(res.results as unknown as Record<string, unknown>[]));
+      if (!res.pagination?.has_next || res.results.length === 0) break;
+      offset = res.pagination.next_offset ?? offset + res.results.length;
+    }
+    await writeFile(dir("quarterly_dates.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows }));
+    console.log(`quarterly-dates: ${rows.length} rows`);
+  }
+
+  await store.log("ingest_extras", calls, 0, "ok");
+  console.log(`extras done (${calls} calls)`);
+}
+
+// Per-symbol artifact ingest shared loop: fetch fn per symbol, collect into a
+// symbol-keyed map, checkpoint-write the merged artifact every 50 symbols.
+async function ingestPerSymbol(
+  name: string,
+  file: string,
+  fetchOne: (sym: string) => Promise<unknown>,
+  symbols?: string[],
+) {
+  const target = path.join(process.cwd(), "data", file);
+  const art = {
+    schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const,
+    asOf: null as string | null, generatedAt: "", creditsEst: 0,
+    data: {} as Record<string, unknown>, misses: [] as string[],
+  };
+  try { Object.assign(art, JSON.parse(readFileSync(target, "utf8"))); } catch { /* first run */ }
+
+  const universe = symbols ?? (args.includes("--universe") ? await scopeUniverse() : await watchlist());
+  const limit = Number(flag("limit", "0")) || universe.length;
+  const onlyMissing = args.includes("--only-missing");
+  const targets = universe.filter((s) => !onlyMissing || !(s in art.data)).slice(0, limit);
+
+  let calls = 0;
+  const now = new Date().toISOString();
+  for (let i = 0; i < targets.length; i++) {
+    const sym = targets[i];
+    try {
+      art.data[sym] = await fetchOne(sym);
+      calls++;
+      const mi = art.misses.indexOf(sym);
+      if (mi >= 0) art.misses.splice(mi, 1);
+    } catch (e) {
+      calls++;
+      if (!art.misses.includes(sym)) art.misses.push(sym);
+      console.warn(`${name} ${sym}: ${e instanceof Error ? e.message : e}`);
+    }
+    if ((i + 1) % 50 === 0 || i === targets.length - 1) {
+      console.log(`${name}: ${i + 1}/${targets.length} (${calls} calls)`);
+      art.asOf = now.slice(0, 10); art.generatedAt = now; art.creditsEst = calls;
+      await writeFile(target, JSON.stringify(art));
+    }
+  }
+  await store.log(`ingest_${name}`, calls, targets.length, "ok");
+  console.log(`${name}: ${targets.length} processed, ${Object.keys(art.data).length} covered, ${art.misses.length} misses (${calls} calls)`);
+}
+
+// broker-summary/{s}/top — ranked top buyers/sellers per emiten (~3mo window).
+async function ingestBrokerTop() {
+  await ingestPerSymbol("brokertop", "broker_top.json", async (sym) => {
+    const r = await api.brokerSummaryTop(sym);
+    return { start: r.start, end: r.end, topBuyers: r.top_buyers ?? [], topSellers: r.top_sellers ?? [] };
+  });
+}
+
+// financials/quarterly/{s} — per-emiten quarterly financials (latest LK).
+async function ingestFinancials() {
+  await ingestPerSymbol("financials", "financials_quarterly.json", (sym) => api.quarterlyFinancials(sym));
+}
+
+// company/corporate-actions/{s} — full per-emiten corporate action history.
+async function ingestCorpActions() {
+  await ingestPerSymbol("corpactions", "company_actions.json", async (sym) => {
+    const r = await api.companyCorporateActions(sym);
+    return r.corporate_actions ?? {};
+  });
+}
+
+// get-segments — only emiten flagged by list_companies_with_segments (the list
+// endpoint returns a symbol→years dict, not a paginated list).
+async function ingestSegments() {
+  const list = await api.companiesWithSegments();
+  const syms = Object.keys(list ?? {});
+  console.log(`segments list: ${syms.length} emiten`);
+  await ingestPerSymbol("segments", "segments.json", (sym) => api.segments(sym), syms);
+}
+
 const commands: Record<string, () => Promise<void>> = {
   universe: ingestUniverse,
   rotation: ingestRotation,
@@ -829,6 +1001,11 @@ const commands: Record<string, () => Promise<void>> = {
   holders: ingestHolders,
   broker: ingestBroker,
   index: ingestIndex,
+  extras: ingestExtras,
+  brokertop: ingestBrokerTop,
+  financials: ingestFinancials,
+  corpactions: ingestCorpActions,
+  segments: ingestSegments,
 };
 
 if (!cmd || !commands[cmd]) {
