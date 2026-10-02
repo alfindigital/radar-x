@@ -14,11 +14,31 @@ export class SectorsError extends Error {
   }
 }
 
-function key(): string {
-  const k = process.env.SECTORS_API_KEY;
-  if (!k) throw new Error("SECTORS_API_KEY not set");
-  return k;
+// Key pool: SECTORS_API_KEYS (csv) merged with SECTORS_API_KEY, deduped.
+// 401/403 marks a key dead for the process; 429 marks it spent until the next
+// backoff round. Deterministic errors (400/404/5xx) throw immediately — the
+// request is bad, not the key.
+function keys(): string[] {
+  const multi = (process.env.SECTORS_API_KEYS ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const single = process.env.SECTORS_API_KEY?.trim();
+  const all = [...new Set(single ? [single, ...multi] : multi)];
+  if (!all.length) throw new Error("SECTORS_API_KEY(S) not set");
+  return all;
 }
+
+const keyPool = {
+  dead: new Set<string>(),
+  spent: new Set<string>(),
+  rr: 0,
+  pick(): string | null {
+    const alive = keys().filter((k) => !this.dead.has(k) && !this.spent.has(k));
+    if (!alive.length) return null;
+    return alive[this.rr++ % alive.length];
+  },
+};
 
 export async function sectorsGet<T>(path: string, params?: Record<string, string | number>): Promise<T> {
   const url = new URL(`${BASE}${path}`);
@@ -27,25 +47,36 @@ export async function sectorsGet<T>(path: string, params?: Record<string, string
       if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, String(v));
     }
   }
-  let attempt = 0;
-  let res: Response;
-   
-  while (true) {
+  let res: Response | undefined;
+  for (let round = 0; round < 5; round++) {
+    const k = keyPool.pick();
+    if (k === null) {
+      // All keys dead → hard fail; all spent → back off, unspend, retry.
+      if (keyPool.spent.size === 0) break;
+      const wait = Math.min(30000, 1500 * 2 ** round) + Math.random() * 500;
+      await new Promise((r) => setTimeout(r, wait));
+      keyPool.spent.clear();
+      continue;
+    }
     res = await fetch(url.toString(), {
-      headers: { Authorization: key() },
+      headers: { Authorization: k },
       cache: "no-store",
     });
-    if (res.status !== 429) break;
-    attempt++;
-    if (attempt > 5) break;
-    const wait = Math.min(30000, 1500 * 2 ** attempt) + Math.random() * 500;
-    await new Promise((r) => setTimeout(r, wait));
+    if (res.ok) return (await res.json()) as T;
+    if (res.status === 401 || res.status === 403) {
+      keyPool.dead.add(k);
+      console.warn(`sectors: key ${k.slice(0, 8)}… ${res.status} — rotating`);
+      continue;
+    }
+    if (res.status === 429) {
+      keyPool.spent.add(k);
+      continue;
+    }
+    break;
   }
-  if (!res.ok) {
-    const body = await res.text().catch(() => "");
-    throw new SectorsError(res.status, path, body.slice(0, 300));
-  }
-  return (await res.json()) as T;
+  const status = res?.status ?? 0;
+  const body = res ? await res.text().catch(() => "") : "all pool keys dead";
+  throw new SectorsError(status, path, body.slice(0, 300));
 }
 
 // ---- Raw response shapes (subset of fields we use) ----

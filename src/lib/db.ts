@@ -70,7 +70,18 @@ async function readJson<T>(file: string, fallback: T): Promise<T> {
 
 async function writeJson(file: string, data: unknown): Promise<void> {
   await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(path.join(DATA_DIR, file), JSON.stringify(data));
+  const target = path.join(DATA_DIR, file);
+  const payload = JSON.stringify(data);
+  // Windows (OneDrive/AV) can briefly hold the file — retry transient opens.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      await fs.writeFile(target, payload);
+      return;
+    } catch (e) {
+      if (attempt === 4) throw e;
+      await new Promise((r) => setTimeout(r, 250 * (attempt + 1)));
+    }
+  }
 }
 
 function insiderKey(r: InsiderTrade): string {

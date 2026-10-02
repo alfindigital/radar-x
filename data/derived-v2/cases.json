@@ -12400,6 +12400,1054 @@
     ]
   },
   {
+    "symbol": "BCIC.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-09-28",
+    "windowStart": "2026-08-29",
+    "windowEnd": "2026-09-28",
+    "holders": [
+      "Felix Istyono Hartadi T, Sh",
+      "Helmi Arif Hidayat",
+      "Ritsuo Fukadai"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "BCIC.JK",
+        "holderName": "Felix Istyono Hartadi T, Sh",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T15:18:42",
+        "amount": 37600,
+        "price": 132,
+        "value": 4963200,
+        "pctBefore": 0.009,
+        "pctAfter": 0.009,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-9035-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BCIC.JK",
+        "holderName": "Helmi Arif Hidayat",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T15:16:16",
+        "amount": 75400,
+        "price": 132,
+        "value": 9952800,
+        "pctBefore": 0.018,
+        "pctAfter": 0.019,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-1747-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BCIC.JK",
+        "holderName": "Ritsuo Fukadai",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T15:20:54",
+        "amount": 3600,
+        "price": 132,
+        "value": 475200,
+        "pctBefore": 0.001,
+        "pctAfter": 0.001,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-5125-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-08-31",
+        "netForeignInflow": -13700,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 13700
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-01",
+        "netForeignInflow": 0,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-02",
+        "netForeignInflow": 0,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-03",
+        "netForeignInflow": 9121800,
+        "foreignBuyIdr": 9121800,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-04",
+        "netForeignInflow": 6179500,
+        "foreignBuyIdr": 6736500,
+        "foreignSellIdr": 557000
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-07",
+        "netForeignInflow": 11570200,
+        "foreignBuyIdr": 12236000,
+        "foreignSellIdr": 665800
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-08",
+        "netForeignInflow": -604300,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 604300
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-09",
+        "netForeignInflow": -585400,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 585400
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-10",
+        "netForeignInflow": -353900,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 353900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-11",
+        "netForeignInflow": -351200,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 351200
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-14",
+        "netForeignInflow": -8986900,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 8986900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-15",
+        "netForeignInflow": -12900,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 12900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-16",
+        "netForeignInflow": 3855900,
+        "foreignBuyIdr": 5737800,
+        "foreignSellIdr": 1881900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-17",
+        "netForeignInflow": -254600,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 254600
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-18",
+        "netForeignInflow": -8200800,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 8200800
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-21",
+        "netForeignInflow": 3871000,
+        "foreignBuyIdr": 11159400,
+        "foreignSellIdr": 7288400
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-22",
+        "netForeignInflow": -5880000,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 5880000
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-23",
+        "netForeignInflow": 1585800,
+        "foreignBuyIdr": 5628000,
+        "foreignSellIdr": 4042200
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-28",
+        "netForeignInflow": -11387000,
+        "foreignBuyIdr": 475200,
+        "foreignSellIdr": 11862200
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-08-31",
+        "open": 136,
+        "high": 140,
+        "low": 135,
+        "close": 137,
+        "volume": 1620800,
+        "marketCap": 2455871732617
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-01",
+        "open": 137,
+        "high": 141,
+        "low": 135,
+        "close": 141,
+        "volume": 1730400,
+        "marketCap": 2527576016781
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-02",
+        "open": 141,
+        "high": 141,
+        "low": 136,
+        "close": 136,
+        "volume": 546900,
+        "marketCap": 2437945661576
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-03",
+        "open": 140,
+        "high": 140,
+        "low": 134,
+        "close": 138,
+        "volume": 943100,
+        "marketCap": 2473797803658
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-04",
+        "open": 139,
+        "high": 139,
+        "low": 134,
+        "close": 134,
+        "volume": 757700,
+        "marketCap": 2402093519494
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-07",
+        "open": 135,
+        "high": 135,
+        "low": 135,
+        "close": 135,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-08",
+        "open": 132,
+        "high": 137,
+        "low": 132,
+        "close": 134,
+        "volume": 271400,
+        "marketCap": 2402093519494
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-09",
+        "open": 132,
+        "high": 137,
+        "low": 125,
+        "close": 131,
+        "volume": 1048000,
+        "marketCap": 2348315306371
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-10",
+        "open": 132,
+        "high": 133,
+        "low": 130,
+        "close": 132,
+        "volume": 200400,
+        "marketCap": 2366241377412
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-11",
+        "open": 130,
+        "high": 131,
+        "low": 128,
+        "close": 131,
+        "volume": 479600,
+        "marketCap": 2348315306371
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-14",
+        "open": 130,
+        "high": 134,
+        "low": 126,
+        "close": 132,
+        "volume": 218400,
+        "marketCap": 2366241377412
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-15",
+        "open": 132,
+        "high": 132,
+        "low": 128,
+        "close": 128,
+        "volume": 212500,
+        "marketCap": 2294537093248
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-16",
+        "open": 131,
+        "high": 139,
+        "low": 128,
+        "close": 138,
+        "volume": 1326700,
+        "marketCap": 2473797803658
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-17",
+        "open": 138,
+        "high": 139,
+        "low": 134,
+        "close": 134,
+        "volume": 526400,
+        "marketCap": 2402093519494
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-18",
+        "open": 0,
+        "high": 136,
+        "low": 133,
+        "close": 135,
+        "volume": 596000,
+        "marketCap": 2420019590535
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-21",
+        "open": 140,
+        "high": 140,
+        "low": 140,
+        "close": 140,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-22",
+        "open": 135,
+        "high": 135,
+        "low": 135,
+        "close": 135,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-23",
+        "open": 138,
+        "high": 138,
+        "low": 138,
+        "close": 138,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-24",
+        "open": 134,
+        "high": 134,
+        "low": 134,
+        "close": 134,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-25",
+        "open": 132,
+        "high": 132,
+        "low": 132,
+        "close": 132,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-28",
+        "open": 131,
+        "high": 131,
+        "low": 131,
+        "close": 131,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      }
+    ],
+    "abnormalFlowZ": 0.017839756910817513,
+    "abnormalVolumeZ": -0.7516670025915201,
+    "preDriftPct": 0.735602927421708,
+    "id": "BCIC.JK:buy:2026-09-28:CLUSTER_PATTERN:08ea42c8",
+    "pattern": "CLUSTER_PATTERN",
+    "outcomes": [
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "BCIC.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-09-28",
+    "windowStart": "2026-08-29",
+    "windowEnd": "2026-09-28",
+    "holders": [
+      "Felix Istyono Hartadi T, Sh",
+      "Helmi Arif Hidayat",
+      "Ritsuo Fukadai"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "BCIC.JK",
+        "holderName": "Felix Istyono Hartadi T, Sh",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T15:18:42",
+        "amount": 37600,
+        "price": 132,
+        "value": 4963200,
+        "pctBefore": 0.009,
+        "pctAfter": 0.009,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-9035-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BCIC.JK",
+        "holderName": "Helmi Arif Hidayat",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T15:16:16",
+        "amount": 75400,
+        "price": 132,
+        "value": 9952800,
+        "pctBefore": 0.018,
+        "pctAfter": 0.019,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-1747-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BCIC.JK",
+        "holderName": "Ritsuo Fukadai",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T15:20:54",
+        "amount": 3600,
+        "price": 132,
+        "value": 475200,
+        "pctBefore": 0.001,
+        "pctAfter": 0.001,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-5125-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-08-31",
+        "netForeignInflow": -13700,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 13700
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-01",
+        "netForeignInflow": 0,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-02",
+        "netForeignInflow": 0,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-03",
+        "netForeignInflow": 9121800,
+        "foreignBuyIdr": 9121800,
+        "foreignSellIdr": 0
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-04",
+        "netForeignInflow": 6179500,
+        "foreignBuyIdr": 6736500,
+        "foreignSellIdr": 557000
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-07",
+        "netForeignInflow": 11570200,
+        "foreignBuyIdr": 12236000,
+        "foreignSellIdr": 665800
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-08",
+        "netForeignInflow": -604300,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 604300
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-09",
+        "netForeignInflow": -585400,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 585400
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-10",
+        "netForeignInflow": -353900,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 353900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-11",
+        "netForeignInflow": -351200,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 351200
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-14",
+        "netForeignInflow": -8986900,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 8986900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-15",
+        "netForeignInflow": -12900,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 12900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-16",
+        "netForeignInflow": 3855900,
+        "foreignBuyIdr": 5737800,
+        "foreignSellIdr": 1881900
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-17",
+        "netForeignInflow": -254600,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 254600
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-18",
+        "netForeignInflow": -8200800,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 8200800
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-21",
+        "netForeignInflow": 3871000,
+        "foreignBuyIdr": 11159400,
+        "foreignSellIdr": 7288400
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-22",
+        "netForeignInflow": -5880000,
+        "foreignBuyIdr": 0,
+        "foreignSellIdr": 5880000
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-23",
+        "netForeignInflow": 1585800,
+        "foreignBuyIdr": 5628000,
+        "foreignSellIdr": 4042200
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-28",
+        "netForeignInflow": -11387000,
+        "foreignBuyIdr": 475200,
+        "foreignSellIdr": 11862200
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-08-31",
+        "open": 136,
+        "high": 140,
+        "low": 135,
+        "close": 137,
+        "volume": 1620800,
+        "marketCap": 2455871732617
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-01",
+        "open": 137,
+        "high": 141,
+        "low": 135,
+        "close": 141,
+        "volume": 1730400,
+        "marketCap": 2527576016781
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-02",
+        "open": 141,
+        "high": 141,
+        "low": 136,
+        "close": 136,
+        "volume": 546900,
+        "marketCap": 2437945661576
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-03",
+        "open": 140,
+        "high": 140,
+        "low": 134,
+        "close": 138,
+        "volume": 943100,
+        "marketCap": 2473797803658
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-04",
+        "open": 139,
+        "high": 139,
+        "low": 134,
+        "close": 134,
+        "volume": 757700,
+        "marketCap": 2402093519494
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-07",
+        "open": 135,
+        "high": 135,
+        "low": 135,
+        "close": 135,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-08",
+        "open": 132,
+        "high": 137,
+        "low": 132,
+        "close": 134,
+        "volume": 271400,
+        "marketCap": 2402093519494
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-09",
+        "open": 132,
+        "high": 137,
+        "low": 125,
+        "close": 131,
+        "volume": 1048000,
+        "marketCap": 2348315306371
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-10",
+        "open": 132,
+        "high": 133,
+        "low": 130,
+        "close": 132,
+        "volume": 200400,
+        "marketCap": 2366241377412
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-11",
+        "open": 130,
+        "high": 131,
+        "low": 128,
+        "close": 131,
+        "volume": 479600,
+        "marketCap": 2348315306371
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-14",
+        "open": 130,
+        "high": 134,
+        "low": 126,
+        "close": 132,
+        "volume": 218400,
+        "marketCap": 2366241377412
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-15",
+        "open": 132,
+        "high": 132,
+        "low": 128,
+        "close": 128,
+        "volume": 212500,
+        "marketCap": 2294537093248
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-16",
+        "open": 131,
+        "high": 139,
+        "low": 128,
+        "close": 138,
+        "volume": 1326700,
+        "marketCap": 2473797803658
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-17",
+        "open": 138,
+        "high": 139,
+        "low": 134,
+        "close": 134,
+        "volume": 526400,
+        "marketCap": 2402093519494
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-18",
+        "open": 0,
+        "high": 136,
+        "low": 133,
+        "close": 135,
+        "volume": 596000,
+        "marketCap": 2420019590535
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-21",
+        "open": 140,
+        "high": 140,
+        "low": 140,
+        "close": 140,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-22",
+        "open": 135,
+        "high": 135,
+        "low": 135,
+        "close": 135,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-23",
+        "open": 138,
+        "high": 138,
+        "low": 138,
+        "close": 138,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-24",
+        "open": 134,
+        "high": 134,
+        "low": 134,
+        "close": 134,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-25",
+        "open": 132,
+        "high": 132,
+        "low": 132,
+        "close": 132,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BCIC.JK",
+        "date": "2026-09-28",
+        "open": 131,
+        "high": 131,
+        "low": 131,
+        "close": 131,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      }
+    ],
+    "abnormalFlowZ": 0.017839756910817513,
+    "abnormalVolumeZ": -0.7516670025915201,
+    "preDriftPct": 0.735602927421708,
+    "id": "BCIC.JK:buy:2026-09-28:INSIDER_CONTRA_BUY:08ea42c8",
+    "pattern": "INSIDER_CONTRA_BUY",
+    "outcomes": [
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
     "symbol": "BIKE.JK",
     "direction": "distribute",
     "anchorDate": "2026-04-30",
@@ -19409,11 +20457,12 @@
   {
     "symbol": "BRMS.JK",
     "direction": "accumulate",
-    "anchorDate": "2026-09-25",
+    "anchorDate": "2026-10-01",
     "windowStart": "2026-08-23",
-    "windowEnd": "2026-09-25",
+    "windowEnd": "2026-10-01",
     "holders": [
-      "Adika Aryasthana Bakrie"
+      "Adika Aryasthana Bakrie",
+      "Muhammad Sulthon"
     ],
     "insiderTrades": [
       {
@@ -19445,6 +20494,36 @@
         "pctAfter": 0,
         "clusterHint": null,
         "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-28092026-7738-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BRMS.JK",
+        "holderName": "Muhammad Sulthon",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T16:44:26",
+        "amount": 40000,
+        "price": 640,
+        "value": 25600000,
+        "pctBefore": 0,
+        "pctAfter": 0,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-9695-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BRMS.JK",
+        "holderName": "Muhammad Sulthon",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-10-01",
+        "filedAt": "2026-10-01T16:56:54",
+        "amount": 180500,
+        "price": 559.155,
+        "value": 100927500,
+        "pctBefore": 0,
+        "pctAfter": 0,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-1439-00.pdf-0.pdf"
       }
     ],
     "flowWindow": [
@@ -19615,6 +20694,34 @@
         "netForeignInflow": -8825826500,
         "foreignBuyIdr": 12193776000,
         "foreignSellIdr": 21019602500
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-28",
+        "netForeignInflow": -3947897500,
+        "foreignBuyIdr": 16736868000,
+        "foreignSellIdr": 20684765500
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-29",
+        "netForeignInflow": 26224387500,
+        "foreignBuyIdr": 89101816500,
+        "foreignSellIdr": 62877429000
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-30",
+        "netForeignInflow": -46004094500,
+        "foreignBuyIdr": 45164005000,
+        "foreignSellIdr": 91168099500
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-10-01",
+        "netForeignInflow": -36112208000,
+        "foreignBuyIdr": 49624728500,
+        "foreignSellIdr": 85736936500
       }
     ],
     "priceWindow": [
@@ -19911,12 +21018,88 @@
           "volume": "legacy-unknown",
           "marketCap": "legacy-unknown"
         }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-28",
+        "open": 620,
+        "high": 620,
+        "low": 620,
+        "close": 620,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-29",
+        "open": 595,
+        "high": 595,
+        "low": 595,
+        "close": 595,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-30",
+        "open": 590,
+        "high": 590,
+        "low": 590,
+        "close": 590,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-10-01",
+        "open": 550,
+        "high": 550,
+        "low": 550,
+        "close": 550,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
       }
     ],
-    "abnormalFlowZ": 3.0321412647267194,
-    "abnormalVolumeZ": -0.5733488926945608,
-    "preDriftPct": -1.2257074807966264,
-    "id": "BRMS.JK:buy:2026-09-25:INSIDER_CONTRA_BUY:c0651c2c",
+    "abnormalFlowZ": 2.7522813463999514,
+    "abnormalVolumeZ": -0.8304867458117774,
+    "preDriftPct": -17.053045610293033,
+    "id": "BRMS.JK:buy:2026-10-01:INSIDER_CONTRA_BUY:6f5db004",
     "pattern": "INSIDER_CONTRA_BUY",
     "outcomes": [
       {
@@ -19972,11 +21155,12 @@
   {
     "symbol": "BRMS.JK",
     "direction": "accumulate",
-    "anchorDate": "2026-09-25",
+    "anchorDate": "2026-10-01",
     "windowStart": "2026-08-23",
-    "windowEnd": "2026-09-25",
+    "windowEnd": "2026-10-01",
     "holders": [
-      "Adika Aryasthana Bakrie"
+      "Adika Aryasthana Bakrie",
+      "Muhammad Sulthon"
     ],
     "insiderTrades": [
       {
@@ -20008,6 +21192,36 @@
         "pctAfter": 0,
         "clusterHint": null,
         "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-28092026-7738-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BRMS.JK",
+        "holderName": "Muhammad Sulthon",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-28",
+        "filedAt": "2026-10-01T16:44:26",
+        "amount": 40000,
+        "price": 640,
+        "value": 25600000,
+        "pctBefore": 0,
+        "pctAfter": 0,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-9695-00.pdf-0.pdf"
+      },
+      {
+        "symbol": "BRMS.JK",
+        "holderName": "Muhammad Sulthon",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-10-01",
+        "filedAt": "2026-10-01T16:56:54",
+        "amount": 180500,
+        "price": 559.155,
+        "value": 100927500,
+        "pctBefore": 0,
+        "pctAfter": 0,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-01102026-1439-00.pdf-0.pdf"
       }
     ],
     "flowWindow": [
@@ -20178,6 +21392,34 @@
         "netForeignInflow": -8825826500,
         "foreignBuyIdr": 12193776000,
         "foreignSellIdr": 21019602500
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-28",
+        "netForeignInflow": -3947897500,
+        "foreignBuyIdr": 16736868000,
+        "foreignSellIdr": 20684765500
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-29",
+        "netForeignInflow": 26224387500,
+        "foreignBuyIdr": 89101816500,
+        "foreignSellIdr": 62877429000
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-30",
+        "netForeignInflow": -46004094500,
+        "foreignBuyIdr": 45164005000,
+        "foreignSellIdr": 91168099500
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-10-01",
+        "netForeignInflow": -36112208000,
+        "foreignBuyIdr": 49624728500,
+        "foreignSellIdr": 85736936500
       }
     ],
     "priceWindow": [
@@ -20474,12 +21716,88 @@
           "volume": "legacy-unknown",
           "marketCap": "legacy-unknown"
         }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-28",
+        "open": 620,
+        "high": 620,
+        "low": 620,
+        "close": 620,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-29",
+        "open": 595,
+        "high": 595,
+        "low": 595,
+        "close": 595,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-09-30",
+        "open": 590,
+        "high": 590,
+        "low": 590,
+        "close": 590,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "BRMS.JK",
+        "date": "2026-10-01",
+        "open": 550,
+        "high": 550,
+        "low": 550,
+        "close": 550,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
       }
     ],
-    "abnormalFlowZ": 3.0321412647267194,
-    "abnormalVolumeZ": -0.5733488926945608,
-    "preDriftPct": -1.2257074807966264,
-    "id": "BRMS.JK:buy:2026-09-25:STEALTH_ACCUMULATION:c0651c2c",
+    "abnormalFlowZ": 2.7522813463999514,
+    "abnormalVolumeZ": -0.8304867458117774,
+    "preDriftPct": -17.053045610293033,
+    "id": "BRMS.JK:buy:2026-10-01:STEALTH_ACCUMULATION:6f5db004",
     "pattern": "STEALTH_ACCUMULATION",
     "outcomes": [
       {
@@ -31174,8 +32492,8 @@
         "adjustmentBasis": "unverified"
       },
       {
-        "status": "pending",
-        "reason": "The full forward horizon has not elapsed as of the snapshot.",
+        "status": "unavailable",
+        "reason": "No common end session exists within seven days of the target.",
         "basis": "transaction-relative-retrospective",
         "horizonDays": 30,
         "startDate": "2026-09-01",
@@ -51142,8 +52460,8 @@
         "adjustmentBasis": "unverified"
       },
       {
-        "status": "pending",
-        "reason": "The full forward horizon has not elapsed as of the snapshot.",
+        "status": "unavailable",
+        "reason": "No common end session exists within seven days of the target.",
         "basis": "transaction-relative-retrospective",
         "horizonDays": 30,
         "startDate": "2026-09-01",
@@ -66716,8 +68034,8 @@
         "adjustmentBasis": "unverified"
       },
       {
-        "status": "pending",
-        "reason": "The full forward horizon has not elapsed as of the snapshot.",
+        "status": "unavailable",
+        "reason": "No common end session exists within seven days of the target.",
         "basis": "transaction-relative-retrospective",
         "horizonDays": 30,
         "startDate": "2026-09-01",
@@ -70793,6 +72111,588 @@
         "endDate": null,
         "elapsedDays": null,
         "startClose": 226,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      }
+    ]
+  },
+  {
+    "symbol": "PACK.JK",
+    "direction": "accumulate",
+    "anchorDate": "2026-09-30",
+    "windowStart": "2026-08-31",
+    "windowEnd": "2026-09-30",
+    "holders": [
+      "Eco Energi Perkasa"
+    ],
+    "insiderTrades": [
+      {
+        "symbol": "PACK.JK",
+        "holderName": "Eco Energi Perkasa",
+        "holderType": "insider",
+        "txnType": "buy",
+        "txnDate": "2026-09-30",
+        "filedAt": "2026-10-02T09:51:36",
+        "amount": 22845000,
+        "price": 581,
+        "value": 13272945000,
+        "pctBefore": 38.51,
+        "pctAfter": 38.57,
+        "clusterHint": null,
+        "sourceUrl": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-02102026-9618-00.pdf-0.pdf"
+      }
+    ],
+    "flowWindow": [
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-08-31",
+        "netForeignInflow": -2288847300,
+        "foreignBuyIdr": 22280428700,
+        "foreignSellIdr": 24569276000
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-17",
+        "netForeignInflow": -52853100000,
+        "foreignBuyIdr": 66942750000,
+        "foreignSellIdr": 119795850000
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-18",
+        "netForeignInflow": -33085916500,
+        "foreignBuyIdr": 1491047000,
+        "foreignSellIdr": 34576963500
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-21",
+        "netForeignInflow": -5209318500,
+        "foreignBuyIdr": 502621500,
+        "foreignSellIdr": 5711940000
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-22",
+        "netForeignInflow": -24692298000,
+        "foreignBuyIdr": 1599092000,
+        "foreignSellIdr": 26291390000
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-23",
+        "netForeignInflow": -6552968000,
+        "foreignBuyIdr": 855704500,
+        "foreignSellIdr": 7408672500
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-24",
+        "netForeignInflow": -31933693500,
+        "foreignBuyIdr": 5583596500,
+        "foreignSellIdr": 37517290000
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-25",
+        "netForeignInflow": -33042682500,
+        "foreignBuyIdr": 13435250000,
+        "foreignSellIdr": 46477932500
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-28",
+        "netForeignInflow": -5110617000,
+        "foreignBuyIdr": 27960508500,
+        "foreignSellIdr": 33071125500
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-29",
+        "netForeignInflow": 1420928500,
+        "foreignBuyIdr": 1862174500,
+        "foreignSellIdr": 441246000
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-30",
+        "netForeignInflow": -62562457700,
+        "foreignBuyIdr": 46878436400,
+        "foreignSellIdr": 109440894100
+      }
+    ],
+    "priceWindow": [
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-08-31",
+        "open": 560,
+        "high": 560,
+        "low": 496,
+        "close": 560,
+        "volume": 237278600,
+        "marketCap": 19099432111760
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-01",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19099482937360,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-02",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19100365452560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-03",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19101262572560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-04",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19101329929360,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-07",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-08",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19102843407760,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-09",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19102913564560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-10",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19102917484560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-11",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19103170380560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-14",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19103672420560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-15",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19103672420560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-16",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": 19103675220560,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-17",
+        "open": 615,
+        "high": 615,
+        "low": 615,
+        "close": 615,
+        "volume": 504038700,
+        "marketCap": 20980368146865,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-18",
+        "open": 0,
+        "high": 645,
+        "low": 565,
+        "close": 565,
+        "volume": 298218400,
+        "marketCap": 19274647159315
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-21",
+        "open": 510,
+        "high": 510,
+        "low": 510,
+        "close": 510,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-22",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-23",
+        "open": 560,
+        "high": 560,
+        "low": 560,
+        "close": 560,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-24",
+        "open": 605,
+        "high": 605,
+        "low": 605,
+        "close": 605,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-25",
+        "open": 645,
+        "high": 645,
+        "low": 645,
+        "close": 645,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-28",
+        "open": 585,
+        "high": 585,
+        "low": 585,
+        "close": 585,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-29",
+        "open": 530,
+        "high": 530,
+        "low": 530,
+        "close": 530,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      },
+      {
+        "symbol": "PACK.JK",
+        "date": "2026-09-30",
+        "open": 525,
+        "high": 525,
+        "low": 525,
+        "close": 525,
+        "volume": 0,
+        "marketCap": null,
+        "observationKind": "legacy-unknown",
+        "fieldSources": {
+          "open": "legacy-unknown",
+          "high": "legacy-unknown",
+          "low": "legacy-unknown",
+          "close": "legacy-unknown",
+          "volume": "legacy-unknown",
+          "marketCap": "legacy-unknown"
+        }
+      }
+    ],
+    "abnormalFlowZ": -23.643136516995604,
+    "abnormalVolumeZ": -0.5430972821923107,
+    "preDriftPct": -2.4428612739174023,
+    "id": "PACK.JK:buy:2026-09-30:INSIDER_CONTRA_BUY:b31a52db",
+    "pattern": "INSIDER_CONTRA_BUY",
+    "outcomes": [
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 7,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 30,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
+        "endClose": null,
+        "issuerPct": null,
+        "benchmarkPct": null,
+        "excessPp": null,
+        "adjustmentBasis": "unverified"
+      },
+      {
+        "status": "unavailable",
+        "reason": "No common start session within seven days of the anchor.",
+        "basis": "transaction-relative-retrospective",
+        "horizonDays": 60,
+        "startDate": null,
+        "targetDate": null,
+        "endDate": null,
+        "elapsedDays": null,
+        "startClose": null,
         "endClose": null,
         "issuerPct": null,
         "benchmarkPct": null,

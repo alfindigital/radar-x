@@ -4,7 +4,11 @@
 
 This checkout contains the merged Sectors Hackathon 2026 Track 3 release candidate. PR [#1](https://github.com/alfindigital/radar-x/pull/1) merged it to `main` at `bfdacc62ee4d34b514f6efb485e83a864289233d`; production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/). The portal screenshot is still a draft; **Submit final** has not been clicked.
 
-The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated `radarx-v2` artifacts. The verified artifact contains 962 score rows (254 non-null), 171 bounded candidate patterns, 301 complete outcomes, 170 pending outcomes, and 42 unavailable outcomes. See [CLAIMS.md](CLAIMS.md) for traceable statements.
+The app serves a hash-verified Sectors snapshot through **2026-10-01** and generated `radarx-v2` artifacts (asOf 2026-10-01: 962 score rows, 202 bounded candidate patterns, 301 complete + 138 pending outcomes). Snapshot coverage: prices + foreign flow 2026-06-22 → 10-01, filings through 10-02, broker rows through 10-01, monthly holders through 2026-09-30 EOM. See [CLAIMS.md](CLAIMS.md) for traceable statements.
+
+### Key pool (added 2026-10-02)
+
+`SECTORS_API_KEYS` (comma-separated) merges with `SECTORS_API_KEY` into a rotating pool in `sectorsGet` — 401/403 marks a key dead for the process, 429 marks it spent until backoff. Thirteen keys are stored in the local DPAPI vault (`sectors-api-key-1..13`); keys 1–2 exhausted on 2026-10-01 (~1.0k + ~400 calls, `SUBSCRIPTION_DOES_NOT_ALLOW` — a cumulative quota wall, not a daily reset). `.env.local` carries the 11 live keys. Sequential per-request use only — never parallel across keys.
 
 ### Sector rotation board (added 2026-10-01)
 
@@ -18,7 +22,9 @@ The app serves a hash-verified Sectors snapshot through 2026-09-22 and generated
 
 ### Rolling ownership ingest (added 2026-10-01)
 
-`npm run ingest -- ownership --limit N` pulls `company/report?sections=ownership` for the N least-recently-fetched symbols → `data/ownership.json` (holders/whales/conglomerate groups/inst flow/top txn, all flat rows keyed by symbol). 1 credit per symbol per refresh. A Windows scheduled task `RadarX-DailyIngest` (daily 18:00, until 2026-10-11 ≈ submission+3) runs `boards --lite` + `filings` + `ownership --limit 100`, logging to `logs/daily-*.log`. Delete after the freeze: `schtasks /delete /tn RadarX-DailyIngest /f`. NOTE: key-1 hit `SUBSCRIPTION_DOES_NOT_ALLOW` (quota wall) mid-run on 2026-10-01 after ~1.0k same-day calls — `.env.local` was switched to vault key-2; key-3 remains spare. `shareholders-composition` bulk still deferred to mid-October EOM publication.
+`npm run ingest -- ownership [--full]` pulls `company/report?sections=ownership` for the N least-recently-fetched symbols → `data/ownership.json` (holders/whales/conglomerate groups/inst flow/top txn, all flat rows keyed by symbol; checkpoint-written every 50 symbols so a killed run keeps landed data). 1 credit per symbol per refresh. **Full-universe coverage completed 2026-10-02: 962/962 issuers** — 4.6k named holders, 6.5k institutional-flow months, 828 whale tags, 306 conglomerate links. A Windows scheduled task `RadarX-DailyIngest` (daily 18:00, until 2026-10-11 ≈ submission+3) runs `boards --lite` + `filings` + `ownership --limit 100` (post-coverage it just refreshes the stalest 100), logging to `logs/daily-*.log`. Delete after the freeze: `schtasks /delete /tn RadarX-DailyIngest /f`.
+
+`holders`/`broker` ingest accept `--universe` to widen from the insider-active watchlist (~266 symbols) to the full taxonomy; both batch-write every N symbols (per-call rewrites race Windows file locks). `shareholders-composition` full-universe completed 2026-10-02 — `holders_monthly.json` covers all 962 issuers through the **2026-09-30 EOM** row (KSEI September data published early Oct). Broker rows cover the 266-symbol watchlist through 2026-10-01 (one `broker-summary` call returns ~10 recent days, which closed the 19–30 Sep gap in a single pass).
 - Navigation gained a "Sectors" entry on desktop and mobile.
 
 ## Passed gates

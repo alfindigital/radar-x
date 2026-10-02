@@ -1,19 +1,19 @@
 {
   "schemaVersion": 2,
   "engineVersion": "radarx-v2",
-  "asOf": "2026-09-30",
-  "inputHash": "6c60a57989134a6ea85feaeeac8b051ec389310af186e20935d8a60154974dea",
-  "generatedAt": "2026-10-01T09:04:20.111Z",
+  "asOf": "2026-10-01",
+  "inputHash": "0ea465ce40d84a981062f49b9daab819048c81de65f30a62672545be959c0937",
+  "generatedAt": "2026-10-02T10:36:33.720Z",
   "files": [
     {
       "path": "scores.json",
       "rows": 962,
-      "sha256": "978cb159e5fb3978c0bb7cd8e12dc40f21d06f99931191bd0a23b741e5360e92"
+      "sha256": "0a7dd8eca48dd2dccde27b97ca1a0a3c81ad2beec0845478f1e3fa1823be78be"
     },
     {
       "path": "cases.json",
-      "rows": 199,
-      "sha256": "dde806e01461cfa7685fac32fa09e70bd0184578574ac5ba2ede740ffdc26fc3"
+      "rows": 202,
+      "sha256": "6eddc1fb22148224cea7eb8a5bad9b93ddb5ec3e26332da1df81dc96f56c4a1d"
     }
   ],
   "limitations": [

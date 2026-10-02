@@ -193,51 +193,73 @@ async function ingestPrices() {
   console.log(`prices: ${rows} rows over ${calls} calls (${wl.length} symbols)`);
 }
 
+// --universe widens a watchlist-scoped command to the full taxonomy universe.
+async function scopeUniverse(): Promise<string[]> {
+  const tax = await loadTaxonomy();
+  if (tax?.rows.length) return tax.rows.map((r) => r.symbol);
+  const rot = await loadRotation();
+  return [...new Set(rot?.subsectors.flatMap((s) => s.members) ?? [])];
+}
+
 async function ingestHolders() {
   const limit = Number(flag("limit", "200"));
-  const wl = await missing("holders", (await watchlist()).slice(0, limit));
-  let rows = 0;
+  const wl = args.includes("--universe")
+    ? await scopeUniverse()
+    : await missing("holders", (await watchlist()).slice(0, limit));
+  const batch: HoldersMonthly[] = [];
   let calls = 0;
-  for (const sym of wl) {
+  for (let i = 0; i < wl.length; i++) {
+    const sym = wl[i];
     try {
       const res = await api.shareholdersComposition(sym);
       calls++;
-      const mapped: HoldersMonthly[] = res.data.map((r) => {
-        const local: Record<string, number> = {};
-        const foreign: Record<string, number> = {};
-        for (const [k, v] of Object.entries(r)) {
-          if (k.endsWith("_l") && typeof v === "number") local[k] = v;
-          if (k.endsWith("_f") && typeof v === "number") foreign[k] = v;
-        }
-        return {
-          symbol: sym,
-          month: r.date,
-          sharesNumber: r.shares_number,
-          nShareholders: r.numbers_of_shareholders,
-          changeInShareholders: r.change_in_shareholders,
-          local,
-          foreign,
-        };
-      });
-      rows += await store.upsertHolders(mapped);
+      batch.push(
+        ...res.data.map((r) => {
+          const local: Record<string, number> = {};
+          const foreign: Record<string, number> = {};
+          for (const [k, v] of Object.entries(r)) {
+            if (k.endsWith("_l") && typeof v === "number") local[k] = v;
+            if (k.endsWith("_f") && typeof v === "number") foreign[k] = v;
+          }
+          return {
+            symbol: sym,
+            month: r.date,
+            sharesNumber: r.shares_number,
+            nShareholders: r.numbers_of_shareholders,
+            changeInShareholders: r.change_in_shareholders,
+            local,
+            foreign,
+          };
+        }),
+      );
     } catch (e) {
       console.warn(`holders ${sym}: ${e instanceof Error ? e.message : e}`);
     }
+    // Batch upsert every 100 symbols — one file rewrite instead of per-call
+    // (per-call rewrite on Windows races AV/file locks and loses billed rows).
+    if (batch.length && ((i + 1) % 100 === 0 || i === wl.length - 1)) {
+      const added = await store.upsertHolders(batch.splice(0));
+      console.log(`holders: ${i + 1}/${wl.length} (+${added} rows, ${calls} calls)`);
+    }
   }
-  await store.log("ingest_holders", calls, rows, "ok");
-  console.log(`holders: ${rows} rows over ${calls} calls (${wl.length} symbols)`);
+  await store.log("ingest_holders", calls, wl.length, "ok");
+  console.log(`holders done: ${wl.length} symbols, ${calls} calls`);
 }
 
 async function ingestBroker() {
   const limit = Number(flag("limit", "40"));
-  const wl = await missing("broker", (await watchlist()).slice(0, limit));
+  const wl = args.includes("--universe")
+    ? await scopeUniverse()
+    : await missing("broker", (await watchlist()).slice(0, limit));
+  const batch = new Map<string, BrokerSummaryRow[]>();
   let rows = 0;
   let calls = 0;
-  for (const sym of wl) {
+  for (let i = 0; i < wl.length; i++) {
+    const sym = wl[i];
     try {
       const res = await api.brokerSummary(sym);
       calls++;
-      const mapped: BrokerSummaryRow[] = res.data.flatMap((d) =>
+      batch.set(sym, res.data.flatMap((d) =>
         d.summary.map((s) => ({
           symbol: sym,
           date: d.date,
@@ -253,10 +275,15 @@ async function ingestBroker() {
           foreignBuyVal: s.f_bval,
           foreignSellVal: s.f_sval,
         })),
-      );
-      rows += await store.upsertBrokerRows(sym, mapped);
+      ));
     } catch (e) {
       console.warn(`broker ${sym}: ${e instanceof Error ? e.message : e}`);
+    }
+    // Batch upsert every 50 symbols — per-call rewrite races file locks.
+    if (batch.size && ((i + 1) % 50 === 0 || i === wl.length - 1)) {
+      for (const [s, rows_] of batch) rows += await store.upsertBrokerRows(s, rows_);
+      batch.clear();
+      console.log(`broker: ${i + 1}/${wl.length} (${calls} calls)`);
     }
   }
   await store.log("ingest_broker", calls, rows, "ok");
@@ -778,13 +805,13 @@ async function ingestOwnership() {
     }
     if ((i + 1) % 50 === 0 || i === targets.length - 1) {
       console.log(`ownership: ${i + 1}/${targets.length} (${calls} calls)`);
+      // checkpoint — a killed run keeps whatever already landed
+      art.asOf = now.slice(0, 10);
+      art.generatedAt = now;
+      art.creditsEst = calls;
+      await writeFile(file, JSON.stringify(art));
     }
   }
-
-  art.asOf = now.slice(0, 10);
-  art.generatedAt = now;
-  art.creditsEst = calls;
-  await writeFile(file, JSON.stringify(art));
   await store.log("ingest_ownership", calls, targets.length, "ok");
   console.log(`ownership: ${targets.length} refreshed, ${Object.keys(art.refreshed).length} covered, ${art.misses.length} misses (${calls} calls)`);
 }
