@@ -3,7 +3,8 @@
 RADAR-X is an evidence-first market-intelligence workflow for Indonesian equities. It turns a frozen Sectors snapshot into bounded reported-ownership patterns, a coverage-aware positioning index, foreign-flow context, and retrospective issuer-versus-IHSG outcomes.
 
 **Track:** Sectors Hackathon 2026, Track 3 — Market Intelligence
-**Current verified snapshot:** through 2026-09-22
+**Current verified snapshot:** through 2026-10-01
+**v3:** `/` is the Exit Watch board (cohort-labeled exit pressure); the v2 radar board is preserved at `/?v=radar`.
 **Submission deadline in the current rules:** 8 October 2026, 23:59 WIB
 
 The repository is designed to run without credentials or network access. The checked-in raw snapshot is read-only at runtime; generated v2 artifacts are hash-verified before the app serves them. Provider ingestion is optional and is not required for the demo.
@@ -39,7 +40,8 @@ data/*.json (frozen Sectors snapshot)
         ├── score.ts       → radarx-v2 positioning components
         ├── cases.ts       → bounded candidate patterns
         ├── outcomes.ts    → matched issuer/IHSG retrospective windows
-        └── derive.ts      → data/derived-v2/{scores,cases,manifest}.json
+        ├── exitwatch.ts   → cohort exit-pressure components (v3)
+        └── derive.ts      → data/derived-v2/{scores,cases,exitwatch,manifest}.json
                               │
                               └── services.ts → Next.js research pages
 ```
@@ -65,6 +67,7 @@ npm run audit:data
 npm run lint
 npm run typecheck
 npm run build
+npx playwright install chromium   # once — required before e2e
 npm run test:e2e
 ```
 

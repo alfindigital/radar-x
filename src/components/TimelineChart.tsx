@@ -120,7 +120,7 @@ export default function TimelineChart({ price, flow, insider, anchorDate }: Prop
       <text x={W - PAD.r - 4} y={PAD.t + 10} textAnchor="end" fontSize="9" fill="var(--ink-dim)" className="mono">
         ▲ reported buy · ▼ reported sell
       </text>
-      {outOfRangeMarks > 0 && <text x={W - PAD.r - 4} y={H - 6} textAnchor="end" fontSize="9" fill="var(--ink-faint)">{outOfRangeMarks} marker(s) outside the displayed range</text>}
+      {outOfRangeMarks > 0 && <text x={W / 2} y={H - 6} textAnchor="middle" fontSize="9" fill="var(--ink-faint)">{outOfRangeMarks} marker(s) outside the displayed range</text>}
     </svg>
     <details className="rounded-md border border-line bg-panel px-3 py-2 text-xs">
       <summary className="cursor-pointer dim">View flow observations</summary>

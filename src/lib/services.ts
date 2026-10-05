@@ -2,7 +2,7 @@
 // Reads the verified local snapshot and derived-v2 artifacts; never fetches or writes during a request.
 
 import { loadDerived, type BrokerCohorts, type DerivedCase, cohortsFromRegistry, EMPTY_COHORTS } from "./derive";
-import { loadBrokerTop, loadBrokersTop, loadCorpActions, loadRegistry, loadSuspensions } from "./feeds";
+import { loadBrokerTop, loadBrokersTop, loadCorpActions, loadIndexDaily, loadMostTraded, loadRegistry, loadSuspensions } from "./feeds";
 import { rankFlowRows, type FlowRadarRow } from "./flow";
 import { measureOutcome } from "./outcomes";
 import { loadOwnership, loadFreeFloat, ownershipForSymbol, freeFloatForSymbol, type IssuerOwnership } from "./ownership";
@@ -317,7 +317,13 @@ export interface ExitBoard {
 // null-score rows last. Nulls are never coerced to zero.
 export async function getExitBoard(): Promise<ExitBoard> {
   const derived = await loadDerived();
-  const rows = [...derived.exitWatch].sort((a, b) => (b.score ?? -Infinity) - (a.score ?? -Infinity));
+  // Tie-break saturated 100s by coverage then total |z| so the ordering stays
+  // meaningful instead of arbitrary among equal scores.
+  const intensity = (r: ExitWatchRow) =>
+    r.components.reduce((s: number, c) => s + Math.abs(c.z ?? 0), 0);
+  const rows = [...derived.exitWatch].sort(
+    (a, b) => (b.score ?? -Infinity) - (a.score ?? -Infinity) || b.coverage - a.coverage || intensity(b) - intensity(a),
+  );
   const counts = {
     publishable: rows.filter((r) => r.score !== null).length,
     high: rows.filter((r) => r.tier === "high").length,
@@ -335,6 +341,29 @@ export async function getExitBoard(): Promise<ExitBoard> {
   };
 }
 
+export interface MarketContext {
+  ihsg: { date: string; price: number; changePct: number | null } | null;
+  mostTraded: { date: string | null; rows: { symbol: string; company_name?: string; volume?: number }[] };
+}
+
+// Market backdrop for the Exit Watch board — IHSG last close + heaviest-volume
+// issuers of the latest saved session. Null/empty when feeds are absent.
+export async function getMarketContext(): Promise<MarketContext> {
+  const [idx, mt] = await Promise.all([loadIndexDaily(), loadMostTraded()]);
+  const ihsgRows = (idx?.data ?? []).filter((r) => r.indexCode === "IHSG").sort((a, b) => a.date.localeCompare(b.date));
+  const last = ihsgRows.at(-1) ?? null;
+  const prev = ihsgRows.at(-2) ?? null;
+  return {
+    ihsg:
+      last && prev
+        ? { date: last.date, price: last.price, changePct: prev.price ? ((last.price - prev.price) / prev.price) * 100 : null }
+        : last
+          ? { date: last.date, price: last.price, changePct: null }
+          : null,
+    mostTraded: { date: mt?.data.date ?? null, rows: (mt?.data.rows ?? []).slice(0, 5) },
+  };
+}
+
 export interface BrokerLeaderboardEntry {
   rank: number;
   broker_code: string;
@@ -346,6 +375,7 @@ export interface BrokerLeaderboardEntry {
 
 export interface BrokerBoard {
   date: string | null;
+  sessionCohort: string;
   entries: BrokerLeaderboardEntry[];
   sessions: { date: string; cohort: string }[];
   registry: { total: number; byCohort: Record<string, number> };
@@ -355,14 +385,18 @@ export interface BrokerBoard {
 // Broker leaderboard — latest brokers_top session, each row labeled with its
 // registry cohort. When no registry/session exists the board reports itself
 // unavailable rather than showing an unlabeled list.
-export async function getBrokerBoard(): Promise<BrokerBoard> {
+export async function getBrokerBoard(cohort = "all"): Promise<BrokerBoard> {
   const [sessions, registry] = await Promise.all([loadBrokersTop(), loadRegistry()]);
   const cohortByCode = new Map<string, RegistryRow>((registry?.data ?? []).map((r) => [r.code, r]));
-  const latest = sessions?.data.find((s) => s.results.length) ?? null;
+  const latest =
+    sessions?.data.find((s) => s.results.length && (s.cohort ?? "all") === cohort) ??
+    sessions?.data.find((s) => s.results.length) ??
+    null;
   const byCohort: Record<string, number> = {};
   for (const r of registry?.data ?? []) byCohort[r.cohort] = (byCohort[r.cohort] ?? 0) + 1;
   return {
     date: latest?.date ?? null,
+    sessionCohort: latest?.cohort ?? "all",
     entries: (latest?.results ?? []).map((r) => ({
       rank: r.rank,
       broker_code: r.broker_code,

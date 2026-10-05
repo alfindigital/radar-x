@@ -7,7 +7,7 @@
 | Gate | Result |
 |---|---|
 | `npm test` | 53/53 pass |
-| `npm run test:e2e` | 13 pass, 7 mobile skips by design |
+| `npm run test:e2e` | 14 pass, 8 mobile skips by design |
 | `npm run typecheck` (`next typegen` + `tsc --noEmit`) | clean |
 | `npm run build` | clean, all routes render |
 | `npm run compute -- --as-of 2026-10-01` | 962 rows → 247 publishable exit readings |
@@ -21,11 +21,11 @@
 | suspensions.json | 604 | 2026-10-02 | 0d7d273697fd |
 | corporate_actions.json | 199 events (7 types) | 2026-10-02 | 73f4a9c2e082 |
 | broker_top.json | 266 | 2026-10-02 | 4ac52f9717e6 |
-| brokers_top.json | 1 session | 2026-10-01 | 6394083f0d71 |
+| brokers_top.json | 3 sessions (all/inst/ret) | 2026-10-01/02 | see manifest |
 | cohort_top.json | 31 | 2026-10-05 | 6a1c8f1759bf |
 | ownership.json | 13,562 rows | 2026-10-04 | 4adb76ffcb4f |
 | taxonomy.json | 962 | 2026-10-01 | f858cf4b36a2 |
-| broker_rows.json | 92,725 | — | 5c2f26f88d9c |
+| broker_rows.json | 145,879 (703 symbols probed) | — | see manifest |
 | insider_trades.json | 1,655 | — | 848910c05c13 |
 | flow_daily.json | 24,261 | — | b70289f8c87c |
 | price_daily.json | 25,336 | — | 04a7115b0e9e |
@@ -35,13 +35,17 @@
 
 Registry cohort split: **institutional 39 · mixed 42 · unknown 2 · retail 5**.
 Mixed/unknown brokers are excluded from both sides — the cohort view is a
-labeled subset, not a census. Daily tug-of-war series exist for 259 symbols
-(those with `broker_rows` detail); the rest rely on `broker_top` top-N
-labeling or the `cohort_top` precision overlay.
+labeled subset, not a census. Daily tug-of-war series exist for **863/962**
+symbols after the universe-wide broker backfill (647 calls, 404s = honest
+"no broker data"); the rest rely on `broker_top` top-N labeling or the
+`cohort_top` precision overlay. `brokers_top` is now ingested per cohort
+(`all`/`institutional`/`retail` sessions) powering `/broker?cohort=` tabs.
 
 ## API spend (this pass)
 
 - `cohorttop` precision pass: 31 symbols × 2 calls = **62 calls** (1 verify + 30 bulk, `--only-missing`). Zero misses.
+- `broker/top` cohort split: 3 calls (all + institutional + retail sessions).
+- Universe-wide `broker_rows` backfill: **647 calls / 703 symbols** (`--universe --only-missing`; 404s logged as honest no-data).
 - Live cohort echo verified on the first call (`retail`/`institutional` returned matching `cohort` fields) before the bulk run.
 
 ## Exit Watch distribution (as-of 2026-10-01)
@@ -57,7 +61,6 @@ suppressed listing is capped at 150 rows with a truthful count.
 
 - `insiderExit` coverage is limited to reported insider filings (sparse for
   most issuers) — it lowers coverage rather than faking zero.
-- `brokers_top` leaderboard is stored at cohort `all` only.
 - Cohort overlay (`cohort_top.json`) covers the top ~30 flagged symbols;
   other symbols fall back to registry-labeled `broker_top` / `broker_rows`.
 - Suspensions/corporate-action feeds reflect provider as-of dates above;

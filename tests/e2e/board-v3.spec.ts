@@ -75,3 +75,12 @@ test("broker board renders cohort labels and profile resolves", async ({ page },
   await expect(page.getByRole("heading", { name: "Leaderboard appearances" })).toBeVisible();
   await expect(page.locator("text=/institutional|retail|mixed|unknown/").first()).toBeVisible();
 });
+
+test("broker board cohort tabs switch the leaderboard session", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile-chrome", "Broker tabs verified on desktop only.");
+  await page.goto("/broker?cohort=retail");
+  await expect(page.getByText(/session cohort: retail/)).toBeVisible();
+  await page.getByRole("link", { name: "Institutional" }).click();
+  await expect(page).toHaveURL(/cohort=institutional/);
+  await expect(page.getByText(/session cohort: institutional/)).toBeVisible();
+});

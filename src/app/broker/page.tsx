@@ -18,8 +18,16 @@ function CohortTag({ cohort }: { cohort: string }) {
   );
 }
 
-export default async function BrokerBoardPage() {
-  const board = await getBrokerBoard();
+const COHORT_TABS = [
+  { key: "all", label: "All brokers" },
+  { key: "institutional", label: "Institutional" },
+  { key: "retail", label: "Retail" },
+] as const;
+
+export default async function BrokerBoardPage({ searchParams }: PageProps<"/broker">) {
+  const params = await searchParams;
+  const cohort = ["retail", "institutional"].includes(String(params.cohort)) ? String(params.cohort) : "all";
+  const board = await getBrokerBoard(cohort);
 
   return (
     <div className="space-y-8">
@@ -42,6 +50,21 @@ export default async function BrokerBoardPage() {
       </div>
 
       {board.date && <DataStatus asOf={board.date} />}
+
+      {board.available && (
+        <div className="flex items-center gap-1">
+          {COHORT_TABS.map((t) => (
+            <Link
+              key={t.key}
+              href={t.key === "all" ? "/broker" : `/broker?cohort=${t.key}`}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium ${cohort === t.key ? "bg-panel-2 text-ink" : "faint hover:text-ink"}`}
+            >
+              {t.label}
+            </Link>
+          ))}
+          <span className="faint ml-2 text-[10px]">session cohort: {board.sessionCohort}</span>
+        </div>
+      )}
 
       {!board.available && (
         <div className="panel p-6 text-sm dim">
@@ -86,8 +109,9 @@ export default async function BrokerBoardPage() {
             </table>
           </div>
           <p className="mt-4 text-[10px] faint">
-            Leaderboard reflects the saved brokers/top session (cohort: all). Institutional/retail labels come from the
-            broker registry — 42 of 88 brokers are classified &ldquo;mixed&rdquo; and are not counted as either side.
+            Leaderboard reflects the saved brokers/top session for cohort &ldquo;{board.sessionCohort}&rdquo;. The
+            per-cohort leaderboard is published by Sectors; registry labels on each row describe the channel, not the
+            ultimate trader — 42 of 88 brokers are classified &ldquo;mixed&rdquo; and are not counted as either side.
           </p>
         </section>
       )}

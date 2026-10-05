@@ -4,10 +4,15 @@
 
 - **Version:** `radarx-v3` **Exit Watch — built, audited, verified.** v2 board
   preserved at `/?v=radar`.
-- **Gates:** `npm test` 53/53 · `npm run test:e2e` 13 pass (7 mobile skips
+- **Gates:** `npm test` 53/53 · `npm run test:e2e` 14 pass (8 mobile skips
   by design) · `typecheck` clean · `build` clean ·
   `compute --as-of 2026-10-01` → exitwatch.json 962 rows (247 publishable:
   61 high / 48 elevated / 79 watch / 59 low, 715 suppressed-not-zero).
+- **Coverage expansion (2026-10-05):** universe-wide broker backfill
+  (`ingest --universe --only-missing`, 647 calls / 703 symbols, 404s = honest
+  no-data) → `broker_rows` 145,879 rows; daily tug-of-war series **863/962**.
+  `brokers_top` now split per cohort (all/institutional/retail sessions) →
+  `/broker?cohort=` tabs. Board header shows IHSG context (`index_daily`).
 - **Post-audit fixes (all verified):** dossier suspensions show newest
   (`slice(0,3)` on DESC-sorted feed); `window.from` is the 14-day bound on
   every row; empty `cohort_top` sides are missing evidence not zero;

@@ -249,7 +249,7 @@ async function ingestHolders() {
 async function ingestBroker() {
   const limit = Number(flag("limit", "40"));
   const wl = args.includes("--universe")
-    ? await scopeUniverse()
+    ? await missing("broker", await scopeUniverse())
     : await missing("broker", (await watchlist()).slice(0, limit));
   const batch = new Map<string, BrokerSummaryRow[]>();
   let rows = 0;
@@ -868,15 +868,22 @@ async function ingestExtras() {
     await writeFile(dir("corporate_actions.json"), JSON.stringify(cal));
   }
 
-  // --- brokers/top: daily leaderboard, accreted by session date ---
+  // --- brokers/top: daily leaderboard, accreted by session date + cohort ---
+  // One session per cohort per day: all (default call) + retail + institutional.
   {
-    const res = await api.brokersTop();
-    calls++;
     const art = read("brokers_top.json", { ...meta, sessions: [] as Record<string, unknown>[] });
-    if (!art.sessions.some((s) => s.date === res.date)) art.sessions.push(res as unknown as Record<string, unknown>);
-    art.asOf = res.date; art.generatedAt = now;
+    for (const cohort of [undefined, "retail", "institutional"] as const) {
+      const res = await api.brokersTop(cohort ? { cohort } : undefined);
+      calls++;
+      const key = (s: Record<string, unknown>) => `${s.date}|${s.cohort ?? "all"}`;
+      if (!art.sessions.some((s) => key(s) === key(res as unknown as Record<string, unknown>))) {
+        art.sessions.push(res as unknown as Record<string, unknown>);
+      }
+      art.asOf = res.date;
+    }
+    art.generatedAt = now;
     await writeFile(dir("brokers_top.json"), JSON.stringify(art));
-    console.log(`brokers/top: ${art.sessions.length} sessions, latest=${res.date} (${res.results.length} brokers)`);
+    console.log(`brokers/top: ${art.sessions.length} sessions, latest=${art.asOf}`);
   }
 
   // --- most-traded: dict keyed by date (~10 days per call), accreted ---
@@ -956,6 +963,34 @@ async function ingestPerSymbol(
   }
   await store.log(`ingest_${name}`, calls, targets.length, "ok");
   console.log(`${name}: ${targets.length} processed, ${Object.keys(art.data).length} covered, ${art.misses.length} misses (${calls} calls)`);
+}
+
+// brokers/top leaderboard for all three cohorts — standalone command so the
+// cohort split can be refreshed without a full extras run.
+async function ingestBrokerLeaderboard() {
+  const dir = (f: string) => path.join(process.cwd(), "data", f);
+  const now = new Date().toISOString();
+  const meta = { schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const };
+  let art: { asOf: string | null; generatedAt: string; sessions: Record<string, unknown>[] };
+  try {
+    art = JSON.parse(readFileSync(dir("brokers_top.json"), "utf8"));
+  } catch {
+    art = { ...meta, asOf: null, generatedAt: "", sessions: [] };
+  }
+  let calls = 0;
+  for (const cohort of [undefined, "retail", "institutional"] as const) {
+    const res = await api.brokersTop(cohort ? { cohort } : undefined);
+    calls++;
+    const key = (s: Record<string, unknown>) => `${s.date}|${s.cohort ?? "all"}`;
+    if (!art.sessions.some((s) => key(s) === key(res as unknown as Record<string, unknown>))) {
+      art.sessions.push(res as unknown as Record<string, unknown>);
+    }
+    art.asOf = res.date;
+  }
+  art.generatedAt = now;
+  await writeFile(dir("brokers_top.json"), JSON.stringify(art));
+  await store.log("ingest_broker_leaderboard", calls, art.sessions.length, "ok");
+  console.log(`brokers/top: ${art.sessions.length} sessions, latest=${art.asOf} (${calls} calls)`);
 }
 
 // broker-summary/{s}/top — ranked top buyers/sellers per emiten (~3mo window).
@@ -1064,6 +1099,7 @@ const commands: Record<string, () => Promise<void>> = {
   broker: ingestBroker,
   index: ingestIndex,
   extras: ingestExtras,
+  brokerleaderboard: ingestBrokerLeaderboard,
   brokertop: ingestBrokerTop,
   cohorttop: ingestCohortTop,
   financials: ingestFinancials,

@@ -147,6 +147,46 @@ export function loadBrokersTop(dataDir = DATA_DIR): Promise<Feed<BrokersTopSessi
 
 
 
+export interface IndexDailyRow {
+  indexCode: string;
+  date: string;
+  price: number;
+}
+
+export function loadIndexDaily(dataDir = DATA_DIR): Promise<Feed<IndexDailyRow[]> | null> {
+  return readFeed(
+    "index_daily.json",
+    (env) => rowsOf(env) as unknown as IndexDailyRow[],
+    (d) => d.length,
+    dataDir,
+  );
+}
+
+export interface MostTradedRow {
+  symbol: string;
+  company_name?: string;
+  volume?: number;
+  price?: number;
+}
+
+export function loadMostTraded(dataDir = DATA_DIR): Promise<Feed<{ date: string | null; rows: MostTradedRow[] }> | null> {
+  return readFeed(
+    "most_traded.json",
+    (env) => {
+      const days = env.days;
+      if (!days || typeof days !== "object") return { date: null, rows: [] };
+      const dates = Object.keys(days).sort();
+      const last = dates.at(-1) ?? null;
+      const rows = last && Array.isArray((days as Record<string, unknown>)[last])
+        ? ((days as Record<string, unknown>)[last] as MostTradedRow[])
+        : [];
+      return { date: last, rows };
+    },
+    (d) => d.rows.length,
+    dataDir,
+  );
+}
+
 /** Optional per-cohort top-N overlay written by `npm run ingest -- cohorttop`. */
 export function loadCohortTop(dataDir = DATA_DIR): Promise<Feed<Map<string, CohortTopSymbol>> | null> {
   return readFeed(

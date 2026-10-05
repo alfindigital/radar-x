@@ -9,5 +9,6 @@
 | 5 | `DATA_SOURCE=supabase` stub → fallback JsonStore dengan warning | v2 | non-goal v3 |
 | 6 | Dead keys: `sectors-api-key-1/-2` 401 (pool .env.local bersih — 11 live, primary repointed ke key-4 2026-10-02) | — | — |
 | 7 | `scripts/store-secret.ps1` adalah helper vault lokal — sengaja di-ignore dari repo publik (`.gitignore`) | 2026-10-02 | — |
-| 8 | `brokers_top.json` hanya cohort "all" — leaderboard belum split ritel/institusi (registry label dipakai per baris) | v3 | optional future ingest |
-| 9 | 259/962 simbol punya daily tug-of-war series; sisanya aggregate top-N saja (by design — `broker_rows` coverage) | v3 | documented limitation |
+| 8 | ~~`brokers_top.json` hanya cohort "all"~~ → **RESOLVED 2026-10-05**: leaderboard di-ingest per kohort (`cohort` param); `/broker?cohort=` institutional=39 / retail=5 | v3 | done |
+| 9 | ~~259/962 daily series~~ → **RESOLVED 2026-10-05**: universe-wide broker backfill (`broker_rows` 92.7k→145.9k, 647 calls) → **863/962** simbol punya series | v3 | done |
+| 10 | Deployment: belum ada live URL — app membaca `data/*.json` via `fs` (45MB), butuh host Node penuh (VPS/Railway/Render) atau `outputFileTracingIncludes` untuk Vercel serverless | 2026-10-05 | optional — demo lokal `npm run build && npm start` |

@@ -1,7 +1,7 @@
 // Exit Watch board (default) — v2 radar board preserved behind ?v=radar.
 
 import Link from "next/link";
-import { getExitBoard } from "@/lib/services";
+import { getExitBoard, getMarketContext } from "@/lib/services";
 import { ExitPressureBadge } from "@/components/ExitPressureBadge";
 import { FlagChips } from "@/components/FlagChips";
 import DataStatus from "@/components/DataStatus";
@@ -91,8 +91,9 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
 
   const ROW_CAP = 150;
   const scope = typeof params.scope === "string" ? params.scope : "all";
-  const board = await getExitBoard();
-  const flagged = board.rows.filter((r) => Object.values(r.flags).some(Boolean));
+  const [board, market] = await Promise.all([getExitBoard(), getMarketContext()]);
+  // "Flagged" = alert flags only; sparse_broker is coverage context, not an alert.
+  const flagged = board.rows.filter((r) => r.flags.suspension_recent || r.flags.corp_action_near || r.flags.float_constraint);
   const suppressed = board.rows.filter((r) => r.score === null);
   const base = scope === "flagged" ? flagged : scope === "suppressed" ? suppressed : board.rows.filter((r) => r.score !== null);
   const shown = base.slice(0, ROW_CAP);
@@ -116,6 +117,33 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
       </div>
 
       <DataStatus asOf={board.asOf} />
+
+      {(market.ihsg || market.mostTraded.rows.length > 0) && (
+        <section className="panel flex flex-wrap items-center gap-x-5 gap-y-1 px-3 py-2 text-xs">
+          {market.ihsg && (
+            <span className="dim">
+              IHSG <span className="mono text-ink">{market.ihsg.price.toLocaleString("en-US", { maximumFractionDigits: 0 })}</span>
+              {market.ihsg.changePct !== null && (
+                <span className={`mono ml-1 ${market.ihsg.changePct < 0 ? "dist" : "acc"}`}>
+                  {market.ihsg.changePct >= 0 ? "+" : ""}
+                  {market.ihsg.changePct.toFixed(2)}%
+                </span>
+              )}{" "}
+              <span className="faint">({market.ihsg.date})</span>
+            </span>
+          )}
+          {market.mostTraded.rows.length > 0 && (
+            <span className="dim">
+              <span className="faint">heaviest volume {market.mostTraded.date}:</span>{" "}
+              {market.mostTraded.rows.map((r) => (
+                <Link key={r.symbol} href={`/saham/${r.symbol.replace(".JK", "")}`} className="mono mr-2 hover:text-ink">
+                  {r.symbol.replace(".JK", "")}
+                </Link>
+              ))}
+            </span>
+          )}
+        </section>
+      )}
 
       {!board.rows.length && (
         <div className="panel p-6 text-sm dim">
