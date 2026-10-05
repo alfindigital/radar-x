@@ -298,7 +298,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
         <Stat
           label="Free float"
           value={d.freeFloat == null ? "—" : `${(d.freeFloat * 100).toFixed(1)}%`}
-          sub={d.freeFloat != null && d.freeFloat < 0.25 ? "low float — thin public liquidity" : undefined}
+          sub={d.freeFloat != null && d.freeFloat < 0.25 ? "low float, thin public liquidity" : undefined}
         />
       </div>
 
@@ -318,14 +318,14 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
           </div>
 
           <div>
-            <h3 className="mb-1 text-[10px] font-semibold uppercase tracking-widest faint">
+            <h3 className="section-label mb-1">
               Cohort net flow ({d.exit.series.length} sessions)
             </h3>
             <CohortNetChart days={d.exit.series} />
           </div>
 
           <div>
-            <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Components</h3>
+            <h3 className="section-label mb-2">Components</h3>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {d.exit.components.map((c) => (
                 <div key={c.key} className="rounded-md border border-line p-2">
@@ -347,7 +347,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
 
           {(d.suspensions.length > 0 || d.corpActions.length > 0) && (
             <div className="border-t border-line pt-3">
-              <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Context</h3>
+              <h3 className="section-label mb-2">Context</h3>
               <ul className="space-y-1 text-xs dim">
                 {d.suspensions.slice(0, 3).map((s, i) => (
                   <li key={`s${i}`}>

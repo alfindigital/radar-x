@@ -54,9 +54,9 @@ export default async function AsingPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-bold tracking-tight">Foreign Flow Radar</h1>
-        <p className="mt-1 text-xs dim">
-          Signed net foreign flow — <span className="mono">{rows.length}</span> issuers with observations, <span className="mono">{from ?? "—"}</span> → <span className="mono">{to ?? "—"}</span>.
+        <h1 className="text-2xl font-semibold tracking-tight">Foreign Flow Radar</h1>
+        <p className="mt-1.5 text-[13px] dim">
+          Signed net foreign flow: <span className="mono">{rows.length}</span> issuers with observations, <span className="mono">{from ?? "—"}</span> → <span className="mono">{to ?? "—"}</span>.
           The benchmark-observed IHSG sessions define expected coverage; missing issuer rows are unknown, not zero.
         </p>
       </div>

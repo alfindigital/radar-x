@@ -4,8 +4,8 @@ export default function MethodologyPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6 text-sm leading-relaxed">
       <div>
-        <h1 className="text-lg font-bold tracking-tight">Methodology</h1>
-        <p className="text-xs dim">How RADAR-X summarizes reported ownership activity and its limits.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Methodology</h1>
+        <p className="mt-1 text-[13px] dim">How RADAR-X summarizes reported ownership activity and its limits.</p>
       </div>
 
       <section className="panel space-y-3 p-5">
@@ -21,11 +21,11 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
           shareholder count .15 · foreign holder-class shift .10`}
         </pre>
         <ul className="list-inside list-disc space-y-1 dim">
-          <li><b className="text-ink">Reported ownership (30%)</b> — signed transaction value in the inclusive 90-calendar-day window.</li>
-          <li><b className="text-ink">Foreign flow (25%)</b> — signed net inflow in the inclusive 90-day window, normalized only when an observed positive market cap exists.</li>
-          <li><b className="text-ink">Broker context (20%)</b> — eligible institutional or foreign broker net value in the inclusive 14-day window; no rows means missing.</li>
-          <li><b className="text-ink">Shareholder count (15%)</b> — latest valid month-over-month change on or before the as-of date.</li>
-          <li><b className="text-ink">Foreign holder-class shift (10%)</b> — foreign institutional classes minus foreign individual classes across the same two months.</li>
+          <li><b className="text-ink">Reported ownership (30%)</b>: signed transaction value in the inclusive 90-calendar-day window.</li>
+          <li><b className="text-ink">Foreign flow (25%)</b>: signed net inflow in the inclusive 90-day window, normalized only when an observed positive market cap exists.</li>
+          <li><b className="text-ink">Broker context (20%)</b>: eligible institutional or foreign broker net value in the inclusive 14-day window; no rows means missing.</li>
+          <li><b className="text-ink">Shareholder count (15%)</b>: latest valid month-over-month change on or before the as-of date.</li>
+          <li><b className="text-ink">Foreign holder-class shift (10%)</b>: foreign institutional classes minus foreign individual classes across the same two months.</li>
         </ul>
         <p className="text-xs faint">A null component is missing evidence, not a measured zero. Coverage weight is the sum of rankable weights and is not a probability.</p>
       </section>
@@ -33,9 +33,9 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
       <section className="panel space-y-3 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Bounded candidate patterns</h2>
         <ul className="list-inside list-disc space-y-1 dim">
-          <li><b className="text-ink">Holder cluster</b> — at least three distinct normalized holders transacting in one direction inside a 30-day event window.</li>
-          <li><b className="text-ink">Buy during decline</b> — reported buys while the pre-anchor close was lower than the prior context close.</li>
-          <li><b className="text-ink">Stealth flow</b> — reported buys with abnormal foreign flow in the bounded pre-anchor window.</li>
+          <li><b className="text-ink">Holder cluster</b>: at least three distinct normalized holders transacting in one direction inside a 30-day event window.</li>
+          <li><b className="text-ink">Buy during decline</b>: reported buys while the pre-anchor close was lower than the prior context close.</li>
+          <li><b className="text-ink">Stealth flow</b>: reported buys with abnormal foreign flow in the bounded pre-anchor window.</li>
         </ul>
         <p className="dim">Candidate membership and evidence stop at the event anchor. Post-anchor prices can change only the retrospective outcome object.</p>
       </section>
@@ -58,19 +58,19 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
           by the issuer&rsquo;s observed market cap:
         </p>
         <ul className="dim list-inside list-disc space-y-1 text-xs">
-          <li><span className="mono">instExit · 30%</span> — net flow of brokers classified <em>institutional</em> in the broker registry (14-day window). Precision overlays from per-cohort top-broker feeds are preferred when present.</li>
-          <li><span className="mono">foreignExit · 25%</span> — net foreign flow over the same window.</li>
-          <li><span className="mono">insiderExit · 25%</span> — reported insider sell value over 90 days.</li>
-          <li><span className="mono">retailAbsorb · 20%</span> — net flow of brokers classified <em>retail</em> (inverted: retail net buying raises the reading as absorption of exit supply).</li>
+          <li><span className="mono">instExit · 30%</span>: net flow of brokers classified <em>institutional</em> in the broker registry (14-day window). Precision overlays from per-cohort top-broker feeds are preferred when present.</li>
+          <li><span className="mono">foreignExit · 25%</span>: net foreign flow over the same window.</li>
+          <li><span className="mono">insiderExit · 25%</span>: reported insider sell value over 90 days.</li>
+          <li><span className="mono">retailAbsorb · 20%</span>: net flow of brokers classified <em>retail</em> (inverted: retail net buying raises the reading as absorption of exit supply).</li>
         </ul>
         <p className="dim">
           Each component is a clipped robust z-score (±3σ) across the scored universe. The score publishes only when at
-          least half of the component weight has usable evidence — otherwise the issuer is listed as{" "}
+          least half of the component weight has usable evidence; otherwise the issuer is listed as{" "}
           <em>suppressed / low coverage</em>, never scored zero. Missing components are shown with their reason.
         </p>
         <p className="dim">
           Broker cohort labels come from the broker registry. Of 88 classified firms, 42 are <em>mixed</em> and 2{" "}
-          <em>unknown</em> — they are not counted as either side, so the cohort view is a labeled subset, not a census.
+          <em>unknown</em>: they are not counted as either side, so the cohort view is a labeled subset, not a census.
           Flags (<span className="mono">SUSP ≤14D</span>, <span className="mono">CA ±7D</span>,{" "}
           <span className="mono">FF&lt;20%</span>, <span className="mono">SPARSE</span>) mark context that can distort the
           reading; they annotate, they do not change the score.
@@ -83,7 +83,7 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
           The public app reads a hash-verified local Sectors snapshot and generated artifacts. The snapshot includes
           parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, a benchmark-observed IHSG
           series, and a saved subsector-aggregate artifact used by the sector rotation board. v3 Exit Watch additionally
-          consumes the broker registry, per-issuer top-broker feeds, suspensions, corporate actions, and free-float feeds —
+          consumes the broker registry, per-issuer top-broker feeds, suspensions, corporate actions, and free-float feeds;
           each hashed into the derived manifest (<span className="mono">feedHashes</span>).
           Retrieval times and historical publication availability are not verified for legacy rows. Ambiguous flat-OHLC or zero-volume
           observations are marked <span className="mono">legacy-unknown</span>.

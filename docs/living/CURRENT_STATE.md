@@ -20,8 +20,12 @@
   are mtime-cached (`filecache.ts`); suppressed listing capped at 150 rows
   ("Showing first N of M"); `?f=` accepts `positive`/`negative` keys
   (`akumulasi`/`distribusi` still work).
-- **Design:** PK1 "Research balanced" applied — Evidence Desk palette
-  (light/dark + System toggle, no flash), IBM Plex Sans/Mono, NAV-A top nav.
+- **Design (2026-10-05):** "Dark market terminal" redesign — see `DESIGN.md`.
+  Phosphor-on-near-black dark default + paper light, IBM Plex Sans/Mono,
+  sharp corners, terminal tabs, signal gauges, row tint stripes ≥75,
+  `PrimaryNav` active states. Dials: ENERGY 2 / RHYTHM 2 / MOTION 1.
+  Antislop pointer lives in `AGENTS.md`. QA: `scripts/qa-redesign.mjs` →
+  `docs/verification/redesign-terminal/`.
 - **Routes:** `/` = Exit Watch board · `/?v=radar` = v2 board · `/broker`,
   `/broker/[code]` new · dossier gains Exit Watch panel (tug-of-war chart,
   component coverage, suspension/CA context).

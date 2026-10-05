@@ -12,7 +12,7 @@ const COHORT_ORDER = ["institutional", "mixed", "retail", "unknown"] as const;
 function CohortTag({ cohort }: { cohort: string }) {
   const cls = cohort === "institutional" ? "cohort-inst" : cohort === "retail" ? "cohort-retail" : "dim";
   return (
-    <span className={`tag ${cls}`} title="Broker classification from the broker registry — describes the channel, not the ultimate trader.">
+    <span className={`tag ${cls}`} title="Broker classification from the broker registry: describes the channel, not the ultimate trader.">
       {cohort}
     </span>
   );
@@ -33,9 +33,9 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">Broker board</h1>
-          <p className="mt-1 text-xs dim">
-            Top brokers by reported activity — session <span className="mono">{board.date ?? "—"}</span> · cohort labels
+          <h1 className="text-2xl font-semibold tracking-tight">Broker board</h1>
+          <p className="mt-1.5 text-[13px] dim">
+            Top brokers by reported activity · session <span className="mono">{board.date ?? "—"}</span> · cohort labels
             from the broker registry ({board.registry.total} firms classified)
           </p>
         </div>
@@ -52,23 +52,25 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
       {board.date && <DataStatus asOf={board.date} />}
 
       {board.available && (
-        <div className="flex items-center gap-1">
-          {COHORT_TABS.map((t) => (
-            <Link
-              key={t.key}
-              href={t.key === "all" ? "/broker" : `/broker?cohort=${t.key}`}
-              className={`rounded-md px-3 py-1.5 text-xs font-medium ${cohort === t.key ? "bg-panel-2 text-ink" : "faint hover:text-ink"}`}
-            >
-              {t.label}
-            </Link>
-          ))}
-          <span className="faint ml-2 text-[10px]">session cohort: {board.sessionCohort}</span>
+        <div className="flex items-center justify-between gap-3">
+          <div className="tabbar flex-1">
+            {COHORT_TABS.map((t) => (
+              <Link
+                key={t.key}
+                href={t.key === "all" ? "/broker" : `/broker?cohort=${t.key}`}
+                className={`tab ${cohort === t.key ? "tab-active" : ""}`}
+              >
+                {t.label}
+              </Link>
+            ))}
+          </div>
+          <span className="faint mono hidden text-[10px] uppercase tracking-wider sm:inline">session cohort: {board.sessionCohort}</span>
         </div>
       )}
 
       {!board.available && (
         <div className="panel p-6 text-sm dim">
-          Broker leaderboard or registry feed not ingested yet — run <code className="mono">npm run ingest</code> to build
+          Broker leaderboard or registry feed not ingested yet. Run <code className="mono">npm run ingest</code> to build
           the local snapshot.
         </div>
       )}
@@ -111,7 +113,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
           <p className="mt-4 text-[10px] faint">
             Leaderboard reflects the saved brokers/top session for cohort &ldquo;{board.sessionCohort}&rdquo;. The
             per-cohort leaderboard is published by Sectors; registry labels on each row describe the channel, not the
-            ultimate trader — 42 of 88 brokers are classified &ldquo;mixed&rdquo; and are not counted as either side.
+            ultimate trader. 42 of 88 brokers are classified &ldquo;mixed&rdquo; and are not counted as either side.
           </p>
         </section>
       )}

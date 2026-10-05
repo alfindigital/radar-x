@@ -70,8 +70,8 @@ export default async function RotasiPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">Sector Rotation</h1>
-          <p className="mt-1 text-xs dim">
+          <h1 className="text-2xl font-semibold tracking-tight">Sector Rotation</h1>
+          <p className="mt-1.5 text-[13px] dim">
             Aggregate market-cap movement across {all.length} IDX subsectors · as of{" "}
             <span className="mono">{board.asOf ?? "—"}</span>
             {board.flowDate ? (
@@ -168,7 +168,7 @@ export default async function RotasiPage() {
       </section>
 
       <p className="text-[11px] leading-relaxed faint">
-        Aggregates are provider-weighted — a single large issuer can dominate a subsector&apos;s move. Net foreign flow sums the
+        Aggregates are provider-weighted: a single large issuer can dominate a subsector&apos;s move. Net foreign flow sums the
         saved flow session over mapped member issuers; unmapped issuers count as zero. {board.limitations.length ? "Saved artifact limitations apply." : ""}
       </p>
     </div>

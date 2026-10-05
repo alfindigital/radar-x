@@ -8,11 +8,11 @@ import type { ExitFlags } from "@/lib/types";
 const ALERT: { key: keyof ExitFlags; label: string; hint: string }[] = [
   { key: "suspension_recent", label: "SUSP ≤14D", hint: "Trading suspension recorded within 14 days of the as-of date." },
   { key: "corp_action_near", label: "CA ±7D", hint: "Corporate action (e.g. dividend/split) within ±7 days of the window end." },
-  { key: "float_constraint", label: "FF<20%", hint: "Reported free float below 20% — flow readings are noisier on thin floats." },
+  { key: "float_constraint", label: "FF<20%", hint: "Reported free float below 20%; flow readings are noisier on thin floats." },
 ];
 
 const CONTEXT: { key: keyof ExitFlags; label: string; hint: string }[] = [
-  { key: "sparse_broker", label: "SPARSE", hint: "Fewer than 5 labeled broker observations in the window — coverage context, not an alert." },
+  { key: "sparse_broker", label: "SPARSE", hint: "Fewer than 5 labeled broker observations in the window; coverage context, not an alert." },
 ];
 
 export function FlagChips({ flags }: { flags: ExitFlags }) {

@@ -43,7 +43,7 @@ export function CohortNetChart({ days }: { days: Day[] }) {
   if (!days.length) {
     return (
       <p className="dim text-xs">
-        No daily labeled-broker detail for this issuer — aggregate top-broker feeds were used for the score instead.
+        No daily labeled-broker detail for this issuer: aggregate top-broker feeds were used for the score instead.
       </p>
     );
   }
@@ -72,7 +72,7 @@ export function CohortNetChart({ days }: { days: Day[] }) {
         </div>
       </div>
       <p className="mt-2 text-[10px] faint">
-        Broker cohort classification comes from the broker registry — it describes the channel, not proof of the
+        Broker cohort classification comes from the broker registry: it describes the channel, not proof of the
         ultimate trader&rsquo;s identity. Zero baseline shared per panel; dates {days[0].date} → {days.at(-1)!.date}.
       </p>
       <details className="mt-2">

@@ -16,26 +16,23 @@ export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-bold tracking-tight">Candidate Feed</h1>
-          <p className="mt-1 text-xs dim">
-            Bounded patterns from reported disclosures — {cases.length} candidates. Retrospective outcomes are measured, not predicted.
-          </p>
-        </div>
-        <div className="flex items-center gap-1">
-          {PATTERNS.map((p) => (
-            <Link
-              key={p || "all"}
-              href={p ? `/kasus?pola=${p}` : "/kasus"}
-              className={`rounded-md px-3 py-1.5 text-xs font-medium ${
-                pattern === p || (!pattern && !p) ? "bg-panel-2 text-ink" : "faint hover:text-ink"
-              }`}
-            >
-              {p ? PATTERN_LABEL[p] : "All"}
-            </Link>
-          ))}
-        </div>
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight">Candidate Feed</h1>
+        <p className="mt-1.5 text-[13px] dim">
+          Bounded patterns from reported disclosures: {cases.length} candidates. Retrospective outcomes are measured, not predicted.
+        </p>
+      </div>
+
+      <div className="tabbar">
+        {PATTERNS.map((p) => (
+          <Link
+            key={p || "all"}
+            href={p ? `/kasus?pola=${p}` : "/kasus"}
+            className={`tab ${pattern === p || (!pattern && !p) ? "tab-active" : ""}`}
+          >
+            {p ? PATTERN_LABEL[p] : "All"}
+          </Link>
+        ))}
       </div>
 
       <div>

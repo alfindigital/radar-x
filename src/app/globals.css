@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 /*
- * RADAR-X v3 — PK1 "Research balanced" · World A: Evidence Desk.
- * Dual theme: system default, explicit [data-theme] override wins.
+ * RADAR-X v3.1 — "Terminal pasar" (see DESIGN.md).
+ * Exchange-console surfaces: near-black scope glass, hairline separation,
+ * one phosphor accent, sharp corners. Dual theme; explicit [data-theme] wins.
  * Semantic tokens only — color never carries buy/sell meaning on its own.
  */
 
@@ -25,68 +26,74 @@
   --color-cohort-retail: var(--cohort-retail);
 }
 
-/* Light theme (default) — Evidence Desk palette */
+/* Sharp console corners — radius is a hierarchy tool, not decoration (R-11). */
+@theme {
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 5px;
+}
+
+/* Light theme — "day desk" paper, same instrument language */
 :root {
-  --bg: #f4f7fb;
+  --bg: #f5f7f9;
   --panel: #ffffff;
-  --panel-2: #e8eef6;
-  --line: #cdd7e4;
-  --line-2: #74869c;
-  --ink: #142132;
-  --ink-dim: #536174;
-  --ink-faint: #74869c;
-  --acc: #2458a6; /* cobalt — action/identity, NOT "safe/buy" */
-  --acc-soft: #e2ecfb;
+  --panel-2: #eaeef2;
+  --line: #d4dce4;
+  --line-2: #74879a;
+  --ink: #16202b;
+  --ink-dim: #4d5f70;
+  --ink-faint: #74879a;
+  --acc: #0a7a52; /* phosphor, darkened for AA on paper */
+  --acc-soft: #dff2ea;
   --on-acc: #ffffff;
-  --dist: #b3382e; /* elevated exit pressure — semantic warning */
-  --watch: #b45309;
-  --sky: #1d4ed8;
-  --cohort-inst: #1d4ed8; /* EC2: institutional blue */
-  --cohort-retail: #92400e; /* EC2: retail ochre */
+  --dist: #c93a26;
+  --watch: #9a5b07;
+  --sky: #2563a8;
+  --cohort-inst: #1d4ed8;
+  --cohort-retail: #9a5a12;
   color-scheme: light;
 }
 
-/* Dark theme — system preference when no explicit choice stored */
+/* Dark theme — scope glass. System preference when no explicit choice stored */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #101720;
-    --panel: #18222f;
-    --panel-2: #202e3e;
-    --line: #34475e;
-    --line-2: #657d99;
-    --ink: #edf3fa;
-    --ink-dim: #aab8c9;
-    --ink-faint: #657d99;
-    --acc: #9bc2ff;
-    --acc-soft: #223b5c;
-    --on-acc: #10223a;
-    --dist: #f87171;
-    --watch: #fbbf24;
-    --sky: #93c5fd;
-    --cohort-inst: #93c5fd;
-    --cohort-retail: #fdba74;
+    --bg: #0b0e12;
+    --panel: #11161c;
+    --panel-2: #1a222c;
+    --line: #22303f;
+    --line-2: #46586b;
+    --ink: #e8eef4;
+    --ink-dim: #9fb0c1;
+    --ink-faint: #68798c;
+    --acc: #34d399;
+    --acc-soft: #15352a;
+    --on-acc: #06251b;
+    --dist: #f2705d;
+    --watch: #f5b544;
+    --sky: #82b4ff;
+    --cohort-inst: #8fb8f8;
+    --cohort-retail: #f4a95c;
     color-scheme: dark;
   }
 }
 
-/* Explicit dark choice */
 [data-theme="dark"] {
-  --bg: #101720;
-  --panel: #18222f;
-  --panel-2: #202e3e;
-  --line: #34475e;
-  --line-2: #657d99;
-  --ink: #edf3fa;
-  --ink-dim: #aab8c9;
-  --ink-faint: #657d99;
-  --acc: #9bc2ff;
-  --acc-soft: #223b5c;
-  --on-acc: #10223a;
-  --dist: #f87171;
-  --watch: #fbbf24;
-  --sky: #93c5fd;
-  --cohort-inst: #93c5fd;
-  --cohort-retail: #fdba74;
+  --bg: #0b0e12;
+  --panel: #11161c;
+  --panel-2: #1a222c;
+  --line: #22303f;
+  --line-2: #46586b;
+  --ink: #e8eef4;
+  --ink-dim: #9fb0c1;
+  --ink-faint: #68798c;
+  --acc: #34d399;
+  --acc-soft: #15352a;
+  --on-acc: #06251b;
+  --dist: #f2705d;
+  --watch: #f5b544;
+  --sky: #82b4ff;
+  --cohort-inst: #8fb8f8;
+  --cohort-retail: #f4a95c;
   color-scheme: dark;
 }
 
@@ -98,7 +105,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-plex-sans), system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   overflow-x: hidden;
 }
 
@@ -106,7 +113,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 summary:focus-visible {
-  outline: 2px solid var(--sky);
+  outline: 2px solid var(--acc);
   outline-offset: 2px;
 }
 
@@ -140,14 +147,16 @@ summary:focus-visible {
   color: var(--cohort-retail);
 }
 
+/* Console labels — square mono chips that carry real state, never decoration. */
 .tag {
   display: inline-flex;
   align-items: center;
-  padding: 1px 8px;
-  border-radius: 999px;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   border: 1px solid var(--line-2);
   color: var(--ink-dim);
@@ -156,32 +165,78 @@ summary:focus-visible {
 
 .tag-acc {
   border-color: transparent;
-  background: color-mix(in srgb, var(--acc) 12%, transparent);
+  background: color-mix(in srgb, var(--acc) 14%, transparent);
   color: var(--acc);
 }
 .tag-dist {
   border-color: transparent;
-  background: color-mix(in srgb, var(--dist) 12%, transparent);
+  background: color-mix(in srgb, var(--dist) 14%, transparent);
   color: var(--dist);
 }
 .tag-watch {
   border-color: transparent;
-  background: color-mix(in srgb, var(--watch) 12%, transparent);
+  background: color-mix(in srgb, var(--watch) 14%, transparent);
   color: var(--watch);
 }
 
 .panel {
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
 }
 
+/* Kicker — the mono micro-label that names an instrument section. */
 .section-label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
+  color: var(--ink-dim);
+}
+
+/* Terminal tabs — text row with accent underline on the active scope. */
+.tabbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 10px;
   color: var(--ink-faint);
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tab-active {
+  color: var(--acc);
+  border-bottom-color: var(--acc);
+}
+
+/* Gauge — thin track + fill for scannable readings. */
+.gauge {
+  height: 3px;
+  background: var(--panel-2);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.gauge > i {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-sm);
+}
+
+/* Signal stripe — ONLY on high-pressure rows (score >= 75): state, not decor.
+   Applied to the first cell because inset shadows on <tr> are unreliable. */
+.row-signal > td:first-child {
+  box-shadow: inset 2px 0 0 var(--dist);
 }
 
 a {
@@ -189,7 +244,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: var(--sky);
+  color: var(--acc);
 }
 
 .row-hover:hover {
@@ -197,13 +252,14 @@ a:hover {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--sky) 30%, transparent);
+  background: color-mix(in srgb, var(--acc) 32%, transparent);
 }
 
 /* M2 — state transitions 140–220ms; reduced-motion kills them entirely */
 a,
 button,
-.tag {
+.tag,
+.tab {
   transition:
     color 150ms ease,
     background-color 150ms ease,
@@ -225,8 +281,8 @@ button,
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--line-2);
-  border-radius: 4px;
+  background: var(--line);
+  border-radius: 0;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

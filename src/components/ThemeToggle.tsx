@@ -32,7 +32,7 @@ function subscribe(onStoreChange: () => void) {
 }
 
 const MODES: Mode[] = ["system", "light", "dark"];
-const LABELS: Record<Mode, string> = { system: "System", light: "Light", dark: "Dark" };
+const LABELS: Record<Mode, string> = { system: "Auto", light: "Light", dark: "Dark" };
 
 export function ThemeToggle() {
   const mode = useSyncExternalStore(subscribe, getMode, () => "system" as Mode);
@@ -42,7 +42,12 @@ export function ThemeToggle() {
   }, [mode]);
 
   return (
-    <div role="group" aria-label="Theme" className="flex items-center overflow-hidden rounded-md border border-line text-[11px]">
+    <div
+      role="group"
+      aria-label="Theme"
+      className="mono flex items-center overflow-hidden border border-line text-[10px] uppercase tracking-wider"
+      style={{ borderRadius: "var(--radius-sm)" }}
+    >
       {MODES.map((m) => (
         <button
           key={m}
@@ -54,7 +59,7 @@ export function ThemeToggle() {
             apply(m);
             window.dispatchEvent(new Event(EVENT));
           }}
-          className={`px-2 py-1 ${mode === m ? "bg-acc-soft text-ink" : "dim"}`}
+          className={`px-2 py-1.5 ${mode === m ? "bg-panel-2 text-acc" : "dim hover:text-ink"}`}
         >
           {LABELS[m]}
         </button>

@@ -1,37 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useSyncExternalStore } from "react";
 import { SearchBox } from "./SearchBox";
-
-const NAV = [
-  { href: "/", label: "Exit Watch" },
-  { href: "/broker", label: "Brokers" },
-  { href: "/asing", label: "Foreign flow" },
-  { href: "/rotasi", label: "Sectors" },
-  { href: "/kasus", label: "Cases" },
-  { href: "/metodologi", label: "Methodology" },
-];
+import { NAV, isNavActive, useMountedPath } from "./PrimaryNav";
 
 export default function MobileNav() {
-  const pathname = usePathname();
-  const mounted = useSyncExternalStore(
-    () => () => undefined,
-    () => true,
-    () => false,
-  );
+  const { pathname, mounted } = useMountedPath();
   return (
     <div className="border-b border-line bg-panel md:hidden">
-      <nav aria-label="Primary navigation" className="flex gap-1 overflow-x-auto px-2 py-2">
+      <nav aria-label="Primary navigation" className="flex gap-0.5 overflow-x-auto px-2 py-1.5">
         {NAV.map((item) => {
-          const active = mounted && (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href));
+          const active = mounted && isNavActive(item.href, pathname);
           return (
             <Link
               key={item.href}
               href={item.href}
               aria-current={active ? "page" : undefined}
-              className={`whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] ${active ? "bg-panel-2 text-ink" : "dim"}`}
+              className={`whitespace-nowrap px-2.5 py-2 text-center font-mono text-[11px] uppercase tracking-wider ${
+                active ? "bg-panel-2 text-acc" : "dim"
+              }`}
+              style={{ borderRadius: "var(--radius-sm)" }}
             >
               {item.label}
             </Link>

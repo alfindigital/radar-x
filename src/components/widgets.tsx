@@ -20,10 +20,10 @@ export function ScoreMarker({ score }: { score: number | null }) {
   if (score === null) return null;
   const pos = Math.max(0, Math.min(100, (score + 100) / 2));
   return (
-    <div className="relative h-1 w-20 rounded-full bg-panel-2" title={`${score > 0 ? "+" : ""}${score}`}>
+    <div className="relative h-1 w-20 bg-panel-2" style={{ borderRadius: "var(--radius-sm)" }} title={`${score > 0 ? "+" : ""}${score}`}>
       <div
-        className="absolute top-1/2 h-2.5 w-[3px] -translate-y-1/2 rounded-full"
-        style={{ left: `calc(${pos}% - 1.5px)`, background: score >= 0 ? "var(--acc)" : "var(--dist)" }}
+        className="absolute top-1/2 h-2.5 w-[3px] -translate-y-1/2"
+        style={{ left: `calc(${pos}% - 1.5px)`, background: score >= 0 ? "var(--acc)" : "var(--dist)", borderRadius: 1 }}
       />
       <div className="absolute left-1/2 top-1/2 h-1.5 w-px -translate-y-1/2 bg-line-2" />
     </div>
@@ -56,9 +56,9 @@ export function ScoreBreakdown({ score }: { score: ScoreV2 }) {
                 {z === null ? "Unavailable" : `${pos ? "+" : ""}${z.toFixed(2)}σ`}
               </span>
             </div>
-            <div className="mt-1 h-[3px] rounded-full bg-panel-2">
-              <div
-                className={`h-full rounded-full ${pos ? "bg-acc" : "bg-dist"}`}
+            <div className="gauge mt-1">
+              <i
+                className={pos ? "bg-acc" : "bg-dist"}
                 style={{ width: `${pct}%` }}
               />
             </div>
@@ -103,9 +103,9 @@ export function CaseRow({ c }: { c: DerivedCase }) {
 
 export function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="border-l-2 border-line px-3 py-1">
-      <div className="text-[10px] uppercase tracking-wider faint">{label}</div>
-      <div className="mono mt-0.5 text-lg">{value}</div>
+    <div className="border-l border-line px-3 py-1">
+      <div className="section-label">{label}</div>
+      <div className="mono mt-1 text-lg tabular-nums">{value}</div>
       {sub && <div className="text-[10px] dim">{sub}</div>}
     </div>
   );

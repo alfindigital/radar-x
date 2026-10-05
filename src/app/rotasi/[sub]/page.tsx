@@ -38,10 +38,10 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
   return (
     <div className="space-y-8">
       <div>
-        <div className="text-[10px] uppercase tracking-widest faint">
+        <div className="section-label">
           <Link href="/rotasi" className="hover:text-ink">Sector rotation</Link> · {row.sector}
         </div>
-        <h1 className="mt-1 text-xl font-bold tracking-tight">{row.subSector}</h1>
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight">{row.subSector}</h1>
         <p className="mt-1 text-xs dim">
           {row.companyCount ?? "—"} issuers · saved aggregate context
           {row.flowDate ? (
@@ -233,7 +233,7 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
                   </tr>
                 ))}
                 {!memberScores.length && (
-                  <tr><td colSpan={3} className="py-8 text-center dim">Member list not ingested — run ingest rotation --refresh-members.</td></tr>
+                  <tr><td colSpan={3} className="py-8 text-center dim">Member list not ingested: run ingest rotation --refresh-members.</td></tr>
                 )}
               </tbody>
             </table>

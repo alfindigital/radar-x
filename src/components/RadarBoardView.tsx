@@ -34,8 +34,8 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">Radar Board</h1>
-          <p className="mt-1 text-xs dim">
+          <h1 className="text-2xl font-semibold tracking-tight">Radar Board</h1>
+          <p className="mt-1.5 text-[13px] dim">
             Reported ownership activity across {scores.length} tracked issuers from a {universe}-issuer IDX directory · as of <span className="mono">{week ?? "—"}</span>
           </p>
         </div>
@@ -54,14 +54,12 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
 
       <div className="grid gap-8 xl:grid-cols-[1fr_300px]">
         <section>
-          <div className="mb-3 flex items-center gap-1">
+          <div className="tabbar mb-3">
             {TABS.map((t) => (
               <Link
                 key={t.key}
                 href={t.key === "semua" ? "/?v=radar" : `/?v=radar&f=${t.key}`}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium ${
-                  resolved === t.key ? "bg-panel-2 text-ink" : "faint hover:text-ink"
-                }`}
+                className={`tab ${resolved === t.key ? "tab-active" : ""}`}
               >
                 {t.label}
               </Link>

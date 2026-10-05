@@ -20,7 +20,7 @@ export function SearchBox() {
   }
 
   return (
-    <form onSubmit={go} className="w-full max-w-[280px]" noValidate>
+    <form onSubmit={go} className="w-full" noValidate>
       <label htmlFor="issuer-search" className="sr-only">Search issuer</label>
       <div className="relative">
         <svg
@@ -42,8 +42,9 @@ export function SearchBox() {
             aria-invalid={Boolean(error)}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search issuer… (BBCA)"
-          className="w-full rounded-md border border-line bg-panel py-1.5 pl-9 pr-3 text-xs text-ink placeholder:text-ink-faint focus:border-line-2 focus:outline-none"
+            placeholder="SEARCH ISSUER (BBCA)"
+          className="mono w-full border border-line bg-panel py-1.5 pl-9 pr-3 text-[11px] uppercase tracking-wider text-ink placeholder:text-ink-faint focus:border-acc focus:outline-none"
+          style={{ borderRadius: "var(--radius-sm)" }}
         />
       </div>
       {error && <p className="mt-1 text-[11px] text-dist" role="alert">{error}</p>}
