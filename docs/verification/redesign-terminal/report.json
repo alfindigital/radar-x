@@ -6,9 +6,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -19,9 +17,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -32,9 +28,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -45,9 +39,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -58,9 +50,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -71,9 +61,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -84,9 +72,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -97,9 +83,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -110,9 +94,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -123,9 +105,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -136,9 +116,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -149,9 +127,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 bg-panel-2 text-acc right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -162,9 +138,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -175,9 +149,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -188,9 +160,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -201,9 +171,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -214,9 +182,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -227,9 +193,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -240,9 +204,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -253,9 +215,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -266,9 +226,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -279,9 +237,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -292,9 +248,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -305,9 +259,7 @@
     "overflow": {
       "scrollW": 1440,
       "clientW": 1440,
-      "off": [
-        "button.px-2 py-1.5 dim hover:text-ink right=1448"
-      ]
+      "off": []
     },
     "errors": []
   },
@@ -360,11 +312,9 @@
     "name": "broker-inst",
     "route": "/broker?cohort=institutional",
     "overflow": {
-      "scrollW": 371,
+      "scrollW": 360,
       "clientW": 360,
-      "off": [
-        "span.faint mono text-[10px] uppercase tracking-wider right=371"
-      ]
+      "off": []
     },
     "errors": []
   },
