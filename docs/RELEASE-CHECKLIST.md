@@ -1,6 +1,6 @@
 # RADAR-X release checklist
 
-Status: merged release on `main`; production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/) serving **v3 Exit Watch** (`data/*.json` bundled via `outputFileTracingIncludes`). The portal is still a draft.
+Status: merged release on `main`; production is live at **[radarx.web.id](https://radarx.web.id)** (canonical; alias [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/)) serving **v3 Exit Watch** (`data/*.json` bundled via `outputFileTracingIncludes`). The portal is still a draft.
 
 ## Evidence and engine
 

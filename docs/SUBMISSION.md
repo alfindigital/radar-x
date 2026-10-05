@@ -8,6 +8,12 @@ The portal is still a draft. This file contains English copy and a final-entry c
 <verify the public repository URL immediately before submission>
 ```
 
+## Live app URL
+
+```text
+https://radarx.web.id (verified 200 on 2026-10-05; www → apex 308)
+```
+
 ## One-sentence problem statement
 
 ```text

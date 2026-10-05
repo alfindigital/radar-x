@@ -3,6 +3,7 @@
 RADAR-X is an evidence-first market-intelligence workflow for Indonesian equities. It turns a frozen Sectors snapshot into bounded reported-ownership patterns, a coverage-aware positioning index, foreign-flow context, and retrospective issuer-versus-IHSG outcomes.
 
 **Track:** Sectors Hackathon 2026, Track 3 — Market Intelligence
+**Live:** [radarx.web.id](https://radarx.web.id) (www → apex 308; beta alias: radar-x-beta.vercel.app)
 **Current verified snapshot:** through 2026-10-01
 **v3:** `/` is the Exit Watch board (cohort-labeled exit pressure); the v2 radar board is preserved at `/?v=radar`.
 **Submission deadline in the current rules:** 8 October 2026, 23:59 WIB

@@ -2,7 +2,7 @@
 
 ## Actual status
 
-This checkout contains the merged Sectors Hackathon 2026 Track 3 release candidate, now running the **v3 "Exit Watch" engine** (`radarx-v3`; v2 board preserved at `/?v=radar`). Production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/) — `outputFileTracingIncludes` ships `data/*.json` (~85MB) into each function bundle; all v3 routes smoke-verified 200 on 2026-10-05. The portal screenshot is still a draft; **Submit final** has not been clicked.
+This checkout contains the merged Sectors Hackathon 2026 Track 3 release candidate, now running the **v3 "Exit Watch" engine** (`radarx-v3`; v2 board preserved at `/?v=radar`). Production is live at **[radarx.web.id](https://radarx.web.id)** (custom domain via Cloudflare DNS → Vercel, www 308→apex, verified 200 on 2026-10-05); beta alias [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/). `outputFileTracingIncludes` ships `data/*.json` (~85MB) into each function bundle; all v3 routes smoke-verified 200 on 2026-10-05. The portal screenshot is still a draft; **Submit final** has not been clicked.
 
 The app serves a hash-verified Sectors snapshot through **2026-10-01**: `exitwatch.json` = 962 rows → 247 publishable readings (61 high / 48 elevated / 79 watch / 59 low), 715 suppressed-not-zero. Snapshot coverage: prices + foreign flow 2026-06-22 → 10-01, filings through 10-02, broker rows through 10-01, monthly holders through 2026-09-30 EOM. See [CLAIMS.md](CLAIMS.md) for traceable statements.
 
