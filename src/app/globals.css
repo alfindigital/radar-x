@@ -40,9 +40,9 @@
   --panel-2: #eaeef2;
   --line: #d4dce4;
   --line-2: #74879a;
-  --ink: #16202b;
-  --ink-dim: #4d5f70;
-  --ink-faint: #74879a;
+  --ink: #111a24;
+  --ink-dim: #44566b;
+  --ink-faint: #70839a;
   --acc: #0a7a52; /* phosphor, darkened for AA on paper */
   --acc-soft: #dff2ea;
   --on-acc: #ffffff;
@@ -57,43 +57,43 @@
 /* Dark theme — scope glass. System preference when no explicit choice stored */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b0e12;
-    --panel: #11161c;
-    --panel-2: #1a222c;
-    --line: #22303f;
-    --line-2: #46586b;
-    --ink: #e8eef4;
-    --ink-dim: #9fb0c1;
-    --ink-faint: #68798c;
-    --acc: #34d399;
-    --acc-soft: #15352a;
+    --bg: #090c10;
+    --panel: #10151b;
+    --panel-2: #1b2530;
+    --line: #253545;
+    --line-2: #4d6076;
+    --ink: #f0f5fa;
+    --ink-dim: #aec0d1;
+    --ink-faint: #7e91a6;
+    --acc: #3ee2a0;
+    --acc-soft: #17382c;
     --on-acc: #06251b;
-    --dist: #f2705d;
-    --watch: #f5b544;
-    --sky: #82b4ff;
-    --cohort-inst: #8fb8f8;
-    --cohort-retail: #f4a95c;
+    --dist: #ff7d66;
+    --watch: #ffbf52;
+    --sky: #8fbfff;
+    --cohort-inst: #96c0ff;
+    --cohort-retail: #ffb26b;
     color-scheme: dark;
   }
 }
 
 [data-theme="dark"] {
-  --bg: #0b0e12;
-  --panel: #11161c;
-  --panel-2: #1a222c;
-  --line: #22303f;
-  --line-2: #46586b;
-  --ink: #e8eef4;
-  --ink-dim: #9fb0c1;
-  --ink-faint: #68798c;
-  --acc: #34d399;
-  --acc-soft: #15352a;
+  --bg: #090c10;
+  --panel: #10151b;
+  --panel-2: #1b2530;
+  --line: #253545;
+  --line-2: #4d6076;
+  --ink: #f0f5fa;
+  --ink-dim: #aec0d1;
+  --ink-faint: #7e91a6;
+  --acc: #3ee2a0;
+  --acc-soft: #17382c;
   --on-acc: #06251b;
-  --dist: #f2705d;
-  --watch: #f5b544;
-  --sky: #82b4ff;
-  --cohort-inst: #8fb8f8;
-  --cohort-retail: #f4a95c;
+  --dist: #ff7d66;
+  --watch: #ffbf52;
+  --sky: #8fbfff;
+  --cohort-inst: #96c0ff;
+  --cohort-retail: #ffb26b;
   color-scheme: dark;
 }
 
@@ -104,7 +104,7 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 14px;
   overflow-x: hidden;
 }
@@ -118,7 +118,7 @@ summary:focus-visible {
 }
 
 .mono {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -153,7 +153,7 @@ summary:focus-visible {
   align-items: center;
   padding: 1px 6px;
   border-radius: var(--radius-sm);
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -187,7 +187,7 @@ summary:focus-visible {
 
 /* Kicker — the mono micro-label that names an instrument section. */
 .section-label {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;
@@ -203,7 +203,7 @@ summary:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 .tab {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;

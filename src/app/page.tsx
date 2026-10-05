@@ -1,6 +1,7 @@
 // Exit Watch board (default) — v2 radar board preserved behind ?v=radar.
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { getExitBoard, getMarketContext } from "@/lib/services";
 import { ExitPressureBadge } from "@/components/ExitPressureBadge";
 import { FlagChips } from "@/components/FlagChips";
@@ -60,26 +61,39 @@ function Row({ row, rank }: { row: ExitWatchRow; rank: number }) {
   const hot = row.score !== null && row.score >= 75;
   return (
     <tr className={`row-hover border-b border-line/60 ${hot ? "row-signal" : ""}`}>
-      <td className="mono py-3.5 pl-1 pr-4 text-[11px] faint">{String(rank).padStart(2, "0")}</td>
-      <td className="py-3.5 pr-4">
+      <td className="mono py-3 pl-1 pr-4 text-[11px] faint">{String(rank).padStart(2, "0")}</td>
+      <td className="py-3 pr-4">
         <Link href={`/saham/${row.symbol.replace(".JK", "")}`} className="mono text-[13px] font-semibold tracking-wide">
           {row.symbol.replace(".JK", "")}
         </Link>
       </td>
-      <td className="py-3.5 pr-4">
+      <td className="py-3 pr-4">
         <ExitPressureBadge score={row.score} coverage={row.coverage} />
       </td>
-      <td className="hidden py-3.5 pr-4 md:table-cell">
+      <td className="hidden py-3 pr-4 md:table-cell">
         <div className="flex gap-4">
           {row.components.map((c) => (
             <ComponentCell key={c.key} c={c} kind={c.key} />
           ))}
         </div>
       </td>
-      <td className="py-3.5">
+      <td className="py-3">
         <FlagChips flags={row.flags} />
       </td>
     </tr>
+  );
+}
+
+// KPI cell inside the hairline stats band.
+function StatCell({ label, value, sub, color }: { label: string; value: ReactNode; sub?: ReactNode; color?: string }) {
+  return (
+    <div className="bg-bg px-2.5 py-2">
+      <div className="mono text-[9px] uppercase tracking-[0.12em] faint">{label}</div>
+      <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums" style={color ? { color } : undefined}>
+        {value}
+      </div>
+      {sub && <div className="mono mt-0.5 text-[9px] faint">{sub}</div>}
+    </div>
   );
 }
 
@@ -101,53 +115,63 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
   const truncated = base.length - shown.length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Exit Watch</h1>
-          <p className="mt-1.5 text-[13px] dim">
-            Which cohorts appear to be leaving, and who is absorbing. {board.counts.publishable} scored ·{" "}
-            {board.counts.insufficient} suppressed (low coverage) · {flagged.length} flagged · as of{" "}
-            <span className="mono">{board.asOf}</span>
+          <h1 className="text-[26px] font-bold tracking-tight">Exit Watch</h1>
+          <p className="mt-1 max-w-2xl text-[13px] dim">
+            Which cohorts appear to be leaving, and who is absorbing.
           </p>
         </div>
-        <div className="flex items-center gap-4 text-xs">
-          <span className="tag">EOD {board.asOf}</span>
-          <Link href="/?v=radar" className="mono faint text-[11px] uppercase tracking-wider hover:text-ink">
-            View: <span className="acc">Radar v2</span>
-          </Link>
-        </div>
+        <Link href="/?v=radar" className="mono faint text-[10px] uppercase tracking-wider hover:text-ink">
+          View: <span className="acc">Radar v2</span>
+        </Link>
       </div>
 
-      <DataStatus asOf={board.asOf} />
-
-      {(market.ihsg || market.mostTraded.rows.length > 0) && (
-        <section className="flex flex-wrap items-center gap-x-5 gap-y-1 border-y border-line py-2 text-xs">
-          {market.ihsg && (
-            <span className="dim">
-              <span className="mono faint text-[10px] uppercase tracking-wider">IHSG</span>{" "}
-              <span className="mono text-ink">{market.ihsg.price.toLocaleString("en-US", { maximumFractionDigits: 0 })}</span>
-              {market.ihsg.changePct !== null && (
-                <span className={`mono ml-1 ${market.ihsg.changePct < 0 ? "dist" : "acc"}`}>
+      {/* Stats band — hairline grid; the read at a glance before the tape. */}
+      <section className="grid grid-cols-4 gap-px border border-line bg-line/70 sm:grid-cols-8">
+        {market.ihsg ? (
+          <StatCell
+            label={`IHSG · ${market.ihsg.date}`}
+            value={market.ihsg.price.toLocaleString("en-US", { maximumFractionDigits: 0 })}
+            sub={
+              market.ihsg.changePct !== null ? (
+                <span className={market.ihsg.changePct < 0 ? "dist" : "acc"}>
                   {market.ihsg.changePct >= 0 ? "+" : ""}
                   {market.ihsg.changePct.toFixed(2)}%
                 </span>
-              )}{" "}
-              <span className="faint">({market.ihsg.date})</span>
-            </span>
-          )}
+              ) : undefined
+            }
+          />
+        ) : (
+          <StatCell label="IHSG" value="—" />
+        )}
+        <StatCell label="Scored" value={board.counts.publishable} sub={`of ${board.rows.length}`} />
+        <StatCell label="High ≥75" value={board.counts.high} color="var(--dist)" />
+        <StatCell label="Elev ≥55" value={board.counts.elevated} color="var(--watch)" />
+        <StatCell label="Watch ≥35" value={board.counts.watch} color="var(--sky)" />
+        <StatCell label="Low" value={board.counts.low} color="var(--ink-dim)" />
+        <StatCell label="Suppressed" value={board.counts.insufficient} color="var(--ink-faint)" />
+        <StatCell label="Flagged" value={flagged.length} color="var(--watch)" />
+      </section>
+
+      {(market.mostTraded.rows.length > 0 || market.ihsg) && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border border-line px-2.5 py-1.5">
           {market.mostTraded.rows.length > 0 && (
-            <span className="dim">
-              <span className="mono faint text-[10px] uppercase tracking-wider">heaviest volume {market.mostTraded.date}</span>{" "}
+            <span className="mono flex flex-wrap items-center gap-x-2 text-[10px] uppercase tracking-wider faint">
+              Heaviest vol <span className="normal-case">{market.mostTraded.date}</span>
               {market.mostTraded.rows.map((r) => (
-                <Link key={r.symbol} href={`/saham/${r.symbol.replace(".JK", "")}`} className="mono mr-2 hover:text-acc">
+                <Link key={r.symbol} href={`/saham/${r.symbol.replace(".JK", "")}`} className="text-ink hover:text-acc">
                   {r.symbol.replace(".JK", "")}
                 </Link>
               ))}
             </span>
           )}
-        </section>
+          <span className="mono ml-auto text-[9px] uppercase tracking-wider faint">EOD {board.asOf}</span>
+        </div>
       )}
+
+      <DataStatus asOf={board.asOf} />
 
       {!board.rows.length && (
         <div className="panel p-6 text-sm dim">

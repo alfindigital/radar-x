@@ -5,10 +5,13 @@ import { useEffect, useSyncExternalStore } from "react";
 // TH1: Light / Dark / System. Explicit choice persists in localStorage and sets
 // data-theme on <html>; "system" removes the attribute so the media query rules.
 // The bootstrap script in layout.tsx runs before paint to avoid theme flash.
+// Icon-only cycle button: system -> light -> dark -> system.
 
 type Mode = "light" | "dark" | "system";
 const KEY = "radarx-theme";
 const EVENT = "radarx-theme";
+const NEXT: Record<Mode, Mode> = { system: "light", light: "dark", dark: "system" };
+const LABELS: Record<Mode, string> = { system: "Auto", light: "Light", dark: "Dark" };
 
 function getMode(): Mode {
   if (typeof window === "undefined") return "system";
@@ -31,8 +34,34 @@ function subscribe(onStoreChange: () => void) {
   };
 }
 
-const MODES: Mode[] = ["system", "light", "dark"];
-const LABELS: Record<Mode, string> = { system: "Auto", light: "Light", dark: "Dark" };
+function ModeIcon({ mode }: { mode: Mode }) {
+  const p = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  if (mode === "light")
+    return (
+      <svg width="14" height="14" viewBox="0 0 24 24" {...p} aria-hidden>
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.8 1.8M17 17l1.8 1.8M5.2 18.8 7 17M17 7l1.8-1.8" />
+      </svg>
+    );
+  if (mode === "dark")
+    return (
+      <svg width="14" height="14" viewBox="0 0 24 24" {...p} aria-hidden>
+        <path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z" />
+      </svg>
+    );
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" {...p} aria-hidden>
+      <rect x="3" y="4.5" width="18" height="12.5" rx="1.5" />
+      <path d="M9 20.5h6M12 17v3.5" />
+    </svg>
+  );
+}
 
 export function ThemeToggle() {
   const mode = useSyncExternalStore(subscribe, getMode, () => "system" as Mode);
@@ -42,28 +71,21 @@ export function ThemeToggle() {
   }, [mode]);
 
   return (
-    <div
-      role="group"
-      aria-label="Theme"
-      className="mono flex items-center overflow-hidden border border-line text-[10px] uppercase tracking-wider"
+    <button
+      type="button"
+      aria-label={`Theme: ${LABELS[mode]}. Switch to ${LABELS[NEXT[mode]]}`}
+      title={`${LABELS[mode]} — next: ${LABELS[NEXT[mode]]}`}
+      onClick={() => {
+        const next = NEXT[mode];
+        if (next === "system") window.localStorage.removeItem(KEY);
+        else window.localStorage.setItem(KEY, next);
+        apply(next);
+        window.dispatchEvent(new Event(EVENT));
+      }}
+      className="flex h-7 w-7 items-center justify-center border border-line dim hover:border-line-2 hover:text-ink"
       style={{ borderRadius: "var(--radius-sm)" }}
     >
-      {MODES.map((m) => (
-        <button
-          key={m}
-          type="button"
-          aria-pressed={mode === m}
-          onClick={() => {
-            if (m === "system") window.localStorage.removeItem(KEY);
-            else window.localStorage.setItem(KEY, m);
-            apply(m);
-            window.dispatchEvent(new Event(EVENT));
-          }}
-          className={`px-2 py-1.5 ${mode === m ? "bg-panel-2 text-acc" : "dim hover:text-ink"}`}
-        >
-          {LABELS[m]}
-        </button>
-      ))}
-    </div>
+      <ModeIcon mode={mode} />
+    </button>
   );
 }
