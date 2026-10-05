@@ -13,7 +13,7 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
   if (!p) {
     return (
       <div className="space-y-4">
-        <h1 className="mono text-2xl font-bold">{code.toUpperCase()}</h1>
+        <h1 className="mono text-[26px] font-bold">{code.toUpperCase()}</h1>
         <p className="dim text-sm">No registry record, leaderboard appearance, or per-issuer top-N presence found for this code.</p>
         <Link href="/broker" className="blue text-xs">
           ← Broker board
@@ -23,7 +23,7 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div>
         <div className="flex items-center gap-4">
           <h1 className="mono text-3xl font-bold tracking-tight">{p.code}</h1>

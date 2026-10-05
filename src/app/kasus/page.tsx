@@ -15,9 +15,9 @@ export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
   const cases = await getCaseFeed(pattern);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Candidate Feed</h1>
+        <h1 className="text-[26px] font-bold tracking-tight">Candidate Feed</h1>
         <p className="mt-1.5 text-[13px] dim">
           Bounded patterns from reported disclosures: {cases.length} candidates. Retrospective outcomes are measured, not predicted.
         </p>

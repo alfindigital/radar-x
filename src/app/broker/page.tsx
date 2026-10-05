@@ -30,24 +30,38 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
   const board = await getBrokerBoard(cohort);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Broker board</h1>
-          <p className="mt-1.5 text-[13px] dim">
-            Top brokers by reported activity · session <span className="mono">{board.date ?? "—"}</span> · cohort labels
-            from the broker registry ({board.registry.total} firms classified)
+          <h1 className="text-[26px] font-bold tracking-tight">Broker board</h1>
+          <p className="mt-1 max-w-2xl text-[13px] dim">
+            Top brokers by reported activity; registry cohort labels describe the channel, not the ultimate trader.
           </p>
         </div>
-        <div className="flex items-center gap-3 text-xs">
-          {COHORT_ORDER.filter((c) => board.registry.byCohort[c]).map((c) => (
-            <span key={c} className="dim">
-              <span className={c === "institutional" ? "cohort-inst" : c === "retail" ? "cohort-retail" : "faint"}>●</span>{" "}
-              {board.registry.byCohort[c]} {c}
-            </span>
-          ))}
-        </div>
       </div>
+
+      {/* Registry cohort counts — same hairline-band language as the board stats. */}
+      <section className="grid grid-cols-3 gap-px border border-line bg-line/70 sm:grid-cols-6">
+        {COHORT_ORDER.map((c) => (
+          <div key={c} className="bg-bg px-2.5 py-2">
+            <div className="mono text-[9px] uppercase tracking-[0.12em] faint">{c}</div>
+            <div
+              className="mono mt-0.5 text-[15px] font-semibold tabular-nums"
+              style={{ color: c === "institutional" ? "var(--cohort-inst)" : c === "retail" ? "var(--cohort-retail)" : undefined }}
+            >
+              {board.registry.byCohort[c] ?? 0}
+            </div>
+          </div>
+        ))}
+        <div className="bg-bg px-2.5 py-2">
+          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Firms classified</div>
+          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">{board.registry.total}</div>
+        </div>
+        <div className="bg-bg px-2.5 py-2">
+          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Session</div>
+          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">{board.date ?? "—"}</div>
+        </div>
+      </section>
 
       {board.date && <DataStatus asOf={board.date} />}
 

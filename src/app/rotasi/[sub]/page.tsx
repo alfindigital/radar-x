@@ -36,7 +36,7 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
   const ytd = row.mcapChangeYtd === null ? "—" : fmtPct(row.mcapChangeYtd * 100, 0, "complete");
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div>
         <div className="section-label">
           <Link href="/rotasi" className="hover:text-ink">Sector rotation</Link> · {row.sector}

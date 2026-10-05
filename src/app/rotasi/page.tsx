@@ -52,7 +52,7 @@ export default async function RotasiPage() {
 
   if (!board) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4">
         <h1 className="text-xl font-bold tracking-tight">Sector Rotation</h1>
         <div className="panel p-5 text-xs dim">
           No saved subsector aggregates yet. Run <span className="mono text-ink">npm run ingest -- rotation</span> with a
@@ -67,10 +67,10 @@ export default async function RotasiPage() {
   const sorted = [...all].sort((a, b) => (b.mcapChange1w ?? -Infinity) - (a.mcapChange1w ?? -Infinity));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Sector Rotation</h1>
+          <h1 className="text-[26px] font-bold tracking-tight">Sector Rotation</h1>
           <p className="mt-1.5 text-[13px] dim">
             Aggregate market-cap movement across {all.length} IDX subsectors · as of{" "}
             <span className="mono">{board.asOf ?? "—"}</span>

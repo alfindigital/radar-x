@@ -118,7 +118,7 @@ function OwnershipSection({ o, covered }: { o: IssuerOwnership; covered: boolean
   const sellers = latestTxns.filter((t) => t.side === "sell").sort((a, b) => b.changeAmount - a.changeAmount);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {(o.groups.length > 0 || o.whales.length > 0) && (
         <div className="flex flex-wrap gap-2">
           {o.groups.map((g) => (
@@ -242,7 +242,7 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
     lastPrice && firstPrice && firstPrice.close ? ((lastPrice.close - firstPrice.close) / firstPrice.close) * 100 : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-4">

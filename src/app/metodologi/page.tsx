@@ -4,7 +4,7 @@ export default function MethodologyPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6 text-sm leading-relaxed">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Methodology</h1>
+        <h1 className="text-[26px] font-bold tracking-tight">Methodology</h1>
         <p className="mt-1 text-[13px] dim">How RADAR-X summarizes reported ownership activity and its limits.</p>
       </div>
 

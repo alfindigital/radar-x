@@ -27,7 +27,7 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
   const outcome60 = c.outcomes.find((outcome) => outcome.horizonDays === 60)!;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <div className="flex flex-wrap items-center gap-3">
           <span className={`tag ${patternTagClass(c.pattern)}`}>{PATTERN_LABEL[c.pattern] ?? c.pattern}</span>

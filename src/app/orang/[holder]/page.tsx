@@ -16,9 +16,9 @@ export default async function PersonPage({ params }: PageProps<"/orang/[holder]"
 
   const s = d.stats;
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{d.holderName}</h1>
+        <h1 className="text-[26px] font-bold tracking-tight">{d.holderName}</h1>
         <p className="mt-1 text-xs dim">
           {s.totalTrades} reported transactions · {s.symbols} issuers:{" "}
           {d.symbols.map((sym) => (

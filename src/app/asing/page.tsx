@@ -52,16 +52,38 @@ export default async function AsingPage() {
   const dist = rows.filter((r) => r.cumNet < 0).sort((a, b) => a.cumNet - b.cumNet).slice(0, 50);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Foreign Flow Radar</h1>
-        <p className="mt-1.5 text-[13px] dim">
-          Signed net foreign flow: <span className="mono">{rows.length}</span> issuers with observations, <span className="mono">{from ?? "—"}</span> → <span className="mono">{to ?? "—"}</span>.
-          The benchmark-observed IHSG sessions define expected coverage; missing issuer rows are unknown, not zero.
+        <h1 className="text-[26px] font-bold tracking-tight">Foreign Flow Radar</h1>
+        <p className="mt-1 max-w-2xl text-[13px] dim">
+          Signed net foreign flow, {from ?? "—"} → {to ?? "—"}. Missing issuer rows are unknown, not zero.
         </p>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-2">
+      <section className="grid grid-cols-4 gap-px border border-line bg-line/70">
+        <div className="bg-bg px-2.5 py-2">
+          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Issuers observed</div>
+          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">{rows.length}</div>
+        </div>
+        <div className="bg-bg px-2.5 py-2">
+          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Net accumulating</div>
+          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums acc">
+            {rows.filter((r) => r.cumNet > 0).length}
+          </div>
+        </div>
+        <div className="bg-bg px-2.5 py-2">
+          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Net distributing</div>
+          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums dist">
+            {rows.filter((r) => r.cumNet < 0).length}
+          </div>
+        </div>
+        <div className="bg-bg px-2.5 py-2">
+          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Window</div>
+          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">14d</div>
+        </div>
+      </section>
+
+      <div className="grid gap-6 lg:grid-cols-2">
         <FlowTable title="Largest foreign accumulation" rows={acc} sign="acc" />
         <FlowTable title="Largest foreign distribution" rows={dist} sign="dist" />
       </div>
