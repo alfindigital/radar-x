@@ -2,9 +2,9 @@
 
 ## Actual status
 
-This checkout contains the merged Sectors Hackathon 2026 Track 3 release candidate. PR [#1](https://github.com/alfindigital/radar-x/pull/1) merged it to `main` at `bfdacc62ee4d34b514f6efb485e83a864289233d`; production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/). The portal screenshot is still a draft; **Submit final** has not been clicked.
+This checkout contains the merged Sectors Hackathon 2026 Track 3 release candidate, now running the **v3 "Exit Watch" engine** (`radarx-v3`; v2 board preserved at `/?v=radar`). Production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/) — `outputFileTracingIncludes` ships `data/*.json` (~85MB) into each function bundle; all v3 routes smoke-verified 200 on 2026-10-05. The portal screenshot is still a draft; **Submit final** has not been clicked.
 
-The app serves a hash-verified Sectors snapshot through **2026-10-01** and generated `radarx-v2` artifacts (asOf 2026-10-01: 962 score rows, 202 bounded candidate patterns, 301 complete + 138 pending outcomes). Snapshot coverage: prices + foreign flow 2026-06-22 → 10-01, filings through 10-02, broker rows through 10-01, monthly holders through 2026-09-30 EOM. See [CLAIMS.md](CLAIMS.md) for traceable statements.
+The app serves a hash-verified Sectors snapshot through **2026-10-01**: `exitwatch.json` = 962 rows → 247 publishable readings (61 high / 48 elevated / 79 watch / 59 low), 715 suppressed-not-zero. Snapshot coverage: prices + foreign flow 2026-06-22 → 10-01, filings through 10-02, broker rows through 10-01, monthly holders through 2026-09-30 EOM. See [CLAIMS.md](CLAIMS.md) for traceable statements.
 
 ### Key pool (added 2026-10-02)
 

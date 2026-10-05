@@ -1,6 +1,6 @@
 # RADAR-X release checklist
 
-Status: merged release on `main`; production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/). The portal is still a draft.
+Status: merged release on `main`; production is live at [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/) serving **v3 Exit Watch** (`data/*.json` bundled via `outputFileTracingIncludes`). The portal is still a draft.
 
 ## Evidence and engine
 
@@ -48,6 +48,7 @@ gitleaks git --redact --no-banner --log-level warn .   passed (no findings)
 - [x] Merge the verified release to `main`.
 - [x] Deploy production through the existing Vercel project.
 - [x] Smoke-test the live root, Foreign flow, Cases, and Methodology routes with HTTP 200.
+- [x] v3 smoke (2026-10-05): `/`, `/?v=radar`, `/?scope=suppressed`, `/broker`, `/broker?cohort=institutional`, `/saham/ADRO`, `/metodologi` all 200 on production.
 - [x] Confirm the production `SECTORS_API_KEY` secret exists without reading its value.
 
 ## User-only gates before submission

@@ -21,7 +21,10 @@ Executed natively by Devin 2026-10-05 — all 11 tasks complete.
 
 - Judging video re-record — new money-shot: Exit Watch board → dossier
   tug-of-war → suppressed honest state (≤3 min).
-- Portal submission copy + social post update for v3 framing.
-- Visual QA sweep at 360px mobile width.
-- `brokers_top` cohort-split sessions (`?cohort=retail|institutional`) not yet
-  ingested — board labels use registry; split leaderboard optional later.
+- Portal submission copy + social post update for v3 framing (draft updated
+  in `docs/SUBMISSION.md`).
+- ~~Visual QA sweep at 360px mobile width~~ → DONE 2026-10-05 —
+  `node scripts/qa-mobile.mjs`, evidence in `docs/verification/mobile-qa-360/`;
+  fixed header clip + broker key collision.
+- `brokers_top` cohort-split sessions (`?cohort=retail|institutional`) now
+  ingested and live via `/broker?cohort=` tabs.

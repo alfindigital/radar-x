@@ -73,7 +73,7 @@ export function CohortNetChart({ days }: { days: Day[] }) {
       </div>
       <p className="mt-2 text-[10px] faint">
         Broker cohort classification comes from the broker registry — it describes the channel, not proof of the
-        ultimate trader's identity. Zero baseline shared per panel; dates {days[0].date} → {days.at(-1)!.date}.
+        ultimate trader&rsquo;s identity. Zero baseline shared per panel; dates {days[0].date} → {days.at(-1)!.date}.
       </p>
       <details className="mt-2">
         <summary className="cursor-pointer text-xs dim">View observations ({days.length} sessions)</summary>

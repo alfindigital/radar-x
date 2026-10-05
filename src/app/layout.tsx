@@ -39,7 +39,7 @@ function TopNav() {
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
       <div className="flex h-14 items-center gap-4 px-4 md:gap-6 md:px-8">
-        <Link href="/" className="mono flex items-center gap-2 text-sm font-semibold tracking-[0.18em]">
+        <Link href="/" className="mono flex shrink-0 items-center gap-2 whitespace-nowrap text-sm font-semibold tracking-[0.18em]">
           <span className="inline-block h-2 w-2 rounded-full bg-acc" />
           RADAR<span className="acc">-X</span>
         </Link>
@@ -50,8 +50,10 @@ function TopNav() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-3">
-          <SearchBox />
+        <div className="ml-auto flex min-w-0 items-center gap-3">
+          <div className="hidden w-full max-w-[280px] md:block">
+            <SearchBox />
+          </div>
           <ThemeToggle />
         </div>
       </div>

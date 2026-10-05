@@ -48,14 +48,16 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
               <thead>
                 <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
                   <th className="py-1 pr-3 font-medium">Date</th>
+                  <th className="py-1 pr-3 font-medium">Session</th>
                   <th className="py-1 pr-3 font-medium">Rank</th>
                   <th className="py-1 text-right font-medium">Net</th>
                 </tr>
               </thead>
               <tbody className="mono text-xs">
                 {p.leaderboardAppearances.map((a) => (
-                  <tr key={a.date} className="border-b border-line/40">
+                  <tr key={`${a.date}-${a.cohort}`} className="border-b border-line/40">
                     <td className="py-2 pr-3">{a.date}</td>
+                    <td className="py-2 pr-3 dim">{a.cohort}</td>
                     <td className="py-2 pr-3">#{a.rank}</td>
                     <td className={`py-2 text-right ${(a.net ?? 0) < 0 ? "dist" : ""}`}>
                       {a.net != null ? fmtCurrency(a.net) : "—"}

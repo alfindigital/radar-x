@@ -11,4 +11,4 @@
 | 7 | `scripts/store-secret.ps1` adalah helper vault lokal — sengaja di-ignore dari repo publik (`.gitignore`) | 2026-10-02 | — |
 | 8 | ~~`brokers_top.json` hanya cohort "all"~~ → **RESOLVED 2026-10-05**: leaderboard di-ingest per kohort (`cohort` param); `/broker?cohort=` institutional=39 / retail=5 | v3 | done |
 | 9 | ~~259/962 daily series~~ → **RESOLVED 2026-10-05**: universe-wide broker backfill (`broker_rows` 92.7k→145.9k, 647 calls) → **863/962** simbol punya series | v3 | done |
-| 10 | Deployment: belum ada live URL — app membaca `data/*.json` via `fs` (45MB), butuh host Node penuh (VPS/Railway/Render) atau `outputFileTracingIncludes` untuk Vercel serverless | 2026-10-05 | optional — demo lokal `npm run build && npm start` |
+| 10 | ~~Deployment: belum ada live URL~~ → **RESOLVED 2026-10-05**: `outputFileTracingIncludes` di `next.config.ts` membawa `data/*.json` (~85MB) ke tiap function bundle; v3 live di https://radar-x-beta.vercel.app/ — smoke `/`, `/broker?cohort=institutional`, `/saham/ADRO`, `/?v=radar`, `/?scope=suppressed`, `/metodologi` semua 200 | v3 | done |

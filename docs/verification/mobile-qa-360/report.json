@@ -1,0 +1,344 @@
+[
+  {
+    "route": "/",
+    "name": "home",
+    "ms": 5674,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 8239,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/?v=radar",
+    "name": "radar-v2",
+    "ms": 3120,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 8028,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/?scope=suppressed",
+    "name": "suppressed",
+    "ms": 4998,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 7778,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/broker",
+    "name": "broker",
+    "ms": 3097,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 7487,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      },
+      {
+        "tag": "table",
+        "cls": "w-full text-sm",
+        "text": "#BrokerCohortGrossNet1AKUBS Sekuritas Indonesiains",
+        "w": 394,
+        "r": 410,
+        "l": 16
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/broker?cohort=institutional",
+    "name": "broker-inst",
+    "ms": 2116,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 3767,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      },
+      {
+        "tag": "table",
+        "cls": "w-full text-sm",
+        "text": "#BrokerCohortGrossNet1AKUBS Sekuritas Indonesiains",
+        "w": 394,
+        "r": 410,
+        "l": 16
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/broker/XL",
+    "name": "broker-detail",
+    "ms": 2071,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 1223,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/saham/ADRO",
+    "name": "dossier",
+    "ms": 3037,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 3136,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      },
+      {
+        "tag": "table",
+        "cls": "w-full text-xs",
+        "text": "Transaction dateHolderTypeSharesPriceValueFiled at",
+        "w": 528,
+        "r": 544,
+        "l": 16
+      },
+      {
+        "tag": "span",
+        "cls": "faint",
+        "text": "· institution",
+        "w": 101,
+        "r": 376,
+        "l": 275
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/kasus",
+    "name": "kasus",
+    "ms": 2516,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 13052,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/asing",
+    "name": "asing",
+    "ms": 2015,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 4790,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/rotasi",
+    "name": "rotasi",
+    "ms": 2179,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 4777,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/metodologi",
+    "name": "metodologi",
+    "ms": 1857,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 3438,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] bg-panel-2 text-ink",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/kasus/AKPI.JK%3Abuy%3A2026-09-22%3AINSIDER_CONTRA_BUY%3Aee33cc80",
+    "name": "kasus-detail",
+    "ms": 2121,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 1259,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      },
+      {
+        "tag": "table",
+        "cls": "w-full min-w-[720px] text-xs",
+        "text": "Transaction dateHolderTypeSharesValueOwnership bef",
+        "w": 720,
+        "r": 736,
+        "l": 16
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/rotasi/basic-materials",
+    "name": "rotasi-sub",
+    "ms": 2617,
+    "title": "RADAR-X — basic-materials",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 5903,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "route": "/orang/Edwin%20Soeryadjaya",
+    "name": "orang",
+    "ms": 1947,
+    "title": "RADAR-X — IDX Market Intelligence",
+    "scrollW": 360,
+    "clientW": 360,
+    "overflowX": 0,
+    "pageH": 1161,
+    "offenders": [
+      {
+        "tag": "a",
+        "cls": "whitespace-nowrap rounded-md px-2 py-2 text-center text-[11px] dim",
+        "text": "Methodology",
+        "w": 80,
+        "r": 406,
+        "l": 326
+      },
+      {
+        "tag": "table",
+        "cls": "w-full text-xs",
+        "text": "Transaction dateHolderTypeSharesPriceValueFiled at",
+        "w": 502,
+        "r": 518,
+        "l": 16
+      }
+    ],
+    "consoleErrors": []
+  }
+]

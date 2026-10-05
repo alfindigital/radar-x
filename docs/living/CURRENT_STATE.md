@@ -37,6 +37,11 @@
   `compute.ts` loads all feeds + hashes them into manifest `feedHashes`.
 - **API keys:** pool `SECTORS_API_KEYS` = 11 live. `.env.local` live (key-4).
 - **Docs:** `docs/EVIDENCE_V3.md` = feed inventory + spend + limitations.
+- **Mobile QA (2026-10-05):** 360px sweep via `scripts/qa-mobile.mjs` across 14
+  routes → fixed clipped theme toggle + wrapped logo (search moved to a
+  full-width row under MobileNav on <md), duplicate React key on broker
+  profiles (cohort now shown per appearance), 2 stale lint errors. Evidence:
+  `docs/verification/mobile-qa-360/`. Prod v3 smoke-verified 200 on all routes.
 - **Remaining:** video re-record (judging ≤3min, new money-shot: Exit Watch
-  board → dossier tug-of-war → suppressed honest state), submission copy
-  update, visual QA pass on mobile width.
+  board → dossier tug-of-war → suppressed honest state), custom domain
+  `radarx.web.id` wiring (Vercel DNS), final portal submit.

@@ -11,7 +11,7 @@ The portal is still a draft. This file contains English copy and a final-entry c
 ## One-sentence problem statement
 
 ```text
-RADAR-X helps Indonesian equity researchers turn scattered reported-ownership disclosures into bounded, source-linked patterns and measured historical outcomes without hiding missing evidence.
+RADAR-X helps Indonesian equity researchers spot reported exit pressure early, turning scattered ownership and broker-flow disclosures into cohort-labeled, source-linked readings while keeping missing evidence visible.
 ```
 
 ## Track
@@ -42,9 +42,9 @@ RADAR-X helps Indonesian equity researchers turn scattered reported-ownership di
 ## Factual English caption draft
 
 ```text
-Public ownership disclosures are useful but scattered. RADAR-X turns a frozen Sectors snapshot into bounded reported-activity patterns, foreign-flow context, and matched issuer-versus-IHSG outcomes while keeping missing evidence visible.
+Public disclosures show who bought — they rarely show who is leaving. RADAR-X turns a frozen Sectors snapshot of all 962 IDX issuers into cohort-labeled exit-pressure readings, broker-level flow evidence, and matched historical outcomes, while keeping missing evidence visible instead of scoring it zero.
 
-Current snapshot: 962 score rows, 171 candidate patterns, and 301 complete retrospective outcomes as of 22 September 2026. These are descriptive public-data statistics, not a forecast or buy/sell recommendation.
+Current snapshot (as of 1 October 2026): 247 publishable exit readings — 61 high, 48 elevated, 79 watch, 59 low — 715 issuers honestly suppressed for insufficient coverage, and daily institutional-versus-retail flow series for 863 issuers. Descriptive public-data statistics, not a forecast or buy/sell recommendation.
 
 Built for Sectors Hackathon 2026, Track 3 — Market Intelligence.
 

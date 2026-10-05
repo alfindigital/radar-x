@@ -55,7 +55,7 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
         <p className="dim">
           Exit Watch is a bounded reading of observed exit-side pressure: which investor cohorts appear to be leaving a
           name, and which may be absorbing that flow. It combines four robust cross-sectional components, each normalized
-          by the issuer's observed market cap:
+          by the issuer&rsquo;s observed market cap:
         </p>
         <ul className="dim list-inside list-disc space-y-1 text-xs">
           <li><span className="mono">instExit · 30%</span> — net flow of brokers classified <em>institutional</em> in the broker registry (14-day window). Precision overlays from per-cohort top-broker feeds are preferred when present.</li>

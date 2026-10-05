@@ -414,7 +414,7 @@ export async function getBrokerBoard(cohort = "all"): Promise<BrokerBoard> {
 export interface BrokerProfile {
   code: string;
   registry: RegistryRow | null;
-  leaderboardAppearances: { date: string; rank: number; net?: number }[];
+  leaderboardAppearances: { date: string; rank: number; net?: number; cohort: string }[];
   symbolsTopBuyer: string[];
   symbolsTopSeller: string[];
 }
@@ -425,7 +425,7 @@ export async function getBrokerProfile(codeRaw: string): Promise<BrokerProfile |
   const [registry, sessions, brokerTop] = await Promise.all([loadRegistry(), loadBrokersTop(), loadBrokerTop()]);
   const registryRow = registry?.data.find((r) => r.code === code) ?? null;
   const appearances = (sessions?.data ?? [])
-    .flatMap((s) => s.results.filter((r) => r.broker_code === code).map((r) => ({ date: s.date, rank: r.rank, net: r.net })))
+    .flatMap((s) => s.results.filter((r) => r.broker_code === code).map((r) => ({ date: s.date, rank: r.rank, net: r.net, cohort: s.cohort ?? "all" })))
     .sort((a, b) => b.date.localeCompare(a.date));
   const symbolsTopBuyer: string[] = [];
   const symbolsTopSeller: string[] = [];
