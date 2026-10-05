@@ -2,22 +2,38 @@
   "schemaVersion": 2,
   "engineVersion": "radarx-v2",
   "asOf": "2026-10-01",
-  "inputHash": "0ea465ce40d84a981062f49b9daab819048c81de65f30a62672545be959c0937",
-  "generatedAt": "2026-10-02T10:36:33.720Z",
+  "inputHash": "7a39210d866f7aadb5ff67b4d44128dbf419fbb68f9eb75f3bc7717b7ce43aa5",
+  "generatedAt": "2026-10-05T03:56:57.705Z",
   "files": [
     {
       "path": "scores.json",
       "rows": 962,
-      "sha256": "0a7dd8eca48dd2dccde27b97ca1a0a3c81ad2beec0845478f1e3fa1823be78be"
+      "sha256": "5f7de4e80c00f7c03257fc3a2e1d431e92b86e01a560ff3b406c924f6b3eea41",
+      "engineVersion": "radarx-v2"
     },
     {
       "path": "cases.json",
-      "rows": 202,
-      "sha256": "6eddc1fb22148224cea7eb8a5bad9b93ddb5ec3e26332da1df81dc96f56c4a1d"
+      "rows": 204,
+      "sha256": "51ed3535195a7ceadc3a733b09d24849d293d137abd79a15357e59758db96a3f"
+    },
+    {
+      "path": "exitwatch.json",
+      "rows": 962,
+      "sha256": "ff1bb78c7caea4103c05014b9a3feb693cfe3b040ebf1bd2bb6ac3d4f4720d09",
+      "engineVersion": "radarx-v3"
     }
   ],
   "limitations": [
     "Derived analytics use the immutable local Sectors snapshot and do not call an upstream provider.",
-    "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete."
-  ]
+    "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete.",
+    "Exit Watch is a bounded pressure reading over labeled broker cohorts — not proof of intent; missing components lower coverage instead of scoring zero."
+  ],
+  "feedHashes": {
+    "broker_registry.json": "2c97b793cb538f7b90ce649e8915c8b3029b908aaff0f64c1178f81ebc3c99e7",
+    "broker_top.json": "4ac52f9717e66071bb83c1828befce34cef6d39ab85e8b777271b52fd861a7c6",
+    "cohort_top.json": "6a1c8f1759bfb97ef58253ce17596c0dfb5dd989723c111c39bb18b493c57a3c",
+    "suspensions.json": "0d7d273697fdccda99e234302a60a6d5b1ac133941f0f18a30347db774ded561",
+    "corporate_actions.json": "73f4a9c2e082f27075da0e3c7e3e7d3c88efb249f323ce09f3a4274886fc9758",
+    "free_float.json": "d546936f3ffe6dd709e8ca079d09c70cb1f159f5831adc5ed8100d7771f47e1a"
+  }
 }

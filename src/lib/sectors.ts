@@ -510,8 +510,11 @@ export const api = {
   brokersTop: (p?: { date?: string; metric?: string; origin?: string; cohort?: string }) =>
     sectorsGet<BrokersTopResponse>("/v2/brokers/top/", p as Record<string, string | number> | undefined),
   mostTraded: () => sectorsGet<MostTradedResponse>("/v2/most-traded/"),
-  brokerSummaryTop: (symbol: string) =>
-    sectorsGet<BrokerSummaryTopResponse>(`/v2/broker-summary/${encodeURIComponent(symbol)}/top/`),
+  brokerSummaryTop: (symbol: string, p?: { cohort?: "retail" | "institutional" }) =>
+    sectorsGet<BrokerSummaryTopResponse>(
+      `/v2/broker-summary/${encodeURIComponent(symbol)}/top/`,
+      p as Record<string, string> | undefined,
+    ),
   quarterlyFinancialDates: (p?: { limit?: number; offset?: number; since?: string }) =>
     sectorsGet<Page<QuarterlyDateRow>>("/v2/companies/quarterly-financial-dates/", p as Record<string, string | number> | undefined),
   quarterlyFinancials: (symbol: string) =>

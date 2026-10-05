@@ -1,82 +1,60 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Link from "next/link";
+import Script from "next/script";
 import "./globals.css";
 import { SearchBox } from "@/components/SearchBox";
 import MobileNav from "@/components/MobileNav";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "RADAR-X — Institutional & Insider Ownership Positioning IDX",
+  title: "RADAR-X — IDX Market Intelligence",
   description:
-    "A reproducible market-intelligence view of Indonesian equity disclosures, foreign flow disparity, institutional positioning, and measured historical outcomes.",
+    "A reproducible market-intelligence view of Indonesian equity disclosures: exit pressure, institutional positioning, reported ownership, and measured historical outcomes.",
 };
 
 const NAV = [
-  { href: "/", label: "Board", icon: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" },
-  { href: "/asing", label: "Foreign flow", icon: "M3 17l6-6 4 4 8-8M15 7h6v6" },
-  { href: "/rotasi", label: "Sectors", icon: "M3 12h4l3-8 4 16 3-8h4" },
-  { href: "/kasus", label: "Cases", icon: "M4 6h16M4 12h16M4 18h10" },
-  { href: "/metodologi", label: "Methodology", icon: "M12 8h.01M12 12v4m9-4a9 9 0 1 1-18 0 9 9 0 0 1 18 0" },
+  { href: "/", label: "Exit Watch" },
+  { href: "/broker", label: "Brokers" },
+  { href: "/asing", label: "Foreign flow" },
+  { href: "/rotasi", label: "Sectors" },
+  { href: "/kasus", label: "Cases" },
+  { href: "/metodologi", label: "Methodology" },
 ];
 
-function Sidebar() {
+// NAV-A: single top bar on desktop — logo, primary routes, search, theme.
+function TopNav() {
   return (
-    <aside className="fixed inset-y-0 left-0 z-20 hidden w-[200px] flex-col border-r border-line bg-panel md:flex">
-      <Link
-        href="/"
-        className="mono flex h-14 items-center gap-2 border-b border-line px-5 text-sm font-bold tracking-[0.2em]"
-      >
-        <span className="inline-block h-2 w-2 rounded-full bg-acc" />
-        RADAR<span className="acc">-X</span>
-      </Link>
-      <nav className="flex-1 space-y-0.5 p-3">
-        {NAV.map((n) => (
-          <Link
-            key={n.href}
-            href={n.href}
-            className="dim flex items-center gap-3 rounded-md px-3 py-2 text-[13px] hover:text-ink"
-          >
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d={n.icon} />
-            </svg>
-            {n.label}
-          </Link>
-        ))}
-      </nav>
-      <div className="border-t border-line p-4">
-        <p className="text-[10px] leading-relaxed faint">Sectors data · IDX disclosures · EOD</p>
+    <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
+      <div className="flex h-14 items-center gap-4 px-4 md:gap-6 md:px-8">
+        <Link href="/" className="mono flex items-center gap-2 text-sm font-semibold tracking-[0.18em]">
+          <span className="inline-block h-2 w-2 rounded-full bg-acc" />
+          RADAR<span className="acc">-X</span>
+        </Link>
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+          {NAV.map((n) => (
+            <Link key={n.href} href={n.href} className="dim rounded-md px-3 py-1.5 text-[13px] hover:bg-panel-2 hover:text-ink">
+              {n.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="ml-auto flex items-center gap-3">
+          <SearchBox />
+          <ThemeToggle />
+        </div>
       </div>
-    </aside>
-  );
-}
-
-function Topbar() {
-  return (
-    <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b border-line bg-bg/90 px-4 backdrop-blur md:px-8">
-      <Link href="/" className="mono text-sm font-bold tracking-[0.2em] md:hidden">
-        RADAR<span className="acc">-X</span>
-      </Link>
-      <SearchBox />
-      <div className="ml-auto hidden text-[10px] faint sm:block">End-of-day data · research only</div>
     </header>
   );
 }
@@ -96,15 +74,15 @@ function Footer() {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full">
-        <Sidebar />
-        <div className="flex min-h-screen w-full flex-col md:pl-[200px]">
-          <Topbar />
-          <MobileNav />
-          <main className="w-full flex-1 px-4 py-6 md:px-8">{children}</main>
-          <Footer />
-        </div>
+    <html lang="en" className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="flex min-h-full flex-col">
+        <Script id="radarx-theme-init" strategy="beforeInteractive">
+          {`try{var t=localStorage.getItem("radarx-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}`}
+        </Script>
+        <TopNav />
+        <MobileNav />
+        <main className="w-full flex-1 px-4 py-6 md:px-8">{children}</main>
+        <Footer />
       </body>
     </html>
   );

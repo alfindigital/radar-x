@@ -32,6 +32,7 @@ export interface SymbolData {
   broker: BrokerSummaryRow[];
   holders: HoldersMonthly[];
   instBrokers: Set<string>; // broker codes tagged institutional cohort
+  retailBrokers: Set<string>; // broker codes tagged retail cohort
 }
 
 export interface RawComponents {

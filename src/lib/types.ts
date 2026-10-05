@@ -242,3 +242,118 @@ export interface Ticker {
   name: string;
   subSector: string | null;
 }
+
+// ── RADAR-X v3 — Exit Watch feed types (envelope data/*.json) ────────────────
+
+export type BrokerCohort = "retail" | "institutional" | "mixed" | "unknown";
+
+export interface FeedMeta {
+  path: string;
+  sha256: string;
+  asOf: string | null;
+  generatedAt: string | null;
+  rows: number;
+}
+
+export interface Feed<T> {
+  meta: FeedMeta;
+  data: T;
+}
+
+export interface RegistryRow {
+  code: string;
+  name: string;
+  is_foreign: boolean;
+  cohort: BrokerCohort;
+  license_type?: string;
+}
+
+export interface SuspensionRow {
+  symbol: string;
+  suspension_date: string;
+  reason?: string;
+  pdf_url?: string;
+}
+
+export interface CorpActionRow {
+  symbol: string;
+  type: string; // dividend | upcoming_dividend | bonus | right_issue | stock_split | warrant | agm
+  date: string | null; // best per-type date (ex_date > date > agm_date > trading_period_start > recording_date)
+  raw: Record<string, unknown>;
+}
+
+export interface BrokerTopEntry {
+  rank: number;
+  broker_code: string;
+  net_idr?: number;
+  buy_idr?: number;
+  sell_idr?: number;
+  foreign_net_idr?: number;
+}
+
+export interface BrokerTopSymbol {
+  start: string;
+  end: string;
+  topBuyers: BrokerTopEntry[];
+  topSellers: BrokerTopEntry[];
+}
+
+export interface BrokersTopSession {
+  date: string;
+  metric?: string;
+  origin?: string;
+  cohort?: string;
+  foreign?: boolean;
+  results: { rank: number; broker_code: string; gross?: number; net?: number; foreign_gross?: number; foreign_net?: number }[];
+}
+
+/** Per-cohort top-N precision overlay — data/cohort_top.json (TASK-11). */
+export interface CohortTopSide {
+  start: string;
+  end: string;
+  top_buyers?: BrokerTopEntry[];
+  top_sellers?: BrokerTopEntry[];
+}
+
+export interface CohortTopSymbol {
+  retail?: CohortTopSide;
+  institutional?: CohortTopSide;
+}
+
+// ── Exit Watch engine ────────────────────────────────────────────────────────
+
+export type ExitComponentKey = "instExit" | "foreignExit" | "insiderExit" | "retailAbsorb";
+
+export interface ExitComponent {
+  key: ExitComponentKey;
+  weight: number;
+  raw: number | null;      // exit/absorption pressure, positive = more pressure
+  z: number | null;        // robust cross-sectional z
+  contribution: number;    // clamp(z,-3,3)/3 * weight * 100
+  status: "available" | "missing";
+  reason: string | null;
+  observations: number;
+  observedFrom: string | null;
+  observedTo: string | null;
+}
+
+export interface ExitFlags {
+  suspension_recent: boolean;
+  corp_action_near: boolean;
+  float_constraint: boolean;
+  sparse_broker: boolean;
+}
+
+export interface ExitWatchRow {
+  symbol: string;
+  score: number | null; // 0-100 exit pressure; null when coverage < floor
+  tier: "high" | "elevated" | "watch" | "low" | null;
+  coverage: number;     // sum of available weights / total weights
+  components: ExitComponent[];
+  flags: ExitFlags;
+  /** Daily paired net flow (IDR) per cohort over the window — from labeled
+   * broker_rows only; empty when only aggregate top-N feeds exist. */
+  series: { date: string; instNet: number; retailNet: number }[];
+  window: { days: number; from: string | null; to: string };
+  asOf: string;
+}

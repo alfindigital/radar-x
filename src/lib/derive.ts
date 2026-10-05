@@ -2,9 +2,21 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { detectCandidates } from "./cases";
+import { cachedFileLoad } from "./filecache";
+import { computeExitWatch, type ExitWatchInput } from "./exitwatch";
 import { measureOutcome } from "./outcomes";
 import { computeScoresV2, type SymbolData } from "./score";
-import type { Candidate, MeasuredOutcome, ScoreV2, Snapshot } from "./types";
+import type {
+  BrokerTopSymbol,
+  Candidate,
+  CohortTopSymbol,
+  CorpActionRow,
+  ExitWatchRow,
+  MeasuredOutcome,
+  ScoreV2,
+  Snapshot,
+  SuspensionRow,
+} from "./types";
 
 const BENCH = "^IHSG";
 const HORIZONS = [7, 30, 60] as const;
@@ -12,9 +24,36 @@ const HORIZONS = [7, 30, 60] as const;
 export type DerivedCase = Candidate & { outcomes: MeasuredOutcome[] };
 
 export interface DerivedFileMeta {
-  path: "scores.json" | "cases.json";
+  path: "scores.json" | "cases.json" | "exitwatch.json";
   sha256?: string;
   rows: number;
+  engineVersion?: "radarx-v2" | "radarx-v3";
+}
+
+/** Feeds consumed by the v3 exit engine — loaded by the caller (async fs). */
+export interface ExitFeeds {
+  brokerTop: Map<string, BrokerTopSymbol> | null;
+  cohortTop: Map<string, CohortTopSymbol> | null;
+  freeFloat: Map<string, number> | null;
+  suspensionsBySymbol: Map<string, SuspensionRow[]> | null;
+  corpActionsBySymbol: Map<string, CorpActionRow[]> | null;
+  /** sha256 per feed file actually consumed — folded into inputHash. */
+  feedHashes: Record<string, string>;
+}
+
+export const NO_FEEDS: ExitFeeds = {
+  brokerTop: null,
+  cohortTop: null,
+  freeFloat: null,
+  suspensionsBySymbol: null,
+  corpActionsBySymbol: null,
+  feedHashes: {},
+};
+
+export function indexBySymbol<T extends { symbol: string }>(rows: T[]): Map<string, T[]> {
+  const map = new Map<string, T[]>();
+  for (const row of rows) (map.get(row.symbol) ?? map.set(row.symbol, []).get(row.symbol)!).push(row);
+  return map;
 }
 
 export interface DerivedManifest {
@@ -25,11 +64,14 @@ export interface DerivedManifest {
   generatedAt: string;
   files: DerivedFileMeta[];
   limitations: string[];
+  /** sha256 of each feed file consumed by the v3 engine (when present). */
+  feedHashes?: Record<string, string>;
 }
 
 export interface DerivedSnapshot {
   scores: ScoreV2[];
   cases: DerivedCase[];
+  exitWatch: ExitWatchRow[];
   manifest: DerivedManifest;
 }
 
@@ -43,7 +85,22 @@ function rowsFor<T extends { symbol: string }>(rows: T[], symbol: string): T[] {
   return rows.filter((row) => row.symbol === symbol);
 }
 
-function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string): SymbolData {
+export interface BrokerCohorts {
+  instBrokers: Set<string>;
+  retailBrokers: Set<string>;
+}
+
+export const EMPTY_COHORTS: BrokerCohorts = { instBrokers: new Set(), retailBrokers: new Set() };
+
+/** Build cohort sets from broker_registry rows (cohort: institutional|retail|mixed|unknown). */
+export function cohortsFromRegistry(rows: { code: string; cohort: string }[]): BrokerCohorts {
+  return {
+    instBrokers: new Set(rows.filter((r) => r.cohort === "institutional").map((r) => r.code)),
+    retailBrokers: new Set(rows.filter((r) => r.cohort === "retail").map((r) => r.code)),
+  };
+}
+
+function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string, cohorts: BrokerCohorts): SymbolData {
   return {
     symbol,
     insider: rowsFor(snapshot.insider, symbol).filter((row) => row.txnDate <= asOf),
@@ -51,11 +108,17 @@ function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string): Symb
     price: rowsFor(snapshot.price, symbol).filter((row) => row.date <= asOf),
     broker: rowsFor(snapshot.broker, symbol).filter((row) => row.date <= asOf),
     holders: rowsFor(snapshot.holders, symbol).filter((row) => row.month <= asOf),
-    instBrokers: new Set(),
+    instBrokers: cohorts.instBrokers,
+    retailBrokers: cohorts.retailBrokers,
   };
 }
 
-export function buildDerived(snapshot: Snapshot, asOf: string): DerivedSnapshot {
+export function buildDerived(
+  snapshot: Snapshot,
+  asOf: string,
+  cohorts: BrokerCohorts = EMPTY_COHORTS,
+  feeds: ExitFeeds = NO_FEEDS,
+): DerivedSnapshot {
   assertAsOf(asOf);
   const symbols = new Set<string>([
     ...snapshot.tickers.map((row) => row.symbol),
@@ -66,7 +129,7 @@ export function buildDerived(snapshot: Snapshot, asOf: string): DerivedSnapshot 
     ...snapshot.holders.map((row) => row.symbol),
   ]);
   symbols.delete(BENCH);
-  const data = [...symbols].sort().map((symbol) => buildSymbolData(snapshot, symbol, asOf));
+  const data = [...symbols].sort().map((symbol) => buildSymbolData(snapshot, symbol, asOf, cohorts));
   const scores = computeScoresV2(data, asOf);
   const benchmark = snapshot.price.filter((row) => row.symbol === BENCH && row.date <= asOf);
   const cases: DerivedCase[] = [];
@@ -84,9 +147,21 @@ export function buildDerived(snapshot: Snapshot, asOf: string): DerivedSnapshot 
     }
   }
   cases.sort((a, b) => a.id.localeCompare(b.id));
+
+  const exitInputs: ExitWatchInput[] = data.map((d) => ({
+    d,
+    brokerTop: feeds.brokerTop?.get(d.symbol) ?? null,
+    cohortTop: feeds.cohortTop?.get(d.symbol) ?? null,
+    freeFloat: feeds.freeFloat?.get(d.symbol) ?? null,
+    suspensions: feeds.suspensionsBySymbol?.get(d.symbol) ?? [],
+    corpActions: feeds.corpActionsBySymbol?.get(d.symbol) ?? [],
+  }));
+  const exitWatch = computeExitWatch(exitInputs, asOf);
+
   return {
     scores,
     cases,
+    exitWatch,
     manifest: {
       schemaVersion: 2,
       engineVersion: "radarx-v2",
@@ -94,13 +169,16 @@ export function buildDerived(snapshot: Snapshot, asOf: string): DerivedSnapshot 
       inputHash: snapshot.manifest.inputHash,
       generatedAt: new Date().toISOString(),
       files: [
-        { path: "scores.json", rows: scores.length },
+        { path: "scores.json", rows: scores.length, engineVersion: "radarx-v2" },
         { path: "cases.json", rows: cases.length },
+        { path: "exitwatch.json", rows: exitWatch.length, engineVersion: "radarx-v3" },
       ],
       limitations: [
         "Derived analytics use the immutable local Sectors snapshot and do not call an upstream provider.",
         "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete.",
+        "Exit Watch is a bounded pressure reading over labeled broker cohorts — not proof of intent; missing components lower coverage instead of scoring zero.",
       ],
+      feedHashes: feeds.feedHashes,
     },
   };
 }
@@ -110,14 +188,30 @@ function digest(bytes: Buffer): string {
 }
 
 export async function loadDerived(dataDir = path.join(process.cwd(), "data", "derived-v2")): Promise<DerivedSnapshot> {
+  return cachedFileLoad(dataDir, ["manifest.json", "scores.json", "cases.json", "exitwatch.json"], () =>
+    loadDerivedUncached(dataDir),
+  );
+}
+
+async function loadDerivedUncached(dataDir: string): Promise<DerivedSnapshot> {
   const manifest = JSON.parse(await readFile(path.join(dataDir, "manifest.json"), "utf8")) as DerivedManifest;
   if (manifest.schemaVersion !== 2 || manifest.engineVersion !== "radarx-v2") throw new Error("derived manifest version is unsupported");
-  const content = {} as { scores: ScoreV2[]; cases: DerivedCase[] };
-  for (const file of ["scores.json", "cases.json"] as const) {
-    const bytes = await readFile(path.join(/*turbopackIgnore: true*/ dataDir, file));
+  const content = {} as { scores: ScoreV2[]; cases: DerivedCase[]; exitWatch: ExitWatchRow[] };
+  for (const file of ["scores.json", "cases.json", "exitwatch.json"] as const) {
+    let bytes: Buffer;
+    try {
+      bytes = await readFile(path.join(/*turbopackIgnore: true*/ dataDir, file));
+    } catch {
+      if (file === "exitwatch.json") {
+        content.exitWatch = [];
+        continue;
+      }
+      throw new Error(`missing derived artifact: ${file}`);
+    }
     const meta = manifest.files.find((item) => item.path === file);
     if (!meta || (meta.sha256 && meta.sha256 !== digest(bytes))) throw new Error(`derived ${file} hash mismatch`);
-    content[file.slice(0, -5) as "scores" | "cases"] = JSON.parse(bytes.toString("utf8"));
+    if (file === "exitwatch.json") content.exitWatch = JSON.parse(bytes.toString("utf8"));
+    else content[file.slice(0, -5) as "scores" | "cases"] = JSON.parse(bytes.toString("utf8"));
   }
   return { ...content, manifest };
 }

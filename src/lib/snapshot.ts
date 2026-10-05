@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { cachedFileLoad } from "./filecache";
 import type {
   BrokerSummaryRow,
   CaseRecord,
@@ -88,6 +89,10 @@ function normalizePriceRow(row: PriceDaily): PriceDaily {
 }
 
 export async function loadSnapshot(dataDir = DEFAULT_DATA_DIR): Promise<Snapshot> {
+  return cachedFileLoad(dataDir, DATA_FILES.map(([file]) => file), () => loadSnapshotUncached(dataDir));
+}
+
+async function loadSnapshotUncached(dataDir: string): Promise<Snapshot> {
   const raw = new Map<string, { rows: Record<string, unknown>[]; bytes: Buffer }>();
   for (const [file] of DATA_FILES) {
     let bytes: Buffer;

@@ -23,6 +23,7 @@ function symbolData(symbol: string, overrides: Partial<SymbolData> = {}): Symbol
     broker: [],
     holders: [],
     instBrokers: new Set(),
+    retailBrokers: new Set(),
     ...overrides,
   };
 }

@@ -6,6 +6,9 @@ import TimelineChart from "@/components/TimelineChart";
 import TradesTable from "@/components/TradesTable";
 import { CaseRow, ScoreBreakdown, ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
 import { fmtCurrency, fmtNum, fmtShares } from "@/components/fmt";
+import { ExitPressureBadge } from "@/components/ExitPressureBadge";
+import { FlagChips } from "@/components/FlagChips";
+import { CohortNetChart } from "@/components/CohortNetChart";
 import type { HoldersMonthly } from "@/lib/types";
 import type { IssuerOwnership } from "@/lib/ownership";
 import DataStatus from "@/components/DataStatus";
@@ -298,6 +301,76 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
           sub={d.freeFloat != null && d.freeFloat < 0.25 ? "low float — thin public liquidity" : undefined}
         />
       </div>
+
+      {d.exit && (
+        <section className="panel space-y-4 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="section-label">Exit Watch</h2>
+              <div className="mt-2 flex items-center gap-3">
+                <ExitPressureBadge score={d.exit.score} coverage={d.exit.coverage} />
+                <span className="faint text-[11px]">
+                  {d.exit.window.days}-day window {d.exit.window.from ?? "—"} → {d.exit.window.to} · coverage {d.exit.coverage.toFixed(2)}
+                </span>
+              </div>
+            </div>
+            <FlagChips flags={d.exit.flags} />
+          </div>
+
+          <div>
+            <h3 className="mb-1 text-[10px] font-semibold uppercase tracking-widest faint">
+              Cohort net flow ({d.exit.series.length} sessions)
+            </h3>
+            <CohortNetChart days={d.exit.series} />
+          </div>
+
+          <div>
+            <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Components</h3>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {d.exit.components.map((c) => (
+                <div key={c.key} className="rounded-md border border-line p-2">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-[10px] uppercase tracking-wider faint">{c.key}</span>
+                    <span className="mono text-[11px]">
+                      {c.status === "available" && c.raw !== null ? `${c.raw > 0 ? "+" : ""}${c.raw.toFixed(3)}% cap` : "—"}
+                    </span>
+                  </div>
+                  <div className="mt-1 text-[10px] dim">
+                    {c.status === "available"
+                      ? `z ${c.z !== null && c.z >= 0 ? "+" : ""}${c.z?.toFixed(2)} · ${c.observations} obs`
+                      : (c.reason ?? "No usable evidence")}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {(d.suspensions.length > 0 || d.corpActions.length > 0) && (
+            <div className="border-t border-line pt-3">
+              <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">Context</h3>
+              <ul className="space-y-1 text-xs dim">
+                {d.suspensions.slice(0, 3).map((s, i) => (
+                  <li key={`s${i}`}>
+                    <span className="tag tag-watch">SUSP</span> <span className="mono">{s.suspension_date}</span>{" "}
+                    {s.reason ?? "suspension"}{" "}
+                    {s.pdf_url && (
+                      <a href={s.pdf_url} target="_blank" rel="noreferrer" className="blue text-[10px]">
+                        source ↗
+                      </a>
+                    )}
+                  </li>
+                ))}
+                {d.corpActions.slice(0, 5).map((c, i) => (
+                  <li key={`c${i}`}>
+                    <span className="tag">{c.type.replace(/_/g, " ").toUpperCase()}</span>{" "}
+                    <span className="mono">{c.date ?? "date TBD"}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
 
       <div className="grid gap-8 lg:grid-cols-2">
         <section>

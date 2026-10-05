@@ -979,6 +979,68 @@ async function ingestCorpActions() {
   });
 }
 
+// broker-summary/{s}/top?cohort= — per-cohort top buyers/sellers (precision
+// overlay for Exit Watch). Two calls per symbol (retail + institutional).
+// Default targets: highest exit-pressure publishable symbols from
+// data/derived-v2/exitwatch.json. --symbols=A,B overrides; --limit N caps.
+async function ingestCohortTop() {
+  const target = path.join(process.cwd(), "data", "cohort_top.json");
+  const art = {
+    schemaVersion: 1, engineVersion: "radarx-v3" as const, source: "sectors" as const,
+    asOf: null as string | null, generatedAt: "", creditsEst: 0,
+    data: {} as Record<string, unknown>, misses: [] as string[],
+  };
+  try { Object.assign(art, JSON.parse(readFileSync(target, "utf8"))); } catch { /* first run */ }
+
+  let symbols: string[];
+  const explicit = flag("symbols");
+  if (explicit) {
+    symbols = explicit.split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
+  } else {
+    try {
+      const rows = JSON.parse(readFileSync(path.join(process.cwd(), "data", "derived-v2", "exitwatch.json"), "utf8")) as { symbol: string; score: number | null }[];
+      symbols = rows.filter((r) => r.score !== null).sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).map((r) => r.symbol);
+    } catch {
+      console.warn("exitwatch.json missing — falling back to watchlist order");
+      symbols = await watchlist();
+    }
+  }
+  const limit = Number(flag("limit", "30")) || 30;
+  const onlyMissing = args.includes("--only-missing");
+  const targets = symbols.filter((s) => !onlyMissing || !(s in art.data)).slice(0, limit);
+
+  let calls = 0;
+  const now = new Date().toISOString();
+  for (let i = 0; i < targets.length; i++) {
+    const sym = targets[i];
+    try {
+      const retail = await api.brokerSummaryTop(sym, { cohort: "retail" });
+      const institutional = await api.brokerSummaryTop(sym, { cohort: "institutional" });
+      calls += 2;
+      // Refuse to store silently if the API ignored the cohort filter.
+      if (retail.cohort && retail.cohort !== "retail") throw new Error(`cohort echo mismatch: ${retail.cohort}`);
+      if (institutional.cohort && institutional.cohort !== "institutional") throw new Error(`cohort echo mismatch: ${institutional.cohort}`);
+      art.data[sym] = {
+        retail: { start: retail.start, end: retail.end, top_buyers: retail.top_buyers ?? [], top_sellers: retail.top_sellers ?? [] },
+        institutional: { start: institutional.start, end: institutional.end, top_buyers: institutional.top_buyers ?? [], top_sellers: institutional.top_sellers ?? [] },
+      };
+      const mi = art.misses.indexOf(sym);
+      if (mi >= 0) art.misses.splice(mi, 1);
+    } catch (e) {
+      calls++;
+      if (!art.misses.includes(sym)) art.misses.push(sym);
+      console.warn(`cohorttop ${sym}: ${e instanceof Error ? e.message : e}`);
+    }
+    if ((i + 1) % 10 === 0 || i === targets.length - 1) {
+      console.log(`cohorttop: ${i + 1}/${targets.length} (${calls} calls)`);
+      art.asOf = now.slice(0, 10); art.generatedAt = now; art.creditsEst = calls;
+      await writeFile(target, JSON.stringify(art));
+    }
+  }
+  await store.log("ingest_cohorttop", calls, targets.length, "ok");
+  console.log(`cohorttop: ${targets.length} symbols, ${Object.keys(art.data).length} covered, ${art.misses.length} misses (${calls} calls)`);
+}
+
 // get-segments — only emiten flagged by list_companies_with_segments (the list
 // endpoint returns a symbol→years dict, not a paginated list).
 async function ingestSegments() {
@@ -1003,6 +1065,7 @@ const commands: Record<string, () => Promise<void>> = {
   index: ingestIndex,
   extras: ingestExtras,
   brokertop: ingestBrokerTop,
+  cohorttop: ingestCohortTop,
   financials: ingestFinancials,
   corpactions: ingestCorpActions,
   segments: ingestSegments,

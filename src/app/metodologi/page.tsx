@@ -51,11 +51,40 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
       </section>
 
       <section className="panel space-y-3 p-5">
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Exit Watch (v3, 0–100)</h2>
+        <p className="dim">
+          Exit Watch is a bounded reading of observed exit-side pressure: which investor cohorts appear to be leaving a
+          name, and which may be absorbing that flow. It combines four robust cross-sectional components, each normalized
+          by the issuer's observed market cap:
+        </p>
+        <ul className="dim list-inside list-disc space-y-1 text-xs">
+          <li><span className="mono">instExit · 30%</span> — net flow of brokers classified <em>institutional</em> in the broker registry (14-day window). Precision overlays from per-cohort top-broker feeds are preferred when present.</li>
+          <li><span className="mono">foreignExit · 25%</span> — net foreign flow over the same window.</li>
+          <li><span className="mono">insiderExit · 25%</span> — reported insider sell value over 90 days.</li>
+          <li><span className="mono">retailAbsorb · 20%</span> — net flow of brokers classified <em>retail</em> (inverted: retail net buying raises the reading as absorption of exit supply).</li>
+        </ul>
+        <p className="dim">
+          Each component is a clipped robust z-score (±3σ) across the scored universe. The score publishes only when at
+          least half of the component weight has usable evidence — otherwise the issuer is listed as{" "}
+          <em>suppressed / low coverage</em>, never scored zero. Missing components are shown with their reason.
+        </p>
+        <p className="dim">
+          Broker cohort labels come from the broker registry. Of 88 classified firms, 42 are <em>mixed</em> and 2{" "}
+          <em>unknown</em> — they are not counted as either side, so the cohort view is a labeled subset, not a census.
+          Flags (<span className="mono">SUSP ≤14D</span>, <span className="mono">CA ±7D</span>,{" "}
+          <span className="mono">FF&lt;20%</span>, <span className="mono">SPARSE</span>) mark context that can distort the
+          reading; they annotate, they do not change the score.
+        </p>
+      </section>
+
+      <section className="panel space-y-3 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Data lineage and coverage</h2>
         <p className="dim">
-          The public app reads a hash-verified local Sectors snapshot and generated v2 artifacts. The snapshot includes
+          The public app reads a hash-verified local Sectors snapshot and generated artifacts. The snapshot includes
           parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, a benchmark-observed IHSG
-          series, and a saved subsector-aggregate artifact used by the sector rotation board.
+          series, and a saved subsector-aggregate artifact used by the sector rotation board. v3 Exit Watch additionally
+          consumes the broker registry, per-issuer top-broker feeds, suspensions, corporate actions, and free-float feeds —
+          each hashed into the derived manifest (<span className="mono">feedHashes</span>).
           Retrieval times and historical publication availability are not verified for legacy rows. Ambiguous flat-OHLC or zero-volume
           observations are marked <span className="mono">legacy-unknown</span>.
         </p>

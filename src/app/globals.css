@@ -1,33 +1,93 @@
 @import "tailwindcss";
 
-@theme {
-  --color-bg: #0a0d10;
-  --color-panel: #10151a;
-  --color-panel-2: #151c22;
-  --color-line: #1b232c;
-  --color-line-2: #242f3a;
-  --color-ink: #e8ecf1;
-  --color-ink-dim: #97a3b2;
-  --color-ink-faint: #8190a0;
-  --color-acc: #34d399;
-  --color-dist: #f87171;
-  --color-watch: #fbbf24;
-  --color-sky: #60a5fa;
+/*
+ * RADAR-X v3 — PK1 "Research balanced" · World A: Evidence Desk.
+ * Dual theme: system default, explicit [data-theme] override wins.
+ * Semantic tokens only — color never carries buy/sell meaning on its own.
+ */
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-faint: var(--ink-faint);
+  --color-acc: var(--acc);
+  --color-acc-soft: var(--acc-soft);
+  --color-on-acc: var(--on-acc);
+  --color-dist: var(--dist);
+  --color-watch: var(--watch);
+  --color-sky: var(--sky);
+  --color-cohort-inst: var(--cohort-inst);
+  --color-cohort-retail: var(--cohort-retail);
 }
 
+/* Light theme (default) — Evidence Desk palette */
 :root {
-  --bg: #0a0d10;
-  --panel: #10151a;
-  --panel-2: #151c22;
-  --line: #1b232c;
-  --line-2: #242f3a;
-  --ink: #e8ecf1;
-  --ink-dim: #97a3b2;
-  --ink-faint: #8190a0;
-  --acc: #34d399;
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --panel-2: #e8eef6;
+  --line: #cdd7e4;
+  --line-2: #74869c;
+  --ink: #142132;
+  --ink-dim: #536174;
+  --ink-faint: #74869c;
+  --acc: #2458a6; /* cobalt — action/identity, NOT "safe/buy" */
+  --acc-soft: #e2ecfb;
+  --on-acc: #ffffff;
+  --dist: #b3382e; /* elevated exit pressure — semantic warning */
+  --watch: #b45309;
+  --sky: #1d4ed8;
+  --cohort-inst: #1d4ed8; /* EC2: institutional blue */
+  --cohort-retail: #92400e; /* EC2: retail ochre */
+  color-scheme: light;
+}
+
+/* Dark theme — system preference when no explicit choice stored */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101720;
+    --panel: #18222f;
+    --panel-2: #202e3e;
+    --line: #34475e;
+    --line-2: #657d99;
+    --ink: #edf3fa;
+    --ink-dim: #aab8c9;
+    --ink-faint: #657d99;
+    --acc: #9bc2ff;
+    --acc-soft: #223b5c;
+    --on-acc: #10223a;
+    --dist: #f87171;
+    --watch: #fbbf24;
+    --sky: #93c5fd;
+    --cohort-inst: #93c5fd;
+    --cohort-retail: #fdba74;
+    color-scheme: dark;
+  }
+}
+
+/* Explicit dark choice */
+[data-theme="dark"] {
+  --bg: #101720;
+  --panel: #18222f;
+  --panel-2: #202e3e;
+  --line: #34475e;
+  --line-2: #657d99;
+  --ink: #edf3fa;
+  --ink-dim: #aab8c9;
+  --ink-faint: #657d99;
+  --acc: #9bc2ff;
+  --acc-soft: #223b5c;
+  --on-acc: #10223a;
   --dist: #f87171;
   --watch: #fbbf24;
-  --sky: #60a5fa;
+  --sky: #93c5fd;
+  --cohort-inst: #93c5fd;
+  --cohort-retail: #fdba74;
+  color-scheme: dark;
 }
 
 html {
@@ -37,8 +97,8 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
-  font-feature-settings: "ss01", "cv11";
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  font-size: 15px;
   overflow-x: hidden;
 }
 
@@ -51,7 +111,7 @@ summary:focus-visible {
 }
 
 .mono {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -72,6 +132,12 @@ summary:focus-visible {
 }
 .blue {
   color: var(--sky);
+}
+.cohort-inst {
+  color: var(--cohort-inst);
+}
+.cohort-retail {
+  color: var(--cohort-retail);
 }
 
 .tag {
@@ -132,6 +198,26 @@ a:hover {
 
 ::selection {
   background: color-mix(in srgb, var(--sky) 30%, transparent);
+}
+
+/* M2 — state transitions 140–220ms; reduced-motion kills them entirely */
+a,
+button,
+.tag {
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 ::-webkit-scrollbar {

@@ -10,3 +10,6 @@ import "./compute.test";
 import "./flow.test";
 import "./format.test";
 import "./chart-geometry.test";
+import "./feeds.test";
+import "./broker-cohort.test";
+import "./exitwatch.test";

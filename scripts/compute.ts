@@ -1,8 +1,18 @@
 import { createHash } from "node:crypto";
-import { mkdir, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildDerived, type DerivedSnapshot } from "../src/lib/derive";
+import {
+  buildDerived,
+  cohortsFromRegistry,
+  EMPTY_COHORTS,
+  indexBySymbol,
+  NO_FEEDS,
+  type DerivedSnapshot,
+  type ExitFeeds,
+} from "../src/lib/derive";
+import { loadBrokerTop, loadCohortTop, loadCorpActions, loadRegistry, loadSuspensions } from "../src/lib/feeds";
+import { loadFreeFloat } from "../src/lib/ownership";
 import { loadSnapshot } from "../src/lib/snapshot";
 
 export interface ComputeArgs {
@@ -55,12 +65,15 @@ export async function writeDerived(outputDir: string, derived: DerivedSnapshot):
   await mkdir(resolved, { recursive: true });
   const scoresBytes = Buffer.from(`${JSON.stringify(derived.scores, null, 2)}\n`, "utf8");
   const casesBytes = Buffer.from(`${JSON.stringify(derived.cases, null, 2)}\n`, "utf8");
+  const exitBytes = Buffer.from(`${JSON.stringify(derived.exitWatch, null, 2)}\n`, "utf8");
   const files = [
-    { path: "scores.json" as const, rows: derived.scores.length, sha256: hash(scoresBytes) },
+    { path: "scores.json" as const, rows: derived.scores.length, sha256: hash(scoresBytes), engineVersion: "radarx-v2" as const },
     { path: "cases.json" as const, rows: derived.cases.length, sha256: hash(casesBytes) },
+    { path: "exitwatch.json" as const, rows: derived.exitWatch.length, sha256: hash(exitBytes), engineVersion: "radarx-v3" as const },
   ];
   await writeAtomic(path.join(resolved, "scores.json"), scoresBytes);
   await writeAtomic(path.join(resolved, "cases.json"), casesBytes);
+  await writeAtomic(path.join(resolved, "exitwatch.json"), exitBytes);
   const manifestBytes = Buffer.from(`${JSON.stringify({ ...derived.manifest, files }, null, 2)}\n`, "utf8");
   await writeAtomic(path.join(resolved, "manifest.json"), manifestBytes);
 }
@@ -68,12 +81,53 @@ export async function writeDerived(outputDir: string, derived: DerivedSnapshot):
 export async function main(argv = process.argv.slice(2)): Promise<void> {
   const args = parseArgs(argv);
   const snapshot = await loadSnapshot();
-  const derived = buildDerived(snapshot, args.asOf);
+  const registry = await loadRegistry();
+  const cohorts = registry
+    ? cohortsFromRegistry(registry.data)
+    : EMPTY_COHORTS;
+  if (!registry) console.warn("broker_registry.json missing — cohort components fall back to foreign proxy");
+
+  const [brokerTop, cohortTop, suspensions, corpActions, freeFloat] = await Promise.all([
+    loadBrokerTop(),
+    loadCohortTop(),
+    loadSuspensions(),
+    loadCorpActions(),
+    loadFreeFloat(),
+  ]);
+  const feedHashes: Record<string, string> = {};
+  for (const name of ["broker_registry.json", "broker_top.json", "cohort_top.json", "suspensions.json", "corporate_actions.json", "free_float.json"]) {
+    try {
+      feedHashes[name] = hash(await readFile(path.join(process.cwd(), "data", name)));
+    } catch {
+      /* optional feed absent */
+    }
+  }
+  const feeds: ExitFeeds = {
+    ...NO_FEEDS,
+    brokerTop: brokerTop?.data ?? null,
+    cohortTop: cohortTop?.data ?? null,
+    suspensionsBySymbol: suspensions ? indexBySymbol(suspensions.data) : null,
+    corpActionsBySymbol: corpActions ? indexBySymbol(corpActions.data) : null,
+    freeFloat: freeFloat ? new Map(freeFloat.rows.map((r) => [r.symbol, r.freeFloat]).filter((e): e is [string, number] => e[1] !== null)) : null,
+    feedHashes,
+  };
+  for (const [name, feed] of [
+    ["broker_top", brokerTop],
+    ["suspensions", suspensions],
+    ["corporate_actions", corpActions],
+    ["free_float", freeFloat],
+  ] as const) {
+    if (!feed) console.warn(`${name}.json missing — related exit components will show as missing`);
+  }
+
+  const derived = buildDerived(snapshot, args.asOf, cohorts, feeds);
   await writeDerived(args.outputDir, derived);
   const scores = derived.scores.filter((row) => row.score !== null).length;
   const complete = derived.cases.flatMap((row) => row.outcomes).filter((outcome) => outcome.status === "complete").length;
   const pending = derived.cases.flatMap((row) => row.outcomes).filter((outcome) => outcome.status === "pending").length;
+  const publishable = derived.exitWatch.filter((row) => row.score !== null).length;
   console.log(`derived-v2 as-of ${args.asOf}: ${scores}/${derived.scores.length} scores, ${derived.cases.length} candidates, ${complete} complete outcomes, ${pending} pending outcomes`);
+  console.log(`exitwatch: ${publishable}/${derived.exitWatch.length} publishable (coverage>=0.5), feeds: ${Object.keys(feedHashes).join(",")}`);
 }
 
 const entry = process.argv[1] ? path.resolve(process.argv[1]) : "";

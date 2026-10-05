@@ -44,3 +44,6 @@ playwright-report
 blob-report
 
 .vercel
+
+# local vault helpers — never commit (machine paths + vault internals)
+scripts/store-secret.ps1
