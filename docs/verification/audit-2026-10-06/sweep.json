@@ -1,0 +1,398 @@
+[
+  {
+    "theme": "dark",
+    "name": "home",
+    "route": "/",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "suppressed",
+    "route": "/?scope=suppressed",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "radar-v2",
+    "route": "/?v=radar",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "broker",
+    "route": "/broker",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "broker-inst",
+    "route": "/broker?cohort=institutional",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "broker-detail",
+    "route": "/broker/XL",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "dossier",
+    "route": "/saham/ADRO",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "dossier-exit",
+    "route": "/saham/PNLF",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "kasus",
+    "route": "/kasus",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "asing",
+    "route": "/asing",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "rotasi",
+    "route": "/rotasi",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "name": "metodologi",
+    "route": "/metodologi",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "home",
+    "route": "/",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "suppressed",
+    "route": "/?scope=suppressed",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "radar-v2",
+    "route": "/?v=radar",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "broker",
+    "route": "/broker",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "broker-inst",
+    "route": "/broker?cohort=institutional",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "broker-detail",
+    "route": "/broker/XL",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "dossier",
+    "route": "/saham/ADRO",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "dossier-exit",
+    "route": "/saham/PNLF",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "kasus",
+    "route": "/kasus",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "asing",
+    "route": "/asing",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "rotasi",
+    "route": "/rotasi",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "name": "metodologi",
+    "route": "/metodologi",
+    "overflow": {
+      "scrollW": 1440,
+      "clientW": 1440,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "home",
+    "route": "/",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "suppressed",
+    "route": "/?scope=suppressed",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "radar-v2",
+    "route": "/?v=radar",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "broker",
+    "route": "/broker",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "broker-inst",
+    "route": "/broker?cohort=institutional",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "broker-detail",
+    "route": "/broker/XL",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "dossier",
+    "route": "/saham/ADRO",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "dossier-exit",
+    "route": "/saham/PNLF",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "kasus",
+    "route": "/kasus",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "asing",
+    "route": "/asing",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "rotasi",
+    "route": "/rotasi",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  },
+  {
+    "theme": "dark-mobile",
+    "name": "metodologi",
+    "route": "/metodologi",
+    "overflow": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": []
+    },
+    "errors": []
+  }
+]

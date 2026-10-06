@@ -1,0 +1,8 @@
+[
+  {
+    "theme": "dark",
+    "name": "negative-control",
+    "route": "/",
+    "error": "Error: page.goto: net::ERR_UNSAFE_PORT at http://127.0.0.1:1/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:1/\", waiting until \"load\"\u001b[22m\n"
+  }
+]

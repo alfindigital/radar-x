@@ -20,7 +20,7 @@ test("desktop research journey keeps negative distribution and source evidence",
 
   await page.goto("/?v=radar");
   await expect(page.getByRole("heading", { name: "Radar Board" })).toBeVisible();
-  await expect(page.getByText("Historical Sectors snapshot")).toBeVisible();
+  await expect(page.getByText(/market data through/)).toBeVisible();
 
   await page.getByRole("link", { name: "Distribution" }).click();
   await expect(page).toHaveURL(/f=negative/);
@@ -31,7 +31,7 @@ test("desktop research journey keeps negative distribution and source evidence",
   await rows.first().locator("a[href^='/saham/']").click();
   await expect(page).toHaveURL(/\/saham\//);
   await expect(page.getByText("Reported ownership transactions")).toBeVisible();
-  await expect(page.getByText("Historical Sectors snapshot")).toBeVisible();
+  await expect(page.getByText(/market data through/)).toBeVisible();
   const sourceLinks = page.locator("a[href^='http://'], a[href^='https://']");
   await expect(sourceLinks.first()).toBeVisible();
   expect(await sourceLinks.evaluateAll((links) => links.every((link) => /^https?:\/\//.test((link as HTMLAnchorElement).href)))).toBe(true);
@@ -48,7 +48,7 @@ test("case detail exposes separate outcome status and bounded evidence", async (
   await expect(firstCase).toBeVisible();
   await firstCase.click();
   await expect(page.getByText("Candidate pattern from reported transactions")).toBeVisible();
-  await expect(page.getByText(/Historical Sectors snapshot/)).toBeVisible();
+  await expect(page.getByText(/market data through/)).toBeVisible();
   expect(await page.getByText(/Pending|Unavailable/).count()).toBeGreaterThan(0);
   await expect(page.getByText("bounded window")).toBeVisible();
 });

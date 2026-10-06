@@ -42,7 +42,7 @@
   --line-2: #74879a;
   --ink: #111a24;
   --ink-dim: #44566b;
-  --ink-faint: #70839a;
+  --ink-faint: #54687c; /* ≥4.5:1 on --bg — info text, not decoration */
   --acc: #0a7a52; /* phosphor, darkened for AA on paper */
   --acc-soft: #dff2ea;
   --on-acc: #ffffff;
@@ -207,7 +207,10 @@ summary:focus-visible {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 12px;
   color: var(--ink-faint);
   border-bottom: 1px solid transparent;
   margin-bottom: -1px;

@@ -41,6 +41,23 @@ const flag = (name: string, def?: string) => {
   return i >= 0 ? args[i + 1] : def;
 };
 
+// Per-run outcome accounting. A run whose every call failed is a FAILED run —
+// logging "ok" after a total outage made production think dead keys were fine.
+const tally = { ok: 0, failed: 0 };
+function tallyReset() {
+  tally.ok = 0;
+  tally.failed = 0;
+}
+function tallyStatus(): "ok" | "partial" | "failed" {
+  if (tally.failed === 0) return "ok";
+  return tally.ok === 0 ? "failed" : "partial";
+}
+async function logRun(job: string, calls: number, rows: number): Promise<void> {
+  const status = tallyStatus();
+  await store.log(job, calls, rows, status);
+  if (status === "failed") process.exitCode = 1;
+}
+
 function monthChunks(months: number): { start: string; end: string }[] {
   const chunks: { start: string; end: string }[] = [];
   const now = new Date();
@@ -144,6 +161,7 @@ async function ingestFlows() {
   const wl = await missing("flow", (await watchlist()).slice(0, limit));
   let rows = 0;
   let calls = 0;
+  tallyReset();
   for (const sym of wl) {
     try {
       const res = await api.foreignFlowSymbol(sym);
@@ -156,12 +174,14 @@ async function ingestFlows() {
         foreignSellIdr: r.foreign_sell_idr,
       }));
       rows += await store.upsertFlowDaily(mapped);
+      tally.ok++;
     } catch (e) {
+      tally.failed++;
       console.warn(`flow ${sym}: ${e instanceof Error ? e.message : e}`);
     }
   }
-  await store.log("ingest_flows", calls, rows, "ok");
-  console.log(`flows: ${rows} rows over ${calls} calls (${wl.length} symbols)`);
+  await logRun("ingest_flows", calls, rows);
+  console.log(`flows: ${rows} rows over ${calls} calls (${wl.length} symbols, ${tally.failed} failed)`);
 }
 
 async function ingestPrices() {
@@ -169,6 +189,7 @@ async function ingestPrices() {
   const wl = await missing("price", (await watchlist()).slice(0, limit));
   let rows = 0;
   let calls = 0;
+  tallyReset();
   for (const sym of wl) {
     try {
       const start = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
@@ -183,14 +204,25 @@ async function ingestPrices() {
         close: r.close,
         volume: r.volume,
         marketCap: r.market_cap,
+        observationKind: "ohlcv" as const,
+        fieldSources: {
+          open: "sectors-daily" as const,
+          high: "sectors-daily" as const,
+          low: "sectors-daily" as const,
+          close: "sectors-daily" as const,
+          volume: "sectors-daily" as const,
+          marketCap: "sectors-daily" as const,
+        },
       }));
       rows += await store.upsertPriceDaily(mapped);
+      tally.ok++;
     } catch (e) {
+      tally.failed++;
       console.warn(`price ${sym}: ${e instanceof Error ? e.message : e}`);
     }
   }
-  await store.log("ingest_prices", calls, rows, "ok");
-  console.log(`prices: ${rows} rows over ${calls} calls (${wl.length} symbols)`);
+  await logRun("ingest_prices", calls, rows);
+  console.log(`prices: ${rows} rows over ${calls} calls (${wl.length} symbols, ${tally.failed} failed)`);
 }
 
 // --universe widens a watchlist-scoped command to the full taxonomy universe.
@@ -203,16 +235,19 @@ async function scopeUniverse(): Promise<string[]> {
 
 async function ingestHolders() {
   const limit = Number(flag("limit", "200"));
-  const wl = args.includes("--universe")
-    ? await scopeUniverse()
-    : await missing("holders", (await watchlist()).slice(0, limit));
+  // Compose scope → (optional) missing filter → limit; --universe must not
+  // silently discard the requested call budget.
+  const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
+  const wl = (await missing("holders", base)).slice(0, limit);
   const batch: HoldersMonthly[] = [];
   let calls = 0;
+  tallyReset();
   for (let i = 0; i < wl.length; i++) {
     const sym = wl[i];
     try {
       const res = await api.shareholdersComposition(sym);
       calls++;
+      tally.ok++;
       batch.push(
         ...res.data.map((r) => {
           const local: Record<string, number> = {};
@@ -233,6 +268,7 @@ async function ingestHolders() {
         }),
       );
     } catch (e) {
+      tally.failed++;
       console.warn(`holders ${sym}: ${e instanceof Error ? e.message : e}`);
     }
     // Batch upsert every 100 symbols — one file rewrite instead of per-call
@@ -242,23 +278,24 @@ async function ingestHolders() {
       console.log(`holders: ${i + 1}/${wl.length} (+${added} rows, ${calls} calls)`);
     }
   }
-  await store.log("ingest_holders", calls, wl.length, "ok");
-  console.log(`holders done: ${wl.length} symbols, ${calls} calls`);
+  await logRun("ingest_holders", calls, wl.length);
+  console.log(`holders done: ${wl.length} symbols, ${calls} calls, ${tally.failed} failed`);
 }
 
 async function ingestBroker() {
   const limit = Number(flag("limit", "40"));
-  const wl = args.includes("--universe")
-    ? await missing("broker", await scopeUniverse())
-    : await missing("broker", (await watchlist()).slice(0, limit));
+  const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
+  const wl = (await missing("broker", base)).slice(0, limit);
   const batch = new Map<string, BrokerSummaryRow[]>();
   let rows = 0;
   let calls = 0;
+  tallyReset();
   for (let i = 0; i < wl.length; i++) {
     const sym = wl[i];
     try {
       const res = await api.brokerSummary(sym);
       calls++;
+      tally.ok++;
       batch.set(sym, res.data.flatMap((d) =>
         d.summary.map((s) => ({
           symbol: sym,
@@ -277,31 +314,38 @@ async function ingestBroker() {
         })),
       ));
     } catch (e) {
+      tally.failed++;
       console.warn(`broker ${sym}: ${e instanceof Error ? e.message : e}`);
     }
-    // Batch upsert every 50 symbols — per-call rewrite races file locks.
+    // Batch upsert every 50 symbols — one read+write of the 50MiB store per
+    // batch instead of one per symbol (a full backfill otherwise rewrites it
+    // hundreds of times).
     if (batch.size && ((i + 1) % 50 === 0 || i === wl.length - 1)) {
-      for (const [s, rows_] of batch) rows += await store.upsertBrokerRows(s, rows_);
+      rows += await store.upsertBrokerRowsMulti(batch);
       batch.clear();
       console.log(`broker: ${i + 1}/${wl.length} (${calls} calls)`);
     }
   }
-  await store.log("ingest_broker", calls, rows, "ok");
-  console.log(`broker: ${rows} rows over ${calls} calls (${wl.length} symbols)`);
+  await logRun("ingest_broker", calls, rows);
+  console.log(`broker: ${rows} rows over ${calls} calls (${wl.length} symbols, ${tally.failed} failed)`);
 }
 
 async function ingestIndex() {
   const start = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
   const res = await api.indexDailyRange("ihsg", { start });
-  const mapped: PriceDaily[] = res.map((r) => ({
+  // The index endpoint returns a single price per day — a close-only
+  // observation, not a fabricated OHLC.
+  const mapped = res.map((r) => ({
     symbol: "^IHSG",
     date: r.date,
-    open: r.price,
-    high: r.price,
-    low: r.price,
+    open: null,
+    high: null,
+    low: null,
     close: r.price,
-    volume: 0,
+    volume: null,
     marketCap: null,
+    observationKind: "close-only" as const,
+    fieldSources: { close: "sectors-close" as const },
   }));
   const n = await store.upsertPriceDaily(mapped);
   await store.log("ingest_index", 1, n, "ok");
@@ -333,6 +377,7 @@ async function ingestUniverse() {
   let calls = 0;
   let priceRows = 0;
   let flowRowsN = 0;
+  tallyReset();
   for (const day of days) {
     let dayHasData = false;
     if (feed !== "flow") {
@@ -340,20 +385,28 @@ async function ingestUniverse() {
         const close = await universeAll(api.closeUniverse, day);
         calls += close.calls;
         dayHasData = close.rows.length > 0;
+        // The universe close endpoint returns only a close — open/high/low and
+        // volume stay null instead of being fabricated as flat values.
         priceRows += await store.upsertPriceDaily(
           close.rows.map((r) => ({
             symbol: r.symbol,
             date: r.date,
-            open: r.close,
-            high: r.close,
-            low: r.close,
+            open: null,
+            high: null,
+            low: null,
             close: r.close,
-            volume: 0,
+            volume: null,
             marketCap: null,
+            observationKind: "close-only" as const,
+            fieldSources: { close: "sectors-close" as const },
           })),
         );
         if (close.rows.length) console.log(`${day}: close=${close.rows.length}`);
-      } catch {
+        tally.ok++;
+      } catch (e) {
+        calls++;
+        tally.failed++;
+        console.warn(`universe close ${day}: ${e instanceof Error ? e.message : e}`);
         continue; // future/non-trading day → 400 (free), skip
       }
     }
@@ -361,7 +414,11 @@ async function ingestUniverse() {
     let flow;
     try {
       flow = await universeAll(api.flowUniverse, day);
-    } catch {
+      tally.ok++;
+    } catch (e) {
+      calls++;
+      tally.failed++;
+      console.warn(`universe flow ${day}: ${e instanceof Error ? e.message : e}`);
       continue;
     }
     calls += flow.calls;
@@ -377,8 +434,8 @@ async function ingestUniverse() {
     );
     console.log(`${day}: flow=${flow.rows.length}`);
   }
-  await store.log("ingest_universe", calls, priceRows + flowRowsN, "ok");
-  console.log(`universe: +${priceRows} prices, +${flowRowsN} flows (${calls} calls)`);
+  await logRun("ingest_universe", calls, priceRows + flowRowsN);
+  console.log(`universe: +${priceRows} prices, +${flowRowsN} flows (${calls} calls, ${tally.failed} day errors)`);
 }
 
 // Sector rotation context: /v2/subsectors/ + /v2/subsector/report/{slug}/ per
@@ -555,12 +612,14 @@ async function ingestTaxonomy() {
 
   const rows: TaxonomyRow[] = args.includes("--full") ? [] : [...(existing?.rows ?? [])];
   const misses: string[] = args.includes("--full") ? [] : [...(existing?.misses ?? [])];
+  tallyReset();
 
   for (let i = 0; i < targets.length; i++) {
     const sym = targets[i];
     try {
       const rep = await api.companyReport(sym, ["overview"]);
       calls++;
+      tally.ok++;
       const o = rep.overview ?? {};
       rows.push({
         symbol: rep.symbol ?? sym,
@@ -579,6 +638,7 @@ async function ingestTaxonomy() {
       if (mi >= 0) misses.splice(mi, 1);
     } catch (e) {
       calls++;
+      tally.failed++;
       if (!misses.includes(sym)) misses.push(sym);
       console.warn(`taxonomy ${sym}: ${e instanceof Error ? e.message : e}`);
     }
@@ -599,7 +659,7 @@ async function ingestTaxonomy() {
     misses: misses.sort(),
   };
   await writeFile(path.join(process.cwd(), "data", "taxonomy.json"), JSON.stringify(artifact) + "\n");
-  await store.log("ingest_taxonomy", calls, rows.length, "ok");
+  await logRun("ingest_taxonomy", calls, rows.length);
   console.log(`taxonomy: ${rows.length} mapped, ${misses.length} missed, asOf=${asOf} (${calls} calls)`);
 }
 
@@ -765,11 +825,13 @@ async function ingestOwnership() {
 
   let calls = 0;
   const now = new Date().toISOString();
+  tallyReset();
   for (let i = 0; i < targets.length; i++) {
     const sym = targets[i];
     try {
       const rep = await api.companyReport(sym, ["ownership"]);
       calls++;
+      tally.ok++;
       const o = rep.ownership ?? {};
       const clean = <T extends { symbol: string }>(rows: T[]) => rows.filter((r) => r.symbol !== sym);
       art.holders = clean(art.holders);
@@ -800,6 +862,7 @@ async function ingestOwnership() {
       if (mi >= 0) art.misses.splice(mi, 1);
     } catch (e) {
       calls++;
+      tally.failed++;
       if (!art.misses.includes(sym)) art.misses.push(sym);
       console.warn(`ownership ${sym}: ${e instanceof Error ? e.message : e}`);
     }
@@ -812,7 +875,7 @@ async function ingestOwnership() {
       await writeFile(file, JSON.stringify(art));
     }
   }
-  await store.log("ingest_ownership", calls, targets.length, "ok");
+  await logRun("ingest_ownership", calls, targets.length);
   console.log(`ownership: ${targets.length} refreshed, ${Object.keys(art.refreshed).length} covered, ${art.misses.length} misses (${calls} calls)`);
 }
 
@@ -943,15 +1006,18 @@ async function ingestPerSymbol(
 
   let calls = 0;
   const now = new Date().toISOString();
+  tallyReset();
   for (let i = 0; i < targets.length; i++) {
     const sym = targets[i];
     try {
       art.data[sym] = await fetchOne(sym);
       calls++;
+      tally.ok++;
       const mi = art.misses.indexOf(sym);
       if (mi >= 0) art.misses.splice(mi, 1);
     } catch (e) {
       calls++;
+      tally.failed++;
       if (!art.misses.includes(sym)) art.misses.push(sym);
       console.warn(`${name} ${sym}: ${e instanceof Error ? e.message : e}`);
     }
@@ -961,7 +1027,7 @@ async function ingestPerSymbol(
       await writeFile(target, JSON.stringify(art));
     }
   }
-  await store.log(`ingest_${name}`, calls, targets.length, "ok");
+  await logRun(`ingest_${name}`, calls, targets.length);
   console.log(`${name}: ${targets.length} processed, ${Object.keys(art.data).length} covered, ${art.misses.length} misses (${calls} calls)`);
 }
 
@@ -1046,12 +1112,14 @@ async function ingestCohortTop() {
 
   let calls = 0;
   const now = new Date().toISOString();
+  tallyReset();
   for (let i = 0; i < targets.length; i++) {
     const sym = targets[i];
     try {
       const retail = await api.brokerSummaryTop(sym, { cohort: "retail" });
       const institutional = await api.brokerSummaryTop(sym, { cohort: "institutional" });
       calls += 2;
+      tally.ok++;
       // Refuse to store silently if the API ignored the cohort filter.
       if (retail.cohort && retail.cohort !== "retail") throw new Error(`cohort echo mismatch: ${retail.cohort}`);
       if (institutional.cohort && institutional.cohort !== "institutional") throw new Error(`cohort echo mismatch: ${institutional.cohort}`);
@@ -1063,6 +1131,7 @@ async function ingestCohortTop() {
       if (mi >= 0) art.misses.splice(mi, 1);
     } catch (e) {
       calls++;
+      tally.failed++;
       if (!art.misses.includes(sym)) art.misses.push(sym);
       console.warn(`cohorttop ${sym}: ${e instanceof Error ? e.message : e}`);
     }
@@ -1072,7 +1141,7 @@ async function ingestCohortTop() {
       await writeFile(target, JSON.stringify(art));
     }
   }
-  await store.log("ingest_cohorttop", calls, targets.length, "ok");
+  await logRun("ingest_cohorttop", calls, targets.length);
   console.log(`cohorttop: ${targets.length} symbols, ${Object.keys(art.data).length} covered, ${art.misses.length} misses (${calls} calls)`);
 }
 

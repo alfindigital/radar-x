@@ -3,6 +3,11 @@
 // (institutional / foreign / insider selling) vs retail absorption over the
 // observation window. Bounded: scores are descriptive pressure readings, not
 // proof of intent. Missing components stay missing — never silently zero.
+//
+// Source discipline: every scored component must come from evidence whose
+// window equals the stated window and whose end does not pass as-of. A ~90d
+// top-N aggregate cannot be trimmed into a 14d sum — it is kept as context
+// and reported in the component reason instead of being scored.
 
 import { standardize, type SymbolData } from "./score";
 import type {
@@ -49,6 +54,11 @@ function daysBetween(a: string, b: string): number {
   return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / DAY_MS);
 }
 
+/** A `days`-day lookback ending at asOf: [asOf-days .. asOf], matching the declared label. */
+export function windowFrom(asOf: string, days: number): string {
+  return shift(asOf, -days);
+}
+
 function span(rows: { date?: string; txnDate?: string; suspension_date?: string }[]) {
   const dates = rows
     .map((r) => r.date ?? r.txnDate ?? r.suspension_date)
@@ -65,118 +75,169 @@ function latestCap(d: SymbolData, asOf: string): number | null {
   return cap && cap > 0 ? cap : null;
 }
 
-function missing(reason: string): Pick<ExitComponent, "raw" | "z" | "contribution" | "status" | "reason" | "observations" | "observedFrom" | "observedTo"> {
-  return { raw: null, z: null, contribution: 0, status: "missing", reason, observations: 0, observedFrom: null, observedTo: null };
-}
-
 interface RawResult {
   raw: number | null;
   reason: string | null;
   observations: number;
   observedFrom: string | null;
   observedTo: string | null;
+  /** Which saved feed produced the value — daily broker rows, a cohort overlay, filings, or daily flow. */
+  source: string | null;
+}
+
+function missed(reason: string): RawResult {
+  return { raw: null, reason, observations: 0, observedFrom: null, observedTo: null, source: null };
 }
 
 function sumBrokerTop(entries: { broker_code: string; net_idr?: number }[], codes: Set<string>): number {
   return entries.reduce((sum, e) => sum + (codes.has(e.broker_code) ? (e.net_idr ?? 0) : 0), 0);
 }
 
-/**
- * Institutional net (IDR) over the window. Preferred source order:
- * 1) cohort_top.json — true per-cohort top-N (when the precision pass ran)
- * 2) broker_rows (daily detail, watchlist symbols) labeled by registry cohort
- * 3) broker_top.json top-N labeled by registry cohort (266-issuer fallback)
- * Returns {raw, observations, from, to} or null when no labeled evidence.
- */
-function institutionalNet(input: ExitWatchInput, from: string, asOf: string) {
-  if (input.cohortTop?.institutional) {
-    const side = input.cohortTop.institutional;
-    const observations = (side.top_buyers?.length ?? 0) + (side.top_sellers?.length ?? 0);
-    if (observations === 0) return null; // empty side is missing evidence, never a zero
-    const net =
-      (side.top_buyers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0) +
-      (side.top_sellers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0);
-    return { raw: net, observations, observedFrom: side.start || from, observedTo: side.end || asOf, source: "cohort-top" as const };
-  }
-  const rows = input.d.broker.filter((r) => r.date >= from && r.date <= asOf && input.d.instBrokers.has(r.brokerCode));
-  if (rows.length) {
-    return { raw: rows.reduce((s, r) => s + r.netVal, 0), observations: rows.length, ...span(rows), source: "broker-rows" as const };
-  }
-  if (input.brokerTop) {
-    const sell = sumBrokerTop(input.brokerTop.topSellers, input.d.instBrokers);
-    const buy = sumBrokerTop(input.brokerTop.topBuyers, input.d.instBrokers);
-    const n = input.brokerTop.topSellers.filter((e) => input.d.instBrokers.has(e.broker_code)).length +
-      input.brokerTop.topBuyers.filter((e) => input.d.instBrokers.has(e.broker_code)).length;
-    if (n === 0) return null;
-    return { raw: buy + sell, observations: n, observedFrom: input.brokerTop.start || from, observedTo: input.brokerTop.end || asOf, source: "broker-top" as const };
-  }
-  return null;
+type NetResult =
+  | { ok: true; raw: number; observations: number; observedFrom: string | null; observedTo: string | null; source: string }
+  | { ok: false; reason: string };
+
+/** An aggregate top-N feed is scoreable only when its span IS the score window — it cannot be trimmed. */
+function aggregateMatchesWindow(start: string | undefined, end: string | undefined, from: string, to: string): boolean {
+  return start === from && end === to;
 }
 
-/** Retail net (IDR) — same source order as institutionalNet. */
-function retailNet(input: ExitWatchInput, from: string, asOf: string) {
-  if (input.cohortTop?.retail) {
-    const side = input.cohortTop.retail;
-    const observations = (side.top_buyers?.length ?? 0) + (side.top_sellers?.length ?? 0);
-    if (observations === 0) return null;
-    const net =
-      (side.top_buyers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0) +
-      (side.top_sellers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0);
-    return { raw: net, observations, observedFrom: side.start || from, observedTo: side.end || asOf, source: "cohort-top" as const };
-  }
-  const rows = input.d.broker.filter((r) => r.date >= from && r.date <= asOf && input.d.retailBrokers.has(r.brokerCode));
+function aggregateContextNote(start: string | undefined, end: string | undefined): string {
+  return `top-N aggregate covers ${start || "?"}→${end || "?"} (outside the ${WINDOW_DAYS}d window) — kept as context, not scored`;
+}
+
+/**
+ * Institutional net (IDR) over the window. Source order:
+ * 1) broker_rows daily detail labeled by registry cohort — only source that
+ *    can be bounded to the window exactly
+ * 2) cohort_top overlay — usable only when its span equals the window
+ * 3) broker_top top-N labeled by registry cohort — same window rule
+ * Wider aggregates stay context; the reason explains what exists.
+ */
+function institutionalNet(input: ExitWatchInput, from: string, to: string): NetResult {
+  const rows = input.d.broker.filter((r) => r.date >= from && r.date <= to && input.d.instBrokers.has(r.brokerCode));
   if (rows.length) {
-    return { raw: rows.reduce((s, r) => s + r.netVal, 0), observations: rows.length, ...span(rows), source: "broker-rows" as const };
+    return { ok: true, raw: rows.reduce((s, r) => s + r.netVal, 0), observations: rows.length, ...span(rows), source: "broker_rows" };
   }
+
+  const contextNotes: string[] = [];
+  const side = input.cohortTop?.institutional;
+  if (side) {
+    if (aggregateMatchesWindow(side.start, side.end, from, to)) {
+      const observations = (side.top_buyers?.length ?? 0) + (side.top_sellers?.length ?? 0);
+      if (observations) {
+        const net =
+          (side.top_buyers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0) +
+          (side.top_sellers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0);
+        return { ok: true, raw: net, observations, observedFrom: side.start, observedTo: side.end, source: "cohort_top" };
+      }
+      contextNotes.push("cohort overlay has no institutional entries");
+    } else {
+      contextNotes.push(`institutional ${aggregateContextNote(side.start, side.end)}`);
+    }
+  }
+
   if (input.brokerTop) {
-    const buy = sumBrokerTop(input.brokerTop.topBuyers, input.d.retailBrokers);
-    const sell = sumBrokerTop(input.brokerTop.topSellers, input.d.retailBrokers);
-    const n = input.brokerTop.topBuyers.filter((e) => input.d.retailBrokers.has(e.broker_code)).length +
-      input.brokerTop.topSellers.filter((e) => input.d.retailBrokers.has(e.broker_code)).length;
-    if (n === 0) return null;
-    return { raw: buy + sell, observations: n, observedFrom: input.brokerTop.start || from, observedTo: input.brokerTop.end || asOf, source: "broker-top" as const };
+    if (aggregateMatchesWindow(input.brokerTop.start, input.brokerTop.end, from, to)) {
+      const sell = sumBrokerTop(input.brokerTop.topSellers, input.d.instBrokers);
+      const buy = sumBrokerTop(input.brokerTop.topBuyers, input.d.instBrokers);
+      const n =
+        input.brokerTop.topSellers.filter((e) => input.d.instBrokers.has(e.broker_code)).length +
+        input.brokerTop.topBuyers.filter((e) => input.d.instBrokers.has(e.broker_code)).length;
+      if (n) return { ok: true, raw: buy + sell, observations: n, observedFrom: input.brokerTop.start, observedTo: input.brokerTop.end, source: "broker_top" };
+      contextNotes.push("top-N aggregate has no institutional-labeled brokers");
+    } else {
+      contextNotes.push(`broker ${aggregateContextNote(input.brokerTop.start, input.brokerTop.end)}`);
+    }
   }
-  return null;
+
+  const anyLabeled = input.d.broker.some((r) => input.d.instBrokers.has(r.brokerCode));
+  if (!anyLabeled && !contextNotes.length) return { ok: false, reason: "No broker observations labeled institutional in the saved snapshot." };
+  return { ok: false, reason: contextNotes.join("; ") || `No institutional broker rows in the ${WINDOW_DAYS}d window.` };
+}
+
+/** Retail net (IDR) — same source order and window rule as institutionalNet. */
+function retailNet(input: ExitWatchInput, from: string, to: string): NetResult {
+  const rows = input.d.broker.filter((r) => r.date >= from && r.date <= to && input.d.retailBrokers.has(r.brokerCode));
+  if (rows.length) {
+    return { ok: true, raw: rows.reduce((s, r) => s + r.netVal, 0), observations: rows.length, ...span(rows), source: "broker_rows" };
+  }
+
+  const contextNotes: string[] = [];
+  const side = input.cohortTop?.retail;
+  if (side) {
+    if (aggregateMatchesWindow(side.start, side.end, from, to)) {
+      const observations = (side.top_buyers?.length ?? 0) + (side.top_sellers?.length ?? 0);
+      if (observations) {
+        const net =
+          (side.top_buyers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0) +
+          (side.top_sellers ?? []).reduce((s, e) => s + (e.net_idr ?? 0), 0);
+        return { ok: true, raw: net, observations, observedFrom: side.start, observedTo: side.end, source: "cohort_top" };
+      }
+      contextNotes.push("cohort overlay has no retail entries");
+    } else {
+      contextNotes.push(`retail ${aggregateContextNote(side.start, side.end)}`);
+    }
+  }
+
+  if (input.brokerTop) {
+    if (aggregateMatchesWindow(input.brokerTop.start, input.brokerTop.end, from, to)) {
+      const sell = sumBrokerTop(input.brokerTop.topSellers, input.d.retailBrokers);
+      const buy = sumBrokerTop(input.brokerTop.topBuyers, input.d.retailBrokers);
+      const n =
+        input.brokerTop.topSellers.filter((e) => input.d.retailBrokers.has(e.broker_code)).length +
+        input.brokerTop.topBuyers.filter((e) => input.d.retailBrokers.has(e.broker_code)).length;
+      if (n) return { ok: true, raw: buy + sell, observations: n, observedFrom: input.brokerTop.start, observedTo: input.brokerTop.end, source: "broker_top" };
+      contextNotes.push("top-N aggregate has no retail-labeled brokers");
+    } else {
+      contextNotes.push(`broker ${aggregateContextNote(input.brokerTop.start, input.brokerTop.end)}`);
+    }
+  }
+
+  const anyLabeled = input.d.broker.some((r) => input.d.retailBrokers.has(r.brokerCode));
+  if (!anyLabeled && !contextNotes.length) return { ok: false, reason: "No broker observations labeled retail in the saved snapshot." };
+  return { ok: false, reason: contextNotes.join("; ") || `No retail broker rows in the ${WINDOW_DAYS}d window.` };
 }
 
 function rawComponents(input: ExitWatchInput, asOf: string): Record<ExitComponentKey, RawResult> {
   const cap = latestCap(input.d, asOf);
-  const winFrom = shift(asOf, -WINDOW_DAYS);
-  const insFrom = shift(asOf, -INSIDER_DAYS);
+  const winFrom = windowFrom(asOf, WINDOW_DAYS);
+  const insFrom = windowFrom(asOf, INSIDER_DAYS);
   const norm = (v: number) => (cap ? (v / cap) * 100 : null);
 
   // instExit: positive raw = net institutional selling pressure
   const inst = institutionalNet(input, winFrom, asOf);
   const instExit: RawResult = !cap
-    ? { raw: null, reason: "Market capitalization is unavailable for normalization.", observations: 0, observedFrom: null, observedTo: null }
-    : inst === null
-      ? { raw: null, reason: "No broker observations labeled institutional in the window.", observations: 0, observedFrom: null, observedTo: null }
-      : { raw: norm(-inst.raw), reason: null, observations: inst.observations, observedFrom: inst.observedFrom, observedTo: inst.observedTo };
+    ? missed("Market capitalization is unavailable for normalization.")
+    : !inst.ok
+      ? missed(inst.reason)
+      : { raw: norm(-inst.raw), reason: null, observations: inst.observations, observedFrom: inst.observedFrom, observedTo: inst.observedTo, source: inst.source };
 
   // foreignExit: positive raw = net foreign selling pressure
   const fRows = input.d.flow.filter((r) => r.date >= winFrom && r.date <= asOf);
   const foreignExit: RawResult = !fRows.length
-    ? { raw: null, reason: "Foreign-flow observations are unavailable in the window.", observations: 0, observedFrom: null, observedTo: null }
+    ? missed("Foreign-flow observations are unavailable in the window.")
     : !cap
-      ? { raw: null, reason: "Market capitalization is unavailable for normalization.", observations: fRows.length, ...span(fRows) }
-      : { raw: norm(-fRows.reduce((s, r) => s + r.netForeignInflow, 0)), reason: null, observations: fRows.length, ...span(fRows) };
+      ? { raw: null, reason: "Market capitalization is unavailable for normalization.", observations: fRows.length, ...span(fRows), source: null }
+      : { raw: norm(-fRows.reduce((s, r) => s + r.netForeignInflow, 0)), reason: null, observations: fRows.length, ...span(fRows), source: "flow_daily" };
 
-  // insiderExit: positive raw = net insider selling (sell − buy value, 90d)
-  const iRows = input.d.insider.filter((r) => r.txnDate >= insFrom && r.txnDate <= asOf);
-  const insiderNet = iRows.reduce((s, r) => s + (r.txnType === "sell" ? r.value : r.txnType === "buy" ? -r.value : 0), 0);
+  // insiderExit: positive raw = net insider selling (sell − buy value, 90d).
+  // 'others' filings are not buy/sell evidence — they never read as zero.
+  const iRows = input.d.insider.filter((r) => r.txnDate >= insFrom && r.txnDate <= asOf && (r.txnType === "buy" || r.txnType === "sell"));
+  const insiderNet = iRows.reduce((s, r) => s + (r.txnType === "sell" ? r.value : -r.value), 0);
   const insiderExit: RawResult = !iRows.length
-    ? { raw: null, reason: "No insider transactions reported in the 90-day window.", observations: 0, observedFrom: null, observedTo: null }
+    ? missed("No insider buy/sell transactions reported in the 90-day window.")
     : !cap
-      ? { raw: null, reason: "Market capitalization is unavailable for normalization.", observations: iRows.length, ...span(iRows) }
-      : { raw: norm(insiderNet), reason: null, observations: iRows.length, ...span(iRows) };
+      ? { raw: null, reason: "Market capitalization is unavailable for normalization.", observations: iRows.length, ...span(iRows), source: null }
+      : { raw: norm(insiderNet), reason: null, observations: iRows.length, ...span(iRows), source: "insider_filings" };
 
   // retailAbsorb: positive raw = retail net buying (absorption pressure)
   const ret = retailNet(input, winFrom, asOf);
   const retailAbsorb: RawResult = !cap
-    ? { raw: null, reason: "Market capitalization is unavailable for normalization.", observations: 0, observedFrom: null, observedTo: null }
-    : ret === null
-      ? { raw: null, reason: "No broker observations labeled retail in the window.", observations: 0, observedFrom: null, observedTo: null }
-      : { raw: norm(ret.raw), reason: null, observations: ret.observations, observedFrom: ret.observedFrom, observedTo: ret.observedTo };
+    ? missed("Market capitalization is unavailable for normalization.")
+    : !ret.ok
+      ? missed(ret.reason)
+      : { raw: norm(ret.raw), reason: null, observations: ret.observations, observedFrom: ret.observedFrom, observedTo: ret.observedTo, source: ret.source };
 
   return { instExit, foreignExit, insiderExit, retailAbsorb };
 }
@@ -189,17 +250,20 @@ function deriveFlags(input: ExitWatchInput, asOf: string): ExitFlags {
     (r) => r.date !== null && Math.abs(daysBetween(r.date, asOf)) <= CORP_ACTION_NEAR_DAYS,
   );
   const float_constraint = input.freeFloat !== null && input.freeFloat < FLOAT_CONSTRAINT;
-  const winFrom = shift(asOf, -WINDOW_DAYS);
+  const winFrom = windowFrom(asOf, WINDOW_DAYS);
+  // Sparse-evidence flag counts only window-bounded, cohort-labeled evidence —
+  // the same evidence a score could actually draw on.
   const labeled =
     input.d.broker.filter(
       (r) => r.date >= winFrom && r.date <= asOf && (input.d.instBrokers.has(r.brokerCode) || input.d.retailBrokers.has(r.brokerCode)),
     ).length +
-    (input.brokerTop
+    (input.brokerTop && aggregateMatchesWindow(input.brokerTop.start, input.brokerTop.end, winFrom, asOf)
       ? input.brokerTop.topBuyers.concat(input.brokerTop.topSellers).filter(
           (e) => input.d.instBrokers.has(e.broker_code) || input.d.retailBrokers.has(e.broker_code),
         ).length
       : 0) +
-    (input.cohortTop
+    (input.cohortTop &&
+    [input.cohortTop.retail, input.cohortTop.institutional].some((side) => side && aggregateMatchesWindow(side.start, side.end, winFrom, asOf))
       ? [input.cohortTop.retail, input.cohortTop.institutional].reduce(
           (s, side) => s + (side?.top_buyers?.length ?? 0) + (side?.top_sellers?.length ?? 0),
           0,
@@ -222,20 +286,20 @@ export function computeExitWatch(inputs: ExitWatchInput[], asOf: string): ExitWa
       const z = r.raw !== null ? zByKey[key][i] : null;
       const weight = EXIT_WEIGHTS[key];
       if (r.raw === null) {
-        return { key, weight, raw: null, z: null, contribution: 0, status: "missing", reason: r.reason, observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo };
+        return { key, weight, raw: null, z: null, contribution: 0, status: "missing", reason: r.reason, observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo, source: null };
       }
       if (z === null) {
-        return { key, weight, raw: r.raw, z: null, contribution: 0, status: "missing", reason: "Too few comparable symbols to rank this component.", observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo };
+        return { key, weight, raw: r.raw, z: null, contribution: 0, status: "missing", reason: "Too few comparable symbols to rank this component.", observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo, source: r.source };
       }
       const contribution = (Math.max(-3, Math.min(3, z)) / 3) * weight * 100;
-      return { key, weight, raw: r.raw, z, contribution, status: "available", reason: null, observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo };
+      return { key, weight, raw: r.raw, z, contribution, status: "available", reason: null, observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo, source: r.source };
     });
     const coverage = components.filter((c) => c.status === "available").reduce((s, c) => s + c.weight, 0) / keys.reduce((s, k) => s + EXIT_WEIGHTS[k], 0);
     const publishable = coverage >= COVERAGE_FLOOR;
     const score = publishable ? Math.max(0, Math.min(100, Math.round(50 + components.reduce((s, c) => s + c.contribution, 0)))) : null;
     const tier: ExitWatchRow["tier"] =
       score === null ? null : score >= 75 ? "high" : score >= 55 ? "elevated" : score >= 35 ? "watch" : "low";
-    const winFrom = shift(asOf, -WINDOW_DAYS);
+    const winFrom = windowFrom(asOf, WINDOW_DAYS);
     const byDay = new Map<string, { instNet: number; retailNet: number }>();
     for (const r of input.d.broker) {
       if (r.date < winFrom || r.date > asOf) continue;

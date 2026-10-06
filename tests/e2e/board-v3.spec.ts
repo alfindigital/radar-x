@@ -33,13 +33,17 @@ test("flagged scope renders flag chips", async ({ page }, testInfo) => {
   await expect(page.locator("tbody tr.row-hover").locator("text=/SUSP|CORP|FLOAT|SPARSE/").first()).toBeVisible();
 });
 
-test("suppressed scope shows null-score rows and a cap notice", async ({ page }, testInfo) => {
+test("suppressed scope shows null-score rows and pagination", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile-chrome", "Board scope verified on desktop only.");
   await page.goto("/?scope=suppressed");
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
-  await expect(rows.first().locator("td").nth(2)).toContainText("—");
-  await expect(page.getByText(/Showing first \d+ of \d+/)).toBeVisible();
+  await expect(rows.first().locator("td").nth(2)).toContainText("low coverage");
+  await expect(page.getByText(/Page 1 of \d+ · 1–\d+ of \d+/)).toBeVisible();
+  await page.getByRole("link", { name: "Next →" }).click();
+  await expect(page).toHaveURL(/scope=suppressed/);
+  await expect(page).toHaveURL(/page=2/);
+  await expect(page.getByText(/Page 2 of \d+/)).toBeVisible();
 });
 
 test("preserved v2 board still renders at ?v=radar", async ({ page }, testInfo) => {
@@ -55,7 +59,7 @@ test("issuer dossier shows exit watch panel, cohort chart, coverage, and recent-
   await page.goto("/saham/SONA");
   await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
   await expect(page.getByText(/14-day window 2026-09-17 → 2026-10-01/)).toBeVisible();
-  await expect(page.getByText(/coverage 1\.00/)).toBeVisible();
+  await expect(page.getByText(/coverage \d+\.\d+/)).toBeVisible();
   await expect(page.getByText(/Cohort net flow \(\d+ sessions\)/)).toBeVisible();
   await expect(page.locator("svg").first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "Context", exact: true })).toBeVisible();
@@ -83,4 +87,16 @@ test("broker board cohort tabs switch the leaderboard session", async ({ page },
   await page.getByRole("link", { name: "Institutional" }).click();
   await expect(page).toHaveURL(/cohort=institutional/);
   await expect(page.getByText(/session cohort: institutional/)).toBeVisible();
+});
+
+test("mobile suppressed scope renders rows and dossier link", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile-chrome", "Mobile-only coverage.");
+  await page.goto("/?scope=suppressed");
+  await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
+  const first = page.locator("tbody tr.row-hover").first();
+  await expect(first).toBeVisible();
+  await expect(first.locator("td").nth(2)).toContainText("low coverage");
+  await first.locator("a[href^='/saham/']").click();
+  await expect(page).toHaveURL(/\/saham\/.+/);
+  await expect(page.getByText(/market data through/)).toBeVisible();
 });

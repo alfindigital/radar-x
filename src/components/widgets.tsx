@@ -44,7 +44,6 @@ export function ScoreBreakdown({ score }: { score: ScoreV2 }) {
       {COMPONENT_META.map((m) => {
         const component = score.components[m.key];
         const z = component.z;
-        const pos = (z ?? 0) >= 0;
         const pct = z === null ? 0 : Math.min(100, (Math.abs(z) / 3) * 100);
         return (
           <div key={m.key} title={`${m.hint} — bobot ${(m.weight * 100).toFixed(0)}%`}>
@@ -52,15 +51,17 @@ export function ScoreBreakdown({ score }: { score: ScoreV2 }) {
               <span className="dim">
                 {m.label} <span className="faint">{(m.weight * 100).toFixed(0)}%</span>
               </span>
-              <span className={`mono ${pos ? "acc" : "dist"}`}>
-                {z === null ? "Unavailable" : `${pos ? "+" : ""}${z.toFixed(2)}σ`}
+              <span className={`mono ${z === null ? "faint" : z >= 0 ? "acc" : "dist"}`}>
+                {z === null ? "Unavailable" : `${z >= 0 ? "+" : "−"}${Math.abs(z).toFixed(2)}σ`}
               </span>
             </div>
             <div className="gauge mt-1">
-              <i
-                className={pos ? "bg-acc" : "bg-dist"}
-                style={{ width: `${pct}%` }}
-              />
+              {z !== null && (
+                <i
+                  className={z >= 0 ? "bg-acc" : "bg-dist"}
+                  style={{ width: `${pct}%` }}
+                />
+              )}
             </div>
           </div>
         );

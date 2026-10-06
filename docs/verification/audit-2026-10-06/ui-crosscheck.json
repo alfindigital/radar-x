@@ -1,0 +1,141 @@
+{
+  "holderBars": [
+    {
+      "title": "2026-01-30: -33,012",
+      "height": 4
+    },
+    {
+      "title": "2026-02-27: 1,374",
+      "height": 4
+    },
+    {
+      "title": "2026-03-31: -10,956",
+      "height": 4
+    },
+    {
+      "title": "2026-04-30: 12,071",
+      "height": 4
+    },
+    {
+      "title": "2026-05-29: -8,048",
+      "height": 4
+    },
+    {
+      "title": "2026-06-30: -1,379",
+      "height": 4
+    },
+    {
+      "title": "2026-07-31: -5,136",
+      "height": 4
+    },
+    {
+      "title": "2026-08-31: -9,771",
+      "height": 4
+    },
+    {
+      "title": "2026-09-30: 0",
+      "height": 4
+    }
+  ],
+  "doubleSigns": [
+    "−-19.4M",
+    "−-43.0M",
+    "−-101.7M"
+  ],
+  "persons": [
+    {
+      "name": "Edwin Soeryadjaya",
+      "href": "/orang/Edwin%20Soeryadjaya",
+      "status": 200,
+      "main": "Edwin Soeryadjaya\n\n11 reported transactions · 1 issuers: SRTG\n\nTOTAL TRANSACTION VALUE\nRp21.7B\nBUYS / SELLS\n11 / 0\nMEASURED 30-DAY SELL OUTCOMES\n0/0\ncomplete outcomes where the issuer fell\nMEASURED 30"
+    },
+    {
+      "name": "Garibaldi Thohir",
+      "href": "/orang/Garibaldi%20Thohir",
+      "status": 200,
+      "main": "404 · NO INSTRUMENT AT THIS ROUTE\nNothing on the tape here.\n\nThe symbol or page you asked for is not in the saved snapshot. Coverage varies by issuer; an absent route means no usable evidence, not a z"
+    },
+    {
+      "name": "T Permadi Rachmat",
+      "href": "/orang/T%20Permadi%20Rachmat",
+      "status": 200,
+      "main": "404 · NO INSTRUMENT AT THIS ROUTE\nNothing on the tape here.\n\nThe symbol or page you asked for is not in the saved snapshot. Coverage varies by issuer; an absent route means no usable evidence, not a z"
+    },
+    {
+      "name": "Sandiaga Salahuddin Uno",
+      "href": "/orang/Sandiaga%20Salahuddin%20Uno",
+      "status": 200,
+      "main": "404 · NO INSTRUMENT AT THIS ROUTE\nNothing on the tape here.\n\nThe symbol or page you asked for is not in the saved snapshot. Coverage varies by issuer; an absent route means no usable evidence, not a z"
+    }
+  ],
+  "abba": {
+    "insider": "INSIDER BUYS (90D)\nRp0\nINSIDER SELLS (90D)\nRp0\nNET FOREIGN FLOW (90D)\nRp0\nnet foreign buyer"
+  },
+  "v2": {
+    "rows": 120,
+    "missingSparks": 116
+  },
+  "tablet": [
+    {
+      "tag": "INPUT",
+      "label": "Search issuer",
+      "width": 92.15625,
+      "height": 30.5
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Theme: Auto. Switch to Light",
+      "width": 16,
+      "height": 28
+    }
+  ],
+  "mobile": [
+    {
+      "label": "Theme: Auto. Switch to Light",
+      "width": 28,
+      "height": 28
+    },
+    {
+      "label": "Exit Watch",
+      "width": 91.5,
+      "height": 32.5
+    },
+    {
+      "label": "Brokers",
+      "width": 70.0625,
+      "height": 32.5
+    },
+    {
+      "label": "Foreign flow",
+      "width": 105.8125,
+      "height": 32.5
+    },
+    {
+      "label": "Sectors",
+      "width": 70.0625,
+      "height": 32.5
+    },
+    {
+      "label": "Cases",
+      "width": 55.75,
+      "height": 32.5
+    },
+    {
+      "label": "Methodology",
+      "width": 98.65625,
+      "height": 32.5
+    }
+  ],
+  "storageDenied": {
+    "errors": [
+      "SecurityError: Blocked audit storage"
+    ],
+    "body": "This page couldn’t load\n\nReload to try again, or go back.\n\nReload\nBack"
+  }
+}

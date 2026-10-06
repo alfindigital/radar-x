@@ -1,6 +1,7 @@
 // Redesign QA: desktop dark/light + mobile 360 screenshots. Requires dev server on BASE.
 // Usage: node scripts/qa-redesign.mjs [baseUrl]
 // Writes screenshots to docs/verification/redesign-terminal/.
+// Gate: nonzero exit on route failure, HTTP error, console/page error, or overflow.
 import { chromium } from '@playwright/test';
 import fs from 'node:fs';
 
@@ -25,6 +26,7 @@ const routes = [
 
 const browser = await chromium.launch();
 const report = [];
+const failures = [];
 
 for (const [theme, width] of [['dark', 1440], ['light', 1440], ['dark-mobile', 360]]) {
   const t = theme === 'dark-mobile' ? 'dark' : theme;
@@ -35,8 +37,14 @@ for (const [theme, width] of [['dark', 1440], ['light', 1440], ['dark-mobile', 3
   await page.addInitScript((tt) => { try { localStorage.setItem('radarx-theme', tt); } catch {} }, t);
 
   for (const [name, route] of routes) {
+    const id = `${theme}/${name}`;
     try {
-      await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 });
+      const resp = await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 });
+      const status = resp ? resp.status() : 0;
+      if (!status || status >= 400) failures.push(`${id}: HTTP ${status || 'no response'}`);
+      // A page that rendered must expose real content, not an error shell.
+      const bodyLen = await page.evaluate(() => document.body?.innerText?.length ?? 0);
+      if (status === 200 && bodyLen < 200) failures.push(`${id}: empty body (${bodyLen} chars)`);
       await page.waitForTimeout(1400);
       const overflow = await page.evaluate(() => {
         const doc = document.documentElement;
@@ -50,18 +58,27 @@ for (const [theme, width] of [['dark', 1440], ['light', 1440], ['dark-mobile', 3
         }
         return { scrollW: doc.scrollWidth, clientW: doc.clientWidth, off: off.slice(0, 6) };
       });
+      if (overflow.scrollW > overflow.clientW) failures.push(`${id}: horizontal overflow ${overflow.scrollW}px`);
+      if (errors.length) failures.push(`${id}: console errors — ${errors.join('; ')}`);
       await page.screenshot({ path: `${OUT}/${theme}-${name}.png`, fullPage: false });
-      report.push({ theme, name, route, overflow, errors: [...errors] });
-      errors.length = 0;
-      console.log(`${theme}/${name} ${overflow.scrollW > overflow.clientW ? 'OVERFLOW ' + overflow.scrollW : 'ok'} ${errors.length ? 'ERR:' + errors.join(';') : ''} ${overflow.off.length ? 'CLIP:' + overflow.off.join(' | ') : ''}`);
+      report.push({ theme, name, route, status, overflow, errors: [...errors] });
+      console.log(`${id} ${overflow.scrollW > overflow.clientW ? 'OVERFLOW ' + overflow.scrollW : 'ok'} ${errors.length ? 'ERR:' + errors.join(';') : ''} ${overflow.off.length ? 'CLIP:' + overflow.off.join(' | ') : ''}`);
     } catch (e) {
+      failures.push(`${id}: ${String(e).slice(0, 160)}`);
       report.push({ theme, name, route, error: String(e).slice(0, 160) });
-      console.log(`${theme}/${name} FAIL ${e.message.slice(0, 80)}`);
+      console.log(`${id} FAIL ${e.message.slice(0, 80)}`);
     }
+    errors.length = 0;
   }
   await page.close();
 }
 
-fs.writeFileSync(`${OUT}/report.json`, JSON.stringify(report, null, 2));
+fs.writeFileSync(`${OUT}/report.json`, JSON.stringify({ report, failures }, null, 2));
 await browser.close();
-console.log('done ->', OUT);
+if (failures.length) {
+  console.error(`QA FAILED — ${failures.length} failure(s):`);
+  for (const f of failures) console.error('  -', f);
+  process.exitCode = 1;
+} else {
+  console.log('done ->', OUT);
+}

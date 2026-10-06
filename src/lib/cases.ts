@@ -13,18 +13,22 @@ import type {
   PriceDaily,
 } from "./types";
 
-function median(xs: number[]): number {
-  if (!xs.length) return 0;
+function median(xs: number[]): number | null {
+  if (!xs.length) return null;
   const s = [...xs].sort((a, b) => a - b);
   const m = s.length >> 1;
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 }
 
-function mad(xs: number[], med: number): number {
-  if (!xs.length) return 1;
-  const m = median(xs.map((x) => Math.abs(x - med)));
-  return m === 0 ? 1 : m;
+function mad(xs: number[], med: number): number | null {
+  if (!xs.length) return null;
+  return median(xs.map((x) => Math.abs(x - med)));
 }
+
+// An anomaly statistic needs a real dispersion to divide by. Fewer than five
+// baseline observations (or zero dispersion) makes the z meaningless — emit
+// null instead of a fabricated extreme.
+const MIN_BASELINE_OBS = 5;
 
 function closeOnOrAfter(prices: PriceDaily[], date: string): number | null {
   for (const p of prices) {
@@ -93,17 +97,25 @@ export interface CandidateWindows {
 function evidenceStats(w: Windows, windowStart: string, anchor: string) {
   const flowWin = w.flow.filter((f) => f.date >= windowStart && f.date <= anchor);
   const flowBase = w.flow.filter((f) => f.date < windowStart).map((f) => f.netForeignInflow);
-  const med = median(flowBase);
-  const scale = mad(flowBase, med) * 1.4826;
+  const med = flowBase.length >= MIN_BASELINE_OBS ? median(flowBase) : null;
+  const scale = med === null ? null : mad(flowBase, med);
   const cum = flowWin.reduce((s, f) => s + f.netForeignInflow, 0);
-  const abnormalFlowZ = (cum - med * Math.max(1, flowWin.length)) / (scale * Math.sqrt(Math.max(1, flowWin.length)));
+  const abnormalFlowZ =
+    flowWin.length && med !== null && scale !== null && scale > 0
+      ? (cum - med * flowWin.length) / (scale * 1.4826 * Math.sqrt(flowWin.length))
+      : null;
 
   const priceWin = w.price.filter((p) => p.date >= windowStart && p.date <= anchor);
-  const volBase = w.price.filter((p) => p.date < windowStart).map((p) => p.volume);
-  const vmed = median(volBase);
-  const vscale = mad(volBase, vmed) * 1.4826;
-  const vavg = priceWin.length ? priceWin.reduce((s, p) => s + p.volume, 0) / priceWin.length : 0;
-  const abnormalVolumeZ = vscale ? (vavg - vmed) / vscale : 0;
+  // Unknown volume (close-only / legacy-tagged rows) is not a measured zero —
+  // it must not enter the baseline as a real observation.
+  const measuredVol = (p: PriceDaily) => (p.observationKind ?? "ohlcv") === "ohlcv" && p.volume !== null;
+  const volBase = w.price.filter((p) => p.date < windowStart && measuredVol(p)).map((p) => p.volume as number);
+  const volWin = priceWin.filter(measuredVol);
+  const vmed = volBase.length >= MIN_BASELINE_OBS ? median(volBase) : null;
+  const vscale = vmed === null ? null : mad(volBase, vmed);
+  const vavg = volWin.length ? volWin.reduce((s, p) => s + (p.volume ?? 0), 0) / volWin.length : null;
+  const abnormalVolumeZ =
+    vavg !== null && vmed !== null && vscale !== null && vscale > 0 ? (vavg - vmed) / (vscale * 1.4826) : null;
 
   const c0 = closeOnOrBefore(w.price, windowStart);
   const c1 = closeOnOrBefore(w.price, anchor);
@@ -115,16 +127,16 @@ function evidenceStats(w: Windows, windowStart: string, anchor: string) {
 }
 
 function caseScore(args: {
-  abnormalFlowZ: number;
-  abnormalVolumeZ: number;
+  abnormalFlowZ: number | null;
+  abnormalVolumeZ: number | null;
   preDriftPct: number;
   holdingShift: number; // Σ|pctAfter-pctBefore|
   directionMatch: boolean;
   postMovePct: number | null;
 }): number {
   let s = 0;
-  s += Math.min(30, Math.abs(args.abnormalFlowZ) * 8);
-  s += Math.min(20, Math.abs(args.abnormalVolumeZ) * 5);
+  s += Math.min(30, Math.abs(args.abnormalFlowZ ?? 0) * 8);
+  s += Math.min(20, Math.abs(args.abnormalVolumeZ ?? 0) * 5);
   s += Math.min(15, Math.abs(args.preDriftPct));
   s += Math.min(15, args.holdingShift * 30);
   s += args.directionMatch ? 10 : 0;
@@ -203,7 +215,7 @@ export function detectCandidates(symbol: string, w: CandidateWindows): Candidate
       const prior = closeOnOrBefore(w.price, anchorDate);
       const prior30 = closeOnOrBefore(w.price, shiftDays(anchorDate, -30));
       if (prior !== null && prior30 !== null && prior < prior30) patterns.push("INSIDER_CONTRA_BUY");
-      if (ev.abnormalFlowZ > 1) patterns.push("STEALTH_ACCUMULATION");
+      if (ev.abnormalFlowZ !== null && ev.abnormalFlowZ > 1) patterns.push("STEALTH_ACCUMULATION");
     }
     for (const pattern of patterns) {
       candidates.push({ ...common, id: `${symbol}:${group.dir}:${anchorDate}:${pattern}:${eventHash}`, pattern });
@@ -284,7 +296,7 @@ export function detectCases(symbol: string, w: Windows): CaseRecord[] {
       const prior60 = closeOnOrBefore(w.price, shiftDays(anchorDate, -30));
       const fallingBefore = prior !== null && prior60 !== null && prior < prior60;
       if (fallingBefore) cases.push(mk("INSIDER_CONTRA_BUY", "accumulate", false));
-      if (oc.fwd30dPct !== null && oc.fwd30dPct >= 8 && ev.abnormalFlowZ > 1) {
+      if (oc.fwd30dPct !== null && oc.fwd30dPct >= 8 && ev.abnormalFlowZ !== null && ev.abnormalFlowZ > 1) {
         cases.push(mk("STEALTH_ACCUMULATION", "accumulate", true));
       }
     }

@@ -21,7 +21,10 @@ export interface ComputeArgs {
 }
 
 function validDate(value: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(`${value}T00:00:00Z`));
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!m) return false;
+  const iso = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])).toISOString().slice(0, 10);
+  return iso === value; // rejects rollovers like 2026-02-30
 }
 
 export function parseArgs(argv: string[]): ComputeArgs {
@@ -37,7 +40,10 @@ export function parseArgs(argv: string[]): ComputeArgs {
       throw new Error(`unknown compute flag: ${arg}`);
     }
   }
-  if (!asOf || !validDate(asOf)) throw new Error("compute requires --as-of YYYY-MM-DD");
+  const today = new Date().toISOString().slice(0, 10);
+  if (asOf === "today") asOf = today; // ops shorthand for the daily pipeline
+  if (!asOf || !validDate(asOf)) throw new Error("compute requires --as-of YYYY-MM-DD (a real calendar date)");
+  if (asOf > today) throw new Error(`compute --as-of cannot be in the future (${asOf} > ${today})`);
   return { asOf, outputDir };
 }
 

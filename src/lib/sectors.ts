@@ -40,6 +40,8 @@ const keyPool = {
   },
 };
 
+const REQUEST_TIMEOUT_MS = 30_000;
+
 export async function sectorsGet<T>(path: string, params?: Record<string, string | number>): Promise<T> {
   const url = new URL(`${BASE}${path}`);
   if (params) {
@@ -48,34 +50,52 @@ export async function sectorsGet<T>(path: string, params?: Record<string, string
     }
   }
   let res: Response | undefined;
-  for (let round = 0; round < 5; round++) {
+  // Rotation must try EVERY eligible key, not stop after 5 attempts — the pool
+  // size drives the cap, plus a few rounds for spent-key backoff.
+  const poolSize = keys().length;
+  const maxAttempts = poolSize + 3;
+  let retryAfterMs: number | null = null;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const k = keyPool.pick();
     if (k === null) {
       // All keys dead → hard fail; all spent → back off, unspend, retry.
       if (keyPool.spent.size === 0) break;
-      const wait = Math.min(30000, 1500 * 2 ** round) + Math.random() * 500;
+      const wait = retryAfterMs ?? Math.min(30000, 1500 * 2 ** attempt) + Math.random() * 500;
       await new Promise((r) => setTimeout(r, wait));
+      retryAfterMs = null;
       keyPool.spent.clear();
       continue;
     }
-    res = await fetch(url.toString(), {
-      headers: { Authorization: k },
-      cache: "no-store",
-    });
+    const keyIndex = keys().indexOf(k);
+    try {
+      res = await fetch(url.toString(), {
+        headers: { Authorization: k },
+        cache: "no-store",
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      });
+    } catch (e) {
+      // Network failure/timeout — treat the key as spent and keep rotating
+      // rather than hanging the whole ingest run.
+      keyPool.spent.add(k);
+      console.warn(`sectors: key #${keyIndex + 1} fetch error (${e instanceof Error ? e.message : e}) — rotating`);
+      continue;
+    }
     if (res.ok) return (await res.json()) as T;
     if (res.status === 401 || res.status === 403) {
       keyPool.dead.add(k);
-      console.warn(`sectors: key ${k.slice(0, 8)}… ${res.status} — rotating`);
+      console.warn(`sectors: key #${keyIndex + 1} ${res.status} — rotating`);
       continue;
     }
     if (res.status === 429) {
+      const ra = Number(res.headers.get("retry-after"));
+      if (Number.isFinite(ra) && ra > 0) retryAfterMs = Math.min(60000, ra * 1000);
       keyPool.spent.add(k);
       continue;
     }
     break;
   }
   const status = res?.status ?? 0;
-  const body = res ? await res.text().catch(() => "") : "all pool keys dead";
+  const body = res ? await res.text().catch(() => "") : "all pool keys dead or exhausted";
   throw new SectorsError(status, path, body.slice(0, 300));
 }
 

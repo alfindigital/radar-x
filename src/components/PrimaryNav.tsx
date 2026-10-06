@@ -31,7 +31,7 @@ export function isNavActive(href: string, pathname: string) {
 export function DesktopNav() {
   const { pathname, mounted } = useMountedPath();
   return (
-    <nav aria-label="Primary" className="hidden items-center gap-0.5 md:flex">
+    <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
       {NAV.map((n) => {
         const active = mounted && isNavActive(n.href, pathname);
         return (

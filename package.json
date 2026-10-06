@@ -13,10 +13,10 @@
     "audit:data": "tsx scripts/audit-data.ts",
     "ingest": "tsx scripts/ingest.ts",
     "compute": "tsx scripts/compute.ts",
-    "backfill": "tsx scripts/ingest.ts filings --months 6 && tsx scripts/ingest.ts index && tsx scripts/ingest.ts flows --limit 253 --only-missing && tsx scripts/ingest.ts prices --limit 253 --only-missing && tsx scripts/ingest.ts holders --limit 253 --only-missing && tsx scripts/ingest.ts broker --limit 40 --only-missing && tsx scripts/compute.ts"
+    "backfill": "tsx scripts/ingest.ts filings --months 6 && tsx scripts/ingest.ts index && tsx scripts/ingest.ts flows --limit 253 --only-missing && tsx scripts/ingest.ts prices --limit 253 --only-missing && tsx scripts/ingest.ts holders --limit 253 --only-missing && tsx scripts/ingest.ts broker --limit 40 --only-missing && tsx scripts/compute.ts --as-of today"
   },
   "dependencies": {
-    "next": "16.3.5",
+    "next": "16.3.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "recharts": "^3.10.1",
@@ -29,7 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.5",
+    "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5"

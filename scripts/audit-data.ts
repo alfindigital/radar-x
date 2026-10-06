@@ -55,7 +55,7 @@ async function auditFile(dataDir: string, file: string) {
   const duplicateCount = keys.length - new Set(keys).size;
   const missingSourceCount = rows.filter((row) => "sourceUrl" in row && (!row.sourceUrl || typeof row.sourceUrl !== "string")).length;
   const zeroVolumeCount = file === "price_daily.json"
-    ? rows.filter((row) => row.symbol !== "IHSG" && Number(row.volume) === 0).length
+    ? rows.filter((row) => row.symbol !== "IHSG" && row.symbol !== "^IHSG" && Number(row.volume) === 0).length
     : 0;
   const transactionFeedLagCount = file === "insider_trades.json"
     ? rows.filter((row) => {
@@ -80,16 +80,57 @@ async function auditFile(dataDir: string, file: string) {
   };
 }
 
+// Derived lineage: every member file's sha256 must match the manifest, and the
+// manifest must name an inputHash. A generation that fails verification is a
+// gate failure, not a warning.
+async function auditDerived(dataDir: string) {
+  const dir = path.join(dataDir, "derived-v2");
+  let manifest: { asOf?: string; inputHash?: string; files?: { path: string; rows?: number; sha256: string }[] };
+  try {
+    manifest = JSON.parse(await fs.readFile(path.join(dir, "manifest.json"), "utf8"));
+  } catch {
+    return { status: "missing" as const, files: [] as never[], failures: ["data/derived-v2/manifest.json missing or unreadable"] };
+  }
+  const failures: string[] = [];
+  const files = [];
+  for (const member of manifest.files ?? []) {
+    let bytes: Buffer;
+    try {
+      bytes = await fs.readFile(path.join(dir, member.path));
+    } catch {
+      failures.push(`derived-v2/${member.path} listed in manifest but missing`);
+      continue;
+    }
+    const sha256 = createHash("sha256").update(bytes).digest("hex");
+    const match = sha256 === member.sha256;
+    if (!match) failures.push(`derived-v2/${member.path} sha256 mismatch (manifest ${member.sha256.slice(0, 12)}… vs actual ${sha256.slice(0, 12)}…)`);
+    files.push({ path: `data/derived-v2/${member.path}`, rows: member.rows ?? null, sha256, match });
+  }
+  if (!manifest.asOf) failures.push("derived-v2 manifest has no asOf");
+  if (!manifest.inputHash) failures.push("derived-v2 manifest has no inputHash lineage");
+  if (!manifest.files?.length) failures.push("derived-v2 manifest lists no member files");
+  return { status: failures.length ? ("failed" as const) : ("ok" as const), asOf: manifest.asOf ?? null, inputHash: manifest.inputHash ?? null, files, failures };
+}
+
 async function main() {
   const dataDir = path.join(process.cwd(), "data");
   const files = [];
-  for (const file of DATA_FILES) files.push(await auditFile(dataDir, file));
+  const failures: string[] = [];
+  for (const file of DATA_FILES) {
+    const result = await auditFile(dataDir, file);
+    files.push(result);
+    if (result.status === "missing") failures.push(`required file missing: data/${file}`);
+    else if (result.rows === 0) failures.push(`required file empty: data/${file}`);
+  }
+  const derived = await auditDerived(dataDir);
+  failures.push(...derived.failures);
   const okFiles = files.filter((file) => file.status === "ok");
   const report = {
     generatedAt: new Date().toISOString(),
     dataDir,
     sourcePolicy: "read-only; no provider calls and no source writes",
     files,
+    derived,
     totals: {
       rows: okFiles.reduce((sum, file) => sum + file.rows, 0),
       missingFiles: files.filter((file) => file.status === "missing").length,
@@ -98,8 +139,14 @@ async function main() {
       transactionFeedLagRows: okFiles.reduce((sum, file) => sum + file.transactionFeedLagCount, 0),
       suspiciousZeroVolumeRows: okFiles.reduce((sum, file) => sum + file.zeroVolumeCount, 0),
     },
+    failures,
+    status: failures.length ? "failed" : "ok",
   };
   console.log(JSON.stringify(report, null, 2));
+  if (failures.length) {
+    console.error(`audit:data FAILED — ${failures.length} gate failure(s)`);
+    process.exitCode = 1;
+  }
 }
 
 main().catch((error) => {

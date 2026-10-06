@@ -33,22 +33,28 @@ function ComponentCell({ c, kind }: { c: ExitComponent; kind: ExitComponent["key
       </div>
     );
   }
-  const exitSide = (c.raw ?? 0) > 0;
+  // Display the signed z exactly as computed — positive z means above-cohort
+  // pressure in that component's own direction (exit-side for INST/FOR/INS,
+  // absorb-side for RET). Color marks the cohort role, not the sign.
+  const z = c.z;
   const color =
     kind === "instExit"
       ? "var(--cohort-inst)"
       : kind === "retailAbsorb"
         ? "var(--cohort-retail)"
-        : exitSide
+        : z >= 0
           ? "var(--dist)"
           : "var(--acc)";
-  const pct = Math.min(100, (Math.abs(c.z) / 3) * 100);
+  const pct = Math.min(100, (Math.abs(z) / 3) * 100);
   return (
-    <div className="min-w-[54px]" title={`z ${c.z >= 0 ? "+" : ""}${c.z.toFixed(2)} · raw ${c.raw?.toFixed(3)}% of cap · ${c.observations} obs`}>
+    <div
+      className="min-w-[54px]"
+      title={`z ${z >= 0 ? "+" : "−"}${Math.abs(z).toFixed(2)} · raw ${c.raw !== null ? `${c.raw >= 0 ? "+" : "−"}${Math.abs(c.raw).toFixed(3)}` : "—"}% of cap · ${c.observations} obs${c.source ? ` · ${c.source}` : ""}${c.observedFrom ? ` · ${c.observedFrom}→${c.observedTo}` : ""}`}
+    >
       <div className="faint text-[9px] uppercase tracking-wider">{COMPONENT_CELLS.find((m) => m.key === c.key)?.label}</div>
       <div className="mono text-[11px] leading-tight" style={{ color }}>
-        {exitSide ? "−" : "+"}
-        {Math.abs(c.z).toFixed(1)}
+        {z >= 0 ? "+" : "−"}
+        {Math.abs(z).toFixed(1)}
       </div>
       <div className="gauge mt-1">
         <i style={{ width: `${pct}%`, background: color }} />
@@ -104,15 +110,24 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
     return <RadarBoardView filter={filter} />;
   }
 
-  const ROW_CAP = 150;
+  const PAGE_SIZE = 150;
   const scope = typeof params.scope === "string" ? params.scope : "all";
+  const pageParam = Number(typeof params.page === "string" ? params.page : "1");
   const [board, market] = await Promise.all([getExitBoard(), getMarketContext()]);
   // "Flagged" = alert flags only; sparse_broker is coverage context, not an alert.
   const flagged = board.rows.filter((r) => r.flags.suspension_recent || r.flags.corp_action_near || r.flags.float_constraint);
   const suppressed = board.rows.filter((r) => r.score === null);
   const base = scope === "flagged" ? flagged : scope === "suppressed" ? suppressed : board.rows.filter((r) => r.score !== null);
-  const shown = base.slice(0, ROW_CAP);
-  const truncated = base.length - shown.length;
+  const pageCount = Math.max(1, Math.ceil(base.length / PAGE_SIZE));
+  const page = Number.isInteger(pageParam) && pageParam >= 1 ? Math.min(pageParam, pageCount) : 1;
+  const shown = base.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const pageHref = (p: number) => {
+    const q = new URLSearchParams();
+    if (scope !== "all") q.set("scope", scope);
+    if (p > 1) q.set("page", String(p));
+    const s = q.toString();
+    return s ? `/?${s}` : "/";
+  };
 
   return (
     <div className="space-y-4">
@@ -211,7 +226,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
               </thead>
               <tbody className="text-xs">
                 {shown.map((row, i) => (
-                  <Row key={row.symbol} row={row} rank={i + 1} />
+                  <Row key={row.symbol} row={row} rank={(page - 1) * PAGE_SIZE + i + 1} />
                 ))}
                 {!shown.length && (
                   <tr>
@@ -224,10 +239,27 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             </table>
           </div>
 
-          {truncated > 0 && (
-            <p className="mt-2 text-[11px] faint">
-              Showing first {shown.length} of {base.length} in this scope.
-            </p>
+          {pageCount > 1 && (
+            <nav aria-label="Board pages" className="mt-3 flex items-center gap-3 text-[11px]">
+              {page > 1 ? (
+                <Link href={pageHref(page - 1)} className="mono blue">
+                  ← Prev
+                </Link>
+              ) : (
+                <span className="mono faint">← Prev</span>
+              )}
+              <span className="mono faint">
+                Page {page} of {pageCount} · {(page - 1) * PAGE_SIZE + 1}–
+                {(page - 1) * PAGE_SIZE + shown.length} of {base.length}
+              </span>
+              {page < pageCount ? (
+                <Link href={pageHref(page + 1)} className="mono blue">
+                  Next →
+                </Link>
+              ) : (
+                <span className="mono faint">Next →</span>
+              )}
+            </nav>
           )}
 
           {scope === "all" && suppressed.length > 0 && (

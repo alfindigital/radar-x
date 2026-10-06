@@ -13,10 +13,32 @@ const EVENT = "radarx-theme";
 const NEXT: Record<Mode, Mode> = { system: "light", light: "dark", dark: "system" };
 const LABELS: Record<Mode, string> = { system: "Auto", light: "Light", dark: "Dark" };
 
+// Storage may be denied (private mode, policy) — preference falls back to an
+// in-memory value for the session and must never break rendering.
+let memoryMode: Mode | null = null;
+
+function readMode(): Mode | null {
+  try {
+    const v = window.localStorage.getItem(KEY);
+    return v === "light" || v === "dark" ? v : null;
+  } catch {
+    return memoryMode;
+  }
+}
+
+function writeMode(mode: Mode | null) {
+  memoryMode = mode;
+  try {
+    if (mode === null) window.localStorage.removeItem(KEY);
+    else window.localStorage.setItem(KEY, mode);
+  } catch {
+    /* denied — session-only preference */
+  }
+}
+
 function getMode(): Mode {
   if (typeof window === "undefined") return "system";
-  const v = window.localStorage.getItem(KEY);
-  return v === "light" || v === "dark" ? v : "system";
+  return readMode() ?? "system";
 }
 
 function apply(mode: Mode) {
@@ -77,12 +99,11 @@ export function ThemeToggle() {
       title={`${LABELS[mode]} — next: ${LABELS[NEXT[mode]]}`}
       onClick={() => {
         const next = NEXT[mode];
-        if (next === "system") window.localStorage.removeItem(KEY);
-        else window.localStorage.setItem(KEY, next);
+        writeMode(next === "system" ? null : next);
         apply(next);
         window.dispatchEvent(new Event(EVENT));
       }}
-      className="flex h-7 w-7 items-center justify-center border border-line dim hover:border-line-2 hover:text-ink"
+      className="flex h-11 w-11 shrink-0 items-center justify-center border border-line dim hover:border-line-2 hover:text-ink"
       style={{ borderRadius: "var(--radius-sm)" }}
     >
       <ModeIcon mode={mode} />

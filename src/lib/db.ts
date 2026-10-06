@@ -3,6 +3,7 @@
 
 import { promises as fs } from "fs";
 import path from "path";
+import { mergePriceObservation } from "./price-merge";
 import type {
   BrokerSummaryRow,
   CaseRecord,
@@ -11,6 +12,7 @@ import type {
   InsiderTrade,
   PositioningScore,
   PriceDaily,
+  PriceObservation,
   Ticker,
 } from "./types";
 
@@ -25,10 +27,13 @@ export interface DataStore {
   upsertFlowDaily(rows: FlowDaily[]): Promise<number>;
   listFlowDaily(symbol: string, since?: string): Promise<FlowDaily[]>;
   listFlowUniverse(since?: string): Promise<FlowDaily[]>;
-  upsertPriceDaily(rows: PriceDaily[]): Promise<number>;
+  /** Accepts partial observations — a close-only row never erases richer fields. */
+  upsertPriceDaily(rows: PriceObservation[]): Promise<number>;
   listPriceDaily(symbol: string, since?: string): Promise<PriceDaily[]>;
   // broker summary
   upsertBrokerRows(symbol: string, rows: BrokerSummaryRow[]): Promise<number>;
+  /** Batch upsert across symbols — one read+write instead of one per symbol. */
+  upsertBrokerRowsMulti(batch: Map<string, BrokerSummaryRow[]>): Promise<number>;
   listBrokerRows(symbol: string, since?: string): Promise<BrokerSummaryRow[]>;
   // holders
   upsertHolders(rows: HoldersMonthly[]): Promise<number>;
@@ -59,26 +64,50 @@ const FILES = {
   log: "ingest_log.jsonl",
 } as const;
 
+// Missing file → caller fallback. Corrupt JSON is a data fault, not an empty
+// store — it must halt instead of letting a later write flatten the file.
 async function readJson<T>(file: string, fallback: T): Promise<T> {
+  let raw: string;
   try {
-    const raw = await fs.readFile(path.join(DATA_DIR, file), "utf8");
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
+    raw = await fs.readFile(path.join(DATA_DIR, file), "utf8");
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === "ENOENT") return fallback;
+    throw e;
   }
+  try {
+    return JSON.parse(raw) as T;
+  } catch (e) {
+    throw new Error(`${file}: corrupt JSON — refusing to read it as empty`, { cause: e });
+  }
+}
+
+// Writes go through a per-file queue + temp-then-rename so a crash mid-write
+// can never leave a truncated file behind.
+const fileLocks = new Map<string, Promise<unknown>>();
+
+function serialized<T>(file: string, fn: () => Promise<T>): Promise<T> {
+  const prev = fileLocks.get(file) ?? Promise.resolve();
+  const next = prev.then(fn, fn);
+  fileLocks.set(file, next.catch(() => {}));
+  return next;
 }
 
 async function writeJson(file: string, data: unknown): Promise<void> {
   await fs.mkdir(DATA_DIR, { recursive: true });
   const target = path.join(DATA_DIR, file);
+  const tmp = `${target}.${process.pid}.${Date.now()}.tmp`;
   const payload = JSON.stringify(data);
   // Windows (OneDrive/AV) can briefly hold the file — retry transient opens.
   for (let attempt = 0; attempt < 5; attempt++) {
     try {
-      await fs.writeFile(target, payload);
+      await fs.writeFile(tmp, payload);
+      await fs.rename(tmp, target);
       return;
     } catch (e) {
-      if (attempt === 4) throw e;
+      if (attempt === 4) {
+        await fs.rm(tmp, { force: true }).catch(() => {});
+        throw e;
+      }
       await new Promise((r) => setTimeout(r, 250 * (attempt + 1)));
     }
   }
@@ -90,28 +119,32 @@ function insiderKey(r: InsiderTrade): string {
 
 export class JsonStore implements DataStore {
   async upsertTickers(rows: Ticker[]): Promise<number> {
-    const map = new Map<string, Ticker>();
-    for (const r of await readJson<Ticker[]>(FILES.tickers, [])) map.set(r.symbol, r);
-    for (const r of rows) map.set(r.symbol, r);
-    await writeJson(FILES.tickers, [...map.values()]);
-    return rows.length;
+    return serialized(FILES.tickers, async () => {
+      const map = new Map<string, Ticker>();
+      for (const r of await readJson<Ticker[]>(FILES.tickers, [])) map.set(r.symbol, r);
+      for (const r of rows) map.set(r.symbol, r);
+      await writeJson(FILES.tickers, [...map.values()]);
+      return rows.length;
+    });
   }
   async listTickers(): Promise<Ticker[]> {
     return readJson<Ticker[]>(FILES.tickers, []);
   }
 
   async upsertInsiderTrades(rows: InsiderTrade[]): Promise<number> {
-    const map = new Map<string, InsiderTrade>();
-    for (const r of await readJson<InsiderTrade[]>(FILES.insider, [])) map.set(insiderKey(r), r);
-    let added = 0;
-    for (const r of rows) {
-      const k = insiderKey(r);
-      if (!map.has(k)) added++;
-      map.set(k, r);
-    }
-    const all = [...map.values()].sort((a, b) => b.txnDate.localeCompare(a.txnDate));
-    await writeJson(FILES.insider, all);
-    return added;
+    return serialized(FILES.insider, async () => {
+      const map = new Map<string, InsiderTrade>();
+      for (const r of await readJson<InsiderTrade[]>(FILES.insider, [])) map.set(insiderKey(r), r);
+      let added = 0;
+      for (const r of rows) {
+        const k = insiderKey(r);
+        if (!map.has(k)) added++;
+        map.set(k, r);
+      }
+      const all = [...map.values()].sort((a, b) => b.txnDate.localeCompare(a.txnDate));
+      await writeJson(FILES.insider, all);
+      return added;
+    });
   }
   async listInsiderTrades(filter: { symbol?: string; holderName?: string; since?: string; limit?: number } = {}): Promise<InsiderTrade[]> {
     let rows = await readJson<InsiderTrade[]>(FILES.insider, []);
@@ -123,11 +156,13 @@ export class JsonStore implements DataStore {
   }
 
   async upsertFlowDaily(rows: FlowDaily[]): Promise<number> {
-    const map = new Map<string, FlowDaily>();
-    for (const r of await readJson<FlowDaily[]>(FILES.flow, [])) map.set(`${r.symbol}|${r.date}`, r);
-    for (const r of rows) map.set(`${r.symbol}|${r.date}`, r);
-    await writeJson(FILES.flow, [...map.values()]);
-    return rows.length;
+    return serialized(FILES.flow, async () => {
+      const map = new Map<string, FlowDaily>();
+      for (const r of await readJson<FlowDaily[]>(FILES.flow, [])) map.set(`${r.symbol}|${r.date}`, r);
+      for (const r of rows) map.set(`${r.symbol}|${r.date}`, r);
+      await writeJson(FILES.flow, [...map.values()]);
+      return rows.length;
+    });
   }
   async listFlowDaily(symbol: string, since?: string): Promise<FlowDaily[]> {
     const rows = (await readJson<FlowDaily[]>(FILES.flow, [])).filter((r) => r.symbol === symbol && (!since || r.date >= since));
@@ -139,12 +174,20 @@ export class JsonStore implements DataStore {
     return rows.filter((r) => !since || r.date >= since);
   }
 
-  async upsertPriceDaily(rows: PriceDaily[]): Promise<number> {
-    const map = new Map<string, PriceDaily>();
-    for (const r of await readJson<PriceDaily[]>(FILES.price, [])) map.set(`${r.symbol}|${r.date}`, r);
-    for (const r of rows) map.set(`${r.symbol}|${r.date}`, r);
-    await writeJson(FILES.price, [...map.values()]);
-    return rows.length;
+  async upsertPriceDaily(rows: PriceObservation[]): Promise<number> {
+    return serialized(FILES.price, async () => {
+      const map = new Map<string, PriceObservation>();
+      for (const r of await readJson<PriceObservation[]>(FILES.price, [])) map.set(`${r.symbol}|${r.date}`, r);
+      let applied = 0;
+      for (const r of rows) {
+        const merged = mergePriceObservation(map.get(`${r.symbol}|${r.date}`), r);
+        if (merged.close === null) continue; // a price row without a close carries no usable info
+        map.set(`${r.symbol}|${r.date}`, merged);
+        applied++;
+      }
+      await writeJson(FILES.price, [...map.values()]);
+      return applied;
+    });
   }
   async listPriceDaily(symbol: string, since?: string): Promise<PriceDaily[]> {
     const rows = (await readJson<PriceDaily[]>(FILES.price, [])).filter((r) => r.symbol === symbol && (!since || r.date >= since));
@@ -152,13 +195,32 @@ export class JsonStore implements DataStore {
   }
 
   async upsertBrokerRows(symbol: string, rows: BrokerSummaryRow[]): Promise<number> {
-    const map = new Map<string, BrokerSummaryRow>();
-    for (const r of await readJson<BrokerSummaryRow[]>(FILES.broker, [])) {
-      map.set(`${r.symbol}|${r.date}|${r.brokerCode}`, r);
-    }
-    for (const r of rows) map.set(`${r.symbol}|${r.date}|${r.brokerCode}`, r);
-    await writeJson(FILES.broker, [...map.values()]);
-    return rows.length;
+    return serialized(FILES.broker, async () => {
+      const map = new Map<string, BrokerSummaryRow>();
+      for (const r of await readJson<BrokerSummaryRow[]>(FILES.broker, [])) {
+        map.set(`${r.symbol}|${r.date}|${r.brokerCode}`, r);
+      }
+      for (const r of rows) map.set(`${r.symbol}|${r.date}|${r.brokerCode}`, r);
+      await writeJson(FILES.broker, [...map.values()]);
+      return rows.length;
+    });
+  }
+  async upsertBrokerRowsMulti(batch: Map<string, BrokerSummaryRow[]>): Promise<number> {
+    return serialized(FILES.broker, async () => {
+      const map = new Map<string, BrokerSummaryRow>();
+      for (const r of await readJson<BrokerSummaryRow[]>(FILES.broker, [])) {
+        map.set(`${r.symbol}|${r.date}|${r.brokerCode}`, r);
+      }
+      let applied = 0;
+      for (const rows of batch.values()) {
+        for (const r of rows) {
+          map.set(`${r.symbol}|${r.date}|${r.brokerCode}`, r);
+          applied++;
+        }
+      }
+      await writeJson(FILES.broker, [...map.values()]);
+      return applied;
+    });
   }
   async listBrokerRows(symbol: string, since?: string): Promise<BrokerSummaryRow[]> {
     const rows = (await readJson<BrokerSummaryRow[]>(FILES.broker, [])).filter(
@@ -168,11 +230,13 @@ export class JsonStore implements DataStore {
   }
 
   async upsertHolders(rows: HoldersMonthly[]): Promise<number> {
-    const map = new Map<string, HoldersMonthly>();
-    for (const r of await readJson<HoldersMonthly[]>(FILES.holders, [])) map.set(`${r.symbol}|${r.month}`, r);
-    for (const r of rows) map.set(`${r.symbol}|${r.month}`, r);
-    await writeJson(FILES.holders, [...map.values()]);
-    return rows.length;
+    return serialized(FILES.holders, async () => {
+      const map = new Map<string, HoldersMonthly>();
+      for (const r of await readJson<HoldersMonthly[]>(FILES.holders, [])) map.set(`${r.symbol}|${r.month}`, r);
+      for (const r of rows) map.set(`${r.symbol}|${r.month}`, r);
+      await writeJson(FILES.holders, [...map.values()]);
+      return rows.length;
+    });
   }
   async getHolders(symbol: string): Promise<HoldersMonthly[]> {
     const rows = (await readJson<HoldersMonthly[]>(FILES.holders, [])).filter((r) => r.symbol === symbol);
@@ -180,12 +244,14 @@ export class JsonStore implements DataStore {
   }
 
   async upsertCases(rows: CaseRecord[]): Promise<number> {
-    const map = new Map<string, CaseRecord>();
-    for (const r of await readJson<CaseRecord[]>(FILES.cases, [])) map.set(r.id, r);
-    for (const r of rows) map.set(r.id, r);
-    const all = [...map.values()].sort((a, b) => b.anchorDate.localeCompare(a.anchorDate) || b.score - a.score);
-    await writeJson(FILES.cases, all);
-    return rows.length;
+    return serialized(FILES.cases, async () => {
+      const map = new Map<string, CaseRecord>();
+      for (const r of await readJson<CaseRecord[]>(FILES.cases, [])) map.set(r.id, r);
+      for (const r of rows) map.set(r.id, r);
+      const all = [...map.values()].sort((a, b) => b.anchorDate.localeCompare(a.anchorDate) || b.score - a.score);
+      await writeJson(FILES.cases, all);
+      return rows.length;
+    });
   }
   async listCases(filter: { symbol?: string; pattern?: string; limit?: number } = {}): Promise<CaseRecord[]> {
     let rows = await readJson<CaseRecord[]>(FILES.cases, []);
@@ -200,11 +266,13 @@ export class JsonStore implements DataStore {
   }
 
   async upsertScores(rows: PositioningScore[]): Promise<number> {
-    const map = new Map<string, PositioningScore>();
-    for (const r of await readJson<PositioningScore[]>(FILES.scores, [])) map.set(`${r.symbol}|${r.week}`, r);
-    for (const r of rows) map.set(`${r.symbol}|${r.week}`, r);
-    await writeJson(FILES.scores, [...map.values()]);
-    return rows.length;
+    return serialized(FILES.scores, async () => {
+      const map = new Map<string, PositioningScore>();
+      for (const r of await readJson<PositioningScore[]>(FILES.scores, [])) map.set(`${r.symbol}|${r.week}`, r);
+      for (const r of rows) map.set(`${r.symbol}|${r.week}`, r);
+      await writeJson(FILES.scores, [...map.values()]);
+      return rows.length;
+    });
   }
   async latestScores(limit?: number): Promise<PositioningScore[]> {
     const rows = await readJson<PositioningScore[]>(FILES.scores, []);
@@ -220,9 +288,11 @@ export class JsonStore implements DataStore {
   }
 
   async log(job: string, creditsEst: number, rows: number, status: string): Promise<void> {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    const line = JSON.stringify({ job, ran_at: new Date().toISOString(), credits_est: creditsEst, rows, status }) + "\n";
-    await fs.appendFile(path.join(DATA_DIR, FILES.log), line);
+    await serialized(FILES.log, async () => {
+      await fs.mkdir(DATA_DIR, { recursive: true });
+      const line = JSON.stringify({ job, ran_at: new Date().toISOString(), credits_est: creditsEst, rows, status }) + "\n";
+      await fs.appendFile(path.join(DATA_DIR, FILES.log), line);
+    });
   }
 }
 

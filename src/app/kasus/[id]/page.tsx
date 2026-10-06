@@ -54,8 +54,8 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
         <Stat label="60-day return" value={outcomeDisplay(outcome60)} />
         <Stat
           label="Abnormal flow (z)"
-          value={`${c.abnormalFlowZ >= 0 ? "+" : ""}${c.abnormalFlowZ.toFixed(1)}σ`}
-          sub={`volume ${c.abnormalVolumeZ >= 0 ? "+" : ""}${c.abnormalVolumeZ.toFixed(1)}σ · pre-drift ${fmtPct(c.preDriftPct, 1, "complete")}`}
+          value={c.abnormalFlowZ !== null ? `${c.abnormalFlowZ >= 0 ? "+" : ""}${c.abnormalFlowZ.toFixed(1)}σ` : "Unavailable"}
+          sub={`volume ${c.abnormalVolumeZ !== null ? `${c.abnormalVolumeZ >= 0 ? "+" : ""}${c.abnormalVolumeZ.toFixed(1)}σ` : "unavailable"} · pre-drift ${fmtPct(c.preDriftPct, 1, "complete")}`}
         />
       </div>
 

@@ -4,6 +4,13 @@ function sourceMap(row: PriceObservation): NonNullable<PriceObservation["fieldSo
   return { ...(row.fieldSources ?? {}) };
 }
 
+const FIELDS = ["open", "high", "low", "close", "volume", "marketCap"] as const;
+
+/**
+ * Merge one observation into the stored row for the same symbol+date.
+ * Invariants: a close-only (or legacy/unknown) observation may only update the
+ * measured close, and a null field never erases a value we already know.
+ */
 export function mergePriceObservation(
   existing: PriceObservation | undefined,
   incoming: PriceObservation,
@@ -21,19 +28,19 @@ export function mergePriceObservation(
     };
   }
 
-  if (kind === "close-only") {
+  if (kind !== "ohlcv") {
     return {
       ...existing,
-      close: incoming.close,
-      observationKind: existing.observationKind ?? "ohlcv",
+      close: incoming.close ?? existing.close,
+      observationKind: existing.observationKind === "ohlcv" ? "ohlcv" : kind,
       fieldSources: { ...sourceMap(existing), ...sourceMap(incoming) },
     };
   }
 
-  return {
-    ...existing,
-    ...incoming,
-    observationKind: kind,
-    fieldSources: { ...sourceMap(existing), ...sourceMap(incoming) },
-  };
+  const merged: PriceObservation = { ...existing, ...incoming, observationKind: kind };
+  for (const field of FIELDS) {
+    if (merged[field] === null || merged[field] === undefined) merged[field] = existing[field] ?? null;
+  }
+  merged.fieldSources = { ...sourceMap(existing), ...sourceMap(incoming) };
+  return merged;
 }

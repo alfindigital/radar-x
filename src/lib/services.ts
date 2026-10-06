@@ -38,6 +38,20 @@ export interface RadarBoard {
   universe: number;
 }
 
+export interface IssuerWindowStats {
+  days: number; // declared lookback (90)
+  from: string; // asOf - days
+  to: string; // asOf
+  insiderBuys: number | null; // null = issuer has no reported transactions at all
+  insiderSells: number | null;
+  foreignNet: number | null; // null = no flow observations in the window
+  foreignObs: number;
+  priceFrom: string | null; // first observed session (sorted, ≤ asOf)
+  priceTo: string | null;
+  priceChangePct: number | null;
+  priceObs: number;
+}
+
 export interface IssuerDossier {
   status: "available" | "known-uncovered" | "unknown";
   ticker: Ticker | null;
@@ -54,6 +68,8 @@ export interface IssuerDossier {
   exit: ExitWatchRow | null; // v3 exit-pressure row; null when feed absent
   suspensions: SuspensionRow[];
   corpActions: CorpActionRow[];
+  windowStats: IssuerWindowStats; // bounded aggregates matching the dossier labels
+  knownHolderNames: Set<string>; // names with a real person dossier — gate whale links
   lazy: boolean; // true = fetched live this visit
   asOf: string;
 }
@@ -80,15 +96,44 @@ function loadSymbol(
   symbol: string,
   cohorts: BrokerCohorts,
 ): SymbolData {
+  // Stored arrays are insertion-ordered, not date-ordered — every consumer
+  // (charts, first/last lookups, windows) needs the deterministic order.
+  const byDate = (a: { date: string }, b: { date: string }) => a.date.localeCompare(b.date);
   return {
     symbol,
-    insider: snapshot.insider.filter((row) => row.symbol === symbol),
-    flow: snapshot.flow.filter((row) => row.symbol === symbol),
-    price: snapshot.price.filter((row) => row.symbol === symbol),
-    broker: snapshot.broker.filter((row) => row.symbol === symbol),
-    holders: snapshot.holders.filter((row) => row.symbol === symbol),
+    insider: snapshot.insider.filter((row) => row.symbol === symbol).sort((a, b) => a.txnDate.localeCompare(b.txnDate)),
+    flow: snapshot.flow.filter((row) => row.symbol === symbol).sort(byDate),
+    price: snapshot.price.filter((row) => row.symbol === symbol).sort(byDate),
+    broker: snapshot.broker.filter((row) => row.symbol === symbol).sort(byDate),
+    holders: snapshot.holders.filter((row) => row.symbol === symbol).sort((a, b) => a.month.localeCompare(b.month)),
     instBrokers: cohorts.instBrokers,
     retailBrokers: cohorts.retailBrokers,
+  };
+}
+
+// Dossier stats labeled "90d" must be computed over exactly the 90-day window
+// ending at asOf — never over the whole stored history.
+function issuerWindowStats(data: SymbolData, asOf: string, days = 90): IssuerWindowStats {
+  const from = new Date(Date.parse(`${asOf}T00:00:00Z`) - days * 864e5).toISOString().slice(0, 10);
+  const insiderWin = data.insider.filter((t) => t.txnDate >= from && t.txnDate <= asOf && (t.txnType === "buy" || t.txnType === "sell"));
+  const hasAnyInsider = data.insider.some((t) => t.txnType === "buy" || t.txnType === "sell");
+  const flowWin = data.flow.filter((r) => r.date >= from && r.date <= asOf);
+  const priceObs = data.price.filter((r) => r.date <= asOf);
+  const first = priceObs[0] ?? null;
+  const last = priceObs.at(-1) ?? null;
+  return {
+    days,
+    from,
+    to: asOf,
+    insiderBuys: hasAnyInsider ? insiderWin.filter((t) => t.txnType === "buy").reduce((s, t) => s + t.value, 0) : null,
+    insiderSells: hasAnyInsider ? insiderWin.filter((t) => t.txnType === "sell").reduce((s, t) => s + t.value, 0) : null,
+    foreignNet: flowWin.length ? flowWin.reduce((s, r) => s + r.netForeignInflow, 0) : null,
+    foreignObs: flowWin.length,
+    priceFrom: first?.date ?? null,
+    priceTo: last?.date ?? null,
+    priceChangePct:
+      first && last && first.close ? ((last.close - first.close) / first.close) * 100 : null,
+    priceObs: priceObs.length,
   };
 }
 
@@ -97,12 +142,24 @@ export async function getRadarBoard(): Promise<RadarBoard> {
   const scores = derived.scores;
   const insider = [...snapshot.insider].sort((a, b) => b.txnDate.localeCompare(a.txnDate)).slice(0, 15);
   const cases = derived.cases.slice(0, 12);
-  const sparkSyms = scores.slice(0, 40).map((s) => s.symbol);
+  // Sparks must cover whichever rows the board actually renders — indexing the
+  // flow feed once beats filtering per symbol and dropping most rows to "—".
+  const flowBySymbol = new Map<string, FlowDaily[]>();
+  for (const row of snapshot.flow) {
+    const arr = flowBySymbol.get(row.symbol);
+    if (arr) arr.push(row);
+    else flowBySymbol.set(row.symbol, [row]);
+  }
   const sparks: Record<string, number[]> = {};
-  sparkSyms.forEach((symbol) => {
-    const rows = snapshot.flow.filter((row) => row.symbol === symbol).sort((a, b) => a.date.localeCompare(b.date));
-    sparks[symbol] = rows.slice(-30).map((r) => r.netForeignInflow);
-  });
+  for (const s of scores) {
+    const rows = flowBySymbol.get(s.symbol);
+    if (!rows?.length) continue; // missing stays missing — no empty preview
+    sparks[s.symbol] = rows
+      .slice()
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .slice(-30)
+      .map((r) => r.netForeignInflow);
+  }
   return {
     week: derived.manifest.asOf,
     asOf: derived.manifest.asOf,
@@ -157,6 +214,8 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
       exit: null,
       suspensions: [],
       corpActions: [],
+      windowStats: issuerWindowStats(loadSymbol(snapshot, symbol, cohorts), derived.manifest.asOf),
+      knownHolderNames: new Set(snapshot.insider.map((t) => t.holderName)),
       lazy: false,
       asOf: derived.manifest.asOf,
     };
@@ -180,6 +239,8 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
     exit,
     suspensions: (suspensions?.data ?? []).filter((r) => r.symbol === symbol),
     corpActions: (corpActions?.data ?? []).filter((r) => r.symbol === symbol),
+    windowStats: issuerWindowStats(data, derived.manifest.asOf),
+    knownHolderNames: new Set(snapshot.insider.map((t) => t.holderName)),
     lazy: false,
     asOf: derived.manifest.asOf,
   };

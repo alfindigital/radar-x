@@ -33,23 +33,19 @@ export interface FlowDaily {
 export interface PriceDaily {
   symbol: string;
   date: string;
-  open: number;
-  high: number;
-  low: number;
+  open: number | null;
+  high: number | null;
+  low: number | null;
   close: number;
-  volume: number;
+  volume: number | null;
   marketCap: number | null;
   observationKind?: "ohlcv" | "close-only" | "legacy-unknown";
   fieldSources?: Partial<Record<"open" | "high" | "low" | "close" | "volume" | "marketCap", "sectors-daily" | "sectors-close" | "legacy-unknown" | "arjum">>;
 }
 
 /** A normalized observation that can represent a close-only or partially known row. */
-export type PriceObservation = Omit<PriceDaily, "open" | "high" | "low" | "close" | "volume"> & {
-  open: number | null;
-  high: number | null;
-  low: number | null;
+export type PriceObservation = Omit<PriceDaily, "close"> & {
   close: number | null;
-  volume: number | null;
 };
 
 /** One broker row inside broker-summary data */
@@ -100,8 +96,8 @@ export interface Candidate {
   insiderTrades: InsiderTrade[];
   flowWindow: FlowDaily[];
   priceWindow: PriceDaily[];
-  abnormalFlowZ: number;
-  abnormalVolumeZ: number;
+  abnormalFlowZ: number | null;
+  abnormalVolumeZ: number | null;
   preDriftPct: number;
 }
 
@@ -109,8 +105,8 @@ export interface CaseEvidence {
   insiderTrades: InsiderTrade[];
   flowWindow: FlowDaily[];
   priceWindow: PriceDaily[];
-  abnormalFlowZ: number;
-  abnormalVolumeZ: number;
+  abnormalFlowZ: number | null;
+  abnormalVolumeZ: number | null;
   preDriftPct: number;
 }
 
@@ -329,12 +325,14 @@ export interface ExitComponent {
   weight: number;
   raw: number | null;      // exit/absorption pressure, positive = more pressure
   z: number | null;        // robust cross-sectional z
-  contribution: number;    // clamp(z,-3,3)/3 * weight * 100
+  contribution: number; // clamp(z,-3,3)/3 * weight * 100; 0 when missing/unrankable
   status: "available" | "missing";
   reason: string | null;
   observations: number;
   observedFrom: string | null;
   observedTo: string | null;
+  /** Which saved feed produced the reading (broker rows, cohort overlay, filings, daily flow). */
+  source: string | null;
 }
 
 export interface ExitFlags {

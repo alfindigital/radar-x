@@ -706,19 +706,19 @@
   {
     "symbol": "ADMF.JK",
     "asOf": "2026-10-01",
-    "score": -50,
-    "coverageWeight": 0.6,
+    "score": -20,
+    "coverageWeight": 0.30000000000000004,
     "components": {
       "insiderZ": {
-        "raw": -436319520000,
-        "z": -3,
+        "raw": null,
+        "z": null,
         "weight": 0.3,
-        "contribution": -30,
-        "status": "available",
-        "reason": null,
-        "observedFrom": "2026-09-29",
-        "observedTo": "2026-09-29",
-        "observations": 1
+        "contribution": 0,
+        "status": "missing",
+        "reason": "No reported ownership observations in the 90-day window.",
+        "observedFrom": null,
+        "observedTo": null,
+        "observations": 0
       },
       "foreignTrend": {
         "raw": null,
@@ -1543,9 +1543,9 @@
     "components": {
       "insiderZ": {
         "raw": -3147276400,
-        "z": -0.5149948924118745,
+        "z": -0.5268754861534041,
         "weight": 0.3,
-        "contribution": -5.149948924118744,
+        "contribution": -5.268754861534041,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -1602,14 +1602,14 @@
   {
     "symbol": "AKRA.JK",
     "asOf": "2026-10-01",
-    "score": -73,
+    "score": -74,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": -17253842000,
-        "z": -2.783818135626072,
+        "z": -2.834109865786232,
         "weight": 0.3,
-        "contribution": -27.83818135626072,
+        "contribution": -28.34109865786232,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-03",
@@ -3458,19 +3458,19 @@
   {
     "symbol": "ARKO.JK",
     "asOf": "2026-10-01",
-    "score": -24,
+    "score": -25,
     "coverageWeight": 0.6,
     "components": {
       "insiderZ": {
-        "raw": 1598545600,
-        "z": 0.24829729131832343,
+        "raw": 886815600,
+        "z": 0.13293045222480432,
         "weight": 0.3,
-        "contribution": 2.482972913183234,
+        "contribution": 1.3293045222480433,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-29",
-        "observedTo": "2026-09-30",
-        "observations": 2
+        "observedTo": "2026-09-29",
+        "observations": 1
       },
       "foreignTrend": {
         "raw": null,
@@ -4806,15 +4806,15 @@
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": 37944655400,
+        "raw": 37931181400,
         "z": 3,
         "weight": 0.3,
         "contribution": 30,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-15",
-        "observedTo": "2026-09-25",
-        "observations": 5
+        "observedTo": "2026-07-29",
+        "observations": 4
       },
       "foreignTrend": {
         "raw": -0.003988142539203776,
@@ -4871,9 +4871,9 @@
     "components": {
       "insiderZ": {
         "raw": -1500000000,
-        "z": -0.2500559207093498,
+        "z": -0.2574511024580701,
         "weight": 0.3,
-        "contribution": -2.500559207093498,
+        "contribution": -2.5745110245807012,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-27",
@@ -5127,9 +5127,9 @@
     "components": {
       "insiderZ": {
         "raw": -40751500,
-        "z": -0.015358333195529076,
+        "z": -0.018780089038075515,
         "weight": 0.3,
-        "contribution": -0.15358333195529078,
+        "contribution": -0.18780089038075518,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-26",
@@ -5511,9 +5511,9 @@
     "components": {
       "insiderZ": {
         "raw": 1145754600,
-        "z": 0.17547285096565535,
+        "z": 0.1752818636149548,
         "weight": 0.3,
-        "contribution": 1.7547285096565535,
+        "contribution": 1.752818636149548,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-14",
@@ -5575,9 +5575,9 @@
     "components": {
       "insiderZ": {
         "raw": 1562500000,
-        "z": 0.24249991317437594,
+        "z": 0.2434436927729913,
         "weight": 0.3,
-        "contribution": 2.4249991317437596,
+        "contribution": 2.434436927729913,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-22",
@@ -5703,9 +5703,9 @@
     "components": {
       "insiderZ": {
         "raw": 14200000000,
-        "z": 2.275046639935383,
+        "z": 2.310401398808106,
         "weight": 0.3,
-        "contribution": 22.750466399353833,
+        "contribution": 23.10401398808106,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-07",
@@ -5831,9 +5831,9 @@
     "components": {
       "insiderZ": {
         "raw": -86600000,
-        "z": -0.02273235642812271,
+        "z": -0.026278954350451456,
         "weight": 0.3,
-        "contribution": -0.2273235642812271,
+        "contribution": -0.26278954350451456,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-06",
@@ -6343,9 +6343,9 @@
     "components": {
       "insiderZ": {
         "raw": 49980000,
-        "z": -0.0007655724960935622,
+        "z": -0.003940273164277294,
         "weight": 0.3,
-        "contribution": -0.007655724960935622,
+        "contribution": -0.03940273164277294,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-10",
@@ -6471,9 +6471,9 @@
     "components": {
       "insiderZ": {
         "raw": 572438100,
-        "z": 0.08326374509241484,
+        "z": 0.0815116592492115,
         "weight": 0.3,
-        "contribution": 0.8326374509241484,
+        "contribution": 0.815116592492115,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-14",
@@ -7810,19 +7810,19 @@
   {
     "symbol": "BFIN.JK",
     "asOf": "2026-10-01",
-    "score": -53,
-    "coverageWeight": 0.85,
+    "score": -55,
+    "coverageWeight": 0.55,
     "components": {
       "insiderZ": {
-        "raw": 1383750000,
-        "z": 0.21375073593136665,
+        "raw": null,
+        "z": null,
         "weight": 0.3,
-        "contribution": 2.1375073593136666,
-        "status": "available",
-        "reason": null,
-        "observedFrom": "2026-09-29",
-        "observedTo": "2026-09-29",
-        "observations": 1
+        "contribution": 0,
+        "status": "missing",
+        "reason": "No reported ownership observations in the 90-day window.",
+        "observedFrom": null,
+        "observedTo": null,
+        "observations": 0
       },
       "foreignTrend": {
         "raw": -0.8770806756051077,
@@ -8450,19 +8450,19 @@
   {
     "symbol": "BIPP.JK",
     "asOf": "2026-10-01",
-    "score": -3,
-    "coverageWeight": 0.6,
+    "score": 11,
+    "coverageWeight": 0.30000000000000004,
     "components": {
       "insiderZ": {
-        "raw": -8400000000,
-        "z": -1.3598143709290094,
+        "raw": null,
+        "z": null,
         "weight": 0.3,
-        "contribution": -13.598143709290094,
-        "status": "available",
-        "reason": null,
-        "observedFrom": "2026-10-01",
-        "observedTo": "2026-10-01",
-        "observations": 1
+        "contribution": 0,
+        "status": "missing",
+        "reason": "No reported ownership observations in the 90-day window.",
+        "observedFrom": null,
+        "observedTo": null,
+        "observations": 0
       },
       "foreignTrend": {
         "raw": null,
@@ -8711,9 +8711,9 @@
     "components": {
       "insiderZ": {
         "raw": 932280000,
-        "z": 0.1411387580298203,
+        "z": 0.14036649510751553,
         "weight": 0.3,
-        "contribution": 1.411387580298203,
+        "contribution": 1.4036649510751553,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-14",
@@ -9351,9 +9351,9 @@
     "components": {
       "insiderZ": {
         "raw": -3138340900,
-        "z": -0.51355775521884,
+        "z": -0.5254140182537185,
         "weight": 0.3,
-        "contribution": -5.1355775521883995,
+        "contribution": -5.254140182537185,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-13",
@@ -9479,9 +9479,9 @@
     "components": {
       "insiderZ": {
         "raw": 618100000,
-        "z": 0.09060775659648514,
+        "z": 0.08898000473504372,
         "weight": 0.3,
-        "contribution": 0.9060775659648513,
+        "contribution": 0.8898000473504373,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-28",
@@ -9543,9 +9543,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -10754,19 +10754,19 @@
   {
     "symbol": "BRMS.JK",
     "asOf": "2026-10-01",
-    "score": -5,
+    "score": -6,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": 1124654000,
-        "z": 0.17207914529106041,
+        "raw": 875118000,
+        "z": 0.13101722219812845,
         "weight": 0.3,
-        "contribution": 1.7207914529106043,
+        "contribution": 1.3101722219812846,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-22",
         "observedTo": "2026-10-01",
-        "observations": 5
+        "observations": 4
       },
       "foreignTrend": {
         "raw": 0.0678029683921981,
@@ -10951,9 +10951,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-06",
@@ -11975,9 +11975,9 @@
     "components": {
       "insiderZ": {
         "raw": 4992000000,
-        "z": 0.7940820298451473,
+        "z": 0.8043640846897016,
         "weight": 0.3,
-        "contribution": 7.940820298451474,
+        "contribution": 8.043640846897016,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-24",
@@ -12295,9 +12295,9 @@
     "components": {
       "insiderZ": {
         "raw": -9484254300,
-        "z": -1.534199932032198,
+        "z": -1.5633356486364283,
         "weight": 0.3,
-        "contribution": -15.34199932032198,
+        "contribution": -15.633356486364283,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-21",
@@ -12743,9 +12743,9 @@
     "components": {
       "insiderZ": {
         "raw": 356825600,
-        "z": 0.04858580395502551,
+        "z": 0.046246621196392806,
         "weight": 0.3,
-        "contribution": 0.4858580395502551,
+        "contribution": 0.46246621196392806,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-14",
@@ -14791,9 +14791,9 @@
     "components": {
       "insiderZ": {
         "raw": 15979526231,
-        "z": 2.561255954752744,
+        "z": 2.601456232141999,
         "weight": 0.3,
-        "contribution": 25.612559547527443,
+        "contribution": 26.014562321419994,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-07",
@@ -15175,9 +15175,9 @@
     "components": {
       "insiderZ": {
         "raw": 693458700,
-        "z": 0.10272803980265445,
+        "z": 0.10130548411639197,
         "weight": 0.3,
-        "contribution": 1.0272803980265446,
+        "contribution": 1.0130548411639198,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-06",
@@ -16327,9 +16327,9 @@
     "components": {
       "insiderZ": {
         "raw": 1593934940,
-        "z": 0.24755573785512203,
+        "z": 0.2485851124740201,
         "weight": 0.3,
-        "contribution": 2.4755573785512204,
+        "contribution": 2.485851124740201,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-10",
@@ -16455,9 +16455,9 @@
     "components": {
       "insiderZ": {
         "raw": 133459500,
-        "z": 0.012660815988705288,
+        "z": 0.009713423834413773,
         "weight": 0.3,
-        "contribution": 0.12660815988705287,
+        "contribution": 0.09713423834413773,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-28",
@@ -16711,9 +16711,9 @@
     "components": {
       "insiderZ": {
         "raw": 59500000,
-        "z": 0.0007655724960935622,
+        "z": -0.0023832059151018808,
         "weight": 0.3,
-        "contribution": 0.007655724960935622,
+        "contribution": -0.023832059151018808,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-26",
@@ -16839,9 +16839,9 @@
     "components": {
       "insiderZ": {
         "raw": 63000000,
-        "z": 0.0013284934491035346,
+        "z": -0.0018107547205520962,
         "weight": 0.3,
-        "contribution": 0.013284934491035346,
+        "contribution": -0.018107547205520963,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-11",
@@ -17670,15 +17670,15 @@
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": 38669000,
-        "z": -0.00258477218166379,
+        "raw": 153946000,
+        "z": 0.013064144233597818,
         "weight": 0.3,
-        "contribution": -0.025847721816637897,
+        "contribution": 0.1306414423359782,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-24",
-        "observedTo": "2026-09-28",
-        "observations": 4
+        "observedTo": "2026-09-23",
+        "observations": 3
       },
       "foreignTrend": {
         "raw": -0.11214656797149344,
@@ -18183,9 +18183,9 @@
     "components": {
       "insiderZ": {
         "raw": 13000060000,
-        "z": 2.082054820405444,
+        "z": 2.1141422312686577,
         "weight": 0.3,
-        "contribution": 20.82054820405444,
+        "contribution": 21.141422312686576,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-31",
@@ -19271,9 +19271,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-23",
@@ -20807,9 +20807,9 @@
     "components": {
       "insiderZ": {
         "raw": 1683780000,
-        "z": 0.26200592836896147,
+        "z": 0.2632799444515621,
         "weight": 0.3,
-        "contribution": 2.620059283689615,
+        "contribution": 2.632799444515621,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-16",
@@ -20994,14 +20994,14 @@
   {
     "symbol": "FUJI.JK",
     "asOf": "2026-10-01",
-    "score": -25,
+    "score": -24,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 5706522400,
-        "z": 0.9090019242322823,
+        "z": 0.9212295708075813,
         "weight": 0.3,
-        "contribution": 9.090019242322823,
+        "contribution": 9.212295708075814,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-06",
@@ -21767,9 +21767,9 @@
     "components": {
       "insiderZ": {
         "raw": 5905200000,
-        "z": 0.9409561482133493,
+        "z": 0.9537247792219482,
         "weight": 0.3,
-        "contribution": 9.409561482133492,
+        "contribution": 9.537247792219482,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-21",
@@ -21959,9 +21959,9 @@
     "components": {
       "insiderZ": {
         "raw": 20685500,
-        "z": -0.005477140455508029,
+        "z": -0.008731607883916912,
         "weight": 0.3,
-        "contribution": -0.05477140455508029,
+        "contribution": -0.08731607883916913,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-24",
@@ -22279,9 +22279,9 @@
     "components": {
       "insiderZ": {
         "raw": 3117014400,
-        "z": 0.49251954960744027,
+        "z": 0.497696157122946,
         "weight": 0.3,
-        "contribution": 4.925195496074403,
+        "contribution": 4.97696157122946,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-11",
@@ -22978,14 +22978,14 @@
   {
     "symbol": "GULA.JK",
     "asOf": "2026-10-01",
-    "score": 73,
+    "score": 74,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 11396282000,
-        "z": 1.8241118946407504,
+        "z": 1.8518323364421825,
         "weight": 0.3,
-        "contribution": 18.241118946407507,
+        "contribution": 18.51832336442183,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-20",
@@ -23751,9 +23751,9 @@
     "components": {
       "insiderZ": {
         "raw": 8658760300,
-        "z": 1.383823801998042,
+        "z": 1.4040901743647662,
         "weight": 0.3,
-        "contribution": 13.838238019980421,
+        "contribution": 14.040901743647662,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -23815,9 +23815,9 @@
     "components": {
       "insiderZ": {
         "raw": 14582076500,
-        "z": 2.3364977449361586,
+        "z": 2.372892869903649,
         "weight": 0.3,
-        "contribution": 23.36497744936159,
+        "contribution": 23.72892869903649,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-23",
@@ -24002,14 +24002,14 @@
   {
     "symbol": "HGII.JK",
     "asOf": "2026-10-01",
-    "score": 2,
+    "score": 1,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 106109800,
-        "z": 0.008262039077694764,
+        "z": 0.005240175709962846,
         "weight": 0.3,
-        "contribution": 0.08262039077694765,
+        "contribution": 0.05240175709962846,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-10",
@@ -24903,9 +24903,9 @@
     "components": {
       "insiderZ": {
         "raw": 3255000000,
-        "z": 0.5147124025941983,
+        "z": 0.5202647347088514,
         "weight": 0.3,
-        "contribution": 5.147124025941983,
+        "contribution": 5.202647347088514,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-17",
@@ -25863,9 +25863,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-04",
@@ -26118,15 +26118,15 @@
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": 1181747131545,
+        "raw": 1169533935145,
         "z": 3,
         "weight": 0.3,
         "contribution": 30,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
-        "observedTo": "2026-09-29",
-        "observations": 23
+        "observedTo": "2026-09-24",
+        "observations": 22
       },
       "foreignTrend": {
         "raw": -0.15331651218448056,
@@ -27143,9 +27143,9 @@
     "components": {
       "insiderZ": {
         "raw": -4900000,
-        "z": -0.009592173039289928,
+        "z": -0.012916307894817916,
         "weight": 0.3,
-        "contribution": -0.09592173039289928,
+        "contribution": -0.12916307894817916,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
@@ -28167,9 +28167,9 @@
     "components": {
       "insiderZ": {
         "raw": 7914809000,
-        "z": 1.264170723486897,
+        "z": 1.282411371401376,
         "weight": 0.3,
-        "contribution": 12.641707234868973,
+        "contribution": 12.824113714013762,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-30",
@@ -28295,9 +28295,9 @@
     "components": {
       "insiderZ": {
         "raw": 1502980800,
-        "z": 0.23292716894969276,
+        "z": 0.23370888216194913,
         "weight": 0.3,
-        "contribution": 2.329271689496928,
+        "contribution": 2.337088821619491,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
@@ -28551,9 +28551,9 @@
     "components": {
       "insiderZ": {
         "raw": -36740000,
-        "z": -0.014713145366100647,
+        "z": -0.018123978190379385,
         "weight": 0.3,
-        "contribution": -0.1471314536610065,
+        "contribution": -0.18123978190379386,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-02",
@@ -29063,9 +29063,9 @@
     "components": {
       "insiderZ": {
         "raw": -142000000,
-        "z": -0.03164259094148055,
+        "z": -0.03534003897275376,
         "weight": 0.3,
-        "contribution": -0.31642590941480553,
+        "contribution": -0.3534003897275376,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-23",
@@ -29511,9 +29511,9 @@
     "components": {
       "insiderZ": {
         "raw": 8479996200,
-        "z": 1.355072356987765,
+        "z": 1.3748519679111613,
         "weight": 0.3,
-        "contribution": 13.550723569877649,
+        "contribution": 13.748519679111615,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-27",
@@ -30535,9 +30535,9 @@
     "components": {
       "insiderZ": {
         "raw": 36610000,
-        "z": -0.0029159305365916563,
+        "z": -0.006127036727457472,
         "weight": 0.3,
-        "contribution": -0.029159305365916564,
+        "contribution": -0.06127036727457472,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-14",
@@ -31111,9 +31111,9 @@
     "components": {
       "insiderZ": {
         "raw": 178874600,
-        "z": 0.019965133523860486,
+        "z": 0.017141403333156034,
         "weight": 0.3,
-        "contribution": 0.19965133523860484,
+        "contribution": 0.17141403333156036,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-26",
@@ -31239,9 +31239,9 @@
     "components": {
       "insiderZ": {
         "raw": 41220000,
-        "z": -0.0021744832241985214,
+        "z": -0.005373036725493326,
         "weight": 0.3,
-        "contribution": -0.021744832241985215,
+        "contribution": -0.05373036725493326,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -31682,14 +31682,14 @@
   {
     "symbol": "KOKA.JK",
     "asOf": "2026-10-01",
-    "score": -36,
+    "score": -37,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": -7867393500,
-        "z": -1.274152839912065,
+        "z": -1.2988859639562225,
         "weight": 0.3,
-        "contribution": -12.74152839912065,
+        "contribution": -12.988859639562225,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-15",
@@ -32839,9 +32839,9 @@
     "components": {
       "insiderZ": {
         "raw": 4720000000,
-        "z": 0.7503350300683723,
+        "z": 0.7598764489989754,
         "weight": 0.3,
-        "contribution": 7.503350300683723,
+        "contribution": 7.598764489989755,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-08",
@@ -33415,9 +33415,9 @@
     "components": {
       "insiderZ": {
         "raw": -7808401100,
-        "z": -1.2646648233325375,
+        "z": -1.2892373154278343,
         "weight": 0.3,
-        "contribution": -12.646648233325376,
+        "contribution": -12.892373154278342,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-08",
@@ -33927,9 +33927,9 @@
     "components": {
       "insiderZ": {
         "raw": 13824000,
-        "z": -0.006580706775244578,
+        "z": -0.009853857561460726,
         "weight": 0.3,
-        "contribution": -0.06580706775244578,
+        "contribution": -0.09853857561460726,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-17",
@@ -35015,9 +35015,9 @@
     "components": {
       "insiderZ": {
         "raw": -1674657460,
-        "z": -0.2781468760903501,
+        "z": -0.2860176372049362,
         "weight": 0.3,
-        "contribution": -2.781468760903501,
+        "contribution": -2.8601763720493625,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-10",
@@ -35335,9 +35335,9 @@
     "components": {
       "insiderZ": {
         "raw": 161017500,
-        "z": 0.017093094738147806,
+        "z": 0.014220740982814619,
         "weight": 0.3,
-        "contribution": 0.17093094738147807,
+        "contribution": 0.14220740982814617,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-10",
@@ -35463,9 +35463,9 @@
     "components": {
       "insiderZ": {
         "raw": 34013600,
-        "z": -0.003333521382990254,
+        "z": -0.006551697379322917,
         "weight": 0.3,
-        "contribution": -0.03333521382990254,
+        "contribution": -0.06551697379322917,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-26",
@@ -35783,9 +35783,9 @@
     "components": {
       "insiderZ": {
         "raw": 40400000,
-        "z": -0.0023063675617608576,
+        "z": -0.005507153862502133,
         "weight": 0.3,
-        "contribution": -0.023063675617608578,
+        "contribution": -0.05507153862502133,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
@@ -35975,9 +35975,9 @@
     "components": {
       "insiderZ": {
         "raw": -4500000000,
-        "z": -0.7325595947178974,
+        "z": -0.748123554929314,
         "weight": 0.3,
-        "contribution": -7.325595947178975,
+        "contribution": -7.4812355492931415,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-07",
@@ -36039,9 +36039,9 @@
     "components": {
       "insiderZ": {
         "raw": -5432749600,
-        "z": -0.8825779643612318,
+        "z": -0.9006817328538379,
         "weight": 0.3,
-        "contribution": -8.825779643612318,
+        "contribution": -9.006817328538379,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-23",
@@ -36806,15 +36806,15 @@
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": 1695241400,
-        "z": 0.2638493175720553,
+        "raw": 1646041400,
+        "z": 0.2571075139799517,
         "weight": 0.3,
-        "contribution": 2.638493175720553,
+        "contribution": 2.571075139799517,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
-        "observedTo": "2026-09-30",
-        "observations": 24
+        "observedTo": "2026-09-29",
+        "observations": 23
       },
       "foreignTrend": {
         "raw": -0.0013654545454545456,
@@ -38087,9 +38087,9 @@
     "components": {
       "insiderZ": {
         "raw": -2550000000,
-        "z": -0.4189322066123415,
+        "z": -0.4291864608230055,
         "weight": 0.3,
-        "contribution": -4.189322066123415,
+        "contribution": -4.291864608230055,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-23",
@@ -38471,9 +38471,9 @@
     "components": {
       "insiderZ": {
         "raw": 12536000,
-        "z": -0.006787861685952248,
+        "z": -0.010064519601055047,
         "weight": 0.3,
-        "contribution": -0.06787861685952248,
+        "contribution": -0.10064519601055048,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-21",
@@ -38599,9 +38599,9 @@
     "components": {
       "insiderZ": {
         "raw": 80000000,
-        "z": 0.004062680935151971,
+        "z": 0.0009697225101182855,
         "weight": 0.3,
-        "contribution": 0.040626809351519716,
+        "contribution": 0.009697225101182856,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-24",
@@ -39106,19 +39106,19 @@
   {
     "symbol": "MTLA.JK",
     "asOf": "2026-10-01",
-    "score": -44,
+    "score": -13,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": -103163460000,
-        "z": -3,
+        "raw": 336540000,
+        "z": 0.04292875949577592,
         "weight": 0.3,
-        "contribution": -30,
+        "contribution": 0.4292875949577592,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
-        "observedTo": "2026-09-30",
-        "observations": 3
+        "observedTo": "2026-07-17",
+        "observations": 2
       },
       "foreignTrend": {
         "raw": -0.0003405167879347347,
@@ -39367,9 +39367,9 @@
     "components": {
       "insiderZ": {
         "raw": -16120000000,
-        "z": -2.601457158711005,
+        "z": -2.6486615208345983,
         "weight": 0.3,
-        "contribution": -26.01457158711005,
+        "contribution": -26.486615208345984,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-21",
@@ -39810,14 +39810,14 @@
   {
     "symbol": "NANO.JK",
     "asOf": "2026-10-01",
-    "score": -1,
+    "score": 0,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 7232191542,
-        "z": 1.1543822463444386,
+        "z": 1.1707641773291941,
         "weight": 0.3,
-        "contribution": 11.543822463444387,
+        "contribution": 11.707641773291943,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-07",
@@ -39943,9 +39943,9 @@
     "components": {
       "insiderZ": {
         "raw": -903111500,
-        "z": -0.15405562263486614,
+        "z": -0.15982552107577613,
         "weight": 0.3,
-        "contribution": -1.5405562263486614,
+        "contribution": -1.5982552107577614,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-14",
@@ -40071,9 +40071,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-19",
@@ -40519,9 +40519,9 @@
     "components": {
       "insiderZ": {
         "raw": 366152500,
-        "z": 0.05008589179406228,
+        "z": 0.047772105495377484,
         "weight": 0.3,
-        "contribution": 0.5008589179406229,
+        "contribution": 0.4777210549537748,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-10",
@@ -41159,9 +41159,9 @@
     "components": {
       "insiderZ": {
         "raw": 2815000000,
-        "z": 0.44394519707294455,
+        "z": 0.44829944167973557,
         "weight": 0.3,
-        "contribution": 4.439451970729446,
+        "contribution": 4.482994416797355,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-22",
@@ -41794,14 +41794,14 @@
   {
     "symbol": "OMED.JK",
     "asOf": "2026-10-01",
-    "score": -8,
+    "score": -7,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 3033200000,
-        "z": 0.47903929762916625,
+        "z": 0.48398768472281073,
         "weight": 0.3,
-        "contribution": 4.790392976291662,
+        "contribution": 4.8398768472281075,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-10",
@@ -41990,15 +41990,15 @@
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": -36592602900,
+        "raw": -49865547900,
         "z": -3,
         "weight": 0.3,
         "contribution": -30,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-28",
-        "observedTo": "2026-09-30",
-        "observations": 3
+        "observedTo": "2026-07-30",
+        "observations": 2
       },
       "foreignTrend": {
         "raw": -1.3136139790638754,
@@ -42439,9 +42439,9 @@
     "components": {
       "insiderZ": {
         "raw": 155630000,
-        "z": 0.016226598556907456,
+        "z": 0.013339575036918343,
         "weight": 0.3,
-        "contribution": 0.16226598556907457,
+        "contribution": 0.1333957503691834,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-10",
@@ -42946,19 +42946,19 @@
   {
     "symbol": "PEGE.JK",
     "asOf": "2026-10-01",
-    "score": 17,
+    "score": 3,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": -9639275780,
-        "z": -1.5591327432489457,
+        "raw": -29640000000,
+        "z": -3,
         "weight": 0.3,
-        "contribution": -15.591327432489457,
+        "contribution": -30,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-28",
         "observedTo": "2026-09-28",
-        "observations": 2
+        "observations": 1
       },
       "foreignTrend": {
         "raw": 2.86515379294731,
@@ -43143,9 +43143,9 @@
     "components": {
       "insiderZ": {
         "raw": 1162657000,
-        "z": 0.1781913409988427,
+        "z": 0.17804637763517145,
         "weight": 0.3,
-        "contribution": 1.781913409988427,
+        "contribution": 1.7804637763517144,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -43714,14 +43714,14 @@
   {
     "symbol": "PKPK.JK",
     "asOf": "2026-10-01",
-    "score": 18,
+    "score": 19,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 2226115500,
-        "z": 0.3492322188007157,
+        "z": 0.35198297440063486,
         "weight": 0.3,
-        "contribution": 3.4923221880071575,
+        "contribution": 3.5198297440063486,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-16",
@@ -45255,9 +45255,9 @@
     "components": {
       "insiderZ": {
         "raw": -5983085200,
-        "z": -0.9710909473404646,
+        "z": -0.9906932390319158,
         "weight": 0.3,
-        "contribution": -9.710909473404646,
+        "contribution": -9.906932390319158,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-04",
@@ -47175,9 +47175,9 @@
     "components": {
       "insiderZ": {
         "raw": 294461200,
-        "z": 0.03855545324591262,
+        "z": 0.036046456831426925,
         "weight": 0.3,
-        "contribution": 0.38555453245912624,
+        "contribution": 0.36046456831426926,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-23",
@@ -47559,9 +47559,9 @@
     "components": {
       "insiderZ": {
         "raw": 214710000,
-        "z": 0.02572870424371579,
+        "z": 0.023002551200918705,
         "weight": 0.3,
-        "contribution": 0.2572870424371579,
+        "contribution": 0.23002551200918706,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-16",
@@ -47815,9 +47815,9 @@
     "components": {
       "insiderZ": {
         "raw": -9315237200,
-        "z": -1.5070161414587746,
+        "z": -1.5356916369809024,
         "weight": 0.3,
-        "contribution": -15.070161414587748,
+        "contribution": -15.356916369809024,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-17",
@@ -47943,9 +47943,9 @@
     "components": {
       "insiderZ": {
         "raw": -4914000000,
-        "z": -0.799145101731077,
+        "z": -0.8158363533703457,
         "weight": 0.3,
-        "contribution": -7.99145101731077,
+        "contribution": -8.158363533703456,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-07",
@@ -48327,9 +48327,9 @@
     "components": {
       "insiderZ": {
         "raw": 5325944500,
-        "z": 0.8477918459001298,
+        "z": 0.858983206957796,
         "weight": 0.3,
-        "contribution": 8.477918459001298,
+        "contribution": 8.58983206957796,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -48967,9 +48967,9 @@
     "components": {
       "insiderZ": {
         "raw": -426580600,
-        "z": -0.07741298595866619,
+        "z": -0.08188532594866645,
         "weight": 0.3,
-        "contribution": -0.774129859586662,
+        "contribution": -0.8188532594866644,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-13",
@@ -49031,9 +49031,9 @@
     "components": {
       "insiderZ": {
         "raw": -592537000,
-        "z": -0.10410451020041023,
+        "z": -0.10902873721243268,
         "weight": 0.3,
-        "contribution": -1.0410451020041023,
+        "contribution": -1.0902873721243267,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-17",
@@ -49927,9 +49927,9 @@
     "components": {
       "insiderZ": {
         "raw": 35376000,
-        "z": -0.0031144003811671723,
+        "z": -0.00632886666290731,
         "weight": 0.3,
-        "contribution": -0.031144003811671723,
+        "contribution": -0.0632886666290731,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-07",
@@ -50823,9 +50823,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-08",
@@ -51783,9 +51783,9 @@
     "components": {
       "insiderZ": {
         "raw": -1970250000,
-        "z": -0.32568837161018965,
+        "z": -0.3343640093829376,
         "weight": 0.3,
-        "contribution": -3.2568837161018966,
+        "contribution": -3.343640093829376,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-16",
@@ -51975,9 +51975,9 @@
     "components": {
       "insiderZ": {
         "raw": 6748562000,
-        "z": 1.076597902719748,
+        "z": 1.0916629461756326,
         "weight": 0.3,
-        "contribution": 10.765979027197481,
+        "contribution": 10.916629461756326,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-21",
@@ -52226,14 +52226,14 @@
   {
     "symbol": "SOCI.JK",
     "asOf": "2026-10-01",
-    "score": 55,
+    "score": 54,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": -235620000,
-        "z": -0.0466999222617073,
+        "z": -0.05065229063953971,
         "weight": 0.3,
-        "contribution": -0.466999222617073,
+        "contribution": -0.5065229063953971,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-09",
@@ -52423,9 +52423,9 @@
     "components": {
       "insiderZ": {
         "raw": 138057600,
-        "z": 0.01340034936985819,
+        "z": 0.010465477502316448,
         "weight": 0.3,
-        "contribution": 0.1340034936985819,
+        "contribution": 0.10465477502316448,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-14",
@@ -52487,9 +52487,9 @@
     "components": {
       "insiderZ": {
         "raw": 1729855920,
-        "z": 0.26941652859673615,
+        "z": 0.270816006006985,
         "weight": 0.3,
-        "contribution": 2.6941652859673617,
+        "contribution": 2.7081600600698503,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-03",
@@ -52807,9 +52807,9 @@
     "components": {
       "insiderZ": {
         "raw": 74071060,
-        "z": 0.0031091024908265585,
+        "z": 0,
         "weight": 0.3,
-        "contribution": 0.031091024908265586,
+        "contribution": 0,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-09",
@@ -53190,15 +53190,15 @@
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
-        "raw": 21699959800,
+        "raw": 20029168800,
         "z": 3,
         "weight": 0.3,
         "contribution": 30,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-02",
-        "observedTo": "2026-09-30",
-        "observations": 11
+        "observedTo": "2026-09-28",
+        "observations": 10
       },
       "foreignTrend": {
         "raw": 0.46545171926954687,
@@ -53895,9 +53895,9 @@
     "components": {
       "insiderZ": {
         "raw": 38000000,
-        "z": -0.002692370500967696,
+        "z": -0.0058996918244791285,
         "weight": 0.3,
-        "contribution": -0.02692370500967696,
+        "contribution": -0.05899691824479129,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-12",
@@ -54087,9 +54087,9 @@
     "components": {
       "insiderZ": {
         "raw": 293842700,
-        "z": 0.038455977071787856,
+        "z": 0.03594529652747577,
         "weight": 0.3,
-        "contribution": 0.38455977071787856,
+        "contribution": 0.35945296527475773,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-10",
@@ -54274,14 +54274,14 @@
   {
     "symbol": "TALF.JK",
     "asOf": "2026-10-01",
-    "score": 25,
+    "score": 26,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 15168000000,
-        "z": 2.430734492082141,
+        "z": 2.4687250434721606,
         "weight": 0.3,
-        "contribution": 24.30734492082141,
+        "contribution": 24.687250434721605,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-05",
@@ -54343,9 +54343,9 @@
     "components": {
       "insiderZ": {
         "raw": 838925900,
-        "z": 0.12612419261856653,
+        "z": 0.12509773337576693,
         "weight": 0.3,
-        "contribution": 1.2612419261856653,
+        "contribution": 1.2509773337576693,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-03",
@@ -54466,14 +54466,14 @@
   {
     "symbol": "TAPG.JK",
     "asOf": "2026-10-01",
-    "score": 28,
+    "score": 27,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": -11463134000,
-        "z": -1.852472173922509,
+        "z": -1.886996233817948,
         "weight": 0.3,
-        "contribution": -18.52472173922509,
+        "contribution": -18.86996233817948,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-17",
@@ -55111,9 +55111,9 @@
     "components": {
       "insiderZ": {
         "raw": -220000000,
-        "z": -0.04418768646570279,
+        "z": -0.0480975227370061,
         "weight": 0.3,
-        "contribution": -0.44187686465702797,
+        "contribution": -0.480975227370061,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-14",
@@ -55431,9 +55431,9 @@
     "components": {
       "insiderZ": {
         "raw": -502500,
-        "z": -0.008884903070472398,
+        "z": -0.01219706385823715,
         "weight": 0.3,
-        "contribution": -0.08884903070472398,
+        "contribution": -0.12197063858237152,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-18",
@@ -56519,9 +56519,9 @@
     "components": {
       "insiderZ": {
         "raw": -2913262500,
-        "z": -0.4773573702388515,
+        "z": -0.48860076141161723,
         "weight": 0.3,
-        "contribution": -4.773573702388515,
+        "contribution": -4.886007614116172,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-08",
@@ -57159,9 +57159,9 @@
     "components": {
       "insiderZ": {
         "raw": -16000000000,
-        "z": -2.5821570117506636,
+        "z": -2.6290346227357486,
         "weight": 0.3,
-        "contribution": -25.82157011750664,
+        "contribution": -26.29034622735749,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-30",
@@ -57287,9 +57287,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-27",
@@ -57351,9 +57351,9 @@
     "components": {
       "insiderZ": {
         "raw": -1555345100,
-        "z": -0.2589573254054733,
+        "z": -0.2665032077744922,
         "weight": 0.3,
-        "contribution": -2.589573254054733,
+        "contribution": -2.665032077744922,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
@@ -57607,9 +57607,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-18",
@@ -57730,14 +57730,14 @@
   {
     "symbol": "TSPC.JK",
     "asOf": "2026-10-01",
-    "score": 0,
+    "score": 1,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": 5777778400,
-        "z": 0.9204623514973334,
+        "z": 0.9328840228986782,
         "weight": 0.3,
-        "contribution": 9.204623514973333,
+        "contribution": 9.328840228986783,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-28",
@@ -58119,9 +58119,9 @@
     "components": {
       "insiderZ": {
         "raw": -8056601100,
-        "z": -1.3045839606288447,
+        "z": -1.329832282995622,
         "weight": 0.3,
-        "contribution": -13.045839606288448,
+        "contribution": -13.29832282995622,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-06",
@@ -58951,9 +58951,9 @@
     "components": {
       "insiderZ": {
         "raw": 0,
-        "z": -0.008804083705075965,
+        "z": -0.012114876222448218,
         "weight": 0.3,
-        "contribution": -0.08804083705075966,
+        "contribution": -0.12114876222448218,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-10",
@@ -59778,14 +59778,14 @@
   {
     "symbol": "WGSH.JK",
     "asOf": "2026-10-01",
-    "score": 21,
+    "score": 20,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": -1999995000,
-        "z": -0.3304723955379844,
+        "z": -0.33922902674919,
         "weight": 0.3,
-        "contribution": -3.304723955379844,
+        "contribution": -3.3922902674918998,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-24",
@@ -60167,9 +60167,9 @@
     "components": {
       "insiderZ": {
         "raw": 33132400,
-        "z": -0.0034752487955023647,
+        "z": -0.006695824234362137,
         "weight": 0.3,
-        "contribution": -0.03475248795502365,
+        "contribution": -0.06695824234362137,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-08-03",
@@ -60226,14 +60226,14 @@
   {
     "symbol": "WINR.JK",
     "asOf": "2026-10-01",
-    "score": -17,
+    "score": -18,
     "coverageWeight": 0.85,
     "components": {
       "insiderZ": {
         "raw": -8787105500,
-        "z": -1.4220743129219813,
+        "z": -1.4493117448253001,
         "weight": 0.3,
-        "contribution": -14.220743129219814,
+        "contribution": -14.493117448253003,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
@@ -60295,9 +60295,9 @@
     "components": {
       "insiderZ": {
         "raw": 3773489000,
-        "z": 0.5981033517385376,
+        "z": 0.6050674911119722,
         "weight": 0.3,
-        "contribution": 5.981033517385376,
+        "contribution": 6.050674911119722,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-07-07",
@@ -61447,9 +61447,9 @@
     "components": {
       "insiderZ": {
         "raw": 938000000,
-        "z": 0.1420587317015966,
+        "z": 0.14130204391689402,
         "weight": 0.3,
-        "contribution": 1.4205873170159662,
+        "contribution": 1.4130204391689403,
         "status": "available",
         "reason": null,
         "observedFrom": "2026-09-11",

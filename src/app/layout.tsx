@@ -58,7 +58,7 @@ function TopNav() {
         </Link>
         <DesktopNav />
         <div className="ml-auto flex min-w-0 items-center gap-3">
-          <div className="hidden w-[220px] md:block">
+          <div className="hidden w-[220px] lg:block">
             <SearchBox />
           </div>
           <ThemeToggle />

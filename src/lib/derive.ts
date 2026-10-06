@@ -12,6 +12,7 @@ import type {
   CohortTopSymbol,
   CorpActionRow,
   ExitWatchRow,
+  InsiderTrade,
   MeasuredOutcome,
   ScoreV2,
   Snapshot,
@@ -100,14 +101,26 @@ export function cohortsFromRegistry(rows: { code: string; cohort: string }[]): B
   };
 }
 
+// Knowledge-as-of: a filing only enters a reading once it was actually
+// reported. A trade dated before asOf but filed after it must not leak in.
+// Rows with a missing/unparseable filedAt keep event-date semantics — their
+// timing is unverified, which the snapshot manifest already flags.
+function knownBy(trade: InsiderTrade, asOf: string): boolean {
+  const filedDay = typeof trade.filedAt === "string" ? trade.filedAt.slice(0, 10) : null;
+  return filedDay === null || filedDay <= asOf;
+}
+
 function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string, cohorts: BrokerCohorts): SymbolData {
+  const byDate = <T extends { date: string }>(a: T, b: T) => a.date.localeCompare(b.date);
   return {
     symbol,
-    insider: rowsFor(snapshot.insider, symbol).filter((row) => row.txnDate <= asOf),
-    flow: rowsFor(snapshot.flow, symbol).filter((row) => row.date <= asOf),
-    price: rowsFor(snapshot.price, symbol).filter((row) => row.date <= asOf),
-    broker: rowsFor(snapshot.broker, symbol).filter((row) => row.date <= asOf),
-    holders: rowsFor(snapshot.holders, symbol).filter((row) => row.month <= asOf),
+    insider: rowsFor(snapshot.insider, symbol)
+      .filter((row) => row.txnDate <= asOf && knownBy(row, asOf))
+      .sort((a, b) => a.txnDate.localeCompare(b.txnDate)),
+    flow: rowsFor(snapshot.flow, symbol).filter((row) => row.date <= asOf).sort(byDate),
+    price: rowsFor(snapshot.price, symbol).filter((row) => row.date <= asOf).sort(byDate),
+    broker: rowsFor(snapshot.broker, symbol).filter((row) => row.date <= asOf).sort(byDate),
+    holders: rowsFor(snapshot.holders, symbol).filter((row) => row.month <= asOf).sort((a, b) => a.month.localeCompare(b.month)),
     instBrokers: cohorts.instBrokers,
     retailBrokers: cohorts.retailBrokers,
   };

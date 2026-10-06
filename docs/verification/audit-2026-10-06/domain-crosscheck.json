@@ -1,0 +1,51 @@
+{
+  "asOf": "2026-10-01",
+  "coreHashMatches": true,
+  "pureReproducesStoredExit": true,
+  "counts": {
+    "brokerRows": 238604,
+    "cases": 204,
+    "exitRows": 962,
+    "publishable": 247,
+    "overlaySymbols": 31,
+    "scoreChanges": 14,
+    "institutionalDirectionChanges": 5,
+    "retailDirectionChanges": 4
+  },
+  "overlayWindows": [
+    "2026-07-07..2026-10-05"
+  ],
+  "noBaseline": {
+    "allCasesUnderFive": 78,
+    "stealthTotal": 88,
+    "stealthUnderFive": 34,
+    "bull": 7035458360.777944
+  },
+  "knownFutureFilings": {
+    "rows": 20,
+    "issuers": 14,
+    "scores": [
+      {
+        "symbol": "MTLA.JK",
+        "original": 80,
+        "withoutFuture": 54
+      },
+      {
+        "symbol": "PACK.JK",
+        "original": 49,
+        "withoutFuture": 55
+      }
+    ]
+  },
+  "dossier": {
+    "from": "2026-07-04",
+    "bbcaAllFlow": -562723185000,
+    "bbcaBoundedFlow": -138967377500,
+    "adroAllBuys": 45436088000,
+    "adroBoundedBuyRows": 0
+  },
+  "price": {
+    "flatNull": 9685,
+    "explicitObservationKind": 0
+  }
+}

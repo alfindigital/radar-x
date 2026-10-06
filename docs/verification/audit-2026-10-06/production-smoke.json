@@ -1,0 +1,322 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "bytes": 891761,
+    "ms": 1211,
+    "h1": "Exit Watch",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/?v=radar",
+    "status": 200,
+    "bytes": 342851,
+    "ms": 2782,
+    "h1": "Radar Board",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/?scope=suppressed",
+    "status": 200,
+    "bytes": 653196,
+    "ms": 492,
+    "h1": "Exit Watch",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/?scope=flagged",
+    "status": 200,
+    "bytes": 840763,
+    "ms": 535,
+    "h1": "Exit Watch",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/broker",
+    "status": 200,
+    "bytes": 150403,
+    "ms": 297,
+    "h1": "Broker board",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/broker?cohort=institutional",
+    "status": 200,
+    "bytes": 81904,
+    "ms": 488,
+    "h1": "Broker board",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/broker?cohort=retail",
+    "status": 200,
+    "bytes": 34627,
+    "ms": 266,
+    "h1": "Broker board",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/broker/XL",
+    "status": 200,
+    "bytes": 47230,
+    "ms": 530,
+    "h1": "XL",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/saham/ADRO",
+    "status": 200,
+    "bytes": 170227,
+    "ms": 2609,
+    "h1": "ADRO",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/saham/PNLF",
+    "status": 200,
+    "bytes": 104086,
+    "ms": 2003,
+    "h1": "PNLF",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/asing",
+    "status": 200,
+    "bytes": 159794,
+    "ms": 2319,
+    "h1": "Foreign Flow Radar",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/rotasi",
+    "status": 200,
+    "bytes": 158124,
+    "ms": 298,
+    "h1": "Sector Rotation",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/kasus",
+    "status": 200,
+    "bytes": 215985,
+    "ms": 300,
+    "h1": "Candidate Feed",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/metodologi",
+    "status": 200,
+    "bytes": 33114,
+    "ms": 300,
+    "h1": "Methodology",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "public, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "HIT"
+    }
+  },
+  {
+    "path": "/favicon.ico",
+    "status": 200,
+    "bytes": 4286,
+    "ms": 294,
+    "headers": {
+      "content-type": "image/vnd.microsoft.icon",
+      "content-encoding": "br",
+      "cache-control": "public, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/icon.svg",
+    "status": 200,
+    "bytes": 587,
+    "ms": 32,
+    "headers": {
+      "content-type": "image/svg+xml",
+      "content-encoding": null,
+      "cache-control": "public, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "HIT"
+    }
+  },
+  {
+    "path": "/orang/Edwin%20Soeryadjaya",
+    "status": 200,
+    "bytes": 47752,
+    "ms": 355,
+    "h1": "Edwin Soeryadjaya",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/rotasi/basic-materials",
+    "status": 200,
+    "bytes": 149715,
+    "ms": 530,
+    "h1": "Basic Materials",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  },
+  {
+    "path": "/kasus/AKPI.JK%3Abuy%3A2026-09-22%3AINSIDER_CONTRA_BUY%3Aee33cc80",
+    "status": 200,
+    "bytes": 112956,
+    "ms": 502,
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-encoding": "br",
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "strict-transport-security": "max-age=63072000",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "x-vercel-cache": "MISS"
+    }
+  }
+]

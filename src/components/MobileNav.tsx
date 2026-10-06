@@ -7,7 +7,7 @@ import { NAV, isNavActive, useMountedPath } from "./PrimaryNav";
 export default function MobileNav() {
   const { pathname, mounted } = useMountedPath();
   return (
-    <div className="border-b border-line bg-panel md:hidden">
+    <div className="border-b border-line bg-panel lg:hidden">
       <nav aria-label="Primary navigation" className="flex gap-0.5 overflow-x-auto px-2 py-1.5">
         {NAV.map((item) => {
           const active = mounted && isNavActive(item.href, pathname);
@@ -16,7 +16,7 @@ export default function MobileNav() {
               key={item.href}
               href={item.href}
               aria-current={active ? "page" : undefined}
-              className={`whitespace-nowrap px-2.5 py-2 text-center font-mono text-[11px] uppercase tracking-wider ${
+              className={`inline-flex min-h-10 items-center whitespace-nowrap px-3 text-center font-mono text-[11px] uppercase tracking-wider ${
                 active ? "bg-panel-2 text-acc" : "dim"
               }`}
               style={{ borderRadius: "var(--radius-sm)" }}

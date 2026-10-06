@@ -70,21 +70,25 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
         <div className="mb-1 flex justify-between text-[10px] faint">
           <span>Δ reported shareholder count</span>
         </div>
-        <div className="flex h-10 items-center gap-1">
+        {/* Zero-axis bars: pixel heights scale with |Δ|, zero sits on the axis. */}
+        <div className="relative flex h-10 gap-1">
+          <div className="absolute inset-x-0 top-1/2 h-px bg-line-2" aria-hidden />
           {sorted.map((h) => {
             const v = h.changeInShareholders;
-            const hgt = Math.max(8, (Math.abs(v) / maxN) * 100);
+            const px = Math.round((Math.abs(v) / maxN) * 18); // ≤18px either side of the axis
             return (
-              <div key={h.month} className="flex flex-1 flex-col items-center justify-center" title={`${h.month}: ${fmtNum(v)}`}>
-                {v < 0 ? (
+              <div key={h.month} className="relative flex-1" title={`${h.month}: ${fmtNum(v)}`}>
+                {v !== 0 && (
                   <div
-                    className="w-full rounded-t"
-                    style={{ height: `${hgt}%`, minHeight: 4, backgroundColor: "color-mix(in srgb, var(--acc) 70%, transparent)" }}
-                  />
-                ) : (
-                  <div
-                    className="w-full rounded-b"
-                    style={{ height: `${hgt}%`, minHeight: 4, backgroundColor: "color-mix(in srgb, var(--dist) 70%, transparent)" }}
+                    className="absolute left-0 right-0"
+                    style={{
+                      height: Math.max(2, px),
+                      backgroundColor:
+                        v < 0
+                          ? "color-mix(in srgb, var(--acc) 70%, transparent)"
+                          : "color-mix(in srgb, var(--dist) 70%, transparent)",
+                      ...(v < 0 ? { bottom: "50%" } : { top: "50%" }),
+                    }}
                   />
                 )}
               </div>
@@ -101,7 +105,7 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
   );
 }
 
-function OwnershipSection({ o, covered }: { o: IssuerOwnership; covered: boolean }) {
+function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; covered: boolean; knownHolders: Set<string> }) {
   if (!covered) {
     return (
       <p className="dim py-4 text-xs">
@@ -126,11 +130,17 @@ function OwnershipSection({ o, covered }: { o: IssuerOwnership; covered: boolean
               {g}
             </span>
           ))}
-          {o.whales.map((w) => (
-            <Link key={w} href={`/orang/${encodeURIComponent(w)}`} className="tag hover:border-line">
-              {w}
-            </Link>
-          ))}
+          {o.whales.map((w) =>
+            knownHolders.has(w) ? (
+              <Link key={w} href={`/orang/${encodeURIComponent(w)}`} className="tag hover:border-line">
+                {w}
+              </Link>
+            ) : (
+              <span key={w} className="tag" title="Reported holder — no ownership-transaction dossier in the snapshot">
+                {w}
+              </span>
+            ),
+          )}
         </div>
       )}
 
@@ -205,7 +215,7 @@ function OwnershipSection({ o, covered }: { o: IssuerOwnership; covered: boolean
                   {buyers.map((t) => (
                     <div key={`b-${t.name}`} className="flex items-baseline justify-between gap-2 py-0.5 text-xs">
                       <span className="truncate">{t.name}</span>
-                      <span className="mono acc shrink-0">+{fmtShares(t.changeAmount)}</span>
+                      <span className="mono acc shrink-0">+{fmtShares(Math.abs(t.changeAmount))}</span>
                     </div>
                   ))}
                   {buyers.length === 0 && <p className="dim text-xs">—</p>}
@@ -214,7 +224,7 @@ function OwnershipSection({ o, covered }: { o: IssuerOwnership; covered: boolean
                   {sellers.map((t) => (
                     <div key={`s-${t.name}`} className="flex items-baseline justify-between gap-2 py-0.5 text-xs">
                       <span className="truncate">{t.name}</span>
-                      <span className="mono dist shrink-0">−{fmtShares(t.changeAmount)}</span>
+                      <span className="mono dist shrink-0">−{fmtShares(Math.abs(t.changeAmount))}</span>
                     </div>
                   ))}
                   {sellers.length === 0 && <p className="dim text-xs">—</p>}
@@ -232,14 +242,8 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
   const { ticker } = await params;
   const d = await getIssuerDossier(ticker);
 
-  const insider90 = d.insider;
-  const buyVal = insider90.filter((t) => t.txnType === "buy").reduce((s, t) => s + t.value, 0);
-  const sellVal = insider90.filter((t) => t.txnType === "sell").reduce((s, t) => s + t.value, 0);
-  const netFlow = d.flow.reduce((s, f) => s + f.netForeignInflow, 0);
+  const ws = d.windowStats;
   const lastPrice = d.price.at(-1);
-  const firstPrice = d.price.at(0);
-  const priceChg =
-    lastPrice && firstPrice && firstPrice.close ? ((lastPrice.close - firstPrice.close) / firstPrice.close) * 100 : null;
 
   return (
     <div className="space-y-4">
@@ -263,13 +267,13 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
             <>
               <div className="text-lg text-ink">{fmtNum(lastPrice.close)}</div>
               <div>
-                {priceChg !== null && (
-                  <span className={priceChg >= 0 ? "acc" : "dist"}>
-                    {priceChg >= 0 ? "+" : ""}
-                    {priceChg.toFixed(1)}%
+                {ws.priceChangePct !== null && (
+                  <span className={ws.priceChangePct >= 0 ? "acc" : "dist"}>
+                    {ws.priceChangePct >= 0 ? "+" : ""}
+                    {ws.priceChangePct.toFixed(1)}%
                   </span>
                 )}{" "}
-                90d · {lastPrice.date}
+                {ws.priceFrom ?? "—"}→{ws.priceTo} · {ws.priceObs} obs
               </div>
             </>
           )}
@@ -283,12 +287,28 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
       </section>
 
       <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-5">
-        <Stat label="Insider buys (90d)" value={fmtCurrency(buyVal)} />
-        <Stat label="Insider sells (90d)" value={fmtCurrency(sellVal)} />
         <Stat
-          label="Net foreign flow (90d)"
-          value={fmtCurrency(netFlow)}
-          sub={netFlow >= 0 ? "net foreign buyer" : "net foreign seller"}
+          label={`Insider buys (${ws.days}d)`}
+          value={ws.insiderBuys === null ? "None reported" : fmtCurrency(ws.insiderBuys)}
+          sub={`${ws.from}→${ws.to}`}
+        />
+        <Stat
+          label={`Insider sells (${ws.days}d)`}
+          value={ws.insiderSells === null ? "None reported" : fmtCurrency(ws.insiderSells)}
+          sub={`${ws.from}→${ws.to}`}
+        />
+        <Stat
+          label={`Net foreign flow (${ws.days}d)`}
+          value={ws.foreignNet === null ? "—" : fmtCurrency(ws.foreignNet)}
+          sub={
+            ws.foreignNet === null
+              ? "no flow observations in window"
+              : ws.foreignNet > 0
+                ? `net foreign buyer · ${ws.foreignObs} obs`
+                : ws.foreignNet < 0
+                  ? `net foreign seller · ${ws.foreignObs} obs`
+                  : `flat · ${ws.foreignObs} obs`
+          }
         />
         <Stat
           label="Reported shareholders"
@@ -385,12 +405,12 @@ export default async function DossierPage({ params }: PageProps<"/saham/[ticker]
 
       <section>
         <h2 className="section-label mb-3">Reported ownership</h2>
-        <OwnershipSection o={d.ownership} covered={d.ownershipCovered} />
+        <OwnershipSection o={d.ownership} covered={d.ownershipCovered} knownHolders={d.knownHolderNames} />
       </section>
 
       <section>
         <h2 className="section-label mb-3">Reported ownership transactions</h2>
-        <TradesTable trades={insider90} limit={30} />
+        <TradesTable trades={d.insider} limit={30} />
       </section>
 
       {d.cases.length > 0 && (
