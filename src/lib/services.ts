@@ -39,8 +39,8 @@ export interface RadarBoard {
 }
 
 export interface IssuerWindowStats {
-  days: number; // declared lookback (90)
-  from: string; // asOf - days
+  days: number; // declared lookback (90) — window holds `days` inclusive dates
+  from: string; // asOf - (days-1)
   to: string; // asOf
   insiderBuys: number | null; // null = issuer has no reported transactions at all
   insiderSells: number | null;
@@ -114,7 +114,9 @@ function loadSymbol(
 // Dossier stats labeled "90d" must be computed over exactly the 90-day window
 // ending at asOf — never over the whole stored history.
 function issuerWindowStats(data: SymbolData, asOf: string, days = 90): IssuerWindowStats {
-  const from = new Date(Date.parse(`${asOf}T00:00:00Z`) - days * 864e5).toISOString().slice(0, 10);
+  // Inclusive-date convention: a `days`-day window holds `days` calendar
+  // dates [asOf-(days-1) .. asOf] — same as exitwatch.windowFrom.
+  const from = new Date(Date.parse(`${asOf}T00:00:00Z`) - (days - 1) * 864e5).toISOString().slice(0, 10);
   const insiderWin = data.insider.filter((t) => t.txnDate >= from && t.txnDate <= asOf && (t.txnType === "buy" || t.txnType === "sell"));
   const hasAnyInsider = data.insider.some((t) => t.txnType === "buy" || t.txnType === "sell");
   const flowWin = data.flow.filter((r) => r.date >= from && r.date <= asOf);
@@ -267,18 +269,29 @@ export interface RotationBoard {
 }
 
 // Sector/subsector aggregate context — a saved artifact, never fetched live.
+// Flow coverage is computed at read time against the current snapshot so the
+// "observed/total" count is accurate even for artifacts written before the
+// coverage fields existed.
 export async function getSectorRotation(): Promise<RotationBoard | null> {
-  const rot = await loadRotation();
+  const [rot, snapshot] = await Promise.all([loadRotation(), loadSnapshot()]);
   if (!rot) return null;
+  const flowDate = rot.subsectors.find((s) => s.flowDate)?.flowDate ?? null;
+  const flowCovered = new Set(
+    flowDate ? snapshot.flow.filter((r) => r.date === flowDate).map((r) => r.symbol) : [],
+  );
+  const withCoverage = rot.subsectors.map((s) =>
+    s.flowDate && s.flowObserved == null
+      ? { ...s, flowObserved: s.members.filter((m) => flowCovered.has(m)).length, flowExpected: s.members.length }
+      : s,
+  );
   const groups = new Map<string, { slug: string; label: string; subs: RotationSubsector[] }>();
-  for (const s of rot.subsectors) {
+  for (const s of withCoverage) {
     const g = groups.get(s.sectorSlug) ?? { slug: s.sectorSlug, label: s.sector, subs: [] };
     g.subs.push(s);
     groups.set(s.sectorSlug, g);
   }
   const sectors = [...groups.values()].sort((a, b) => a.label.localeCompare(b.label));
   for (const g of sectors) g.subs.sort((a, b) => (b.mcapChange1w ?? -Infinity) - (a.mcapChange1w ?? -Infinity));
-  const flowDate = rot.subsectors.find((s) => s.flowDate)?.flowDate ?? null;
   return { asOf: rot.asOf, generatedAt: rot.generatedAt, flowDate, sectors, limitations: rot.limitations };
 }
 
@@ -291,10 +304,13 @@ export interface SubsectorDetail {
 // latest saved positioning score (null = issuer outside the scored cohort).
 export async function getSubsectorDetail(slugRaw: string): Promise<SubsectorDetail | null> {
   const slug = decodeRouteParam(slugRaw)?.toLowerCase() ?? "";
-  const rot = await loadRotation();
-  const row = rot?.subsectors.find((s) => s.slug === slug);
+  const [rot, derived, snapshot] = await Promise.all([loadRotation(), loadDerived(), loadSnapshot()]);
+  let row = rot?.subsectors.find((s) => s.slug === slug);
   if (!rot || !row) return null;
-  const derived = await loadDerived();
+  if (row.flowDate && row.flowObserved == null) {
+    const flowCovered = new Set(snapshot.flow.filter((r) => r.date === row!.flowDate).map((r) => r.symbol));
+    row = { ...row, flowObserved: row.members.filter((m) => flowCovered.has(m)).length, flowExpected: row.members.length };
+  }
   const taxMap = taxonomyBySymbol(await loadTaxonomy());
   const memberScores = row.members.map((symbol) => ({
     symbol,

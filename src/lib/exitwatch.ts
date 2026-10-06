@@ -54,9 +54,13 @@ function daysBetween(a: string, b: string): number {
   return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / DAY_MS);
 }
 
-/** A `days`-day lookback ending at asOf: [asOf-days .. asOf], matching the declared label. */
+/**
+ * Window convention: a `days`-day window ending at asOf is exactly `days`
+ * inclusive calendar dates: [asOf-(days-1) .. asOf]. Same convention as
+ * getFlowRadar and the dossier "Nd" labels — the label counts dates.
+ */
 export function windowFrom(asOf: string, days: number): string {
-  return shift(asOf, -days);
+  return shift(asOf, -(days - 1));
 }
 
 function span(rows: { date?: string; txnDate?: string; suspension_date?: string }[]) {

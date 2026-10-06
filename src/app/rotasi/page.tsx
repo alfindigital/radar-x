@@ -27,7 +27,10 @@ function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
     s.growthForecast
       ? `forecast ${s.growthForecast.year}: EPS ${s.growthForecast.epsGrowth === null ? "—" : `${(s.growthForecast.epsGrowth * 100).toFixed(0)}%`} · rev ${s.growthForecast.revGrowth === null ? "—" : `${(s.growthForecast.revGrowth * 100).toFixed(0)}%`}`
       : "growth forecast: not ingested",
-    s.netForeignFlow === null ? "foreign flow: no stored rows" : `net foreign flow ${s.flowDate}: ${s.netForeignFlow >= 0 ? "+" : "−"}Rp${fmtIDR(Math.abs(s.netForeignFlow))}`,
+    s.netForeignFlow === null
+      ? "foreign flow: no stored rows"
+      : `net foreign flow ${s.flowDate}: ${s.netForeignFlow >= 0 ? "+" : "−"}Rp${fmtIDR(Math.abs(s.netForeignFlow))}` +
+        (s.flowObserved != null && s.flowExpected != null ? ` over ${s.flowObserved}/${s.flowExpected} issuers` : ""),
   ].join("\n");
   return (
     <Link
@@ -169,7 +172,8 @@ export default async function RotasiPage() {
 
       <p className="text-[11px] leading-relaxed faint">
         Aggregates are provider-weighted: a single large issuer can dominate a subsector&apos;s move. Net foreign flow sums the
-        saved flow session over mapped member issuers; unmapped issuers count as zero. {board.limitations.length ? "Saved artifact limitations apply." : ""}
+        saved flow session over member issuers with stored rows only; observed/total coverage is shown per subsector.{" "}
+        {board.limitations.length ? "Saved artifact limitations apply." : ""}
       </p>
     </div>
   );

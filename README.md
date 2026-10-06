@@ -47,7 +47,7 @@ data/*.json (frozen Sectors snapshot)
                               └── services.ts → Next.js research pages
 ```
 
-The current manifest records 962 score rows (254 non-null scores), 171 candidate patterns, 301 complete outcomes, 170 pending outcomes, and 42 unavailable paired outcomes. These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
+The current manifest records 962 score rows (866 non-null v2 scores), 161 candidate patterns, 198 complete outcomes, 127 pending outcomes, and 158 unavailable paired outcomes, plus 247 publishable Exit Watch readings (66 high / 44 elevated / 79 watch / 58 low). These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
 
 ## Method limits
 

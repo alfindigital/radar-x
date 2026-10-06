@@ -220,218 +220,129 @@
       "theme": "light",
       "name": "dossier",
       "route": "/saham/ADRO",
-      "status": 200,
-      "overflow": {
-        "scrollW": 1440,
-        "clientW": 1440,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/ADRO\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/ADRO\", waiting un"
     },
     {
       "theme": "light",
       "name": "dossier-exit",
       "route": "/saham/PNLF",
-      "status": 200,
-      "overflow": {
-        "scrollW": 1440,
-        "clientW": 1440,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/PNLF\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/PNLF\", waiting un"
     },
     {
       "theme": "light",
       "name": "kasus",
       "route": "/kasus",
-      "status": 200,
-      "overflow": {
-        "scrollW": 1440,
-        "clientW": 1440,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/kasus\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/kasus\", waiting until \"load\""
     },
     {
       "theme": "light",
       "name": "asing",
       "route": "/asing",
-      "status": 200,
-      "overflow": {
-        "scrollW": 1440,
-        "clientW": 1440,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/asing\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/asing\", waiting until \"load\""
     },
     {
       "theme": "light",
       "name": "rotasi",
       "route": "/rotasi",
-      "status": 200,
-      "overflow": {
-        "scrollW": 1440,
-        "clientW": 1440,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/rotasi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/rotasi\", waiting until \"loa"
     },
     {
       "theme": "light",
       "name": "metodologi",
       "route": "/metodologi",
-      "status": 200,
-      "overflow": {
-        "scrollW": 1440,
-        "clientW": 1440,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/metodologi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/metodologi\", waiting un"
     },
     {
       "theme": "dark-mobile",
       "name": "home",
       "route": "/",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/\", waiting until \"load\"\u001b[22m\n"
     },
     {
       "theme": "dark-mobile",
       "name": "suppressed",
       "route": "/?scope=suppressed",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/?scope=suppressed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/?scope=suppresse"
     },
     {
       "theme": "dark-mobile",
       "name": "radar-v2",
       "route": "/?v=radar",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/?v=radar\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/?v=radar\", waiting until "
     },
     {
       "theme": "dark-mobile",
       "name": "broker",
       "route": "/broker",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/broker\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/broker\", waiting until \"loa"
     },
     {
       "theme": "dark-mobile",
       "name": "broker-inst",
       "route": "/broker?cohort=institutional",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/broker?cohort=institutional\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/broker"
     },
     {
       "theme": "dark-mobile",
       "name": "broker-detail",
       "route": "/broker/XL",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/broker/XL\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/broker/XL\", waiting unti"
     },
     {
       "theme": "dark-mobile",
       "name": "dossier",
       "route": "/saham/ADRO",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/ADRO\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/ADRO\", waiting un"
     },
     {
       "theme": "dark-mobile",
       "name": "dossier-exit",
       "route": "/saham/PNLF",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/PNLF\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/PNLF\", waiting un"
     },
     {
       "theme": "dark-mobile",
       "name": "kasus",
       "route": "/kasus",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/kasus\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/kasus\", waiting until \"load\""
     },
     {
       "theme": "dark-mobile",
       "name": "asing",
       "route": "/asing",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/asing\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/asing\", waiting until \"load\""
     },
     {
       "theme": "dark-mobile",
       "name": "rotasi",
       "route": "/rotasi",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/rotasi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/rotasi\", waiting until \"loa"
     },
     {
       "theme": "dark-mobile",
       "name": "metodologi",
       "route": "/metodologi",
-      "status": 200,
-      "overflow": {
-        "scrollW": 360,
-        "clientW": 360,
-        "off": []
-      },
-      "errors": []
+      "error": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/metodologi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/metodologi\", waiting un"
     }
   ],
-  "failures": []
+  "failures": [
+    "light/dossier: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/ADRO\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/ADRO\", waiting un",
+    "light/dossier-exit: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/PNLF\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/PNLF\", waiting un",
+    "light/kasus: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/kasus\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/kasus\", waiting until \"load\"",
+    "light/asing: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/asing\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/asing\", waiting until \"load\"",
+    "light/rotasi: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/rotasi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/rotasi\", waiting until \"loa",
+    "light/metodologi: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/metodologi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/metodologi\", waiting un",
+    "dark-mobile/home: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/\", waiting until \"load\"\u001b[22m\n",
+    "dark-mobile/suppressed: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/?scope=suppressed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/?scope=suppresse",
+    "dark-mobile/radar-v2: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/?v=radar\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/?v=radar\", waiting until ",
+    "dark-mobile/broker: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/broker\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/broker\", waiting until \"loa",
+    "dark-mobile/broker-inst: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/broker?cohort=institutional\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/broker",
+    "dark-mobile/broker-detail: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/broker/XL\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/broker/XL\", waiting unti",
+    "dark-mobile/dossier: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/ADRO\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/ADRO\", waiting un",
+    "dark-mobile/dossier-exit: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/saham/PNLF\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/saham/PNLF\", waiting un",
+    "dark-mobile/kasus: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/kasus\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/kasus\", waiting until \"load\"",
+    "dark-mobile/asing: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/asing\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/asing\", waiting until \"load\"",
+    "dark-mobile/rotasi: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/rotasi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/rotasi\", waiting until \"loa",
+    "dark-mobile/metodologi: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3107/metodologi\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3107/metodologi\", waiting un"
+  ]
 }

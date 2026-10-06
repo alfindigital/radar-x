@@ -243,11 +243,17 @@ export default async function SubsectorPage({ params }: PageProps<"/rotasi/[sub]
 
       {row.netForeignFlow !== null && (
         <p className="text-[11px] faint">
-          Net foreign flow over members on {row.flowDate}:{" "}
+          Net foreign flow on {row.flowDate}
+          {row.flowObserved != null && row.flowExpected != null && (
+            <>
+              {" "}across {row.flowObserved} of {row.flowExpected} member issuers
+            </>
+          )}
+          :{" "}
           <span className={`mono ${row.netForeignFlow >= 0 ? "acc" : "dist"}`}>
             {row.netForeignFlow >= 0 ? "+" : "−"}Rp{fmtIDR(Math.abs(row.netForeignFlow))}
           </span>
-          . Members without stored flow rows count as zero.
+          . Members without stored flow rows are not counted.
         </p>
       )}
     </div>

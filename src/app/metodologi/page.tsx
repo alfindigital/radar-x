@@ -64,6 +64,10 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
           <li><span className="mono">retailAbsorb · 20%</span>: net flow of brokers classified <em>retail</em> (inverted: retail net buying raises the reading as absorption of exit supply).</li>
         </ul>
         <p className="dim">
+          An N-day window covers exactly N calendar dates ending at the as-of date: for as-of 2026-10-01 the 14-day
+          window is 2026-09-18 to 2026-10-01 inclusive and the 90-day insider window is 2026-07-04 to 2026-10-01.
+        </p>
+        <p className="dim">
           Each component is a clipped robust z-score (±3σ) across the scored universe. The score publishes only when at
           least half of the component weight has usable evidence; otherwise the issuer is listed as{" "}
           <em>suppressed / low coverage</em>, never scored zero. Missing components are shown with their reason.

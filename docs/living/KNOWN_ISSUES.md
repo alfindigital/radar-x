@@ -12,3 +12,6 @@
 | 8 | ~~`brokers_top.json` hanya cohort "all"~~ → **RESOLVED 2026-10-05**: leaderboard di-ingest per kohort (`cohort` param); `/broker?cohort=` institutional=39 / retail=5 | v3 | done |
 | 9 | ~~259/962 daily series~~ → **RESOLVED 2026-10-05**: universe-wide broker backfill (`broker_rows` 92.7k→145.9k, 647 calls) → **863/962** simbol punya series | v3 | done |
 | 10 | ~~Deployment: belum ada live URL~~ → **RESOLVED 2026-10-05**: `outputFileTracingIncludes` di `next.config.ts` membawa `data/*.json` (~85MB) ke tiap function bundle; v3 live di https://radar-x-beta.vercel.app/ — smoke `/`, `/broker?cohort=institutional`, `/saham/ADRO`, `/?v=radar`, `/?scope=suppressed`, `/metodologi` semua 200 | v3 | done |
+| 11 | COAL.JK cross-feed anomaly: daily institutional net ~650% cap, CP Sep18 avg-sell 77.3549 vs close 31 / volume 0 — belum diverifikasi semantics sumber; quarantine dari klaim | 2026-10-06 | pending source check |
+| 12 | `braces` 3.0.3 advisory (5 high, dev-only chain via eslint-plugin-next) — belum ada versi patch; fix resmi butuh downgrade eslint-config-next 14 → ditunda | 2026-10-06 | monitor |
+| 13 | CSP header belum dipasang (bootstrap inline scripts butuh nonce); X-Frame-Options/nosniff/Referrer-Policy sudah di next.config | 2026-10-06 | follow-up |

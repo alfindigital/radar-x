@@ -94,7 +94,13 @@ if (extraLinks.rotasiSub) await visit('rotasi-sub', extraLinks.rotasiSub);
 if (extraLinks.orang) await visit('orang', extraLinks.orang);
 
 await browser.close();
-fs.writeFileSync(`${OUT}/report.json`, JSON.stringify(report, null, 2));
+const failures = [];
+for (const r of report) {
+  if (r.error) failures.push(`${r.route}: ${r.error}`);
+  else if (r.overflowX > 0) failures.push(`${r.route}: horizontal overflow +${r.overflowX}px`);
+  if (r.consoleErrors?.length) failures.push(`${r.route}: ${r.consoleErrors.length} console error(s)`);
+}
+fs.writeFileSync(`${OUT}/report.json`, JSON.stringify({ report, failures }, null, 2));
 for (const r of report) {
   const flag = r.error ? 'ERR' : r.overflowX > 0 ? `OVERFLOW+${r.overflowX}px` : 'ok';
   console.log(`${flag.padEnd(14)} ${r.route}  (${r.ms}ms, h=${r.pageH ?? '?'}${r.consoleErrors?.length ? ', consoleErr=' + r.consoleErrors.length : ''})`);
@@ -102,3 +108,8 @@ for (const r of report) {
   for (const c of r.consoleErrors ?? []) console.log(`   warn: ${c}`);
 }
 console.log('discovered:', JSON.stringify(extraLinks));
+if (failures.length) {
+  console.error(`QA FAILED — ${failures.length} failure(s):`);
+  for (const f of failures) console.error('  -', f);
+  process.exitCode = 1;
+}

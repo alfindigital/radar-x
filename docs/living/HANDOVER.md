@@ -1,24 +1,24 @@
 # HANDOVER — RADAR-X
 
-> Start here kalau sesi/agent baru. Terakhir update: 2026-10-01.
+> Start here kalau sesi/agent baru. Terakhir update: 2026-10-06.
 
 ## Kondisi
 
-- v2 **shipped & verified** di `827d086` (37/37 tests, build clean, snapshot 2026-09-22).
-- v3 "Exit Watch" = **planning complete, zero code**. Semua artefak:
-  - Specs: `specs/PRODUCT_SPEC_V3.md` `TECH_SPEC_V3.md` `DESIGN_SPEC_V3.md` `BROWNFIELD_SPEC.md`
-  - Plan: `docs/superpowers/plans/2026-10-01-exit-watch.md`
-  - Tasks: `docs/superpowers/plans/2026-10-01-exit-watch/tasks/TASK-01..12.md` + `TODO.md`
-- Tunggu: user approve plan + pilih execution mode (subagent-driven vs native).
+- v3 "Exit Watch" **shipped, redesigned, audited, dan diremediasi** — lihat `docs/AUDIT-2026-10-06.md` (32 temuan) + bagian "Status remediasi" di akhirnya.
+- HEAD `f659a5e` + satu layer remediasi lanjutan (konvensi window inclusive, coverage flow rotasi, budget calls, self-expiry scheduler).
+- Snapshot frozen as-of **2026-10-01**: 962 rows → 247 publishable (66 high / 44 elevated / 79 watch / 58 low), 715 suppressed-not-zero; 161 candidate cases.
+- **Konvensi window (final):** N-day = N tanggal kalender inklusif berakhir di as-of. 14d → `asOf−13` (2026-09-18→10-01); 90d insider → `asOf−89` (2026-07-04→10-01). Terdokumentasi di `/metodologi`.
+- Gates hijau: `npm test` 53/53 · typecheck · lint (1 warning pre-existing) · `audit:data` ok · build Next 16.3.8 · qa-redesign 36/36 · qa-mobile fail-asli · E2E 15 pass / 9 skip by-design.
+- Produksi `radarx.web.id` masih artifact **pra-remediasi** — angka live akan berubah saat deploy berikutnya.
 
 ## Konteks penting untuk executor
 
-1. Terminologi register institusional (commit `827d086`) — dilarang "smart money"/"bandar".
+1. Terminologi register institusional — dilarang "smart money"/"bandar".
 2. `*.json` LF-locked via `.gitattributes` — jangan tulis CRLF di data files.
 3. `tests/` excluded dari tsconfig — tes jalan via `tsx --test`, bukan typecheck.
-4. Sectors API key: `SECTORS_API_KEY` di `.env.local` / DPAPI vault; ~3.000 credits total 3 key; v3 backfill budget ~500.
-5. 26 dari 37 endpoint IDX belum dipakai v2 — v3 memakai 6 di antaranya.
-6. Deadline 2026-10-08 23:59 WIB; video submission perlu re-record setelah v3.
+4. Sectors API key: `SECTORS_API_KEYS` pool di `.env.local`; `SECTORS_CALL_BUDGET` membatasi billed calls per proses.
+5. `RadarX-DailyIngest` (task OS): script self-expire setelah 2026-10-11 dan menjalankan ingest→compute→audit lokal saja; publish tetap manual.
+6. Deadline 2026-10-08 23:59 WIB; **video submission WAJIB re-record** — angka berubah pasca-remediasi (MTLA 80→54, high tier 61→66).
 
 ## Kalau plan berubah
 

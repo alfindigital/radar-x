@@ -50,7 +50,7 @@ symbols after the universe-wide broker backfill (647 calls, 404s = honest
 
 ## Exit Watch distribution (as-of 2026-10-01)
 
-247 publishable of 962 tracked: **61 high · 48 elevated · 79 watch · 59 low**,
+247 publishable of 962 tracked: **66 high · 44 elevated · 79 watch · 58 low**,
 715 suppressed for insufficient component coverage (never scored zero).
 Post-audit fixes verified: `window.from` equals the 14-day bound on all 962
 rows; empty `cohort_top` sides are missing evidence (not zero); `sparse_broker`

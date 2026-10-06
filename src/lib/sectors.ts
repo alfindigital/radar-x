@@ -42,6 +42,12 @@ const keyPool = {
 
 const REQUEST_TIMEOUT_MS = 30_000;
 
+// Hard per-process call ceiling (billed requests, not logical calls — every
+// fetch attempt counts). 0/unset = unlimited. The daily ingest runner sets a
+// budget so a runaway stage cannot burn the provider quota.
+let callsMade = 0;
+const CALL_BUDGET = Number(process.env.SECTORS_CALL_BUDGET ?? 0) || 0;
+
 export async function sectorsGet<T>(path: string, params?: Record<string, string | number>): Promise<T> {
   const url = new URL(`${BASE}${path}`);
   if (params) {
@@ -67,6 +73,9 @@ export async function sectorsGet<T>(path: string, params?: Record<string, string
       continue;
     }
     const keyIndex = keys().indexOf(k);
+    if (CALL_BUDGET > 0 && ++callsMade > CALL_BUDGET) {
+      throw new Error(`sectors: call budget ${CALL_BUDGET} exceeded — aborting ${path}`);
+    }
     try {
       res = await fetch(url.toString(), {
         headers: { Authorization: k },

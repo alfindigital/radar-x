@@ -16,7 +16,7 @@ export default function MobileNav() {
               key={item.href}
               href={item.href}
               aria-current={active ? "page" : undefined}
-              className={`inline-flex min-h-10 items-center whitespace-nowrap px-3 text-center font-mono text-[11px] uppercase tracking-wider ${
+              className={`inline-flex min-h-11 items-center whitespace-nowrap px-3 text-center font-mono text-[11px] uppercase tracking-wider ${
                 active ? "bg-panel-2 text-acc" : "dim"
               }`}
               style={{ borderRadius: "var(--radius-sm)" }}

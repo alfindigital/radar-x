@@ -2,6 +2,8 @@
 
 This file records the latest release checks and the verified public deployment. It does not certify a video URL, social post, or portal submission.
 
+> **Update 2026-10-06:** the rows below describe the 2026-09-22 release and are kept as the historical record. Current state after the 2026-10-06 audit remediation (`f659a5e` + follow-ups): as-of 2026-10-01, 962 scores (866 non-null), 161 candidates, outcomes 198 complete / 127 pending / 158 unavailable, Exit Watch 247 publishable (66 high / 44 elevated / 79 watch / 58 low), `npm test` 54/54. Authoritative current state: `docs/living/CURRENT_STATE.md`.
+
 ## Revision and workspace
 
 - Worktree: `C:\Users\GEEKOM A8\.codex\worktrees\radarx-readiness\radar-x-hackaton`

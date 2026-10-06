@@ -58,7 +58,7 @@ test("issuer dossier shows exit watch panel, cohort chart, coverage, and recent-
   // the suspension date proves slice(0,3) renders the newest records, not the oldest.
   await page.goto("/saham/SONA");
   await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
-  await expect(page.getByText(/14-day window 2026-09-17 → 2026-10-01/)).toBeVisible();
+  await expect(page.getByText(/14-day window 2026-09-18 → 2026-10-01/)).toBeVisible();
   await expect(page.getByText(/coverage \d+\.\d+/)).toBeVisible();
   await expect(page.getByText(/Cohort net flow \(\d+ sessions\)/)).toBeVisible();
   await expect(page.locator("svg").first()).toBeVisible();

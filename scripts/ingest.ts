@@ -502,7 +502,7 @@ async function ingestRotation() {
       .slice(0, 8);
 
     const netFlow = members.reduce((sum, sym) => sum + (flowBySymbol.get(sym) ?? 0), 0);
-    const hasFlow = members.some((sym) => flowBySymbol.has(sym));
+    const flowObserved = members.filter((sym) => flowBySymbol.has(sym)).length;
 
     const vHist = rep.valuation?.historical_valuation ?? null;
     const vYear = vHist ? Object.keys(vHist).sort().at(-1) : undefined;
@@ -529,8 +529,10 @@ async function ingestRotation() {
       rsd: rep.stability?.weighted_rsd_close ?? null,
       topChange,
       members: members.sort(),
-      netForeignFlow: hasFlow ? netFlow : null,
-      flowDate: hasFlow ? latestFlowDate : null,
+      netForeignFlow: flowObserved > 0 ? netFlow : null,
+      flowDate: flowObserved > 0 ? latestFlowDate : null,
+      flowObserved,
+      flowExpected: members.length,
       valuationLatest: vYear && v
         ? {
             year: vYear,

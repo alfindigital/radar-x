@@ -32,8 +32,10 @@ export interface RotationSubsector {
   rsd: number | null;
   topChange: RotationMover[]; // strongest 1m movers inside the subsector
   members: string[]; // .JK symbols belonging to this subsector
-  netForeignFlow: number | null; // latest stored foreign-flow day, summed over members (IDR)
+  netForeignFlow: number | null; // latest stored foreign-flow day, summed over observed members (IDR)
   flowDate: string | null;
+  flowObserved: number | null; // members with a stored flow row on flowDate
+  flowExpected: number | null; // members mapped to this subsector
   // valuation/growth sections — present only when ingested with those sections
   valuationLatest: {
     year: string;

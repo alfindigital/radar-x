@@ -5,7 +5,7 @@ import type { SymbolData } from "../src/lib/score";
 import type { BrokerSummaryRow, FlowDaily, InsiderTrade, PriceDaily } from "../src/lib/types";
 
 const AS_OF = "2026-10-01";
-const WIN_FROM = "2026-09-17";
+const WIN_FROM = "2026-09-18"; // 14-day window = 14 inclusive dates [asOf-13, asOf]
 const CAP = 1_000_000_000_000; // 1T IDR
 
 function sd(overrides: Partial<SymbolData> = {}): SymbolData {
@@ -154,6 +154,26 @@ test("window.from is the 14-day bound, not the earliest component span", () => {
   const [row] = computeExitWatch([sym, ...rest], AS_OF);
   assert.equal(row.window.from, WIN_FROM);
   assert.equal(row.window.to, AS_OF);
+});
+
+test("window boundaries: rows before window.from are excluded, boundary rows count", () => {
+  const sym = input({
+    d: sd({
+      price: [priceRow("2026-09-30")],
+      broker: [bRow("YP", -1e9, "2026-09-17"), bRow("YP", -2e9, WIN_FROM)],
+      flow: [fRow(-3e9, "2026-09-17"), fRow(-1e9, WIN_FROM)],
+      insider: [iRow("sell", 5e8, "2026-07-03"), iRow("sell", 5e8, "2026-07-04")], // 90d window starts 07-04
+    }),
+  });
+  const rest = [1, 2, 3, 4, 5].map((i) =>
+    input({ d: sd({ symbol: `B${i}.JK`, price: [{ ...priceRow("2026-09-30"), symbol: `B${i}.JK` }], broker: [bRow("YP", i * 1e7)], flow: [fRow(i * 1e7)], insider: [iRow("buy", i * 1e7)] }) }),
+  );
+  const [row] = computeExitWatch([sym, ...rest], AS_OF);
+  assert.ok(Math.abs(row.components.find((c) => c.key === "instExit")!.raw! - 0.2) < 1e-9); // −(−2e9)/1T*100
+  assert.ok(Math.abs(row.components.find((c) => c.key === "foreignExit")!.raw! - 0.1) < 1e-9);
+  const ins = row.components.find((c) => c.key === "insiderExit")!;
+  assert.equal(ins.observedFrom, "2026-07-04");
+  assert.ok(Math.abs(ins.raw! - 0.05) < 1e-9);
 });
 
 test("deterministic: same inputs → identical rows", () => {

@@ -209,7 +209,7 @@ summary:focus-visible {
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 44px; /* WCAG target size */
   padding: 6px 12px;
   color: var(--ink-faint);
   border-bottom: 1px solid transparent;
