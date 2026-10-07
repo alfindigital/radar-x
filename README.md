@@ -4,7 +4,7 @@ RADAR-X is an evidence-first market-intelligence workflow for Indonesian equitie
 
 **Track:** Sectors Hackathon 2026, Track 3 — Market Intelligence
 **Live:** [radarx.web.id](https://radarx.web.id) (www → apex 308; beta alias: radar-x-beta.vercel.app)
-**Current verified snapshot:** through 2026-10-01
+**Current verified snapshot:** through 2026-10-07
 **v3:** `/` is the Exit Watch board (cohort-labeled exit pressure); the v2 radar board is preserved at `/?v=radar`.
 **Submission deadline in the current rules:** 8 October 2026, 23:59 WIB
 
@@ -47,7 +47,7 @@ data/*.json (frozen Sectors snapshot)
                               └── services.ts → Next.js research pages
 ```
 
-The current manifest records 962 score rows (866 non-null v2 scores), 161 candidate patterns, 198 complete outcomes, 127 pending outcomes, and 158 unavailable paired outcomes, plus 247 publishable Exit Watch readings (66 high / 44 elevated / 79 watch / 58 low). These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
+The current manifest records 962 score rows (865 non-null v2 scores), 169 candidate patterns, 198 complete outcomes, 106 pending outcomes, and 203 unavailable paired outcomes, plus 244 publishable Exit Watch readings (57 high / 46 elevated / 90 watch / 51 low). These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
 
 ## Method limits
 

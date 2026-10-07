@@ -4,7 +4,7 @@
 
 This checkout contains the merged Sectors Hackathon 2026 Track 3 release candidate, now running the **v3 "Exit Watch" engine** (`radarx-v3`; v2 board preserved at `/?v=radar`). Production is live at **[radarx.web.id](https://radarx.web.id)** (custom domain via Cloudflare DNS → Vercel, www 308→apex, verified 200 on 2026-10-05); beta alias [radar-x-beta.vercel.app](https://radar-x-beta.vercel.app/). `outputFileTracingIncludes` ships `data/*.json` (~85MB) into each function bundle; all v3 routes smoke-verified 200 on 2026-10-05. The portal screenshot is still a draft; **Submit final** has not been clicked.
 
-The app serves a hash-verified Sectors snapshot through **2026-10-01**: `exitwatch.json` = 962 rows → 247 publishable readings (66 high / 44 elevated / 79 watch / 58 low), 715 suppressed-not-zero. Date windows are inclusive-count: a 14-day window ends at as-of and starts at as-of − 13 (2026-09-18 → 2026-10-01); the 90-day insider window starts at as-of − 89 (2026-07-04). Snapshot coverage: prices + foreign flow 2026-06-22 → 10-01, filings through 10-02, broker rows through 10-01, monthly holders through 2026-09-30 EOM. See [CLAIMS.md](CLAIMS.md) for traceable statements.
+The app serves a hash-verified Sectors snapshot through **2026-10-07** (daily ingest refreshes local data + recomputes each evening; publish stays manual): `exitwatch.json` = 962 rows → 244 publishable readings (57 high / 46 elevated / 90 watch / 51 low), 718 suppressed-not-zero. Date windows are inclusive-count: an N-day window ends at as-of and starts at as-of − (N−1) — e.g. for as-of 2026-10-07 the 14-day window is 2026-09-24 → 10-07 and the 90-day insider window is 2026-07-10 → 10-07. See [CLAIMS.md](CLAIMS.md) for traceable statements.
 
 ### Key pool (added 2026-10-02)
 

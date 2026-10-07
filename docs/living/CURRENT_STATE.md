@@ -6,8 +6,9 @@
   preserved at `/?v=radar`.
 - **Gates:** `npm test` 53/53 · `typecheck` clean · `lint` 0 errors ·
   `audit:data` exit 0 · `build` clean (Next 16.3.8) ·
-  `compute --as-of 2026-10-01` → exitwatch.json 962 rows (247 publishable:
-  66 high / 44 elevated / 79 watch / 58 low, 715 suppressed-not-zero).
+  `compute --as-of 2026-10-07` (daily ingest) → exitwatch.json 962 rows
+  (244 publishable: 57 high / 46 elevated / 90 watch / 51 low, 718
+  suppressed-not-zero; cases 169; outcomes 198/106/203).
 - **Audit 2026-10-06 (`docs/AUDIT-2026-10-06.md`, 32 findings):** semua P1 +
   P2 kritis diremediasi di `f659a5e`; sisanya (window convention, rotation
   coverage, scheduler contract, docs) ditutup di sesi ini.
