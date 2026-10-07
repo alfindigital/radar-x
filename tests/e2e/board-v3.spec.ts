@@ -1,4 +1,16 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
+// Expected observation window derives from the committed manifest — never
+// hardcode dates: every daily refresh shifts asOf and the window with it.
+const manifest = JSON.parse(
+  readFileSync(path.resolve(__dirname, "../../data/derived-v2/manifest.json"), "utf8"),
+) as { asOf: string };
+const asOf = manifest.asOf;
+const winFrom = new Date(Date.parse(`${asOf}T00:00:00Z`) - 13 * 86400000)
+  .toISOString()
+  .slice(0, 10);
 
 test.beforeEach(async ({ page }) => {
   await page.route("**/*", async (route) => {
@@ -54,11 +66,11 @@ test("preserved v2 board still renders at ?v=radar", async ({ page }, testInfo) 
 
 test("issuer dossier shows exit watch panel, cohort chart, coverage, and recent-suspension context", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile-chrome", "Dossier layout verified on desktop only.");
-  // SONA.JK: scored 41 with suspension_recent flag and a 2026-10-01 suspension —
-  // the suspension date proves slice(0,3) renders the newest records, not the oldest.
+  // SONA.JK: suspension_recent flag set and a 2026-10-01 suspension record —
+  // that date is a historical fact and survives snapshot refreshes.
   await page.goto("/saham/SONA");
   await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
-  await expect(page.getByText(/14-day window 2026-09-18 → 2026-10-01/)).toBeVisible();
+  await expect(page.getByText(`14-day window ${winFrom} → ${asOf}`)).toBeVisible();
   await expect(page.getByText(/coverage \d+\.\d+/)).toBeVisible();
   await expect(page.getByText(/Cohort net flow \(\d+ sessions\)/)).toBeVisible();
   await expect(page.locator("svg").first()).toBeVisible();
