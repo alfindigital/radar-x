@@ -3,7 +3,7 @@
 //   npx tsx scripts/ingest.ts tickers
 //   npx tsx scripts/ingest.ts taxonomy [--full] [--limit N]
 //   npx tsx scripts/ingest.ts flows|prices|holders|broker [--limit N]
-// Env: reads .env.local (SECTORS_API_KEY, DATA_SOURCE)
+// Env: reads .env.local (SECTORS_API_KEY / SECTORS_API_KEYS pool)
 
 import { readFileSync } from "fs";
 import path from "path";

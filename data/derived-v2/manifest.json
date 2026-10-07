@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "engineVersion": "radarx-v2",
   "asOf": "2026-10-07",
-  "inputHash": "4f5aa09f7a1c0d4b2985d2b81a6d754ba2fd8035cbb2f64ec46cff307a4c3f90",
-  "generatedAt": "2026-10-07T11:11:23.707Z",
+  "inputHash": "746bd12f24e17eb29fcf2eb05744feaace34c1b50f2b12da8636eecc31489b3c",
+  "generatedAt": "2026-10-07T15:40:42.903Z",
   "files": [
     {
       "path": "scores.json",

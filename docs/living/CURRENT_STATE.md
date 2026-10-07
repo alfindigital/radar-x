@@ -1,6 +1,6 @@
 # CURRENT_STATE — RADAR-X
 
-> Update tiap akhir task. Terakhir: 2026-10-06 (audit remediation P1+P2 selesai, semua deferred items closed).
+> Update tiap akhir task. Terakhir: 2026-10-07 (snapshot 10-07 live di radarx.web.id; cleanup: dead v2 runtime loads + schema.sql + supabase stub dihapus, sharp/source-map-js dipatch).
 
 - **Version:** `radarx-v3` **Exit Watch — built, audited, remediated.** v2 board
   preserved at `/?v=radar`.

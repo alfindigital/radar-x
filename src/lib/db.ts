@@ -1,16 +1,14 @@
-// Data store adapter. DATA_SOURCE=json → local files in ./data (dev + static demo).
-// DATA_SOURCE=supabase → Supabase Postgres (prod). Same interface, swap via env.
+// Data store adapter — local JSON files in ./data. Single backend; ingest writes
+// here, compute derives artifacts, and the request path never touches this.
 
 import { promises as fs } from "fs";
 import path from "path";
 import { mergePriceObservation } from "./price-merge";
 import type {
   BrokerSummaryRow,
-  CaseRecord,
   FlowDaily,
   HoldersMonthly,
   InsiderTrade,
-  PositioningScore,
   PriceDaily,
   PriceObservation,
   Ticker,
@@ -38,13 +36,6 @@ export interface DataStore {
   // holders
   upsertHolders(rows: HoldersMonthly[]): Promise<number>;
   getHolders(symbol: string): Promise<HoldersMonthly[]>;
-  // cases & scores
-  upsertCases(rows: CaseRecord[]): Promise<number>;
-  listCases(filter?: { symbol?: string; pattern?: string; limit?: number }): Promise<CaseRecord[]>;
-  getCase(id: string): Promise<CaseRecord | null>;
-  upsertScores(rows: PositioningScore[]): Promise<number>;
-  latestScores(limit?: number): Promise<PositioningScore[]>;
-  getScore(symbol: string): Promise<PositioningScore | null>;
   // ingest log
   log(job: string, creditsEst: number, rows: number, status: string): Promise<void>;
 }
@@ -59,8 +50,6 @@ const FILES = {
   price: "price_daily.json",
   broker: "broker_rows.json",
   holders: "holders_monthly.json",
-  cases: "cases.json",
-  scores: "positioning_scores.json",
   log: "ingest_log.jsonl",
 } as const;
 
@@ -243,50 +232,6 @@ export class JsonStore implements DataStore {
     return rows.sort((a, b) => a.month.localeCompare(b.month));
   }
 
-  async upsertCases(rows: CaseRecord[]): Promise<number> {
-    return serialized(FILES.cases, async () => {
-      const map = new Map<string, CaseRecord>();
-      for (const r of await readJson<CaseRecord[]>(FILES.cases, [])) map.set(r.id, r);
-      for (const r of rows) map.set(r.id, r);
-      const all = [...map.values()].sort((a, b) => b.anchorDate.localeCompare(a.anchorDate) || b.score - a.score);
-      await writeJson(FILES.cases, all);
-      return rows.length;
-    });
-  }
-  async listCases(filter: { symbol?: string; pattern?: string; limit?: number } = {}): Promise<CaseRecord[]> {
-    let rows = await readJson<CaseRecord[]>(FILES.cases, []);
-    if (filter.symbol) rows = rows.filter((r) => r.symbol === filter.symbol);
-    if (filter.pattern) rows = rows.filter((r) => r.pattern === filter.pattern);
-    rows.sort((a, b) => b.score - a.score || b.anchorDate.localeCompare(a.anchorDate));
-    return filter.limit ? rows.slice(0, filter.limit) : rows;
-  }
-  async getCase(id: string): Promise<CaseRecord | null> {
-    const rows = await readJson<CaseRecord[]>(FILES.cases, []);
-    return rows.find((r) => r.id === id) ?? null;
-  }
-
-  async upsertScores(rows: PositioningScore[]): Promise<number> {
-    return serialized(FILES.scores, async () => {
-      const map = new Map<string, PositioningScore>();
-      for (const r of await readJson<PositioningScore[]>(FILES.scores, [])) map.set(`${r.symbol}|${r.week}`, r);
-      for (const r of rows) map.set(`${r.symbol}|${r.week}`, r);
-      await writeJson(FILES.scores, [...map.values()]);
-      return rows.length;
-    });
-  }
-  async latestScores(limit?: number): Promise<PositioningScore[]> {
-    const rows = await readJson<PositioningScore[]>(FILES.scores, []);
-    const latestWeek = rows.reduce<string | null>((m, r) => (m === null || r.week > m ? r.week : m), null);
-    const cur = rows.filter((r) => r.week === latestWeek).sort((a, b) => b.score - a.score);
-    return limit === undefined ? cur : cur.slice(0, limit);
-  }
-  async getScore(symbol: string): Promise<PositioningScore | null> {
-    const rows = (await readJson<PositioningScore[]>(FILES.scores, []))
-      .filter((r) => r.symbol === symbol)
-      .sort((a, b) => b.week.localeCompare(a.week));
-    return rows[0] ?? null;
-  }
-
   async log(job: string, creditsEst: number, rows: number, status: string): Promise<void> {
     await serialized(FILES.log, async () => {
       await fs.mkdir(DATA_DIR, { recursive: true });
@@ -302,11 +247,6 @@ let cached: DataStore | null = null;
 
 export function getStore(): DataStore {
   if (cached) return cached;
-  const source = process.env.DATA_SOURCE ?? "json";
-  if (source === "supabase") {
-    // Supabase impl lands with deploy wiring; fall back loudly to json for now.
-    console.warn("[db] DATA_SOURCE=supabase requested but SupabaseStore not wired yet — using JsonStore");
-  }
   cached = new JsonStore();
   return cached;
 }

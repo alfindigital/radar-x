@@ -216,8 +216,6 @@ export interface SnapshotIndexes {
   priceBySymbol: Record<string, number[]>;
   brokerBySymbol: Record<string, number[]>;
   holdersBySymbol: Record<string, number[]>;
-  casesBySymbol: Record<string, number[]>;
-  scoresBySymbol: Record<string, number[]>;
 }
 
 export interface Snapshot {
@@ -227,8 +225,6 @@ export interface Snapshot {
   price: PriceDaily[];
   broker: BrokerSummaryRow[];
   holders: HoldersMonthly[];
-  cases: CaseRecord[];
-  scores: PositioningScore[];
   indexes: SnapshotIndexes;
   manifest: SnapshotManifest;
 }

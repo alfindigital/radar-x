@@ -15,3 +15,5 @@
 | 11 | COAL.JK cross-feed anomaly: daily institutional net ~650% cap, CP Sep18 avg-sell 77.3549 vs close 31 / volume 0 — belum diverifikasi semantics sumber; quarantine dari klaim | 2026-10-06 | pending source check |
 | 12 | `braces` 3.0.3 advisory (5 high, dev-only chain via eslint-plugin-next) — belum ada versi patch; fix resmi butuh downgrade eslint-config-next 14 → ditunda | 2026-10-06 | monitor |
 | 13 | CSP header belum dipasang (bootstrap inline scripts butuh nonce); X-Frame-Options/nosniff/Referrer-Policy sudah di next.config | 2026-10-06 | follow-up |
+| 14 | ~~`sharp` 0.35.4 (CVE-2026-96889, runtime via next image-opt) + `source-map-js` 1.2.1~~ → **RESOLVED 2026-10-07**: `npm audit fix` → sharp 0.35.5, source-map-js 1.2.2; audit kini 5 high (braces dev-only saja) | v3 | done |
+| 15 | ~~`data/cases.json`+`positioning_scores.json` (v2 lineage) dimuat tiap request tapi tak pernah dirender~~ → **RESOLVED 2026-10-07**: files dihapus; `Snapshot`/`DataStore` dibersihkan; schema.sql + stub supabase dibuang | v3 | done |

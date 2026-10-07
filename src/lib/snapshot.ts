@@ -4,11 +4,9 @@ import path from "node:path";
 import { cachedFileLoad } from "./filecache";
 import type {
   BrokerSummaryRow,
-  CaseRecord,
   FlowDaily,
   HoldersMonthly,
   InsiderTrade,
-  PositioningScore,
   PriceDaily,
   Snapshot,
   SnapshotIndexes,
@@ -23,8 +21,6 @@ const DATA_FILES = [
   ["price_daily.json", "price"],
   ["broker_rows.json", "broker"],
   ["holders_monthly.json", "holders"],
-  ["cases.json", "cases"],
-  ["positioning_scores.json", "scores"],
 ] as const;
 
 const DEFAULT_DATA_DIR = path.join(process.cwd(), "data");
@@ -64,8 +60,6 @@ function emptyIndexes(): SnapshotIndexes {
     priceBySymbol: {},
     brokerBySymbol: {},
     holdersBySymbol: {},
-    casesBySymbol: {},
-    scoresBySymbol: {},
   };
 }
 
@@ -135,16 +129,12 @@ async function loadSnapshotUncached(dataDir: string): Promise<Snapshot> {
   const price = (raw.get("price_daily.json")!.rows as unknown as PriceDaily[]).map(normalizePriceRow);
   const broker = raw.get("broker_rows.json")!.rows as unknown as BrokerSummaryRow[];
   const holders = raw.get("holders_monthly.json")!.rows as unknown as HoldersMonthly[];
-  const cases = raw.get("cases.json")!.rows as unknown as CaseRecord[];
-  const scores = raw.get("positioning_scores.json")!.rows as unknown as PositioningScore[];
   const indexes = emptyIndexes();
   indexRows(indexes.insiderBySymbol, insider);
   indexRows(indexes.flowBySymbol, flow);
   indexRows(indexes.priceBySymbol, price);
   indexRows(indexes.brokerBySymbol, broker);
   indexRows(indexes.holdersBySymbol, holders);
-  indexRows(indexes.casesBySymbol, cases);
-  indexRows(indexes.scoresBySymbol, scores);
 
   return {
     tickers,
@@ -153,8 +143,6 @@ async function loadSnapshotUncached(dataDir: string): Promise<Snapshot> {
     price,
     broker,
     holders,
-    cases,
-    scores,
     indexes,
     manifest: {
       schemaVersion: 2,

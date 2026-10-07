@@ -36,9 +36,7 @@ function snapshot(): Snapshot {
     ],
     broker: [],
     holders: [],
-    cases: [],
-    scores: [],
-    indexes: { insiderBySymbol: {}, flowBySymbol: {}, priceBySymbol: {}, brokerBySymbol: {}, holdersBySymbol: {}, casesBySymbol: {}, scoresBySymbol: {} },
+    indexes: { insiderBySymbol: {}, flowBySymbol: {}, priceBySymbol: {}, brokerBySymbol: {}, holdersBySymbol: {} },
     manifest: { schemaVersion: 2, engineVersion: "radarx-v2", asOf: "2026-09-22", files: [], inputHash: "input-hash", generatedAt: "2026-09-22T00:00:00Z" },
   };
 }

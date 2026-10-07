@@ -12,8 +12,6 @@ const files = [
   "price_daily.json",
   "broker_rows.json",
   "holders_monthly.json",
-  "cases.json",
-  "positioning_scores.json",
 ] as const;
 
 async function fixtureDir(overrides: Partial<Record<(typeof files)[number], unknown>> = {}) {
@@ -26,8 +24,6 @@ async function fixtureDir(overrides: Partial<Record<(typeof files)[number], unkn
     "price_daily.json": [],
     "broker_rows.json": [],
     "holders_monthly.json": [],
-    "cases.json": [],
-    "positioning_scores.json": [],
     ...overrides,
   };
   await Promise.all(files.map((file) => writeFile(path.join(dir, file), JSON.stringify(values[file]), "utf8")));

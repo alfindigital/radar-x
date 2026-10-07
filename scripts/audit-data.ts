@@ -9,8 +9,6 @@ const DATA_FILES = [
   "price_daily.json",
   "broker_rows.json",
   "holders_monthly.json",
-  "cases.json",
-  "positioning_scores.json",
 ] as const;
 
 type JsonRow = Record<string, unknown>;
@@ -32,8 +30,6 @@ function rowKey(file: string, row: JsonRow): string {
     case "price_daily.json": return [row.symbol, row.date].join("|");
     case "broker_rows.json": return [row.symbol, row.date, row.brokerCode].join("|");
     case "holders_monthly.json": return [row.symbol, row.month].join("|");
-    case "cases.json": return String(row.id ?? "");
-    case "positioning_scores.json": return [row.symbol, row.week].join("|");
     default: return JSON.stringify(row);
   }
 }
