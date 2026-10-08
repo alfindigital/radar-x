@@ -38,7 +38,7 @@ function ScopeMark() {
         <path d="M12 12 L12 2.6 A9.4 9.4 0 0 1 18.65 5.35 Z" fill="var(--acc)" fillOpacity="0.3" />
         <circle cx="12" cy="12" r="9.4" stroke="var(--acc)" strokeWidth="1.9" />
         <line x1="12" y1="12" x2="18.5" y2="5.5" stroke="var(--acc)" strokeWidth="1.8" strokeLinecap="round" />
-        <circle cx="15" cy="6.8" r="1.5" fill="var(--acc)" />
+        <circle cx="13.8" cy="7.1" r="1.5" fill="var(--acc)" />
         <circle cx="12" cy="12" r="1.4" fill="var(--acc)" />
       </svg>
     </span>

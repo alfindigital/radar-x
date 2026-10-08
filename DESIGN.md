@@ -77,9 +77,13 @@ badges (R-11). Terminals are rectangles; curves are reserved for the radar motif
 
 ## Motif (identity)
 
-- Radar scope: concentric-ring mark in a bordered console badge beside the
-  wordmark; a single blip. Same mark doubles as favicon (`icon.svg`/`icon.png`/
-  `favicon.ico`). Used once in the header — nowhere else.
+- Radar scope: phosphor-wedge mark (ring + lit sweep sector + beam + one blip
+  inside the sector) in a bordered console badge beside the wordmark. Same mark
+  doubles as favicon (`icon.svg`/`icon.png`/`favicon.ico`). Used once in the
+  header — nowhere else.
+- Wordmark: `RadarX` — Archivo 800, tight tracking; the X carries the phosphor
+  accent as the wordmark's blip. Mono stays reserved for data, not the brand
+  signature (RADAR-X uppercase-mono read as terminal costume).
 - Theme control is one icon button cycling system → light → dark (monitor /
   sun / moon glyphs). Text labels on a segmented control read as generic UI;
   the icon communicates the state itself.
