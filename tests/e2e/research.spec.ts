@@ -22,7 +22,7 @@ test("desktop research journey keeps negative distribution and source evidence",
   await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   await expect(page.getByText(/market data through/)).toBeVisible();
 
-  await page.getByRole("link", { name: "Distribution" }).click();
+  await page.locator(".tabbar").getByRole("link", { name: "Distribution" }).click();
   await expect(page).toHaveURL(/scope=distribution/);
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
@@ -55,6 +55,10 @@ test("case detail exposes separate outcome status and bounded evidence", async (
 
 test("search resolves a known issuer and an unknown issuer remains explicit", async ({ page }) => {
   await page.goto("/");
+  // Desktop top bar collapses search to an icon button; the mobile nav keeps
+  // the always-open field. Open it only when the button is the visible control.
+  const searchButton = page.getByRole("button", { name: "Search issuer" });
+  if (await searchButton.isVisible()) await searchButton.click();
   const search = page.getByRole("combobox", { name: "Search issuer" });
   await page.waitForTimeout(750);
   await search.fill("BBCA");
