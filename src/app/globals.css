@@ -212,15 +212,14 @@ summary:focus-visible {
   min-height: 44px; /* WCAG target size */
   padding: 6px 12px;
   color: var(--ink-faint);
-  border-bottom: 1px solid transparent;
-  margin-bottom: -1px;
+  border-radius: var(--radius-sm);
 }
 .tab:hover {
   color: var(--ink);
 }
 .tab-active {
   color: var(--acc);
-  border-bottom-color: var(--acc);
+  background: var(--panel-2);
 }
 
 /* Gauge — thin track + fill for scannable readings. */

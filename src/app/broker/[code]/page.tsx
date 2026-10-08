@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { getBrokerProfile } from "@/lib/services";
 import { fmtCurrency } from "@/components/fmt";
+import { Pager, pageHref, paginate } from "@/components/Pager";
 
 export const dynamic = "force-dynamic";
 
-export default async function BrokerProfilePage({ params }: PageProps<"/broker/[code]">) {
+export default async function BrokerProfilePage({ params, searchParams }: PageProps<"/broker/[code]">) {
   const { code } = await params;
+  const sp = await searchParams;
   const p = await getBrokerProfile(code);
 
   if (!p) {
@@ -21,6 +23,8 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
       </div>
     );
   }
+
+  const lbPg = paginate(p.leaderboardAppearances, sp.page);
 
   return (
     <div className="space-y-4">
@@ -54,7 +58,7 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
                 </tr>
               </thead>
               <tbody className="mono text-xs">
-                {p.leaderboardAppearances.map((a) => (
+                {lbPg.rows.map((a) => (
                   <tr key={`${a.date}-${a.cohort}`} className="border-b border-line/40">
                     <td className="py-2 pr-3">{a.date}</td>
                     <td className="py-2 pr-3 dim">{a.cohort}</td>
@@ -69,6 +73,7 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
           ) : (
             <p className="dim py-2 text-xs">No leaderboard appearances in the saved sessions.</p>
           )}
+          <Pager s={lbPg} href={pageHref(`/broker/${code}`, "page")} />
         </section>
 
         <section className="space-y-6">

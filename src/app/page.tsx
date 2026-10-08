@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { getExitBoard, getMarketContext } from "@/lib/services";
+import { getExitBoard, getMarketContext, getRadarBoard } from "@/lib/services";
 import { ExitPressureBadge } from "@/components/ExitPressureBadge";
 import { FlagChips } from "@/components/FlagChips";
+import { Pager, TABLE_PAGE_SIZE, pageHref, paginate } from "@/components/Pager";
 import DataStatus from "@/components/DataStatus";
-import RadarBoardView from "@/components/RadarBoardView";
+import RadarBoardView, { RadarAside } from "@/components/RadarBoardView";
+import Sparkline from "@/components/Sparkline";
 import type { ExitComponent, ExitWatchRow } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -73,7 +75,7 @@ function ComponentCell({ c, kind }: { c: ExitComponent; kind: ExitComponent["key
   );
 }
 
-function Row({ row, rank }: { row: ExitWatchRow; rank: number }) {
+function Row({ row, rank, spark }: { row: ExitWatchRow; rank: number; spark: number[] }) {
   const hot = row.score !== null && row.score >= 75;
   // One focus stop per row exposes every component's evidence (z · raw · obs ·
   // window); the dossier page holds the full breakdown. Per-cell data-tips stay
@@ -89,6 +91,9 @@ function Row({ row, rank }: { row: ExitWatchRow; rank: number }) {
         >
           {row.symbol.replace(".JK", "")}
         </Link>
+      </td>
+      <td className="hidden py-2 pr-4 lg:table-cell">
+        <Sparkline values={spark} cumulative />
       </td>
       <td className="py-3 pr-4">
         <ExitPressureBadge score={row.score} coverage={row.coverage} />
@@ -124,27 +129,19 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
   if (params.v === "radar") {
     const filter = typeof params.f === "string" ? params.f : "all";
-    return <RadarBoardView filter={filter} />;
+    return <RadarBoardView filter={filter} page={params.page} />;
   }
 
-  const PAGE_SIZE = 150;
   const scope = typeof params.scope === "string" ? params.scope : "all";
-  const pageParam = Number(typeof params.page === "string" ? params.page : "1");
-  const [board, market] = await Promise.all([getExitBoard(), getMarketContext()]);
+  const [board, market, radar] = await Promise.all([getExitBoard(), getMarketContext(), getRadarBoard()]);
   // "Flagged" = alert flags only; sparse_broker is coverage context, not an alert.
   const flagged = board.rows.filter((r) => r.flags.suspension_recent || r.flags.corp_action_near || r.flags.float_constraint);
   const suppressed = board.rows.filter((r) => r.score === null);
   const base = scope === "flagged" ? flagged : scope === "suppressed" ? suppressed : board.rows.filter((r) => r.score !== null);
-  const pageCount = Math.max(1, Math.ceil(base.length / PAGE_SIZE));
-  const page = Number.isInteger(pageParam) && pageParam >= 1 ? Math.min(pageParam, pageCount) : 1;
-  const shown = base.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const pageHref = (p: number) => {
-    const q = new URLSearchParams();
-    if (scope !== "all") q.set("scope", scope);
-    if (p > 1) q.set("page", String(p));
-    const s = q.toString();
-    return s ? `/?${s}` : "/";
-  };
+  const pg = paginate(base, params.page);
+  const shown = pg.rows;
+  const page = pg.page;
+  const hrefFor = pageHref("/", "page", { scope: scope === "all" ? undefined : scope });
 
   return (
     <div className="space-y-4">
@@ -152,7 +149,9 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
         <div>
           <h1 className="text-[26px] font-bold tracking-tight">Exit Watch</h1>
           <p className="mt-1 max-w-2xl text-[13px] dim">
-            Which cohorts appear to be leaving, and who is absorbing.
+            Which cohorts appear to be leaving, and who is absorbing. Every issuer is scored on four public
+            signals: institutional broker flow, foreign flow, reported insider transactions, and retail
+            absorption. Descriptive reading, not a prediction.
           </p>
         </div>
         <Link href="/?v=radar" className="mono faint text-[10px] uppercase tracking-wider hover:text-ink">
@@ -213,6 +212,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
       )}
 
       {board.rows.length > 0 && (
+        <div className="grid gap-8 xl:grid-cols-[1fr_300px]">
         <section>
           <div className="tabbar mb-1">
             {SCOPES.map((s) => (
@@ -235,6 +235,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
                 <tr className="text-left text-[10px] uppercase tracking-wider faint">
                   <th className="mono py-2 pl-1 pr-4 font-normal">#</th>
                   <th className="mono py-2 pr-4 font-normal">Issuer</th>
+                  <th className="mono hidden py-2 pr-4 font-normal lg:table-cell">Flow</th>
                   <th className="mono py-2 pr-4 font-normal">Exit pressure</th>
                   <th className="mono hidden py-2 pr-4 font-normal md:table-cell">
                     Components (z · INST/FOR/INS exit-side · RET absorb-side)
@@ -244,11 +245,11 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
               </thead>
               <tbody className="text-xs">
                 {shown.map((row, i) => (
-                  <Row key={row.symbol} row={row} rank={(page - 1) * PAGE_SIZE + i + 1} />
+                  <Row key={row.symbol} row={row} rank={(page - 1) * TABLE_PAGE_SIZE + i + 1} spark={radar.sparks[row.symbol] ?? []} />
                 ))}
                 {!shown.length && (
                   <tr>
-                    <td colSpan={5} className="py-10 text-center dim">
+                    <td colSpan={6} className="py-10 text-center dim">
                       No issuers in this scope for the saved snapshot.
                     </td>
                   </tr>
@@ -257,28 +258,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             </table>
           </div>
 
-          {pageCount > 1 && (
-            <nav aria-label="Board pages" className="mt-3 flex items-center gap-3 text-[11px]">
-              {page > 1 ? (
-                <Link href={pageHref(page - 1)} className="mono blue">
-                  ← Prev
-                </Link>
-              ) : (
-                <span className="mono faint">← Prev</span>
-              )}
-              <span className="mono faint">
-                Page {page} of {pageCount} · {(page - 1) * PAGE_SIZE + 1}–
-                {(page - 1) * PAGE_SIZE + shown.length} of {base.length}
-              </span>
-              {page < pageCount ? (
-                <Link href={pageHref(page + 1)} className="mono blue">
-                  Next →
-                </Link>
-              ) : (
-                <span className="mono faint">Next →</span>
-              )}
-            </nav>
-          )}
+          <Pager s={pg} href={hrefFor} />
 
           {scope === "all" && suppressed.length > 0 && (
             <p className="mt-4 text-xs dim">
@@ -297,6 +277,8 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             </Link>
           </p>
         </section>
+        <RadarAside recentInsider={radar.recentInsider} topCases={radar.topCases} />
+        </div>
       )}
     </div>
   );

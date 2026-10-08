@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { getCaseFeed } from "@/lib/services";
 import { CaseRow } from "@/components/widgets";
+import { Pager, pageHref, paginate } from "@/components/Pager";
 import { PATTERN_LABEL } from "@/components/fmt";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +16,7 @@ export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
   const raw = q.pattern ?? q.pola;
   const pattern = typeof raw === "string" ? raw : undefined;
   const cases = await getCaseFeed(pattern);
+  const pg = paginate(cases, q.page);
 
   return (
     <div className="space-y-4">
@@ -39,10 +41,11 @@ export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
       </div>
 
       <div>
-        {cases.map((c) => (
+        {pg.rows.map((c) => (
           <CaseRow key={c.id} c={c} />
         ))}
       </div>
+      <Pager s={pg} href={pageHref("/cases", "page", { pattern })} />
       {!cases.length && (
         <div className="py-16 text-center text-sm dim">
           No candidates match this filter in the saved snapshot.

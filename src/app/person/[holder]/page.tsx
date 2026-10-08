@@ -6,15 +6,18 @@ import { getPersonDossier } from "@/lib/services";
 import TradesTable from "@/components/TradesTable";
 import { Stat } from "@/components/widgets";
 import { fmtCurrency } from "@/components/fmt";
+import { Pager, pageHref, paginate } from "@/components/Pager";
 
 export const dynamic = "force-dynamic";
 
-export default async function PersonPage({ params }: PageProps<"/person/[holder]">) {
+export default async function PersonPage({ params, searchParams }: PageProps<"/person/[holder]">) {
   const { holder } = await params;
+  const sp = await searchParams;
   const d = await getPersonDossier(holder);
   if (!d) notFound();
 
   const s = d.stats;
+  const tradesPg = paginate(d.trades, sp.page);
   return (
     <div className="space-y-4">
       <div>
@@ -46,7 +49,8 @@ export default async function PersonPage({ params }: PageProps<"/person/[holder]
 
       <section>
         <h2 className="section-label mb-3">Full reported ownership history</h2>
-        <TradesTable trades={d.trades} />
+        <TradesTable trades={tradesPg.rows} />
+        <Pager s={tradesPg} href={pageHref(`/person/${encodeURIComponent(holder)}`, "page")} />
         <p className="mt-3 text-[10px] faint">
           Counts use complete issuer outcomes measured 30 calendar days after a transaction when a valid matched price exists.
           They are descriptive public-data statistics, not a skill score or allegation.

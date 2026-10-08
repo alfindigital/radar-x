@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { getSectorRotation } from "@/lib/services";
 import { fmtIDR } from "@/components/fmt";
+import { Pager, TABLE_PAGE_SIZE, pageHref, paginate } from "@/components/Pager";
 import type { RotationSubsector } from "@/lib/rotation";
 
 export const dynamic = "force-dynamic";
@@ -51,7 +52,8 @@ function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
   );
 }
 
-export default async function RotationPage() {
+export default async function RotationPage({ searchParams }: PageProps<"/rotation">) {
+  const params = await searchParams;
   const board = await getSectorRotation();
 
   if (!board) {
@@ -69,6 +71,7 @@ export default async function RotationPage() {
   const all = board.sectors.flatMap((g) => g.subs);
   const maxAbs = all.reduce((m, s) => Math.max(m, Math.abs(s.mcapChange1w ?? 0)), 0);
   const sorted = [...all].sort((a, b) => (b.mcapChange1w ?? -Infinity) - (a.mcapChange1w ?? -Infinity));
+  const pg = paginate(sorted, params.page);
 
   return (
     <div className="space-y-4">
@@ -128,12 +131,12 @@ export default async function RotationPage() {
               </tr>
             </thead>
             <tbody className="mono text-xs">
-              {sorted.map((s, i) => {
+              {pg.rows.map((s, i) => {
                 const w = chgPct(s.mcapChange1w);
                 const ytd = chgPct(s.mcapChangeYtd);
                 return (
                   <tr key={s.slug} className="row-hover border-b border-line/60">
-                    <td className="py-2.5 pr-4 faint">{i + 1}</td>
+                    <td className="py-2.5 pr-4 faint">{(pg.page - 1) * TABLE_PAGE_SIZE + i + 1}</td>
                     <td className="tapcell py-2.5 pr-4 font-sans font-medium">
                       <Link href={`/rotation/${s.slug}`} className="taplink hover:text-ink">{s.subSector}</Link>
                       <span className="faint ml-2">{s.companyCount ?? "—"}</span>
@@ -170,6 +173,7 @@ export default async function RotationPage() {
             </tbody>
           </table>
         </div>
+        <Pager s={pg} href={pageHref("/rotation", "page")} />
       </section>
 
       <p className="text-[11px] leading-relaxed faint">

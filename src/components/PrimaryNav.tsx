@@ -27,7 +27,8 @@ export function isNavActive(href: string, pathname: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
-// Desktop top-bar links: quiet text, accent underline on the active section.
+// Desktop top-bar links: quiet text; the active section gets the same lit
+// panel-2 chip that MobileNav and .tab-active use — one tab language everywhere.
 export function DesktopNav() {
   const { pathname, mounted } = useMountedPath();
   return (
@@ -39,12 +40,12 @@ export function DesktopNav() {
             key={n.href}
             href={n.href}
             aria-current={active ? "page" : undefined}
-            className={`relative px-3 py-1.5 text-[12px] font-medium tracking-wide ${
-              active ? "text-ink" : "dim hover:text-ink"
+            className={`px-3 py-1.5 text-[12px] font-medium tracking-wide ${
+              active ? "bg-panel-2 text-acc" : "dim hover:text-ink"
             }`}
+            style={{ borderRadius: "var(--radius-sm)" }}
           >
             {n.label}
-            {active && <span className="absolute inset-x-3 -bottom-[9px] h-px bg-acc" aria-hidden />}
           </Link>
         );
       })}

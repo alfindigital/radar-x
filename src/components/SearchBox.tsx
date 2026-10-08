@@ -92,8 +92,8 @@ export function SearchBox() {
           list={listId}
           autoComplete="off"
           spellCheck={false}
-          placeholder="SEARCH ISSUER (BBCA)"
-          className="mono w-full border border-line bg-panel py-1.5 pl-9 pr-3 text-[11px] uppercase tracking-wider text-ink placeholder:text-ink-faint focus:border-acc focus:outline-none"
+          placeholder="Search"
+          className="mono w-full border border-line bg-panel py-1.5 pl-9 pr-3 text-[12px] text-ink placeholder:text-ink-faint focus:border-acc focus:outline-none"
           style={{ borderRadius: "var(--radius-sm)" }}
         />
         <datalist id={listId}>

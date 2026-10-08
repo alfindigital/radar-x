@@ -56,31 +56,31 @@ function subscribe(onStoreChange: () => void) {
   };
 }
 
+// Filled glyphs, same shape language as the scope mark: thin stroked icons
+// read muddy at 15px and look borrowed; solid shapes stay crisp in both themes.
 function ModeIcon({ mode }: { mode: Mode }) {
-  const p = {
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.6,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
   if (mode === "light")
     return (
-      <svg width="14" height="14" viewBox="0 0 24 24" {...p} aria-hidden>
-        <circle cx="12" cy="12" r="4.2" />
-        <path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.8 1.8M17 17l1.8 1.8M5.2 18.8 7 17M17 7l1.8-1.8" />
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <circle cx="12" cy="12" r="4.6" fill="currentColor" />
+        <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.05 5.05l1.7 1.7M17.25 17.25l1.7 1.7M5.05 18.95l1.7-1.7M17.25 6.75l1.7-1.7" />
+        </g>
       </svg>
     );
   if (mode === "dark")
     return (
-      <svg width="14" height="14" viewBox="0 0 24 24" {...p} aria-hidden>
-        <path d="M20.2 14.2A8.5 8.5 0 0 1 9.8 3.8a8.5 8.5 0 1 0 10.4 10.4Z" />
+      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
+        <path
+          fill="currentColor"
+          d="M20.2 14.2A8.5 8.5 0 1 1 9.8 3.8a8.5 8.5 0 0 0 10.4 10.4Z"
+        />
       </svg>
     );
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" {...p} aria-hidden>
-      <rect x="3" y="4.5" width="18" height="12.5" rx="1.5" />
-      <path d="M9 20.5h6M12 17v3.5" />
+    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
+      <circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      <path fill="currentColor" d="M12 3.6a8.4 8.4 0 0 1 0 16.8Z" />
     </svg>
   );
 }

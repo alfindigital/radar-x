@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getSubsectorDetail } from "@/lib/services";
 import { ScoreNumber, Stat } from "@/components/widgets";
 import { fmtIDR, fmtPct } from "@/components/fmt";
+import { Pager, pageHref, paginate } from "@/components/Pager";
 
 export const dynamic = "force-dynamic";
 
@@ -12,8 +13,9 @@ export async function generateMetadata({ params }: PageProps<"/rotation/[sub]">)
   return { title: `RadarX · ${sub}` };
 }
 
-export default async function SubsectorPage({ params }: PageProps<"/rotation/[sub]">) {
+export default async function SubsectorPage({ params, searchParams }: PageProps<"/rotation/[sub]">) {
   const { sub } = await params;
+  const sp = await searchParams;
   const detail = await getSubsectorDetail(sub);
 
   if (!detail) {
@@ -29,6 +31,9 @@ export default async function SubsectorPage({ params }: PageProps<"/rotation/[su
   }
 
   const { row, memberScores } = detail;
+  // Two tables on one page: ?tp pages the movers, ?mp pages the member list.
+  const moversPg = paginate(row.topChange, sp.tp);
+  const membersPg = paginate(memberScores, sp.mp);
   const monthly = Object.entries(row.monthlyPerf ?? {}).sort(([a], [b]) => a.localeCompare(b)).slice(-12);
   const mcapTotal = row.mcapTotal === null ? "—" : `Rp${fmtIDR(row.mcapTotal)}`;
   const w1 = row.mcapChange1w === null ? "—" : fmtPct(row.mcapChange1w * 100, 1, "complete");
@@ -163,7 +168,7 @@ export default async function SubsectorPage({ params }: PageProps<"/rotation/[su
                 </tr>
               </thead>
               <tbody className="mono text-xs">
-                {row.topChange.map((m) => (
+                {moversPg.rows.map((m) => (
                   <tr key={m.symbol} className="row-hover border-b border-line/60">
                     <td className="tapcell py-2.5 pr-4">
                       <Link href={`/stock/${m.symbol.replace(".JK", "")}`} className="taplink font-bold">
@@ -180,12 +185,16 @@ export default async function SubsectorPage({ params }: PageProps<"/rotation/[su
                     <td className="py-2.5 text-right dim">{m.lastClose === null ? "—" : fmtIDR(m.lastClose)}</td>
                   </tr>
                 ))}
-                {!row.topChange.length && (
+                {!moversPg.rows.length && (
                   <tr><td colSpan={5} className="py-8 text-center dim">No mover rows saved for this subsector.</td></tr>
                 )}
               </tbody>
             </table>
           </div>
+          <Pager
+            s={moversPg}
+            href={pageHref(`/rotation/${sub}`, "tp", { mp: membersPg.page > 1 ? String(membersPg.page) : undefined })}
+          />
 
           {monthly.length > 0 && (
             <div className="mt-6">
@@ -221,7 +230,7 @@ export default async function SubsectorPage({ params }: PageProps<"/rotation/[su
                 </tr>
               </thead>
               <tbody className="mono text-xs">
-                {memberScores.map((m) => (
+                {membersPg.rows.map((m) => (
                   <tr key={m.symbol} className="row-hover border-b border-line/60">
                     <td className="tapcell py-2 pr-4">
                       <Link href={`/stock/${m.symbol.replace(".JK", "")}`} className="taplink font-bold">
@@ -232,12 +241,16 @@ export default async function SubsectorPage({ params }: PageProps<"/rotation/[su
                     <td className="py-2 text-right"><ScoreNumber score={m.score} size="sm" /></td>
                   </tr>
                 ))}
-                {!memberScores.length && (
+                {!membersPg.rows.length && (
                   <tr><td colSpan={3} className="py-8 text-center dim">Member list not ingested: run ingest rotation --refresh-members.</td></tr>
                 )}
               </tbody>
             </table>
           </div>
+          <Pager
+            s={membersPg}
+            href={pageHref(`/rotation/${sub}`, "mp", { tp: moversPg.page > 1 ? String(moversPg.page) : undefined })}
+          />
         </section>
       </div>
 

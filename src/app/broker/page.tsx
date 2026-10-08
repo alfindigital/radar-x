@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { getBrokerBoard } from "@/lib/services";
 import { fmtCurrency } from "@/components/fmt";
+import { Pager, pageHref, paginate } from "@/components/Pager";
 import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
@@ -28,6 +29,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
   const params = await searchParams;
   const cohort = ["retail", "institutional"].includes(String(params.cohort)) ? String(params.cohort) : "all";
   const board = await getBrokerBoard(cohort);
+  const pg = paginate(board.entries, params.page);
 
   return (
     <div className="space-y-4">
@@ -104,7 +106,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
                 </tr>
               </thead>
               <tbody className="mono text-xs">
-                {board.entries.map((e) => (
+                {pg.rows.map((e) => (
                   <tr key={e.broker_code} className="row-hover border-b border-line/60">
                     <td className="py-3 pr-4 faint">{e.rank}</td>
                     <td className="tapcell py-3 pr-4">
@@ -125,6 +127,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
               </tbody>
             </table>
           </div>
+          <Pager s={pg} href={pageHref("/broker", "page", { cohort: cohort === "all" ? undefined : cohort })} />
           <p className="mt-4 text-[10px] faint">
             Leaderboard reflects the saved brokers/top session for cohort &ldquo;{board.sessionCohort}&rdquo;. The
             per-cohort leaderboard is published by Sectors; registry labels on each row describe the channel, not the
