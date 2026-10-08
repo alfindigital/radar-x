@@ -316,7 +316,9 @@ a:hover {
 @media (max-width: 640px) {
   [data-tip]::after,
   [data-ftip]::after {
-    max-width: calc(100vw - 40px);
+    /* keep under the centered .tip-c cap too: a 320px tip centered on a
+       right-edge host still spills (measured scrollW 393 at 360px) */
+    max-width: 200px;
   }
 }
 

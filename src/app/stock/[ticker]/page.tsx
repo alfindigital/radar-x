@@ -11,6 +11,7 @@ import { FlagChips } from "@/components/FlagChips";
 import { CohortNetChart } from "@/components/CohortNetChart";
 import type { HoldersMonthly } from "@/lib/types";
 import type { IssuerOwnership } from "@/lib/ownership";
+import { Pager, pageHref, paginate } from "@/components/Pager";
 import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
@@ -140,7 +141,7 @@ function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; co
                 {w}
               </Link>
             ) : (
-              <span key={w} className="tag tip-c" data-tip="Reported holder · no ownership-transaction dossier in the snapshot">
+              <span key={w} className="tag tip-r" data-tip="Reported holder · no ownership-transaction dossier in the snapshot">
                 {w}
               </span>
             ),
@@ -242,9 +243,11 @@ function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; co
   );
 }
 
-export default async function DossierPage({ params }: PageProps<"/stock/[ticker]">) {
+export default async function DossierPage({ params, searchParams }: PageProps<"/stock/[ticker]">) {
   const { ticker } = await params;
+  const sp = await searchParams;
   const d = await getIssuerDossier(ticker);
+  const tradesPg = paginate([...d.insider].reverse(), sp.tp);
 
   const ws = d.windowStats;
   const lastPrice = d.price.at(-1);
@@ -432,12 +435,10 @@ export default async function DossierPage({ params }: PageProps<"/stock/[ticker]
 
       <section>
         <h2 className="section-label mb-3">Reported ownership transactions</h2>
-        {/* newest first — the raw list arrives ascending, so the first 30 rows
-            would be the oldest history, not the latest. */}
-        <TradesTable trades={[...d.insider].reverse()} limit={30} />
-        {d.insider.length > 30 && (
-          <p className="faint mt-2 text-[11px]">Showing the 30 most recent of {d.insider.length} reported transactions.</p>
-        )}
+        {/* newest first — the raw list arrives ascending, so the first rows
+            would be the oldest history, not the latest. ?tp pages the rest. */}
+        <TradesTable trades={tradesPg.rows} />
+        <Pager s={tradesPg} href={pageHref(`/stock/${ticker}`, "tp")} />
       </section>
 
       {d.cases.length > 0 && (
