@@ -336,6 +336,14 @@ export interface ExitFlags {
   corp_action_near: boolean;
   float_constraint: boolean;
   sparse_broker: boolean;
+  /**
+   * Suspension on record AND zero regular-market volume across the whole
+   * window — the stock is still suspended regardless of how old the notice
+   * is (the suspensions feed has no resume events). Quarantined from the
+   * publishable board: negotiated-market block trades still hit the broker
+   * feed, so a suspended tape can otherwise read as live exit pressure.
+   */
+  suspended: boolean;
 }
 
 export interface ExitWatchRow {

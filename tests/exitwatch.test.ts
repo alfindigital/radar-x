@@ -95,7 +95,36 @@ test("flags: suspension within 14d, corp action ±7d, thin float, sparse broker"
   });
   const calm = [1, 2, 3, 4, 5].map((i) => input({ d: sd({ symbol: `G${i}.JK`, price: [{ ...priceRow("2026-09-30"), symbol: `G${i}.JK` }] }) }));
   const [f] = computeExitWatch([flagged, ...calm], AS_OF);
-  assert.deepEqual(f.flags, { suspension_recent: true, corp_action_near: true, float_constraint: true, sparse_broker: true });
+  assert.deepEqual(f.flags, { suspension_recent: true, corp_action_near: true, float_constraint: true, sparse_broker: true, suspended: false });
+});
+
+test("still-suspended tape (suspension record + zero-volume window) is quarantined from the board", () => {
+  // Mirrors COAL.JK 2026-10-08: suspended 2026-08-12, regular tape frozen at
+  // close 31 vol 0, yet negotiated-market broker rows keep flowing and would
+  // otherwise publish a HIGH exit-pressure score on an untradeable stock.
+  const frozen = input({
+    suspensions: [{ symbol: "X.JK", suspension_date: "2026-08-12", reason: "going concern" }],
+    d: sd({
+      price: [{ ...priceRow("2026-09-30"), volume: 0 }, { ...priceRow("2026-09-25"), volume: 0 }],
+      broker: [bRow("YP", -5e9), bRow("CP", 4e9)],
+      flow: [fRow(-2e9)],
+      insider: [iRow("sell", 1e9)],
+    }),
+  });
+  // A merely illiquid symbol with no suspension record is NOT quarantined.
+  const illiquid = input({ d: sd({ symbol: "L.JK", price: [{ ...priceRow("2026-09-30", 500), volume: 0 }] }) });
+  // A resumed symbol (suspension record but live volume) is NOT quarantined.
+  const resumed = input({
+    suspensions: [{ symbol: "R.JK", suspension_date: "2026-08-12", reason: "r" }],
+    d: sd({ symbol: "R.JK", price: [{ ...priceRow("2026-09-30"), symbol: "R.JK" }] }),
+  });
+  const calm = [1, 2, 3, 4, 5].map((i) => input({ d: sd({ symbol: `S${i}.JK`, price: [{ ...priceRow("2026-09-30"), symbol: `S${i}.JK` }] }) }));
+  const rows = computeExitWatch([frozen, illiquid, resumed, ...calm], AS_OF);
+  assert.equal(rows[0].flags.suspended, true);
+  assert.equal(rows[0].score, null);
+  assert.equal(rows[0].tier, null);
+  assert.equal(rows[1].flags.suspended, false);
+  assert.equal(rows[2].flags.suspended, false);
 });
 
 test("broker_top labeling used when daily rows absent; cohort_top preferred over both", () => {

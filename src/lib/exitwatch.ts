@@ -258,6 +258,13 @@ function deriveFlags(input: ExitWatchInput, asOf: string): ExitFlags {
   );
   const float_constraint = input.freeFloat !== null && input.freeFloat < FLOAT_CONSTRAINT;
   const winFrom = windowFrom(asOf, WINDOW_DAYS);
+  // Still-suspended: a suspension is on record and the regular tape prints
+  // zero volume for the entire window. COAL.JK (suspended 2026-08-12) kept
+  // accumulating negotiated-market broker rows that scored 85/high on a
+  // frozen board — this flag quarantines that reading.
+  const suspended =
+    input.suspensions.length > 0 &&
+    !input.d.price.some((r) => r.date >= winFrom && r.date <= asOf && (r.volume ?? 0) > 0);
   // Sparse-evidence flag counts only window-bounded, cohort-labeled evidence —
   // the same evidence a score could actually draw on.
   const labeled =
@@ -276,7 +283,7 @@ function deriveFlags(input: ExitWatchInput, asOf: string): ExitFlags {
           0,
         )
       : 0);
-  return { suspension_recent, corp_action_near, float_constraint, sparse_broker: labeled < SPARSE_BROKER_OBS };
+  return { suspension_recent, corp_action_near, float_constraint, sparse_broker: labeled < SPARSE_BROKER_OBS, suspended };
 }
 
 export function computeExitWatch(inputs: ExitWatchInput[], asOf: string): ExitWatchRow[] {
@@ -302,7 +309,11 @@ export function computeExitWatch(inputs: ExitWatchInput[], asOf: string): ExitWa
       return { key, weight, raw: r.raw, z, contribution, status: "available", reason: null, observations: r.observations, observedFrom: r.observedFrom, observedTo: r.observedTo, source: r.source };
     });
     const coverage = components.filter((c) => c.status === "available").reduce((s, c) => s + c.weight, 0) / keys.reduce((s, k) => s + EXIT_WEIGHTS[k], 0);
-    const publishable = coverage >= COVERAGE_FLOOR;
+    const flags = deriveFlags(input, asOf);
+    // Quarantine: a still-suspended tape keeps collecting negotiated-market
+    // rows, which are block transfers, not live exit pressure. Evidence stays
+    // attached to the row; it is only excluded from the publishable board.
+    const publishable = coverage >= COVERAGE_FLOOR && !flags.suspended;
     const score = publishable ? Math.max(0, Math.min(100, Math.round(50 + components.reduce((s, c) => s + c.contribution, 0)))) : null;
     const tier: ExitWatchRow["tier"] =
       score === null ? null : score >= 75 ? "high" : score >= 55 ? "elevated" : score >= 35 ? "watch" : "low";
@@ -323,7 +334,7 @@ export function computeExitWatch(inputs: ExitWatchInput[], asOf: string): ExitWa
       tier,
       coverage: Math.round(coverage * 1000) / 1000,
       components,
-      flags: deriveFlags(input, asOf),
+      flags,
       series,
       window: { days: WINDOW_DAYS, from: winFrom, to: asOf },
       asOf,

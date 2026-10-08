@@ -3,7 +3,7 @@
   "engineVersion": "radarx-v2",
   "asOf": "2026-10-08",
   "inputHash": "5f42f985e61d11195b2ec96bc9d824468add71007822a051d4c565c7bee5a27d",
-  "generatedAt": "2026-10-08T01:42:46.683Z",
+  "generatedAt": "2026-10-08T09:08:11.360Z",
   "files": [
     {
       "path": "scores.json",
@@ -19,7 +19,7 @@
     {
       "path": "exitwatch.json",
       "rows": 964,
-      "sha256": "e9f28c156851134a56623ff053300c55009d9b71b98d581a272636ea3f06bfc6",
+      "sha256": "800d1205af1e3fbfb62fe7ce48dfdc7dbbb3b118a6426ec9529ab0db9a7c7dc4",
       "engineVersion": "radarx-v3"
     }
   ],
