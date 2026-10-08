@@ -41,10 +41,20 @@ for (const [theme, width] of [['dark', 1440], ['light', 1440], ['dark-mobile', 3
     try {
       const resp = await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 });
       const status = resp ? resp.status() : 0;
-      if (!status || status >= 400) failures.push(`${id}: HTTP ${status || 'no response'}`);
-      // A page that rendered must expose real content, not an error shell.
-      const bodyLen = await page.evaluate(() => document.body?.innerText?.length ?? 0);
-      if (status === 200 && bodyLen < 200) failures.push(`${id}: empty body (${bodyLen} chars)`);
+      if (status !== 200) failures.push(`${id}: HTTP ${status || 'no response'}`);
+      // A page that rendered must expose real content, not an error shell —
+      // the app's own shells (error.tsx/not-found.tsx) are caught by copy.
+      const probe = await page.evaluate(() => {
+        const text = document.body?.innerText ?? '';
+        return {
+          bodyLen: text.length,
+          shell: /not be found|application error|internal server error|failed to render|nothing on the tape|no instrument at this route|feed interrupted/i.test(text),
+          landmark: Boolean(document.querySelector('main')),
+        };
+      });
+      if (status === 200 && probe.bodyLen < 200) failures.push(`${id}: empty body (${probe.bodyLen} chars)`);
+      if (probe.shell) failures.push(`${id}: error-shell content rendered`);
+      if (status === 200 && !probe.landmark) failures.push(`${id}: no <main> landmark — layout did not render`);
       await page.waitForTimeout(1400);
       const overflow = await page.evaluate(() => {
         const doc = document.documentElement;
@@ -52,13 +62,17 @@ for (const [theme, width] of [['dark', 1440], ['light', 1440], ['dark-mobile', 3
         for (const el of document.querySelectorAll('body *')) {
           const r = el.getBoundingClientRect();
           if (r.right > doc.clientWidth + 1 && r.width > 4) {
-            const inScroll = el.closest('.overflow-x-auto, [data-scroll]');
-            if (!inScroll) off.push(`${el.tagName.toLowerCase()}.${String(el.className).slice(0, 50)} right=${Math.round(r.right)}`);
+            // Only an ancestor that actually scrolls may legitimately clip —
+            // a closest() hit on a container with nothing to scroll is a defect.
+            const scroller = el.closest('.overflow-x-auto, [data-scroll]');
+            const scrolls = scroller && scroller.scrollWidth > scroller.clientWidth + 1;
+            if (!scrolls) off.push(`${el.tagName.toLowerCase()}.${String(el.className).slice(0, 50)} right=${Math.round(r.right)}`);
           }
         }
         return { scrollW: doc.scrollWidth, clientW: doc.clientWidth, off: off.slice(0, 6) };
       });
       if (overflow.scrollW > overflow.clientW) failures.push(`${id}: horizontal overflow ${overflow.scrollW}px`);
+      if (overflow.off.length) failures.push(`${id}: clipped by non-scrolling container — ${overflow.off.join(' | ')}`);
       if (errors.length) failures.push(`${id}: console errors — ${errors.join('; ')}`);
       await page.screenshot({ path: `${OUT}/${theme}-${name}.png`, fullPage: false });
       report.push({ theme, name, route, status, overflow, errors: [...errors] });
