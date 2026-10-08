@@ -1,5 +1,7 @@
 // Shared display helpers.
 
+import type { ExitComponentKey } from "@/lib/types";
+
 export function fmtIDR(n: number): string {
   const a = Math.abs(n);
   const sign = n < 0 ? "−" : "";
@@ -48,3 +50,12 @@ export function patternTagClass(pattern: string): string {
   if (pattern === "STEALTH_ACCUMULATION" || pattern === "INSIDER_CONTRA_BUY") return "tag-acc";
   return "tag-watch";
 }
+
+// Short channel labels for the distribution-pressure components (the raw keys
+// like "instExit" are engine identifiers, not display text).
+export const PRESSURE_COMPONENT_LABEL: Record<ExitComponentKey, string> = {
+  instExit: "INST",
+  foreignExit: "FOR",
+  insiderExit: "INS",
+  retailAbsorb: "RET",
+};

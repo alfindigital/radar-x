@@ -18,12 +18,12 @@ test("desktop research journey keeps negative distribution and source evidence",
     if (message.type() === "error") consoleErrors.push(message.text());
   });
 
-  await page.goto("/?v=radar");
-  await expect(page.getByRole("heading", { name: "Radar Board" })).toBeVisible();
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   await expect(page.getByText(/market data through/)).toBeVisible();
 
   await page.getByRole("link", { name: "Distribution" }).click();
-  await expect(page).toHaveURL(/f=negative/);
+  await expect(page).toHaveURL(/scope=distribution/);
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
   await expect(rows.first()).toContainText("-");
@@ -37,7 +37,7 @@ test("desktop research journey keeps negative distribution and source evidence",
   expect(await sourceLinks.evaluateAll((links) => links.every((link) => /^https?:\/\//.test((link as HTMLAnchorElement).href)))).toBe(true);
 
   await page.goBack();
-  await expect(page).toHaveURL(/f=negative/);
+  await expect(page).toHaveURL(/scope=distribution/);
   expect(consoleErrors).toEqual([]);
 });
 

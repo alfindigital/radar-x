@@ -23,14 +23,16 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("exit watch board renders scored rows with numeric badge and flags", async ({ page }, testInfo) => {
+test("dashboard renders scored rows with positioning, pressure badge and flags", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile-chrome", "Board columns verified on desktop only.");
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
-  // numeric exit-pressure badge (td order: rank, issuer, sparkline, pressure, components, flags)
+  // td order: rank, issuer, sparkline, positioning, pressure, components, flags.
+  // Default sort is positioning desc, so the first row always carries a signed index.
   await expect(rows.first().locator("td").nth(3)).toContainText(/\d+/);
+  await expect(rows.first().locator("td").nth(4)).toContainText(/\d+|low coverage/);
   // component strip labels exist somewhere in the table header/rows
   await expect(page.getByText("INST").first()).toBeVisible();
   // issuer links resolve to dossiers
@@ -50,7 +52,7 @@ test("suppressed scope shows null-score rows", async ({ page }, testInfo) => {
   await page.goto("/?scope=suppressed");
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
-  await expect(rows.first().locator("td").nth(3)).toContainText("low coverage");
+  await expect(rows.first()).toContainText("low coverage");
 });
 
 test("board paginates beyond 150 rows", async ({ page }, testInfo) => {
@@ -62,18 +64,18 @@ test("board paginates beyond 150 rows", async ({ page }, testInfo) => {
   await expect(page.getByText(/Page 2 of \d+/)).toBeVisible();
 });
 
-test("preserved v2 board still renders at ?v=radar", async ({ page }, testInfo) => {
+test("legacy ?v=radar links land on the unified dashboard", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile-chrome", "Desktop check only.");
   await page.goto("/?v=radar");
-  await expect(page.getByRole("heading", { name: "Radar Board" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 });
 
-test("issuer dossier shows exit watch panel, cohort chart, coverage, and recent-suspension context", async ({ page }, testInfo) => {
+test("issuer dossier shows distribution pressure panel, cohort chart, coverage, and recent-suspension context", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile-chrome", "Dossier layout verified on desktop only.");
   // SONA.JK: suspension_recent flag set and a 2026-10-01 suspension record —
   // that date is a historical fact and survives snapshot refreshes.
   await page.goto("/stock/SONA");
-  await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Distribution pressure" })).toBeVisible();
   await expect(page.getByText(`14-day window ${winFrom} → ${asOf}`)).toBeVisible();
   await expect(page.getByText(/coverage \d+\.\d+/)).toBeVisible();
   await expect(page.getByText(/Cohort net flow \(\d+ sessions\)/)).toBeVisible();
@@ -108,10 +110,10 @@ test("broker board cohort tabs switch the leaderboard session", async ({ page },
 test("mobile suppressed scope renders rows and dossier link", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile-chrome", "Mobile-only coverage.");
   await page.goto("/?scope=suppressed");
-  await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   const first = page.locator("tbody tr.row-hover").first();
   await expect(first).toBeVisible();
-  await expect(first.locator("td").nth(3)).toContainText("low coverage");
+  await expect(first).toContainText("low coverage");
   await first.locator("a[href^='/stock/']").click();
   await expect(page).toHaveURL(/\/stock\/.+/);
   await expect(page.getByText(/market data through/)).toBeVisible();

@@ -24,7 +24,7 @@ const jetMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "RadarX · IDX Market Intelligence",
   description:
-    "A reproducible market-intelligence view of Indonesian equity disclosures: exit pressure, institutional positioning, reported ownership, and measured historical outcomes.",
+    "A reproducible market-intelligence view of Indonesian equity disclosures: positioning, distribution pressure, reported ownership, and measured historical outcomes.",
 };
 
 // Radar scope mark — lit phosphor wedge + beam + one blip in a console badge chip.
@@ -59,9 +59,9 @@ function TopNav() {
           Radar<span className="acc">X</span>
         </Link>
         <DesktopNav />
-        <div className="ml-auto flex min-w-0 items-center gap-3">
-          <div className="hidden w-[220px] lg:block">
-            <SearchBox />
+        <div className="ml-auto flex min-w-0 items-center gap-1">
+          <div className="hidden lg:block">
+            <SearchBox expandable />
           </div>
           <ThemeToggle />
         </div>
@@ -72,47 +72,54 @@ function TopNav() {
   );
 }
 
-// Footer colophon — centered and quiet: brand mark, one-line disclaimer,
-// links that all resolve. Hackathon tagline removed (not a rules requirement).
+// Footer colophon — one quiet row, same chrome as the header: three icon
+// controls left (same iconbtn language as the top bar), a hairline, then the
+// disclaimer line. The wordmark lives in the header; it is not repeated here.
 function Footer() {
   return (
-    <footer className="border-t border-line px-4 py-8 md:px-8">
-      <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center gap-3 text-center">
+    <footer className="border-t border-line bg-panel">
+      <div className="flex h-11 items-center gap-1 px-4 md:px-8">
         <Link
-          href="/"
-          className="flex items-center gap-2 text-[13px] font-extrabold leading-none tracking-[-0.01em]"
+          href="/methodology"
+          aria-label="Methodology"
+          data-tip="Methodology"
+          className="iconbtn tip-r"
         >
-          <ScopeMark />
-          Radar<span className="acc">X</span>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+            <path d="M3.5 1.75h6L13 5.25v9h-9.5z" strokeLinejoin="round" />
+            <path d="M9.5 1.75V5.5H13" strokeLinejoin="round" />
+            <path d="M5.75 8.25h4.5M5.75 10.75h4.5" strokeLinecap="round" />
+          </svg>
         </Link>
-        <p className="max-w-md text-[12px] leading-relaxed faint">
-          Descriptive statistics from public IDX disclosures via Sectors. Not investment advice; past
-          outcomes do not predict future returns.
+        <a
+          href="https://github.com/alfindigital/radar-x"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Source on GitHub"
+          data-tip="Source"
+          className="iconbtn tip-r"
+        >
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+          </svg>
+        </a>
+        <a
+          href="https://t.me/alfindigital"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Telegram @alfindigital"
+          data-tip="@alfindigital"
+          className="iconbtn tip-r"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </a>
+        <span className="mx-1.5 h-4 w-px bg-line" aria-hidden />
+        <p className="faint min-w-0 flex-1 truncate text-[11px]">
+          <span className="hidden md:inline">Descriptive statistics from public IDX disclosures via Sectors. Not investment advice; past outcomes do not predict future returns.</span>
+          <span className="md:hidden">Not investment advice.</span>
         </p>
-        <nav aria-label="Footer" className="flex items-center gap-5">
-          <Link
-            href="/methodology"
-            className="dim inline-flex min-h-11 items-center gap-1.5 px-2 text-[12px] transition-colors hover:text-ink"
-          >
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-              <path d="M3.5 1.75h6L13 5.25v9h-9.5z" strokeLinejoin="round" />
-              <path d="M9.5 1.75V5.5H13" strokeLinejoin="round" />
-              <path d="M5.75 8.25h4.5M5.75 10.75h4.5" strokeLinecap="round" />
-            </svg>
-            Methodology
-          </Link>
-          <a
-            href="https://github.com/alfindigital/radar-x"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="dim inline-flex min-h-11 items-center gap-1.5 px-2 text-[12px] transition-colors hover:text-ink"
-          >
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-            </svg>
-            Source
-          </a>
-        </nav>
       </div>
     </footer>
   );

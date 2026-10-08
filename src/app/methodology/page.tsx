@@ -12,7 +12,7 @@ export default function MethodologyPage() {
         <h2 className="text-xs font-bold uppercase tracking-wider dim">How to read a page</h2>
         <ul className="list-inside list-disc space-y-1.5 dim">
           <li>
-            <b className="text-ink">Board.</b> Issuers rank by exit pressure: ≥75 <span className="dist">high</span>, ≥55 <span className="neutral">elevated</span>, ≥35 <span className="dim">watch</span>, below that lower observed pressure. A <span className="mono">—</span> with <span className="tag">low coverage</span> means fewer than half of the weighted components had usable evidence; it is suppressed, not scored zero.
+            <b className="text-ink">Board.</b> The dashboard ranks issuers by the positioning index, accumulation side first. The pressure column is the distribution-pressure reading: ≥75 <span className="dist">high</span>, ≥55 <span className="neutral">elevated</span>, ≥35 <span className="dim">watch</span>, below that lower observed pressure. A <span className="mono">—</span> with <span className="tag">low coverage</span> means fewer than half of the weighted components had usable evidence; it is suppressed, not scored zero.
           </li>
           <li>
             <b className="text-ink">Component chips.</b> <span className="mono">INST / FOR / INS</span> are exit-side z-scores (institutional broker flow, foreign flow, insider sells); <span className="mono">RET</span> is the absorption side (retail-classified broker buying). Positive means above-cohort pressure in that component&apos;s own direction. Focus or hover any chip for its raw value, window, and observation count.
@@ -72,9 +72,9 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
       </section>
 
       <section className="panel space-y-3 p-5">
-        <h2 className="text-xs font-bold uppercase tracking-wider dim">Exit Watch (v3, 0–100)</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Distribution pressure (v3, 0–100)</h2>
         <p className="dim">
-          Exit Watch is a bounded reading of observed exit-side pressure: which investor cohorts appear to be leaving a
+          Distribution pressure is a bounded reading of observed exit-side flow: which investor cohorts appear to be leaving a
           name, and which may be absorbing that flow. It combines four robust cross-sectional components, each normalized
           by the issuer&rsquo;s observed market cap:
         </p>
@@ -180,7 +180,7 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
         <p className="dim">
           The public app reads a hash-verified local Sectors snapshot and generated artifacts. The snapshot includes
           parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, a benchmark-observed IHSG
-          series, and a saved subsector-aggregate artifact used by the sector rotation board. v3 Exit Watch additionally
+          series, and a saved subsector-aggregate artifact used by the sector rotation board. The v3 pressure engine additionally
           consumes the broker registry, per-issuer top-broker feeds, suspensions, corporate actions, and free-float feeds;
           each hashed into the derived manifest (<span className="mono">feedHashes</span>). The full feed-by-feed map
           lives in <span className="mono">docs/DATA-LINEAGE.md</span> in the public repository.

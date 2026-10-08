@@ -1,8 +1,9 @@
-// Exit Watch pressure badge — numeric 0–100 reading of observed exit pressure.
-// Semantics per DESIGN_SPEC_V3: high number = higher observed exit-side
-// pressure. Low numbers are "lower observed exit pressure", never "Safe".
+// Distribution-pressure badge — numeric 0–100 reading of observed exit-side
+// pressure (labeled cohort flow, foreign flow, reported insider transactions,
+// retail absorption). High = more exit-side evidence; low = lower observed
+// pressure, never "Safe".
 
-export function ExitPressureBadge({ score, coverage }: { score: number | null; coverage: number }) {
+export function PressureBadge({ score, coverage }: { score: number | null; coverage: number }) {
   if (score === null) {
     return (
       <span className="inline-flex items-center gap-1.5">
@@ -17,7 +18,7 @@ export function ExitPressureBadge({ score, coverage }: { score: number | null; c
   const bar =
     score >= 75 ? "var(--dist)" : score >= 55 ? "var(--watch)" : score >= 35 ? "var(--ink-dim)" : "var(--acc)";
   const label =
-    score >= 75 ? "High exit pressure" : score >= 55 ? "Elevated exit pressure" : score >= 35 ? "Watch" : "Lower observed exit pressure";
+    score >= 75 ? "High distribution pressure" : score >= 55 ? "Elevated distribution pressure" : score >= 35 ? "Watch" : "Lower observed distribution pressure";
   return (
     <span className="inline-flex flex-col gap-1">
       <span className="inline-flex items-baseline gap-1.5">

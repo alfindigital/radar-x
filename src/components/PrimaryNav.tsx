@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 
 export const NAV = [
-  { href: "/", label: "Exit Watch" },
+  { href: "/", label: "Dashboard" },
   { href: "/broker", label: "Brokers" },
   { href: "/foreign", label: "Foreign flow" },
   { href: "/rotation", label: "Sectors" },

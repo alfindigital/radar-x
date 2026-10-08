@@ -15,7 +15,7 @@ export default function NotFound() {
       </p>
       <div className="mono mt-6 flex items-center justify-center gap-4 text-[11px] uppercase tracking-wider">
         <Link href="/" className="acc hover:underline">
-          Exit Watch
+          Dashboard
         </Link>
         <span className="faint">·</span>
         <Link href="/broker" className="dim hover:text-ink">

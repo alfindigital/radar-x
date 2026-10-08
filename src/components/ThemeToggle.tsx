@@ -2,16 +2,18 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 
-// TH1: Light / Dark / System. Explicit choice persists in localStorage and sets
-// data-theme on <html>; "system" removes the attribute so the media query rules.
-// The bootstrap script in layout.tsx runs before paint to avoid theme flash.
-// Icon-only cycle button: system -> light -> dark -> system.
+// TH1: binary light/dark switch — the old system→light→dark cycle made the
+// state a puzzle for a two-theme product. An explicit choice persists in
+// localStorage as data-theme on <html>; nothing stored means the media query
+// rules (globals.css), so OS changes keep flowing for users who never
+// toggled. The bootstrap script in layout.tsx runs before paint to avoid
+// theme flash. Only the STORED choice may touch data-theme — applying the
+// effective mode would pin unset users to whatever the OS resolved at mount.
 
-type Mode = "light" | "dark" | "system";
+type Mode = "light" | "dark";
 const KEY = "radarx-theme";
 const EVENT = "radarx-theme";
-const NEXT: Record<Mode, Mode> = { system: "light", light: "dark", dark: "system" };
-const LABELS: Record<Mode, string> = { system: "Auto", light: "Light", dark: "Dark" };
+const LABELS: Record<Mode, string> = { light: "Light", dark: "Dark" };
 
 // Storage may be denied (private mode, policy) — preference falls back to an
 // in-memory value for the session and must never break rendering.
@@ -26,87 +28,90 @@ function readMode(): Mode | null {
   }
 }
 
-function writeMode(mode: Mode | null) {
+function writeMode(mode: Mode) {
   memoryMode = mode;
   try {
-    if (mode === null) window.localStorage.removeItem(KEY);
-    else window.localStorage.setItem(KEY, mode);
+    window.localStorage.setItem(KEY, mode);
   } catch {
     /* denied — session-only preference */
   }
 }
 
+// The icon reflects the EFFECTIVE theme: stored choice, else OS-resolved.
 function getMode(): Mode {
-  if (typeof window === "undefined") return "system";
-  return readMode() ?? "system";
+  const stored = readMode();
+  if (stored) return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-function apply(mode: Mode) {
+function applyStored() {
+  const stored = readMode();
   const root = document.documentElement;
-  if (mode === "system") root.removeAttribute("data-theme");
-  else root.setAttribute("data-theme", mode);
+  if (stored) root.setAttribute("data-theme", stored);
+  else root.removeAttribute("data-theme");
 }
 
 function subscribe(onStoreChange: () => void) {
   window.addEventListener(EVENT, onStoreChange);
   window.addEventListener("storage", onStoreChange);
+  // Unset users track the OS — a scheme change must redraw the icon too.
+  const mql = window.matchMedia("(prefers-color-scheme: dark)");
+  mql.addEventListener("change", onStoreChange);
   return () => {
     window.removeEventListener(EVENT, onStoreChange);
     window.removeEventListener("storage", onStoreChange);
+    mql.removeEventListener("change", onStoreChange);
   };
 }
 
-// Filled glyphs, same shape language as the scope mark: thin stroked icons
-// read muddy at 15px and look borrowed; solid shapes stay crisp in both themes.
-function ModeIcon({ mode }: { mode: Mode }) {
-  if (mode === "light")
-    return (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <circle cx="12" cy="12" r="4.6" fill="currentColor" />
-        <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-          <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.05 5.05l1.7 1.7M17.25 17.25l1.7 1.7M5.05 18.95l1.7-1.7M17.25 6.75l1.7-1.7" />
-        </g>
-      </svg>
-    );
-  if (mode === "dark")
-    return (
-      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
-        <path
-          fill="currentColor"
-          d="M20.2 14.2A8.5 8.5 0 1 1 9.8 3.8a8.5 8.5 0 0 0 10.4 10.4Z"
-        />
-      </svg>
-    );
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden>
-      <circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" strokeWidth="1.8" />
-      <path fill="currentColor" d="M12 3.6a8.4 8.4 0 0 1 0 16.8Z" />
-    </svg>
-  );
-}
-
+// Filled glyphs share the scope mark's solid language — stroked icons read
+// muddy at 16px. The pair crossfades with a quarter-turn on toggle: a state
+// change, not decoration (MOTION 1, 150ms like every header control).
 export function ThemeToggle() {
-  const mode = useSyncExternalStore(subscribe, getMode, () => "system" as Mode);
+  const mode = useSyncExternalStore(subscribe, getMode, () => "dark" as Mode);
+  const next: Mode = mode === "dark" ? "light" : "dark";
 
   useEffect(() => {
-    apply(mode);
+    applyStored();
   }, [mode]);
 
   return (
     <button
       type="button"
-      aria-label={`Theme: ${LABELS[mode]}. Switch to ${LABELS[NEXT[mode]]}`}
-      data-tip={`${LABELS[mode]} · next: ${LABELS[NEXT[mode]]}`}
+      aria-label={`Theme: ${LABELS[mode]}. Switch to ${LABELS[next]}`}
+      data-tip={`${LABELS[mode]} · switch to ${LABELS[next]}`}
       onClick={() => {
-        const next = NEXT[mode];
-        writeMode(next === "system" ? null : next);
-        apply(next);
+        writeMode(next);
+        applyStored();
         window.dispatchEvent(new Event(EVENT));
       }}
-      className="tip-r flex h-11 w-11 shrink-0 items-center justify-center border border-line dim hover:border-line-2 hover:text-ink"
-      style={{ borderRadius: "var(--radius-sm)" }}
+      className="iconbtn tip-r tip-b"
     >
-      <ModeIcon mode={mode} />
+      <span className="relative block h-4 w-4" aria-hidden>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          className={`absolute inset-0 h-full w-full transition duration-150 ease-out ${
+            mode === "light" ? "rotate-0 scale-100 opacity-100" : "-rotate-45 scale-50 opacity-0"
+          }`}
+        >
+          <circle cx="12" cy="12" r="4.4" fill="currentColor" />
+          <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.35 5.35l1.84 1.84M16.81 16.81l1.84 1.84M5.35 18.65l1.84-1.84M16.81 7.19l1.84-1.84" />
+          </g>
+        </svg>
+        <svg
+          viewBox="0 0 24 24"
+          className={`absolute inset-0 h-full w-full transition duration-150 ease-out ${
+            mode === "dark" ? "rotate-0 scale-100 opacity-100" : "rotate-45 scale-50 opacity-0"
+          }`}
+        >
+          <path
+            fill="currentColor"
+            d="M20.2 14.2A8.5 8.5 0 1 1 9.8 3.8a8.5 8.5 0 0 0 10.4 10.4Z"
+          />
+        </svg>
+      </span>
     </button>
   );
 }

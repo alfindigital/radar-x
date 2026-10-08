@@ -44,9 +44,10 @@
   `PrimaryNav` active states. Dials: ENERGY 2 / RHYTHM 2 / MOTION 1.
   Antislop pointer lives in `AGENTS.md`. QA: `scripts/qa-redesign.mjs` →
   `docs/verification/redesign-terminal/`.
-- **Routes:** `/` = Exit Watch board · `/?v=radar` = v2 board · `/broker`,
-  `/broker/[code]` new · dossier gains Exit Watch panel (tug-of-war chart,
-  component coverage, suspension/CA context).
+- **Routes:** `/` = unified Dashboard (positioning index + distribution
+  pressure in one tape; legacy `?v=radar`/`?f=` links resolve onto it) ·
+  `/broker`, `/broker/[code]` new · dossier has a Distribution pressure panel
+  (tug-of-war chart, component coverage, suspension/CA context).
 - **Engine:** `src/lib/exitwatch.ts` — instExit .30 / foreignExit .25 /
   insiderExit .25 / retailAbsorb .20, robust-z clipped ±3, coverage gate ≥0.5.
 - **Cohort truth:** registry 88 brokers = inst 39 / mixed 42 / unknown 2 /

@@ -191,7 +191,7 @@ export function buildDerived(
       limitations: [
         "Derived analytics use the immutable local Sectors snapshot and do not call an upstream provider.",
         "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete.",
-        "Exit Watch is a bounded pressure reading over labeled broker cohorts · not proof of intent; missing components lower coverage instead of scoring zero.",
+        "Distribution pressure is a bounded reading over labeled broker cohorts · not proof of intent; missing components lower coverage instead of scoring zero.",
       ],
       feedHashes: feeds.feedHashes,
     },

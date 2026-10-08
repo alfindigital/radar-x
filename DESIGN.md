@@ -84,9 +84,9 @@ badges (R-11). Terminals are rectangles; curves are reserved for the radar motif
 - Wordmark: `RadarX` — Archivo 800, tight tracking; the X carries the phosphor
   accent as the wordmark's blip. Mono stays reserved for data, not the brand
   signature (RADAR-X uppercase-mono read as terminal costume).
-- Theme control is one icon button cycling system → light → dark (monitor /
-  sun / moon glyphs). Text labels on a segmented control read as generic UI;
-  the icon communicates the state itself.
+- Theme control is one icon button flipping light ↔ dark (sun / moon glyphs).
+  Text labels on a segmented control read as generic UI; the icon communicates
+  the state itself. Header icon controls (`iconbtn`) are bare glyphs, no box.
 - Hairline discipline: 1px `--line` borders do all separation; panels get no
   shadow in dark (elevation by border+surface step only), minimal shadow in light
   (R-12).

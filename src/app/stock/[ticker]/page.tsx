@@ -5,8 +5,8 @@ import Link from "next/link";
 import TimelineChart from "@/components/TimelineChart";
 import TradesTable from "@/components/TradesTable";
 import { CaseRow, ScoreBreakdown, ScoreMarker, ScoreNumber, Stat } from "@/components/widgets";
-import { fmtCurrency, fmtNum, fmtShares } from "@/components/fmt";
-import { ExitPressureBadge } from "@/components/ExitPressureBadge";
+import { fmtCurrency, fmtNum, fmtShares, PRESSURE_COMPONENT_LABEL } from "@/components/fmt";
+import { PressureBadge } from "@/components/PressureBadge";
 import { FlagChips } from "@/components/FlagChips";
 import { CohortNetChart } from "@/components/CohortNetChart";
 import type { HoldersMonthly } from "@/lib/types";
@@ -351,9 +351,9 @@ export default async function DossierPage({ params, searchParams }: PageProps<"/
         <section className="panel space-y-4 p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="section-label">Exit Watch</h2>
+              <h2 className="section-label">Distribution pressure</h2>
               <div className="mt-2 flex items-center gap-3">
-                <ExitPressureBadge score={d.exit.score} coverage={d.exit.coverage} />
+                <PressureBadge score={d.exit.score} coverage={d.exit.coverage} />
                 <span className="faint text-[11px]">
                   {d.exit.window.days}-day window {d.exit.window.from ?? "—"} → {d.exit.window.to} · coverage {d.exit.coverage.toFixed(2)}
                 </span>
@@ -375,7 +375,7 @@ export default async function DossierPage({ params, searchParams }: PageProps<"/
               {d.exit.components.map((c) => (
                 <div key={c.key} className="rounded-md border border-line p-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[10px] uppercase tracking-wider faint">{c.key}</span>
+                    <span className="text-[10px] uppercase tracking-wider faint">{PRESSURE_COMPONENT_LABEL[c.key] ?? c.key}</span>
                     <span className="mono text-[11px]">
                       {c.status === "available" && c.raw !== null ? `${c.raw > 0 ? "+" : ""}${c.raw.toFixed(3)}% cap` : "—"}
                     </span>

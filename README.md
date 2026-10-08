@@ -5,7 +5,7 @@ RADAR-X is an evidence-first market-intelligence workflow for Indonesian equitie
 **Track:** Sectors Hackathon 2026, Track 3 — Market Intelligence
 **Live:** [radarx.web.id](https://radarx.web.id) (www → apex 308; beta alias: radar-x-beta.vercel.app)
 **Current verified snapshot:** through 2026-10-08
-**v3:** `/` is the Exit Watch board (cohort-labeled exit pressure); the v2 radar board is preserved at `/?v=radar`.
+**v3:** `/` is the unified dashboard (positioning index + distribution pressure in one tape); the standalone v2 board is retired and legacy `?v=radar`/`?f=` links resolve onto it.
 **Submission deadline in the current rules:** 8 October 2026, 23:59 WIB
 
 The repository is designed to run without credentials or network access. The checked-in raw snapshot is read-only at runtime; generated v2 artifacts are hash-verified before the app serves them. Provider ingestion is optional and is not required for the demo.

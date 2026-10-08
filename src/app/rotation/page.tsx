@@ -1,10 +1,12 @@
-// Sector Rotation — saved subsector aggregates: market-cap change heatmap,
-// valuation context, and member drill-down. Reads data/sector_rotation.json.
+// Sector Rotation — saved subsector aggregates: one uniform market-cap
+// heatmap (every subsector the same tile, ranked by 1w move), then the full
+// ranked table. Reads data/sector_rotation.json.
 
 import Link from "next/link";
 import { getSectorRotation } from "@/lib/services";
 import { fmtIDR } from "@/components/fmt";
 import { Pager, TABLE_PAGE_SIZE, pageHref, paginate } from "@/components/Pager";
+import { StatStrip, Stat } from "@/components/StatStrip";
 import type { RotationSubsector } from "@/lib/rotation";
 
 export const dynamic = "force-dynamic";
@@ -13,14 +15,18 @@ function chgPct(v: number | null): number | null {
   return v === null ? null : v * 100;
 }
 
-function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
+// Uniform heatmap tile: identical structure for all 30+ subsectors so the grid
+// reads as one instrument, not a stack of mismatched panels. Color intensity
+// tracks |Δ1w|; null renders the neutral plate, never a colored guess.
+function Cell({ s, rank, maxAbs }: { s: RotationSubsector; rank: number; maxAbs: number }) {
   const v = s.mcapChange1w;
+  const ytd = s.mcapChangeYtd;
   const intensity = v === null || maxAbs === 0 ? 0 : Math.min(1, Math.abs(v) / maxAbs);
   const alpha = 5 + Math.round(intensity * 20); // 5%..25%
-  const tone = v === null ? "var(--watch)" : v >= 0 ? "var(--acc)" : "var(--dist)";
+  const tone = v === null ? "var(--ink-faint)" : v >= 0 ? "var(--acc)" : "var(--dist)";
   const tip = [
-    `${s.subSector} (${s.companyCount ?? "—"} issuers)`,
-    `mcap Δ1w ${v === null ? "—" : `${(v * 100).toFixed(1)}%`} · YTD ${s.mcapChangeYtd === null ? "—" : `${(s.mcapChangeYtd * 100).toFixed(1)}%`}`,
+    `${s.subSector} · ${s.sector} (${s.companyCount ?? "—"} issuers)`,
+    `mcap Δ1w ${v === null ? "—" : `${(v * 100).toFixed(1)}%`} · YTD ${ytd === null ? "—" : `${(ytd * 100).toFixed(1)}%`}`,
     `median PE ${s.medianPe === null ? "—" : s.medianPe.toFixed(1)}x · max DD ${s.maxDrawdown === null ? "—" : `${(s.maxDrawdown * 100).toFixed(0)}%`}`,
     s.valuationLatest
       ? `PB ${s.valuationLatest.pb === null ? "—" : s.valuationLatest.pb.toFixed(2)}x (rank ${s.valuationLatest.pbRank ?? "—"}/33) · PS ${s.valuationLatest.ps === null ? "—" : s.valuationLatest.ps.toFixed(2)}x`
@@ -41,12 +47,18 @@ function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
       className="block rounded-md border border-line px-3 py-2.5 transition-colors hover:border-line-2"
       style={{ background: `color-mix(in srgb, ${tone} ${alpha}%, transparent)` }}
     >
-      <div className="truncate text-[11px] font-medium">{s.subSector}</div>
-      <div className="mono mt-0.5 flex items-baseline justify-between text-xs">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="faint min-w-0 truncate text-[9px] uppercase tracking-wider">{s.sector}</span>
+        <span className="mono faint shrink-0 text-[9px]">{String(rank).padStart(2, "0")}</span>
+      </div>
+      <div className="mt-1 truncate text-[12px] font-medium">{s.subSector}</div>
+      <div className="mono mt-1 flex items-baseline justify-between gap-2 text-xs">
         <span className={v === null ? "faint" : v >= 0 ? "acc" : "dist"}>
           {v === null ? "—" : `${v >= 0 ? "+" : ""}${(v * 100).toFixed(1)}%`}
         </span>
-        <span className="faint text-[9px]">1w</span>
+        <span className="faint shrink-0 text-[9px]">
+          ytd {ytd === null ? "—" : `${ytd >= 0 ? "+" : ""}${(ytd * 100).toFixed(0)}%`}
+        </span>
       </div>
     </Link>
   );
@@ -73,21 +85,15 @@ export default async function RotationPage({ searchParams }: PageProps<"/rotatio
   const sorted = [...all].sort((a, b) => (b.mcapChange1w ?? -Infinity) - (a.mcapChange1w ?? -Infinity));
   const pg = paginate(sorted, params.page);
 
+  const deltas = all.map((s) => s.mcapChange1w).filter((v): v is number => v !== null).sort((a, b) => a - b);
+  const median = deltas.length ? deltas[Math.floor(deltas.length / 2)] * 100 : null;
+  const advancing = deltas.filter((v) => v > 0).length;
+  const declining = deltas.filter((v) => v < 0).length;
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-[26px] font-bold tracking-tight">Sector Rotation</h1>
-          <p className="mt-1.5 text-[13px] dim">
-            Aggregate market-cap movement across {all.length} IDX subsectors · as of{" "}
-            <span className="mono">{board.asOf ?? "—"}</span>
-            {board.flowDate ? (
-              <>
-                {" "}· foreign flow aggregated from the saved <span className="mono">{board.flowDate}</span> session
-              </>
-            ) : null}
-          </p>
-        </div>
+        <h1 className="text-[26px] font-bold tracking-tight">Sector Rotation</h1>
         <div className="flex items-center gap-4 text-[10px] faint">
           <span>
             <span className="acc">■</span> mcap expansion 1w
@@ -99,21 +105,31 @@ export default async function RotationPage({ searchParams }: PageProps<"/rotatio
         </div>
       </div>
 
-      <div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {board.sectors.map((g) => (
-          <section key={g.slug} className="panel p-4">
-            <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-widest faint">{g.label}</h2>
-            <div className="grid grid-cols-1 gap-1.5">
-              {g.subs.map((s) => (
-                <Cell key={s.slug} s={s} maxAbs={maxAbs} />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
+      <StatStrip>
+        <Stat label="Subsectors" value={all.length} />
+        <Stat label="Advancing 1w" value={advancing} color="var(--acc)" />
+        <Stat label="Declining 1w" value={declining} color="var(--dist)" />
+        <Stat label="No reading" value={all.length - deltas.length} color="var(--ink-faint)" />
+        <Stat
+          label="Median Δ1w"
+          value={median === null ? "—" : `${median >= 0 ? "+" : ""}${median.toFixed(1)}%`}
+          color={median === null ? undefined : median >= 0 ? "var(--acc)" : "var(--dist)"}
+        />
+        <Stat label="As of" value={board.asOf ?? "—"} />
+        <Stat label="Flow session" value={board.flowDate ?? "—"} sub="foreign flow basis" />
+      </StatStrip>
 
       <section>
-        <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">All subsectors, ranked by 1-week mcap change</h2>
+        <h2 className="section-label mb-2">All subsectors, ranked by 1-week mcap change</h2>
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+          {sorted.map((s, i) => (
+            <Cell key={s.slug} s={s} rank={i + 1} maxAbs={maxAbs} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="section-label mb-2">Detail table</h2>
         <div className="table-sticky">
           <table className="w-full text-sm">
             <thead>
@@ -178,8 +194,8 @@ export default async function RotationPage({ searchParams }: PageProps<"/rotatio
 
       <p className="text-[11px] leading-relaxed faint">
         Aggregates are provider-weighted: a single large issuer can dominate a subsector&apos;s move. Net foreign flow sums the
-        saved flow session over member issuers with stored rows only; observed/total coverage is shown per subsector.{" "}
-        {board.limitations.length ? "Saved artifact limitations apply." : ""}
+        saved {board.flowDate ?? "—"} session over member issuers with stored rows only; observed/total coverage is shown per
+        subsector. {board.limitations.length ? "Saved artifact limitations apply." : ""}
       </p>
     </div>
   );

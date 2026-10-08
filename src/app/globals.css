@@ -195,12 +195,37 @@ summary:focus-visible {
   color: var(--ink-dim);
 }
 
+/* Header icon controls — bare glyphs, quiet like nav text: dim at rest, ink
+   on hover, no box. 32px reads proportional in the 48px bar; coarse pointers
+   get the full 44px hit area. Shared by theme + search so they behave as one
+   control language. */
+.iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  color: var(--ink-dim);
+}
+.iconbtn:hover {
+  color: var(--ink);
+}
+@media (pointer: coarse) {
+  .iconbtn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 /* Terminal tabs — text row with accent underline on the active scope. */
 .tabbar {
   display: flex;
   align-items: center;
   gap: 2px;
   border-bottom: 1px solid var(--line);
+  overflow-x: auto; /* scopes outgrow 360px: scroll sideways, never wrap */
 }
 .tab {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -235,10 +260,14 @@ summary:focus-visible {
   border-radius: var(--radius-sm);
 }
 
-/* Signal stripe — ONLY on high-pressure rows (score >= 75): state, not decor.
+/* Signal stripes — state, not decor (DESIGN.md). dist edge: pressure ≥75.
+   acc edge: positioning ≥+50. dist wins conflicts: risk outranks momentum.
    Applied to the first cell because inset shadows on <tr> are unreliable. */
 .row-signal > td:first-child {
   box-shadow: inset 2px 0 0 var(--dist);
+}
+.row-signal-acc > td:first-child {
+  box-shadow: inset 2px 0 0 var(--acc);
 }
 
 a {
@@ -311,6 +340,12 @@ a:hover {
   left: 50%;
   transform: translateX(-50%);
   max-width: 220px;
+}
+/* Top-bar hosts: the default above-host position renders off-viewport from a
+   sticky header — these tips drop below instead. */
+.tip-b::after {
+  top: calc(100% + 5px);
+  bottom: auto;
 }
 @media (max-width: 640px) {
   [data-tip]::after,
