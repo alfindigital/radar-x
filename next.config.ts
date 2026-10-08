@@ -19,8 +19,8 @@ const nextConfig: NextConfig = {
       { source: "/saham/:ticker", destination: "/stock/:ticker", permanent: false },
     ];
   },
-  // Baseline hardening headers. CSP is intentionally not set: Next's bootstrap
-  // inline scripts need hashed/nonced policy work; tracked as follow-up.
+  // Baseline hardening headers. Content-Security-Policy is set per-request with
+  // a nonce in src/proxy.ts (strict-dynamic; inline style attrs allowed).
   async headers() {
     return [
       {

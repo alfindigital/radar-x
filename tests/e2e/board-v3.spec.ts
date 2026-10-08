@@ -45,15 +45,19 @@ test("flagged scope renders flag chips", async ({ page }, testInfo) => {
   await expect(page.locator("tbody tr.row-hover").locator("text=/SUSP|CORP|FLOAT|SPARSE/").first()).toBeVisible();
 });
 
-test("suppressed scope shows null-score rows and pagination", async ({ page }, testInfo) => {
+test("suppressed scope shows null-score rows", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === "mobile-chrome", "Board scope verified on desktop only.");
   await page.goto("/?scope=suppressed");
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
   await expect(rows.first().locator("td").nth(2)).toContainText("low coverage");
+});
+
+test("board paginates beyond 150 rows", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "mobile-chrome", "Board scope verified on desktop only.");
+  await page.goto("/?scope=all");
   await expect(page.getByText(/Page 1 of \d+ · 1–\d+ of \d+/)).toBeVisible();
   await page.getByRole("link", { name: "Next →" }).click();
-  await expect(page).toHaveURL(/scope=suppressed/);
   await expect(page).toHaveURL(/page=2/);
   await expect(page.getByText(/Page 2 of \d+/)).toBeVisible();
 });

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Archivo, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import Script from "next/script";
@@ -84,11 +85,12 @@ function Footer() {
   );
 }
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const nonce = (await headers()).get("x-nonce");
   return (
     <html lang="en" className={`${archivo.variable} ${jetMono.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col">
-        <Script id="radarx-theme-init" strategy="beforeInteractive">
+        <Script id="radarx-theme-init" strategy="beforeInteractive" nonce={nonce ?? undefined}>
           {`try{var t=localStorage.getItem("radarx-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}`}
         </Script>
         <TopNav />

@@ -55,7 +55,7 @@ test("case detail exposes separate outcome status and bounded evidence", async (
 
 test("search resolves a known issuer and an unknown issuer remains explicit", async ({ page }) => {
   await page.goto("/");
-  const search = page.getByRole("textbox", { name: "Search issuer" });
+  const search = page.getByRole("combobox", { name: "Search issuer" });
   await page.waitForTimeout(750);
   await search.fill("BBCA");
   await search.press("Enter");

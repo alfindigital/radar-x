@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+// Rendered at request time so the CSP nonce from the request headers reaches
+// the theme-init script in the root layout.
+export const dynamic = "force-dynamic";
+
 export default function NotFound() {
   return (
     <div className="mx-auto max-w-md py-16 text-center">
