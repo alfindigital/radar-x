@@ -20,10 +20,9 @@ try {
 }
 
 import { api, universeAll, type FilingRaw } from "../src/lib/sectors";
-import { getStore } from "../src/lib/db";
+import { getStore, writeJson } from "../src/lib/db";
 import { loadRotation, type RotationSubsector, type SectorRotationArtifact } from "../src/lib/rotation";
 import { loadTaxonomy, slugifyTaxonomy, type TaxonomyArtifact, type TaxonomyRow } from "../src/lib/taxonomy";
-import { writeFile } from "fs/promises";
 import type {
   BrokerSummaryRow,
   FlowDaily,
@@ -56,6 +55,42 @@ async function logRun(job: string, calls: number, rows: number): Promise<void> {
   const status = tallyStatus();
   await store.log(job, calls, rows, status);
   if (status === "failed") process.exitCode = 1;
+}
+
+// Corrupt JSON is a data fault, not an empty store: `init` comes back only when
+// the file is absent. A parse error or a non-object payload must halt here,
+// before a later write flattens whatever evidence was on disk.
+function readJsonOr<T>(file: string, init: T): T {
+  let raw: string;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === "ENOENT") return init;
+    throw e;
+  }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (e) {
+    throw new Error(`${file}: corrupt JSON — refusing to treat it as empty`, { cause: e });
+  }
+  if (typeof parsed !== "object" || parsed === null) {
+    throw new Error(`${file}: expected an object/array payload, got ${typeof parsed}`);
+  }
+  return parsed as T;
+}
+
+// Numeric flags gate paid upstream calls — `--limit -1` or `--limit abc` must
+// die here, not after a provider round-trip.
+function numFlag(name: string, def: number, { min = 0 }: { min?: number } = {}): number {
+  const raw = flag(name);
+  if (raw === undefined) return def;
+  const n = Number(raw);
+  if (!Number.isInteger(n) || n < min) {
+    console.error(`--${name}: expected an integer >= ${min}, got "${raw}"`);
+    process.exit(1);
+  }
+  return n;
 }
 
 function monthChunks(months: number): { start: string; end: string }[] {
@@ -96,7 +131,7 @@ async function ingestFilings() {
   // --from/--to (inclusive) overrides --months for targeted gap-fills.
   const from = flag("from");
   const to = flag("to", new Date().toISOString().slice(0, 10));
-  const chunks = from ? [{ start: from, end: to! }] : monthChunks(Number(flag("months", "6")));
+  const chunks = from ? [{ start: from, end: to! }] : monthChunks(numFlag("months", 6, { min: 1 }));
   let totalAdded = 0;
   let calls = 0;
   for (const c of chunks) {
@@ -141,23 +176,21 @@ async function watchlist(): Promise<string[]> {
 
 async function missing(kind: "flow" | "price" | "holders" | "broker", syms: string[]): Promise<string[]> {
   if (!args.includes("--only-missing")) return syms;
-  const out: string[] = [];
-  for (const s of syms) {
-    const n =
-      kind === "flow"
-        ? (await store.listFlowDaily(s)).length
-        : kind === "price"
-          ? (await store.listPriceDaily(s)).length
-          : kind === "holders"
-            ? (await store.getHolders(s)).length
-            : (await store.listBrokerRows(s)).length;
-    if (n === 0) out.push(s);
-  }
-  return out;
+  // One pass over the store: the per-symbol listers each re-parse the whole
+  // JSON file, so N symbols would cost N full reads.
+  const have =
+    kind === "flow"
+      ? new Set((await store.listFlowUniverse()).map((r) => r.symbol))
+      : kind === "price"
+        ? await store.listPriceSymbols()
+        : kind === "holders"
+          ? await store.listHolderSymbols()
+          : await store.listBrokerSymbols();
+  return syms.filter((s) => !have.has(s));
 }
 
 async function ingestFlows() {
-  const limit = Number(flag("limit", "200"));
+  const limit = numFlag("limit", 200);
   const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
   let wl = await missing("flow", base);
   // Thinnest history first — a bounded --limit then maximizes backfill value
@@ -191,16 +224,15 @@ async function ingestFlows() {
 }
 
 async function ingestPrices() {
-  const limit = Number(flag("limit", "200"));
+  const limit = numFlag("limit", 200);
   const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
   let wl = await missing("price", base);
   // Symbols with no/fewest OHLCV observations first — close-only universe rows
   // (observationKind absent here) count as zero depth.
   const depth = new Map<string, number>();
-  try {
-    const stored = JSON.parse(readFileSync(path.join(process.cwd(), "data", "price_daily.json"), "utf8")) as { symbol: string; observationKind?: string }[];
-    for (const r of stored) if (r.observationKind === "ohlcv") depth.set(r.symbol, (depth.get(r.symbol) ?? 0) + 1);
-  } catch { /* empty store — every symbol is depth 0 */ }
+  const stored = readJsonOr<{ symbol: string; observationKind?: string }[]>(
+    path.join(process.cwd(), "data", "price_daily.json"), []);
+  for (const r of stored) if (r.observationKind === "ohlcv") depth.set(r.symbol, (depth.get(r.symbol) ?? 0) + 1);
   wl = wl.sort((a, b) => (depth.get(a) ?? 0) - (depth.get(b) ?? 0)).slice(0, limit);
   let rows = 0;
   let calls = 0;
@@ -249,7 +281,7 @@ async function scopeUniverse(): Promise<string[]> {
 }
 
 async function ingestHolders() {
-  const limit = Number(flag("limit", "200"));
+  const limit = numFlag("limit", 200);
   // Compose scope → (optional) missing filter → limit; --universe must not
   // silently discard the requested call budget.
   const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
@@ -261,7 +293,7 @@ async function ingestHolders() {
   for (let i = 0; i < wl.length; i++) {
     const sym = wl[i];
     try {
-      const res = await api.shareholdersComposition(sym, year ? { year: Number(year) } : {});
+      const res = await api.shareholdersComposition(sym, year ? { year: numFlag("year", 0) } : {});
       calls++;
       tally.ok++;
       batch.push(
@@ -299,22 +331,28 @@ async function ingestHolders() {
 }
 
 async function ingestBroker() {
-  const limit = Number(flag("limit", "40"));
+  const limit = numFlag("limit", 40);
   const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
   let wl = await missing("broker", base);
-  // Stalest-first: symbols with no rows or the oldest last-date refresh first,
-  // so a daily --limit rotates the whole universe instead of re-reading the
-  // same head of the list every run.
+  // Rotate by last ATTEMPT, not last data: symbols whose provider legitimately
+  // returns empty would otherwise sort stalest-first forever and burn the
+  // --limit budget on every run.
   const last = new Map<string, string>();
-  try {
-    const stored = JSON.parse(readFileSync(path.join(process.cwd(), "data", "broker_rows.json"), "utf8")) as { symbol: string; date: string }[];
-    for (const r of stored) {
-      const m = last.get(r.symbol);
-      if (!m || r.date > m) last.set(r.symbol, r.date);
-    }
-  } catch { /* empty store — all equally stale */ }
-  wl = wl.sort((a, b) => (last.get(a) ?? "").localeCompare(last.get(b) ?? "")).slice(0, limit);
+  for (const r of readJsonOr<{ symbol: string; date: string }[]>(
+    path.join(process.cwd(), "data", "broker_rows.json"), [])) {
+    const m = last.get(r.symbol);
+    if (!m || r.date > m) last.set(r.symbol, r.date);
+  }
+  const attemptsFile = path.join(process.cwd(), "data", "broker_attempts.json");
+  const attempts = readJsonOr<{ attempted?: Record<string, string> }>(attemptsFile, {});
+  const attempted = (attempts.attempted ??= {});
+  wl = wl.sort(
+    (a, b) =>
+      (attempted[a] ?? "").localeCompare(attempted[b] ?? "") ||
+      (last.get(a) ?? "").localeCompare(last.get(b) ?? ""),
+  ).slice(0, limit);
   const batch = new Map<string, BrokerSummaryRow[]>();
+  const now = new Date().toISOString();
   let rows = 0;
   let calls = 0;
   tallyReset();
@@ -345,12 +383,19 @@ async function ingestBroker() {
       tally.failed++;
       console.warn(`broker ${sym}: ${e instanceof Error ? e.message : e}`);
     }
+    // Stamp every attempt — success, empty, or failure all push the symbol to
+    // the back of the queue for the next run.
+    attempted[sym] = now;
     // Batch upsert every 50 symbols — one read+write of the 50MiB store per
     // batch instead of one per symbol (a full backfill otherwise rewrites it
-    // hundreds of times).
-    if (batch.size && ((i + 1) % 50 === 0 || i === wl.length - 1)) {
-      rows += await store.upsertBrokerRowsMulti(batch);
-      batch.clear();
+    // hundreds of times). Attempt stamps persist on the same cadence so a
+    // killed run doesn't send the same symbols back to the head.
+    if ((i + 1) % 50 === 0 || i === wl.length - 1) {
+      if (batch.size) {
+        rows += await store.upsertBrokerRowsMulti(batch);
+        batch.clear();
+      }
+      await writeJson(attemptsFile, { schemaVersion: 1, generatedAt: now, attempted });
       console.log(`broker: ${i + 1}/${wl.length} (${calls} calls)`);
     }
   }
@@ -384,10 +429,11 @@ async function ingestIndex() {
   // window the last `boards` full run happened to fetch.
   if (args.includes("--all")) {
     const idxFile = path.join(process.cwd(), "data", "index_daily.json");
-    let art: { rows: { indexCode: string; date: string; price: number }[]; asOf?: string | null } & Record<string, unknown> = {
-      schemaVersion: 1, engineVersion: "radarx-v2", source: "sectors", asOf: null, generatedAt: "", rows: [],
-    };
-    try { art = JSON.parse(readFileSync(idxFile, "utf8")); } catch { /* first run */ }
+    const art = readJsonOr(idxFile, {
+      schemaVersion: 1, engineVersion: "radarx-v2", source: "sectors",
+      asOf: null as string | null, generatedAt: "",
+      rows: [] as { indexCode: string; date: string; price: number }[],
+    });
     const have = new Set(art.rows.map((r) => `${r.indexCode}|${r.date}`));
     const idxLatest = await api.indexDailyAll();
     calls++;
@@ -411,7 +457,7 @@ async function ingestIndex() {
     }
     art.asOf = art.rows.map((r) => r.date).sort().at(-1) ?? art.asOf;
     art.generatedAt = new Date().toISOString();
-    await writeFile(idxFile, JSON.stringify(art));
+    await writeJson(idxFile, art);
     console.log(`index --all: +${added} rows across ${codes.length} indices (${art.rows.length} total)`);
   }
   await store.log("ingest_index", calls, n, "ok");
@@ -421,7 +467,7 @@ async function ingestIndex() {
 // Covers ALL emiten (~25-32 credits/day/feed). Auto-detects missing days from
 // stored data; --days N forces an N-calendar-day backfill window.
 async function ingestUniverse() {
-  const forced = Number(flag("days", "0"));
+  const forced = numFlag("days", 0);
   const from = flag("from");
   const to = flag("to", new Date().toISOString().slice(0, 10));
   let days: string[];
@@ -528,11 +574,14 @@ async function ingestRotation() {
   }
 
   const rows: RotationSubsector[] = [];
+  tallyReset();
   for (const t of taxonomy) {
     let rep;
     try {
       rep = await api.subsectorReport(t.subsector, sections);
+      tally.ok++;
     } catch (e) {
+      tally.failed++;
       console.warn(`rotation ${t.subsector}: ${e instanceof Error ? e.message : e}`);
       continue;
     }
@@ -642,8 +691,8 @@ async function ingestRotation() {
       "Member lists refresh only with --refresh-members; new listings between refreshes are unmapped.",
     ],
   };
-  await writeFile(path.join(process.cwd(), "data", "sector_rotation.json"), JSON.stringify(artifact));
-  await store.log("ingest_rotation", calls, rows.length, "ok");
+  await writeJson(path.join(process.cwd(), "data", "sector_rotation.json"), artifact);
+  await logRun("ingest_rotation", calls, rows.length);
   console.log(`rotation: ${rows.length} subsectors, asOf=${asOf} (${calls} calls)`);
 }
 
@@ -671,7 +720,7 @@ async function ingestTaxonomy() {
   }
   universe = [...new Set(universe)].sort();
 
-  const limit = Number(flag("limit", "0")) || 0;
+  const limit = numFlag("limit", 0);
   const pending = args.includes("--full")
     ? universe
     : universe.filter((s) => !done.has(s) || existing?.misses.includes(s));
@@ -725,7 +774,7 @@ async function ingestTaxonomy() {
     rows: rows.sort((a, b) => a.symbol.localeCompare(b.symbol)),
     misses: misses.sort(),
   };
-  await writeFile(path.join(process.cwd(), "data", "taxonomy.json"), JSON.stringify(artifact) + "\n");
+  await writeJson(path.join(process.cwd(), "data", "taxonomy.json"), artifact);
   await logRun("ingest_taxonomy", calls, rows.length);
   console.log(`taxonomy: ${rows.length} mapped, ${misses.length} missed, asOf=${asOf} (${calls} calls)`);
 }
@@ -738,10 +787,10 @@ async function ingestTopChanges(
 ): Promise<void> {
   const tc = await api.topChanges();
   const tcFile = dir("top_changes.json");
-  let tcArtifact: { snapshots: { date: string; fetchedAt: string; topGainers: unknown; topLosers: unknown }[] } & Record<string, unknown> = { ...meta, snapshots: [] };
-  try {
-    tcArtifact = JSON.parse(readFileSync(tcFile, "utf8"));
-  } catch { /* first run */ }
+  const tcArtifact = readJsonOr(tcFile, {
+    ...meta, asOf: null as string | null,
+    snapshots: [] as { date: string; fetchedAt: string; topGainers: unknown; topLosers: unknown }[],
+  });
   const sessionDate =
     (Object.values((tc.top_gainers as Record<string, { latest_close_date?: string }[]>)["1d"] ?? [])[0] as { latest_close_date?: string } | undefined)
       ?.latest_close_date ?? asOf;
@@ -749,7 +798,7 @@ async function ingestTopChanges(
     tcArtifact.snapshots.push({ date: sessionDate, fetchedAt: now, topGainers: tc.top_gainers, topLosers: tc.top_losers });
     tcArtifact.asOf = sessionDate;
   }
-  await writeFile(tcFile, JSON.stringify(tcArtifact));
+  await writeJson(tcFile, tcArtifact);
   console.log(`top-changes: ${tcArtifact.snapshots.length} sessions, latest=${sessionDate}`);
 }
 
@@ -770,27 +819,31 @@ async function ingestBoards() {
     const idxTotal = await api.idxTotal();
     calls++;
     const itFile = dir("idx_total.json");
-    let itArt: { rows: { date: string; idx_total_market_cap: number }[] } & Record<string, unknown> = { ...meta, rows: [] };
-    try { itArt = JSON.parse(readFileSync(itFile, "utf8")); } catch { /* first run */ }
+    const itArt = readJsonOr(itFile, {
+      ...meta, asOf: null as string | null, generatedAt: "",
+      rows: [] as { date: string; idx_total_market_cap: number }[],
+    });
     const itHave = new Set(itArt.rows.map((r) => r.date));
     const itNew = idxTotal.filter((r) => !itHave.has(r.date));
     itArt.rows.push(...itNew);
     itArt.asOf = itArt.rows.at(-1)?.date ?? asOf;
     itArt.generatedAt = now;
-    await writeFile(itFile, JSON.stringify(itArt));
+    await writeJson(itFile, itArt);
 
     // --- latest index closes merged into history ---
     const idxLatest = await api.indexDailyAll();
     calls++;
     const idFile = dir("index_daily.json");
-    let idArt: { rows: { indexCode: string; date: string; price: number }[] } & Record<string, unknown> = { ...meta, rows: [] };
-    try { idArt = JSON.parse(readFileSync(idFile, "utf8")); } catch { /* first run */ }
+    const idArt = readJsonOr(idFile, {
+      ...meta, asOf: null as string | null, generatedAt: "",
+      rows: [] as { indexCode: string; date: string; price: number }[],
+    });
     const idHave = new Set(idArt.rows.map((r) => `${r.indexCode}|${r.date}`));
     const idNew = idxLatest.filter((r) => !idHave.has(`${r.index_code}|${r.date}`));
     idArt.rows.push(...idNew.map((r) => ({ indexCode: r.index_code, date: r.date, price: r.price })));
     idArt.asOf = idArt.rows.map((r) => r.date).sort().at(-1) ?? asOf;
     idArt.generatedAt = now;
-    await writeFile(idFile, JSON.stringify(idArt));
+    await writeJson(idFile, idArt);
     console.log(`boards --lite: idx-total +${itNew.length} dates, index +${idNew.length} closes`);
 
     // --- top-changes dated snapshot ---
@@ -803,13 +856,13 @@ async function ingestBoards() {
   // --- brokers registry (1 call, static) ---
   const brokers = await api.brokers();
   calls++;
-  await writeFile(dir("broker_registry.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: brokers }));
+  await writeJson(dir("broker_registry.json"), { ...meta, asOf, generatedAt: now, rows: brokers });
   console.log(`brokers: ${brokers.length}`);
 
   // --- idx-total (~1 month of daily IDX aggregate mcap) ---
   const idxTotal = await api.idxTotal();
   calls++;
-  await writeFile(dir("idx_total.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: idxTotal }));
+  await writeJson(dir("idx_total.json"), { ...meta, asOf, generatedAt: now, rows: idxTotal });
   console.log(`idx-total: ${idxTotal.length} rows ${idxTotal[0]?.date}..${idxTotal.at(-1)?.date}`);
 
   // --- index-daily history per index (≤90d window; codes from live list) ---
@@ -828,7 +881,7 @@ async function ingestBoards() {
       console.warn(`index ${code}: ${e instanceof Error ? e.message : e}`);
     }
   }
-  await writeFile(dir("index_daily.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: idxRows }));
+  await writeJson(dir("index_daily.json"), { ...meta, asOf, generatedAt: now, rows: idxRows });
   console.log(`index-daily: ${idxRows.length} rows across ${idxCodes.length} indices`);
 
   // --- free-float per subsector (33 calls ≈ full IDX) ---
@@ -845,7 +898,7 @@ async function ingestBoards() {
       console.warn(`freefloat ${t.subsector}: ${e instanceof Error ? e.message : e}`);
     }
   }
-  await writeFile(dir("free_float.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows: ffRows }));
+  await writeJson(dir("free_float.json"), { ...meta, asOf, generatedAt: now, rows: ffRows });
   console.log(`free-float: ${ffRows.length} rows`);
 
   // --- top-changes daily snapshot (accrete by session date) ---
@@ -874,10 +927,7 @@ async function ingestOwnership() {
     instTxn: [] as { symbol: string; month: string; side: string; name: string; changeAmount: number }[],
     misses: [] as string[],
   };
-  try {
-    const prev = JSON.parse(readFileSync(file, "utf8"));
-    Object.assign(art, prev);
-  } catch { /* first run */ }
+  Object.assign(art, readJsonOr(file, {}));
 
   const tax = await loadTaxonomy();
   let universe = tax?.rows.map((r) => r.symbol) ?? [];
@@ -886,7 +936,7 @@ async function ingestOwnership() {
     universe = [...new Set(rot?.subsectors.flatMap((s) => s.members) ?? [])];
   }
 
-  const limit = Number(flag("limit", "100")) || 100;
+  const limit = numFlag("limit", 100);
   const sorted = [...universe].sort((a, b) => (art.refreshed[a] ?? "").localeCompare(art.refreshed[b] ?? ""));
   const targets = args.includes("--full") ? universe : sorted.slice(0, limit);
 
@@ -939,7 +989,7 @@ async function ingestOwnership() {
       art.asOf = now.slice(0, 10);
       art.generatedAt = now;
       art.creditsEst = calls;
-      await writeFile(file, JSON.stringify(art));
+      await writeJson(file, art);
     }
   }
   await logRun("ingest_ownership", calls, targets.length);
@@ -954,29 +1004,41 @@ async function ingestExtras() {
   const now = new Date().toISOString();
   const asOf = now.slice(0, 10);
   const meta = { schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const };
-  const read = <T extends object>(f: string, init: T): T & { asOf: string | null; generatedAt: string } => {
-    try { return JSON.parse(readFileSync(dir(f), "utf8")); } catch { return init as T & { asOf: string | null; generatedAt: string }; }
-  };
+  const read = <T extends object>(f: string, init: T): T & { asOf: string | null; generatedAt: string } =>
+    readJsonOr(dir(f), init) as T & { asOf: string | null; generatedAt: string };
   let calls = 0;
+  tallyReset();
 
   // --- suspensions: full paginated backfill, dedupe by symbol+date ---
   {
     const art = read("suspensions.json", { ...meta, rows: [] as Record<string, unknown>[] });
     const have = new Set(art.rows.map((r) => `${r.symbol}|${r.suspension_date}`));
-    let offset = 0;
     let added = 0;
-    while (true) {
-      const res = await api.suspensions({ limit: 100, offset });
-      calls++;
-      for (const r of res.results) {
-        const key = `${r.symbol}|${r.suspension_date}`;
-        if (!have.has(key)) { art.rows.push(r as unknown as Record<string, unknown>); added++; }
+    try {
+      let offset = 0;
+      while (true) {
+        const res = await api.suspensions({ limit: 100, offset });
+        calls++;
+        for (const r of res.results) {
+          const key = `${r.symbol}|${r.suspension_date}`;
+          if (!have.has(key)) {
+            have.add(key);
+            art.rows.push(r as unknown as Record<string, unknown>);
+            added++;
+          }
+        }
+        if (!res.pagination?.has_next || res.results.length === 0) break;
+        offset = res.pagination.next_offset ?? offset + res.results.length;
       }
-      if (!res.pagination?.has_next || res.results.length === 0) break;
-      offset = res.pagination.next_offset ?? offset + res.results.length;
+      tally.ok++;
+    } catch (e) {
+      // The artifact accretes, so pages that already landed are still worth
+      // persisting — a mid-pagination throw just stops the backfill early.
+      tally.failed++;
+      console.warn(`suspensions: ${e instanceof Error ? e.message : e}`);
     }
     art.asOf = asOf; art.generatedAt = now;
-    await writeFile(dir("suspensions.json"), JSON.stringify(art));
+    await writeJson(dir("suspensions.json"), art);
     console.log(`suspensions: +${added} rows → ${art.rows.length} total`);
   }
 
@@ -995,7 +1057,7 @@ async function ingestExtras() {
         console.warn(`corp-actions ${t}: ${e instanceof Error ? e.message : e}`);
       }
     }
-    await writeFile(dir("corporate_actions.json"), JSON.stringify(cal));
+    await writeJson(dir("corporate_actions.json"), cal);
   }
 
   // --- brokers/top: daily leaderboard, accreted by session date + cohort ---
@@ -1012,7 +1074,7 @@ async function ingestExtras() {
       art.asOf = res.date;
     }
     art.generatedAt = now;
-    await writeFile(dir("brokers_top.json"), JSON.stringify(art));
+    await writeJson(dir("brokers_top.json"), art);
     console.log(`brokers/top: ${art.sessions.length} sessions, latest=${art.asOf}`);
   }
 
@@ -1027,7 +1089,7 @@ async function ingestExtras() {
     }
     art.asOf = Object.keys(art.days).sort().at(-1) ?? asOf;
     art.generatedAt = now;
-    await writeFile(dir("most_traded.json"), JSON.stringify(art));
+    await writeJson(dir("most_traded.json"), art);
     console.log(`most-traded: +${added} days → ${Object.keys(art.days).length} total`);
   }
 
@@ -1042,7 +1104,7 @@ async function ingestExtras() {
       if (!res.pagination?.has_next || res.results.length === 0) break;
       offset = res.pagination.next_offset ?? offset + res.results.length;
     }
-    await writeFile(dir("quarterly_dates.json"), JSON.stringify({ ...meta, asOf, generatedAt: now, rows }));
+    await writeJson(dir("quarterly_dates.json"), { ...meta, asOf, generatedAt: now, rows });
     console.log(`quarterly-dates: ${rows.length} rows`);
   }
 
@@ -1091,7 +1153,7 @@ async function ingestPerSymbol(
     if ((i + 1) % 50 === 0 || i === targets.length - 1) {
       console.log(`${name}: ${i + 1}/${targets.length} (${calls} calls)`);
       art.asOf = now.slice(0, 10); art.generatedAt = now; art.creditsEst = calls;
-      await writeFile(target, JSON.stringify(art));
+      await writeJson(target, art);
     }
   }
   await logRun(`ingest_${name}`, calls, targets.length);
@@ -1121,7 +1183,7 @@ async function ingestBrokerLeaderboard() {
     art.asOf = res.date;
   }
   art.generatedAt = now;
-  await writeFile(dir("brokers_top.json"), JSON.stringify(art));
+  await writeJson(dir("brokers_top.json"), art);
   await store.log("ingest_broker_leaderboard", calls, art.sessions.length, "ok");
   console.log(`brokers/top: ${art.sessions.length} sessions, latest=${art.asOf} (${calls} calls)`);
 }
@@ -1205,7 +1267,7 @@ async function ingestCohortTop() {
     if ((i + 1) % 10 === 0 || i === targets.length - 1) {
       console.log(`cohorttop: ${i + 1}/${targets.length} (${calls} calls)`);
       art.asOf = now.slice(0, 10); art.generatedAt = now; art.creditsEst = calls;
-      await writeFile(target, JSON.stringify(art));
+      await writeJson(target, art);
     }
   }
   await logRun("ingest_cohorttop", calls, targets.length);
@@ -1246,7 +1308,7 @@ async function ingestNews() {
   const dates = art.items.map((r) => String(r.timestamp ?? "")).filter(Boolean).sort();
   art.asOf = dates.at(-1)?.slice(0, 10) ?? now.slice(0, 10);
   art.generatedAt = now;
-  await writeFile(dir("news.json"), JSON.stringify(art));
+  await writeJson(dir("news.json"), art);
   await store.log("ingest_news", 1, art.items.length, "ok");
   console.log(`news: +${added} items → ${art.items.length} total, latest=${art.asOf}`);
 }

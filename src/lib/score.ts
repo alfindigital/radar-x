@@ -140,9 +140,9 @@ function rawV2(d: SymbolData, key: ComponentKey, asOf: string): RawV2 {
     // The provider can publish a partial latest month (holder-class splits
     // populated, shareholder count still null) — read the latest month whose
     // change field is actually reported instead of dropping the component.
-    const reported = [...holders].reverse().find((row) => Number.isFinite(row.changeInShareholders));
+    const reported = [...holders].reverse().find((row) => row.changeInShareholders != null && Number.isFinite(row.changeInShareholders));
     if (!reported) return { ...missing("Shareholder-count change is invalid."), ...dates, observations: 2 };
-    return { raw: -reported.changeInShareholders, reason: null, ...span([reported]), observations: 1 };
+    return { raw: -(reported.changeInShareholders as number), reason: null, ...span([reported]), observations: 1 };
   }
   const currentInstitutional = (current.foreign["mutual_fund_f"] ?? NaN) + (current.foreign["financial_institutions_f"] ?? NaN);
   const previousInstitutional = (previous.foreign["mutual_fund_f"] ?? NaN) + (previous.foreign["financial_institutions_f"] ?? NaN);
@@ -266,15 +266,20 @@ export function rawComponents(d: SymbolData, anchor: string): RawComponents {
     );
   }
 
-  // retail exodus: latest month-over-month change in shareholder count
+  // retail exodus: latest month-over-month change in shareholder count.
+  // Unreported is not zero — a null delta must not count as a measured point.
   const holders = [...d.holders].sort((a, b) => a.month.localeCompare(b.month));
   let retailExodus = 0;
   let fclassShift = 0;
   if (holders.length >= 2) {
     const cur = holders.at(-1)!;
     const prev = holders.at(-2)!;
-    dataPoints++;
-    retailExodus = -cur.changeInShareholders;
+    const hasChg = cur.changeInShareholders != null;
+    const hasFclass = ["mutual_fund_f", "financial_institutions_f", "individual_f"].some(
+      (k) => k in cur.foreign || k in prev.foreign,
+    );
+    if (hasChg || hasFclass) dataPoints++;
+    if (hasChg) retailExodus = -(cur.changeInShareholders as number);
     const instNow = (cur.foreign["mutual_fund_f"] ?? 0) + (cur.foreign["financial_institutions_f"] ?? 0);
     const instPrev = (prev.foreign["mutual_fund_f"] ?? 0) + (prev.foreign["financial_institutions_f"] ?? 0);
     const indNow = cur.foreign["individual_f"] ?? 0;

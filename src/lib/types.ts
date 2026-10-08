@@ -70,8 +70,10 @@ export interface HoldersMonthly {
   symbol: string;
   month: string; // "2026-08-31"
   sharesNumber: number;
-  nShareholders: number;
-  changeInShareholders: number;
+  // Provider can publish a month with holder-class splits populated but the
+  // count fields still null — null means unreported, never zero.
+  nShareholders: number | null;
+  changeInShareholders: number | null;
   local: Record<string, number>; // insurance_l, corporate_l, ... (raw keys preserved)
   foreign: Record<string, number>; // *_f keys
 }

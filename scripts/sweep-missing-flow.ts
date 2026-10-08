@@ -14,7 +14,6 @@ try {
 
 import { api } from "../src/lib/sectors";
 import { getStore } from "../src/lib/db";
-import type { FlowDaily } from "../src/lib/types";
 
 const args = process.argv.slice(2);
 const flag = (n: string, d: string) => {

@@ -25,7 +25,7 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
   const indiv = (h: HoldersMonthly) => (h.local["individual_l"] ?? 0) + (h.foreign["individual_f"] ?? 0);
   const maxInst = Math.max(...sorted.map(inst), 1);
   const maxInd = Math.max(...sorted.map(indiv), 1);
-  const maxN = Math.max(...sorted.map((h) => Math.abs(h.changeInShareholders)), 1);
+  const maxN = Math.max(...sorted.map((h) => Math.abs(h.changeInShareholders ?? 0)), 1);
 
   return (
     <div className="space-y-4">
@@ -75,10 +75,14 @@ function HoldersChart({ holders }: { holders: HoldersMonthly[] }) {
           <div className="absolute inset-x-0 top-1/2 h-px bg-line-2" aria-hidden />
           {sorted.map((h) => {
             const v = h.changeInShareholders;
-            const px = Math.round((Math.abs(v) / maxN) * 18); // ≤18px either side of the axis
+            const px = Math.round((Math.abs(v ?? 0) / maxN) * 18); // ≤18px either side of the axis
             return (
-              <div key={h.month} className="relative flex-1" title={`${h.month}: ${fmtNum(v)}`}>
-                {v !== 0 && (
+              <div
+                key={h.month}
+                className="relative flex-1"
+                title={`${h.month}: ${v === null ? "not reported" : fmtNum(v)}`}
+              >
+                {v !== null && v !== 0 && (
                   <div
                     className="absolute left-0 right-0"
                     style={{
@@ -310,11 +314,29 @@ export default async function DossierPage({ params }: PageProps<"/stock/[ticker]
                   : `flat · ${ws.foreignObs} obs`
           }
         />
-        <Stat
-          label="Reported shareholders"
-          value={d.holders.length ? fmtNum(d.holders.at(-1)!.nShareholders) : "—"}
-          sub={d.holders.length ? `Δ ${fmtNum(d.holders.at(-1)!.changeInShareholders)} last month` : undefined}
-        />
+        {(() => {
+          const latestHolders = d.holders.at(-1);
+          // Fall back to the most recent month that actually reported a count,
+          // so the reader sees the figure AND its age — never a silent zero.
+          const lastReported = [...d.holders].reverse().find((h) => h.nShareholders != null);
+          return (
+            <Stat
+              label="Reported shareholders"
+              value={lastReported ? fmtNum(lastReported.nShareholders as number) : "—"}
+              sub={
+                lastReported
+                  ? lastReported === latestHolders
+                    ? lastReported.changeInShareholders != null
+                      ? `Δ ${fmtNum(lastReported.changeInShareholders)} last month`
+                      : "Δ not reported"
+                    : `as of ${lastReported.month} — stale`
+                  : latestHolders
+                    ? "not reported"
+                    : undefined
+              }
+            />
+          );
+        })()}
         <Stat
           label="Free float"
           value={d.freeFloat == null ? "—" : `${(d.freeFloat * 100).toFixed(1)}%`}

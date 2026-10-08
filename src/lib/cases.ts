@@ -171,15 +171,22 @@ export function detectCandidates(symbol: string, w: CandidateWindows): Candidate
     .sort((a, b) => a.txnDate.localeCompare(b.txnDate) || a.holderName.localeCompare(b.holderName));
   if (!trades.length) return [];
 
+  // Direction streams are grouped independently — an opposite-side holder's
+  // trade must not split a run or change cluster membership (a renamed seller
+  // once made a 3-buyer cluster disappear). Bounded event window, anchored on
+  // the group's first trade; detectCases applies the same rule.
   const groups: { dir: "buy" | "sell"; items: InsiderTrade[] }[] = [];
-  for (const trade of trades) {
-    const direction = trade.txnType as "buy" | "sell";
-    const group = groups.at(-1);
-    const firstDate = group?.items[0]?.txnDate;
-    if (group && firstDate && group.dir === direction && trade.txnDate <= shiftDays(firstDate, 30)) {
-      group.items.push(trade);
-    } else {
-      groups.push({ dir: direction, items: [trade] });
+  for (const dir of ["buy", "sell"] as const) {
+    let group: { dir: "buy" | "sell"; items: InsiderTrade[] } | null = null;
+    for (const trade of trades) {
+      if (trade.txnType !== dir) continue;
+      const firstDate = group?.items[0]?.txnDate;
+      if (group && firstDate && trade.txnDate <= shiftDays(firstDate, 30)) {
+        group.items.push(trade);
+      } else {
+        group = { dir, items: [trade] };
+        groups.push(group);
+      }
     }
   }
 
@@ -229,15 +236,22 @@ export function detectCases(symbol: string, w: Windows): CaseRecord[] {
   const trades = [...w.insider].sort((a, b) => a.txnDate.localeCompare(b.txnDate));
   if (!trades.length || !w.price.length) return cases;
 
-  // Group trades into event clusters: same direction within 30d rolling window
+  // Group trades into event clusters: same direction within a 30d window
+  // anchored on the group's first trade (same rule as detectCandidates).
+  // Direction streams are grouped independently — opposite-side activity must
+  // not break a run or alter case membership.
   const groups: { dir: "buy" | "sell"; items: InsiderTrade[] }[] = [];
-  for (const t of trades) {
-    if (t.txnType !== "buy" && t.txnType !== "sell") continue;
-    const g = groups.at(-1);
-    if (g && g.dir === t.txnType && t.txnDate <= shiftDays(g.items.at(-1)!.txnDate, 30)) {
-      g.items.push(t);
-    } else {
-      groups.push({ dir: t.txnType, items: [t] });
+  for (const dir of ["buy", "sell"] as const) {
+    let g: { dir: "buy" | "sell"; items: InsiderTrade[] } | null = null;
+    for (const t of trades) {
+      if (t.txnType !== dir) continue;
+      const firstDate = g?.items[0]?.txnDate;
+      if (g && firstDate && t.txnDate <= shiftDays(firstDate, 30)) {
+        g.items.push(t);
+      } else {
+        g = { dir, items: [t] };
+        groups.push(g);
+      }
     }
   }
 

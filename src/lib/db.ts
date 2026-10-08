@@ -28,14 +28,20 @@ export interface DataStore {
   /** Accepts partial observations — a close-only row never erases richer fields. */
   upsertPriceDaily(rows: PriceObservation[]): Promise<number>;
   listPriceDaily(symbol: string, since?: string): Promise<PriceDaily[]>;
+  /** Distinct symbols with ≥1 stored row — one file read for the whole set. */
+  listPriceSymbols(): Promise<Set<string>>;
   // broker summary
   upsertBrokerRows(symbol: string, rows: BrokerSummaryRow[]): Promise<number>;
   /** Batch upsert across symbols — one read+write instead of one per symbol. */
   upsertBrokerRowsMulti(batch: Map<string, BrokerSummaryRow[]>): Promise<number>;
   listBrokerRows(symbol: string, since?: string): Promise<BrokerSummaryRow[]>;
+  /** Distinct symbols with ≥1 stored row — one file read for the whole set. */
+  listBrokerSymbols(): Promise<Set<string>>;
   // holders
   upsertHolders(rows: HoldersMonthly[]): Promise<number>;
   getHolders(symbol: string): Promise<HoldersMonthly[]>;
+  /** Distinct symbols with ≥1 stored row — one file read for the whole set. */
+  listHolderSymbols(): Promise<Set<string>>;
   // ingest log
   log(job: string, creditsEst: number, rows: number, status: string): Promise<void>;
 }
@@ -81,9 +87,11 @@ function serialized<T>(file: string, fn: () => Promise<T>): Promise<T> {
   return next;
 }
 
-async function writeJson(file: string, data: unknown): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  const target = path.join(DATA_DIR, file);
+// Exported for ingest's artifact writes — accepts a DATA_DIR-relative name or
+// an absolute path.
+export async function writeJson(file: string, data: unknown): Promise<void> {
+  const target = path.isAbsolute(file) ? file : path.join(DATA_DIR, file);
+  await fs.mkdir(path.dirname(target), { recursive: true });
   const tmp = `${target}.${process.pid}.${Date.now()}.tmp`;
   const payload = JSON.stringify(data);
   // Windows (OneDrive/AV) can briefly hold the file — retry transient opens.
@@ -182,6 +190,9 @@ export class JsonStore implements DataStore {
     const rows = (await readJson<PriceDaily[]>(FILES.price, [])).filter((r) => r.symbol === symbol && (!since || r.date >= since));
     return rows.sort((a, b) => a.date.localeCompare(b.date));
   }
+  async listPriceSymbols(): Promise<Set<string>> {
+    return new Set((await readJson<PriceDaily[]>(FILES.price, [])).map((r) => r.symbol));
+  }
 
   async upsertBrokerRows(symbol: string, rows: BrokerSummaryRow[]): Promise<number> {
     return serialized(FILES.broker, async () => {
@@ -217,6 +228,9 @@ export class JsonStore implements DataStore {
     );
     return rows.sort((a, b) => a.date.localeCompare(b.date));
   }
+  async listBrokerSymbols(): Promise<Set<string>> {
+    return new Set((await readJson<BrokerSummaryRow[]>(FILES.broker, [])).map((r) => r.symbol));
+  }
 
   async upsertHolders(rows: HoldersMonthly[]): Promise<number> {
     return serialized(FILES.holders, async () => {
@@ -230,6 +244,9 @@ export class JsonStore implements DataStore {
   async getHolders(symbol: string): Promise<HoldersMonthly[]> {
     const rows = (await readJson<HoldersMonthly[]>(FILES.holders, [])).filter((r) => r.symbol === symbol);
     return rows.sort((a, b) => a.month.localeCompare(b.month));
+  }
+  async listHolderSymbols(): Promise<Set<string>> {
+    return new Set((await readJson<HoldersMonthly[]>(FILES.holders, [])).map((r) => r.symbol));
   }
 
   async log(job: string, creditsEst: number, rows: number, status: string): Promise<void> {

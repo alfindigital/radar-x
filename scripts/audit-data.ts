@@ -11,6 +11,22 @@ const DATA_FILES = [
   "holders_monthly.json",
 ] as const;
 
+// Members every derived generation must list — a manifest missing any of
+// these came from an incomplete run and must not pass the gate.
+const DERIVED_MEMBERS = ["scores.json", "cases.json", "exitwatch.json"] as const;
+
+// Optional feeds compute.ts folds into manifest.feedHashes — drift here means
+// the derived artifacts predate the current feed bytes.
+const FEED_FILES = [
+  "broker_registry.json",
+  "broker_top.json",
+  "cohort_top.json",
+  "suspensions.json",
+  "corporate_actions.json",
+  "free_float.json",
+  "taxonomy.json",
+] as const;
+
 type JsonRow = Record<string, unknown>;
 
 function asDate(value: unknown): string | null {
@@ -79,9 +95,14 @@ async function auditFile(dataDir: string, file: string) {
 // Derived lineage: every member file's sha256 must match the manifest, and the
 // manifest must name an inputHash. A generation that fails verification is a
 // gate failure, not a warning.
-async function auditDerived(dataDir: string) {
+async function auditDerived(dataDir: string, sourceHashes: Map<string, string>) {
   const dir = path.join(dataDir, "derived-v2");
-  let manifest: { asOf?: string; inputHash?: string; files?: { path: string; rows?: number; sha256: string }[] };
+  let manifest: {
+    asOf?: string;
+    inputHash?: string;
+    feedHashes?: Record<string, string>;
+    files?: { path: string; rows?: number; sha256: string }[];
+  };
   try {
     manifest = JSON.parse(await fs.readFile(path.join(dir, "manifest.json"), "utf8"));
   } catch {
@@ -105,6 +126,44 @@ async function auditDerived(dataDir: string) {
   if (!manifest.asOf) failures.push("derived-v2 manifest has no asOf");
   if (!manifest.inputHash) failures.push("derived-v2 manifest has no inputHash lineage");
   if (!manifest.files?.length) failures.push("derived-v2 manifest lists no member files");
+  // The manifest must name every member the pipeline writes — a generation
+  // that only emitted scores.json must fail, not pass with fewer checks.
+  const listed = new Set((manifest.files ?? []).map((member) => member.path));
+  for (const required of DERIVED_MEMBERS) {
+    if (!listed.has(required)) failures.push(`derived-v2 manifest omits required member ${required}`);
+  }
+  // inputHash lineage: snapshot.ts folds the six raw files into
+  // sha256("name:sha256\n…") in DATA_FILES order and compute.ts copies it into
+  // the derived manifest verbatim — recompute so inputs edited after manifest
+  // generation fail the gate. Skipped when an input is unreadable: the
+  // missing-file failure already covers that case.
+  if (manifest.inputHash && sourceHashes.size === DATA_FILES.length) {
+    const recomputed = createHash("sha256")
+      .update(DATA_FILES.map((file) => `${file}:${sourceHashes.get(file)}`).join("\n"), "utf8")
+      .digest("hex");
+    if (recomputed !== manifest.inputHash) {
+      failures.push(`derived-v2 inputHash stale — inputs changed after manifest generation (manifest ${manifest.inputHash.slice(0, 12)}… vs recomputed ${recomputed.slice(0, 12)}…)`);
+    }
+  }
+  // feedHashes: compute.ts records sha256 of each optional feed it consumed.
+  // A feed edited, added, or removed since then means the artifacts are stale.
+  const recordedFeeds = manifest.feedHashes ?? {};
+  for (const name of FEED_FILES) {
+    let actual: string | null = null;
+    try {
+      actual = createHash("sha256").update(await fs.readFile(path.join(dataDir, name))).digest("hex");
+    } catch {
+      /* feed absent now */
+    }
+    const recorded = recordedFeeds[name];
+    if (actual && recorded && actual !== recorded) {
+      failures.push(`feed ${name} changed after manifest generation (feedHashes ${recorded.slice(0, 12)}… vs actual ${actual.slice(0, 12)}…)`);
+    } else if (actual && !recorded) {
+      failures.push(`feed ${name} present but missing from manifest feedHashes — added after generation`);
+    } else if (!actual && recorded) {
+      failures.push(`feed ${name} hashed in manifest feedHashes but now missing`);
+    }
+  }
   return { status: failures.length ? ("failed" as const) : ("ok" as const), asOf: manifest.asOf ?? null, inputHash: manifest.inputHash ?? null, files, failures };
 }
 
@@ -112,13 +171,21 @@ async function main() {
   const dataDir = path.join(process.cwd(), "data");
   const files = [];
   const failures: string[] = [];
+  const sourceHashes = new Map<string, string>();
   for (const file of DATA_FILES) {
     const result = await auditFile(dataDir, file);
     files.push(result);
-    if (result.status === "missing") failures.push(`required file missing: data/${file}`);
-    else if (result.rows === 0) failures.push(`required file empty: data/${file}`);
+    if (result.status === "missing") {
+      failures.push(`required file missing: data/${file}`);
+    } else {
+      sourceHashes.set(file, result.sha256);
+      if (result.rows === 0) failures.push(`required file empty: data/${file}`);
+      // A duplicated key means the same entity was ingested twice — the count
+      // reaches totals, so it must also reach failures or the gate passes.
+      if (result.duplicateCount > 0) failures.push(`data/${file} has ${result.duplicateCount} duplicate row(s)`);
+    }
   }
-  const derived = await auditDerived(dataDir);
+  const derived = await auditDerived(dataDir, sourceHashes);
   failures.push(...derived.failures);
   const okFiles = files.filter((file) => file.status === "ok");
   const report = {

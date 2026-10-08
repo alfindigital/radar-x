@@ -40,12 +40,12 @@ async function main() {
   const wl = missing.slice(skip);
   console.log(`missing ${date}: ${missing.length} | skipping ${skip} stalest | fetching ${wl.length}`);
   const batch = new Map<string, BrokerSummaryRow[]>();
-  let calls = 0, ok = 0, gotDate = 0, failed = 0, upserted = 0;
+  let calls = 0, gotDate = 0, failed = 0, upserted = 0;
   for (let i = 0; i < wl.length; i++) {
     const sym = wl[i];
     try {
       const res = await api.brokerSummary(sym);
-      calls++; ok++;
+      calls++;
       const days = res.data.flatMap((d) =>
         d.summary.map((s) => ({
           symbol: sym,

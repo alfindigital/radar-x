@@ -258,13 +258,24 @@ function deriveFlags(input: ExitWatchInput, asOf: string): ExitFlags {
   );
   const float_constraint = input.freeFloat !== null && input.freeFloat < FLOAT_CONSTRAINT;
   const winFrom = windowFrom(asOf, WINDOW_DAYS);
-  // Still-suspended: a suspension is on record and the regular tape prints
-  // zero volume for the entire window. COAL.JK (suspended 2026-08-12) kept
+  // Still-suspended: the suspensions feed has no resume events, so reopening
+  // is proven by the tape itself — any positive-volume row AFTER the latest
+  // suspension means the stock traded again and the record is stale history,
+  // not a live quarantine. Suspended names emit no regular-market rows at
+  // all, so an absent window is the expected signature; quarantining on
+  // "no volume in window" alone would also flag symbols whose price feed is
+  // merely missing. Events dated after asOf are future knowledge and never
+  // apply to an earlier reading. COAL.JK (suspended 2026-08-12) kept
   // accumulating negotiated-market broker rows that scored 85/high on a
   // frozen board — this flag quarantines that reading.
+  const lastSusp = input.suspensions
+    .map((r) => r.suspension_date)
+    .filter((d) => d <= asOf)
+    .sort()
+    .at(-1);
   const suspended =
-    input.suspensions.length > 0 &&
-    !input.d.price.some((r) => r.date >= winFrom && r.date <= asOf && (r.volume ?? 0) > 0);
+    lastSusp !== undefined &&
+    !input.d.price.some((r) => r.date > lastSusp && r.date <= asOf && (r.volume ?? 0) > 0);
   // Sparse-evidence flag counts only window-bounded, cohort-labeled evidence —
   // the same evidence a score could actually draw on.
   const labeled =

@@ -103,7 +103,7 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
     loadTaxonomy(),
   ]);
   const feedHashes: Record<string, string> = {};
-  for (const name of ["broker_registry.json", "broker_top.json", "cohort_top.json", "suspensions.json", "corporate_actions.json", "free_float.json"]) {
+  for (const name of ["broker_registry.json", "broker_top.json", "cohort_top.json", "suspensions.json", "corporate_actions.json", "free_float.json", "taxonomy.json"]) {
     try {
       feedHashes[name] = hash(await readFile(path.join(process.cwd(), "data", name)));
     } catch {
