@@ -194,3 +194,52 @@ selesai cepat — satu file helper + swap writer, terisolasi dari jalur submit.
   (kata audit sendiri), jadi hasil akhir mungkin tak banyak berubah — tapi gate
   logika tetap wajib diperbaiki.
 - Bukti spot-check ini tidak mengubah kode/data — review read-only.
+
+---
+
+## 7. STATUS EKSEKUSI — 2026-10-08 ~22:10 WIB
+
+Dieksekusi paralel (2 subagent + lane engine langsung). Semua yang tercatat di
+sini **sudah committed**, gate hijau saat landing.
+
+### Selesai & committed
+
+| Temuan | Fix | Commit |
+|---|---|---|
+| F01 corrupt-JSON flatten | `readJsonOr` — init hanya saat ENOENT; parse error / non-object throw dengan nama file | `630405e` |
+| F02 extras wipe last-good | corp-actions merge ke artifact lama + `staleTypes`; brokersTop/mostTraded/quarterlyDates di-wrap; semua write via `writeJson` atomic | `630405e`+`3ce28ae` |
+| F03 gate lemah | required-member set; duplicateRows → fail; `inputHash` + `feedHashes` di-recompute dua arah | `630405e` |
+| F04 QA probes | status≠200 fail; error-shell copy; `<main>` landmark; scroll-exemption hanya bila benar-benar scrollable | `9b272b8` |
+| F05 (parsial) | `taxonomy.json` masuk `feedHashes` — caps engine kini ter-bind | `630405e` |
+| F06 budget | `SECTORS_CALL_LEDGER` — file ledger harian shared antar-stage; 600/hari untuk SELURUH run (dulu 600/stage ≈ 6rb) | `0a23689` |
+| F07 rotasi broker | `data/broker_attempts.json` — sort by last-attempt; re-calls tak menyalaip symbol yang belum dicoba | `630405e` |
+| F08 only-missing N×parse | satu pass per kind via `list*Symbols()` store listers | `630405e` |
+| F09 flag validation | `numFlag` integer ≥ min, exit 1 sebelum provider call | `630405e` |
+| F10 quarantine | resumption-aware: suspensi ≤ asOf DAN tidak ada volume>0 sejaknya (absent-rows = frozen tape, BUKAN resumed) | `630405e` |
+| F11 grouping | per-direction + 30d first-anchored di `detectCandidates` DAN `detectCases`; regression test | `630405e`+`a466ca6` |
+| F12/F13 holders null | `number \| null` end-to-end; UI "not reported"/"as of <bulan> — stale"; v1 path tak lagi menghitung null→0 | `630405e` |
+| Residu honest-status | `boards`/`index --all` warn-and-continue → tally partial/failed; stage throw → `store.log failed` | `5362722`+`6692a33` |
+| F15 search 503 | cache di-clear saat fetch gagal → retry on next focus | `5362722` |
+| F18 transaksi tertua | newest-first + "30 of N" (lalu dipaginasi sesi UI via `?tp`) | `5362722` |
+| F19 source/filed mobile | unhidden — wrapper sudah overflow-x | `5362722` |
+| F20 chart 3px | `min-w-[560px]` + horizontal scroll | `5362722` |
+| F21 docs drift | `npm run audit:claims` — gate fail on doc≠artifact; docs synced | `3ce28ae`+`152e324` |
+
+### Tidak dikerjakan malam ini — + alasan & efek
+
+| Item | Alasan defer | Efek residual |
+|---|---|---|
+| F05-full: staged-generation + atomic publish pointer | 1–2 jam kerja arsitektur + negative tests; hole hanya hidup selama ingest (mati 10-11); hash-recompute sudah MENDETEKSI mixed generation | Detectable post-hoc, bukan dicegah. Untuk snapshot frozen risiko ~nol. |
+| E2E + visual sweep final tree | BLOCKED menunggu sesi UI commit (Pager/StatStrip masih landing) | Satu-satunya gap verifikasi nyata tersisa — wajib sebelum submit. |
+| F17 kontras light (elemen spesifik) | Token sudah AA (~4.98:1); butuh sweep untuk tahu kalau ada elemen sisa | Kosmetik, low. |
+| F22 braces devDep (5 high via eslint-config-next) | Tidak ada fix non-breaking (`npm audit fix` no-op; `--force` merusak lint chain) | Dev-only, nol eksposur runtime. Monitor upstream patch. |
+| `readJsonOr` terima bare-array | init-`null` di L1280 membuat init tak bisa jadi kontrak; shape salah tetap crash nyata downstream | Kosmetik — error message kurang informatif, bukan silent corruption. |
+| 136 emiten upstream-missing | Provider tidak publish (56 permanent-404 + feed stuck Sep-25) | Bukan bug — sudah terdokumentasi di CURRENT_STATE. |
+
+### Checklist sebelum submit (wajib, berurutan)
+
+1. Sesi UI commit semua file `src/` (Pager/StatStrip masih in-flight saat ini).
+2. Kalau data berubah → `npx tsx scripts/compute.ts --as-of <tanggal>` → **`npm run audit:claims`** (fail = docs drift, update SUBMISSION/CLAIMS/CURRENT_STATE).
+3. `npm test && npm run lint && npm run typecheck && npm run build && npm run audit:data` — full gate.
+4. Visual sweep `scripts/qa-mobile.mjs` + `scripts/qa-redesign.mjs` di tree final → 0 overflow, 0 non-200.
+5. Video terakhir — merekam sebelum #4 berarti re-shoot kalau UI berubah.
