@@ -1,0 +1,52 @@
+[
+  {
+    "nameRace": {
+      "url": "http://localhost:3100/stock/BANK%20CENTRAL",
+      "heading": "BANK%20CENTRAL",
+      "body": "BANK%20CENTRAL\n\nUNKNOWN\n\nSNAPSHOT\n·\nmarket data through 2026-10-08\n·\nCoverage varies by issuer; missing evidence remains visible.\nNo price observations in the saved snapshot.\nINSIDER BUYS (90D)\nNone reported\n2026-07-11→2026-10-08\nINSIDER SELLS (90D)\nNone reported\n2026-07-11→2026-10-08\nNET FOREIGN FLOW (90D)\n—\nno flow observations in window\nREPORTED SHAREHOLDERS\n—\nFREE FLOAT\n—\nINDEX EVIDENCE\n\nNo disclosure-derived index is available for this issuer.\n\nHOLDER COMPOSITION (MONTHLY)\n\nNot enough monthly holder observations.\n\nREPORTED OWNERSHIP\n\nThis issuer is outside the current ownership-snapshot c",
+      "requests": 1
+    }
+  },
+  {
+    "nameFailure": {
+      "requests": 1,
+      "datalistOptions": 0
+    }
+  },
+  {
+    "nameFailureSubmit": {
+      "url": "http://localhost:3100/stock/BANK%20CENTRAL",
+      "h1": "BANK%20CENTRAL",
+      "requests": 1
+    }
+  },
+  {
+    "sourceVisibility": {
+      "kind": "desktop",
+      "sourceLinks": 3,
+      "visibleSources": [
+        {
+          "href": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202412/d7e593ab16_e7d31fe278.pdf",
+          "text": "Open"
+        },
+        {
+          "href": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202510/4d80ecf450_17be92eba5.pdf",
+          "text": "Open"
+        },
+        {
+          "href": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-25052026-0814-00.pdf-0.pdf",
+          "text": "Open"
+        }
+      ],
+      "rows": 3
+    }
+  },
+  {
+    "sourceVisibility": {
+      "kind": "mobile",
+      "sourceLinks": 3,
+      "visibleSources": [],
+      "rows": 3
+    }
+  }
+]

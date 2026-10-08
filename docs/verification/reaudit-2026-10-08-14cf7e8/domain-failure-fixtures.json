@@ -1,0 +1,68 @@
+{
+  "healthy": {
+    "score": 84,
+    "coverage": 0.75,
+    "flags": {
+      "suspension_recent": false,
+      "corp_action_near": false,
+      "float_constraint": false,
+      "sparse_broker": true,
+      "suspended": false
+    }
+  },
+  "futureSusp": {
+    "score": null,
+    "coverage": 0.75,
+    "flags": {
+      "suspension_recent": false,
+      "corp_action_near": false,
+      "float_constraint": false,
+      "sparse_broker": true,
+      "suspended": true
+    }
+  },
+  "oldSusp": {
+    "score": null,
+    "coverage": 0.75,
+    "flags": {
+      "suspension_recent": false,
+      "corp_action_near": false,
+      "float_constraint": false,
+      "sparse_broker": true,
+      "suspended": true
+    }
+  },
+  "staleHolders": {
+    "raw": -1,
+    "z": 1.349,
+    "weight": 0.15,
+    "contribution": 6.745,
+    "status": "available",
+    "reason": null,
+    "observedFrom": "2025-01-31",
+    "observedTo": "2025-01-31",
+    "observations": 1
+  },
+  "capHash": {
+    "beforeInput": "fixed-input",
+    "afterInput": "fixed-input",
+    "beforeFeeds": {},
+    "afterFeeds": {},
+    "beforeRaw": -1,
+    "afterRaw": -10000
+  },
+  "institutionExit": {
+    "key": "insiderExit",
+    "weight": 0.25,
+    "raw": 1,
+    "z": -1.349,
+    "contribution": -11.241666666666667,
+    "status": "available",
+    "reason": null,
+    "observations": 1,
+    "observedFrom": "2026-09-25",
+    "observedTo": "2026-09-25",
+    "source": "insider_filings"
+  },
+  "interruptedError": "Error: derived scores.json hash mismatch"
+}

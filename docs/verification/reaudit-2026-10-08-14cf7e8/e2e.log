@@ -1,0 +1,36 @@
+
+Running 26 tests using 1 worker
+
+(node:52808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop-chrome] › tests\e2e\board-v3.spec.ts:26:5 › exit watch board renders scored rows with numeric badge and flags (1.8s)
+  ok  2 [desktop-chrome] › tests\e2e\board-v3.spec.ts:40:5 › flagged scope renders flag chips (1.4s)
+  ok  3 [desktop-chrome] › tests\e2e\board-v3.spec.ts:48:5 › suppressed scope shows null-score rows (1.5s)
+  ok  4 [desktop-chrome] › tests\e2e\board-v3.spec.ts:56:5 › board paginates beyond 150 rows (2.4s)
+  ok  5 [desktop-chrome] › tests\e2e\board-v3.spec.ts:65:5 › preserved v2 board still renders at ?v=radar (1.2s)
+  ok  6 [desktop-chrome] › tests\e2e\board-v3.spec.ts:71:5 › issuer dossier shows exit watch panel, cohort chart, coverage, and recent-suspension context (1.1s)
+  ok  7 [desktop-chrome] › tests\e2e\board-v3.spec.ts:85:5 › broker board renders cohort labels and profile resolves (2.0s)
+  ok  8 [desktop-chrome] › tests\e2e\board-v3.spec.ts:99:5 › broker board cohort tabs switch the leaderboard session (1.2s)
+  -   9 [desktop-chrome] › tests\e2e\board-v3.spec.ts:108:5 › mobile suppressed scope renders rows and dossier link
+  ok 10 [desktop-chrome] › tests\e2e\research.spec.ts:14:5 › desktop research journey keeps negative distribution and source evidence (3.3s)
+  ok 11 [desktop-chrome] › tests\e2e\research.spec.ts:44:5 › case detail exposes separate outcome status and bounded evidence (1.6s)
+  ok 12 [desktop-chrome] › tests\e2e\research.spec.ts:56:5 › search resolves a known issuer and an unknown issuer remains explicit (3.7s)
+  ok 13 [desktop-chrome] › tests\e2e\research.spec.ts:73:7 › mobile navigation › reaches foreign flow and methodology (2.5s)
+(node:30360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  14 [mobile-chrome] › tests\e2e\board-v3.spec.ts:26:5 › exit watch board renders scored rows with numeric badge and flags
+  -  15 [mobile-chrome] › tests\e2e\board-v3.spec.ts:40:5 › flagged scope renders flag chips
+  -  16 [mobile-chrome] › tests\e2e\board-v3.spec.ts:48:5 › suppressed scope shows null-score rows
+  -  17 [mobile-chrome] › tests\e2e\board-v3.spec.ts:56:5 › board paginates beyond 150 rows
+  -  18 [mobile-chrome] › tests\e2e\board-v3.spec.ts:65:5 › preserved v2 board still renders at ?v=radar
+  -  19 [mobile-chrome] › tests\e2e\board-v3.spec.ts:71:5 › issuer dossier shows exit watch panel, cohort chart, coverage, and recent-suspension context
+  -  20 [mobile-chrome] › tests\e2e\board-v3.spec.ts:85:5 › broker board renders cohort labels and profile resolves
+  -  21 [mobile-chrome] › tests\e2e\board-v3.spec.ts:99:5 › broker board cohort tabs switch the leaderboard session
+  ok 22 [mobile-chrome] › tests\e2e\board-v3.spec.ts:108:5 › mobile suppressed scope renders rows and dossier link (1.9s)
+  -  23 [mobile-chrome] › tests\e2e\research.spec.ts:14:5 › desktop research journey keeps negative distribution and source evidence
+  ok 24 [mobile-chrome] › tests\e2e\research.spec.ts:44:5 › case detail exposes separate outcome status and bounded evidence (1.7s)
+  ok 25 [mobile-chrome] › tests\e2e\research.spec.ts:56:5 › search resolves a known issuer and an unknown issuer remains explicit (3.7s)
+  ok 26 [mobile-chrome] › tests\e2e\research.spec.ts:73:7 › mobile navigation › reaches foreign flow and methodology (2.3s)
+
+  10 skipped
+  16 passed (37.7s)

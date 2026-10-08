@@ -1,0 +1,68 @@
+
+> radar-x@0.1.0 test
+> tsx --test tests/index.test.ts
+
+✔ distribution is filtered before limit and sorted most negative first (2.1545ms)
+✔ unverified timestamps cannot support an as-of claim (0.1791ms)
+✔ source links reject executable schemes (0.1392ms)
+✔ loads a typed snapshot with hashes and row metadata (44.5346ms)
+✔ rejects malformed required JSON instead of returning an empty dataset (9.7848ms)
+✔ board reads the complete latest cohort without an upstream request (1284.8957ms)
+✔ unknown issuer is explicit and does not trigger a provider fetch (50.3928ms)
+✔ flow radar ranks window rows against the exchange session calendar (15.7547ms)
+✔ known issuers use the verified derived-v2 score and do not mutate the snapshot (52.9486ms)
+✔ close-only updates preserve richer fields from the existing observation (0.5612ms)
+✔ new close-only observations keep unknown fields null (0.126ms)
+✔ different symbol/date pairs are rejected (0.1622ms)
+✔ candidates require three distinct holders and stay inside a 30-day event window (0.901ms)
+✔ future prices cannot change candidate identity or evidence (0.394ms)
+✔ a fourth holder after the bounded window starts a separate event (0.2698ms)
+✔ nineteen elapsed days is not a thirty-day outcome (1.1093ms)
+✔ matched complete window has exact returns (0.243ms)
+✔ weekend target uses the first common session within seven days (0.1898ms)
+✔ missing benchmark is unavailable instead of issuer-only (0.1627ms)
+✔ conflicting duplicate dates are rejected and input order is irrelevant (0.4286ms)
+✔ zero start closes and missing start sessions are unavailable (0.3478ms)
+✔ missing observations do not move the valid cohort (1.0069ms)
+✔ identical observations are central and never infinite (0.1676ms)
+✔ all-missing components do not publish a singleton score (0.8996ms)
+✔ fewer than five observations are unrankable (0.6953ms)
+✔ two rankable components publish a bounded score and ignore future holders (1.0541ms)
+✔ a holder month after as-of cannot change earlier raw components (0.2852ms)
+✔ derived analytical output is stable for identical inputs and as-of (3.5565ms)
+✔ changing source rows removes obsolete candidate IDs without mutating raw hashes (1.241ms)
+✔ post-anchor prices can change outcomes but not candidate membership (0.9753ms)
+✔ compute CLI requires an explicit as-of and keeps output under data (0.5285ms)
+✔ derived reader rejects a member hash mismatch (13.2709ms)
+✔ missing reference sessions break an unverified positive streak (0.4152ms)
+✔ adjacent positive reference sessions form a complete streak (0.2893ms)
+✔ zero and negative rows end a positive streak without changing signed totals (0.1563ms)
+✔ English financial formatters use B/M/T and an accounting minus (8.9989ms)
+✔ percentage formatter distinguishes pending from unavailable (0.2429ms)
+✔ flow extrema stay inside the panel around a shared zero line (0.18ms)
+✔ loadRegistry parses rows with provenance meta (8.1313ms)
+✔ missing file returns null, not throw (2.4843ms)
+✔ loadBrokerTop keeps per-symbol keyed map (6.7108ms)
+✔ loadBrokersTop sorts sessions desc (4.2079ms)
+✔ loadCohortTop returns null when absent, map when present (7.1103ms)
+✔ cohortsFromRegistry splits institutional/retail and drops mixed/unknown (0.327ms)
+✔ instNetZ uses institutional netVal when cohort set is populated (0.7936ms)
+✔ empty registry keeps foreign-proxy fallback (no crash) (0.3981ms)
+✔ institutional selling + retail buying → high exit pressure (1.8607ms)
+✔ missing broker evidence → component missing, coverage can drop score to null (0.8341ms)
+✔ below floor → score null but row still emitted (0.8891ms)
+✔ flags: suspension within 14d, corp action ±7d, thin float, sparse broker (0.7101ms)
+✔ still-suspended tape (suspension record + zero-volume window) is quarantined from the board (0.735ms)
+✔ broker_top labeling used when daily rows absent; cohort_top preferred over both (1.419ms)
+✔ empty cohort_top side is missing evidence, never a fabricated zero (0.6584ms)
+✔ window.from is the 14-day bound, not the earliest component span (0.4013ms)
+✔ window boundaries: rows before window.from are excluded, boundary rows count (0.5267ms)
+✔ deterministic: same inputs → identical rows (0.4323ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2135.809

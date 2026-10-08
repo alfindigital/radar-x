@@ -1,0 +1,795 @@
+{
+  "eventCount": 16,
+  "changed": [
+    {
+      "key": "BCIC.JK|2026-07-27",
+      "symbol": "BCIC.JK",
+      "date": "2026-07-27",
+      "dir": "buy",
+      "names": [
+        "Ritsuo Fukadai",
+        "Helmi Arif Hidayat",
+        "Felix Istyono Hartadi T, Sh"
+      ],
+      "opposing": [
+        "Ritsuo Fukadai",
+        "Helmi Arif Hidayat"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BCIC.JK:buy:2026-07-27:CLUSTER_PATTERN:2fdef2c0",
+          "holders": [
+            "Felix Istyono Hartadi T, Sh",
+            "Helmi Arif Hidayat",
+            "J Trust",
+            "Ritsuo Fukadai"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "PKPK.JK|2026-07-16",
+      "symbol": "PKPK.JK",
+      "date": "2026-07-16",
+      "dir": "buy",
+      "names": [
+        "Haryanto Sofian",
+        "Deli Pratama Nusantara",
+        "Resources Global Development"
+      ],
+      "opposing": [
+        "Deli Putra Bangsa"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "PKPK.JK:buy:2026-07-16:CLUSTER_PATTERN:cc5151ff",
+          "holders": [
+            "Deli Pratama Nusantara",
+            "Haryanto Sofian",
+            "Resources Global Development"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "INPS.JK|2026-04-27",
+      "symbol": "INPS.JK",
+      "date": "2026-04-27",
+      "dir": "sell",
+      "names": [
+        "Sinar Ratu Sentosa",
+        "Surya Perkasa Sentosa",
+        "Eddy Purwanto Winata"
+      ],
+      "opposing": [
+        "Graha Inti Guna Persada"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "INPS.JK:sell:2026-04-27:CLUSTER_PATTERN:860d2c49",
+          "holders": [
+            "Eddy Purwanto Winata",
+            "Sinar Ratu Sentosa",
+            "Surya Perkasa Sentosa"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BIKE.JK|2026-04-15",
+      "symbol": "BIKE.JK",
+      "date": "2026-04-15",
+      "dir": "sell",
+      "names": [
+        "Henry Mulyadi",
+        "Stephen Mulyadi",
+        "Andrew Mulyadi"
+      ],
+      "opposing": [
+        "Penajam Makmur Jaya"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BIKE.JK:sell:2026-04-15:CLUSTER_PATTERN:07047d96",
+          "holders": [
+            "Andrew Mulyadi",
+            "Henry Mulyadi",
+            "Stephen Mulyadi"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BELI.JK|2026-04-13",
+      "symbol": "BELI.JK",
+      "date": "2026-04-13",
+      "dir": "buy",
+      "names": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "opposing": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BELI.JK:buy:2026-04-13:CLUSTER_PATTERN:2b997cce",
+          "holders": [
+            "Andy Untono",
+            "Eric Alamsjah Winarta",
+            "Hendry",
+            "Imron Hendrata",
+            "Kusumo Martanto",
+            "Lisa Widodo",
+            "Ronald Winardi"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BELI.JK|2026-04-13",
+      "symbol": "BELI.JK",
+      "date": "2026-04-13",
+      "dir": "sell",
+      "names": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "opposing": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BELI.JK:sell:2026-04-13:CLUSTER_PATTERN:5b05c186",
+          "holders": [
+            "Andy Untono",
+            "Eric Alamsjah Winarta",
+            "Hendry",
+            "Imron Hendrata",
+            "Kusumo Martanto",
+            "Lisa Widodo",
+            "Ronald Winardi"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "ALII.JK|2026-02-13",
+      "symbol": "ALII.JK",
+      "date": "2026-02-13",
+      "dir": "buy",
+      "names": [
+        "Munawir",
+        "Aninditha Anestya Bakrie",
+        "Aulia"
+      ],
+      "opposing": [
+        "Aninditha Anestya Bakrie",
+        "Aulia"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "ALII.JK:buy:2026-02-13:CLUSTER_PATTERN:4a99d72f",
+          "holders": [
+            "Aninditha Anestya Bakrie",
+            "Aulia",
+            "Munawir"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "MGLV.JK|2026-02-09",
+      "symbol": "MGLV.JK",
+      "date": "2026-02-09",
+      "dir": "sell",
+      "names": [
+        "Jecky Salindeho",
+        "Stephen Sardjono",
+        "Sri Rahayu",
+        "Dennis Rahardja"
+      ],
+      "opposing": [
+        "Nextier Datamate Center"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "MGLV.JK:sell:2026-02-09:CLUSTER_PATTERN:a09b1960",
+          "holders": [
+            "Dennis Rahardja",
+            "Jecky Salindeho",
+            "Sri Rahayu",
+            "Stephen Sardjono"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "MDIY.JK|2024-12-19",
+      "symbol": "MDIY.JK",
+      "date": "2024-12-19",
+      "dir": "buy",
+      "names": [
+        "Hendra Kurniawan",
+        "Rika Juniaty Tanzil",
+        "Edwin Cheah Yew Hong"
+      ],
+      "opposing": [
+        "Edwin Cheah Yew Hong",
+        "Darwin Cyril Noerhadi"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "MDIY.JK:buy:2024-12-19:CLUSTER_PATTERN:3cc1e3e2",
+          "holders": [
+            "Edwin Cheah Yew Hong",
+            "Hendra Kurniawan",
+            "Rika Juniaty Tanzil"
+          ]
+        }
+      ],
+      "changed": true
+    }
+  ],
+  "all": [
+    {
+      "key": "BCIC.JK|2026-07-27",
+      "symbol": "BCIC.JK",
+      "date": "2026-07-27",
+      "dir": "buy",
+      "names": [
+        "Ritsuo Fukadai",
+        "Helmi Arif Hidayat",
+        "Felix Istyono Hartadi T, Sh"
+      ],
+      "opposing": [
+        "Ritsuo Fukadai",
+        "Helmi Arif Hidayat"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BCIC.JK:buy:2026-07-27:CLUSTER_PATTERN:2fdef2c0",
+          "holders": [
+            "Felix Istyono Hartadi T, Sh",
+            "Helmi Arif Hidayat",
+            "J Trust",
+            "Ritsuo Fukadai"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "PKPK.JK|2026-07-16",
+      "symbol": "PKPK.JK",
+      "date": "2026-07-16",
+      "dir": "buy",
+      "names": [
+        "Haryanto Sofian",
+        "Deli Pratama Nusantara",
+        "Resources Global Development"
+      ],
+      "opposing": [
+        "Deli Putra Bangsa"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "PKPK.JK:buy:2026-07-16:CLUSTER_PATTERN:cc5151ff",
+          "holders": [
+            "Deli Pratama Nusantara",
+            "Haryanto Sofian",
+            "Resources Global Development"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "CYBR.JK|2026-06-02",
+      "symbol": "CYBR.JK",
+      "date": "2026-06-02",
+      "dir": "sell",
+      "names": [
+        "Andri Hutama Putra",
+        "Mb Investment Management",
+        "Doni Mora"
+      ],
+      "opposing": [
+        "Patrick Rudolf Dannacher"
+      ],
+      "current": [
+        {
+          "id": "CYBR.JK:sell:2026-06-02:CLUSTER_PATTERN:0c9d6c35",
+          "holders": [
+            "Andri Hutama Putra",
+            "Doni Mora",
+            "Mb Investment Management"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "CYBR.JK:sell:2026-06-02:CLUSTER_PATTERN:0c9d6c35",
+          "holders": [
+            "Andri Hutama Putra",
+            "Doni Mora",
+            "Mb Investment Management"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "INPS.JK|2026-04-27",
+      "symbol": "INPS.JK",
+      "date": "2026-04-27",
+      "dir": "sell",
+      "names": [
+        "Sinar Ratu Sentosa",
+        "Surya Perkasa Sentosa",
+        "Eddy Purwanto Winata"
+      ],
+      "opposing": [
+        "Graha Inti Guna Persada"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "INPS.JK:sell:2026-04-27:CLUSTER_PATTERN:860d2c49",
+          "holders": [
+            "Eddy Purwanto Winata",
+            "Sinar Ratu Sentosa",
+            "Surya Perkasa Sentosa"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BIKE.JK|2026-04-15",
+      "symbol": "BIKE.JK",
+      "date": "2026-04-15",
+      "dir": "sell",
+      "names": [
+        "Henry Mulyadi",
+        "Stephen Mulyadi",
+        "Andrew Mulyadi"
+      ],
+      "opposing": [
+        "Penajam Makmur Jaya"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BIKE.JK:sell:2026-04-15:CLUSTER_PATTERN:07047d96",
+          "holders": [
+            "Andrew Mulyadi",
+            "Henry Mulyadi",
+            "Stephen Mulyadi"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BELI.JK|2026-04-13",
+      "symbol": "BELI.JK",
+      "date": "2026-04-13",
+      "dir": "buy",
+      "names": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "opposing": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BELI.JK:buy:2026-04-13:CLUSTER_PATTERN:2b997cce",
+          "holders": [
+            "Andy Untono",
+            "Eric Alamsjah Winarta",
+            "Hendry",
+            "Imron Hendrata",
+            "Kusumo Martanto",
+            "Lisa Widodo",
+            "Ronald Winardi"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BELI.JK|2026-04-13",
+      "symbol": "BELI.JK",
+      "date": "2026-04-13",
+      "dir": "sell",
+      "names": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "opposing": [
+        "Lisa Widodo",
+        "Imron Hendrata",
+        "Andy Untono",
+        "Hendry",
+        "Kusumo Martanto",
+        "Eric Alamsjah Winarta",
+        "Ronald Winardi"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "BELI.JK:sell:2026-04-13:CLUSTER_PATTERN:5b05c186",
+          "holders": [
+            "Andy Untono",
+            "Eric Alamsjah Winarta",
+            "Hendry",
+            "Imron Hendrata",
+            "Kusumo Martanto",
+            "Lisa Widodo",
+            "Ronald Winardi"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "TRUK.JK|2026-04-07",
+      "symbol": "TRUK.JK",
+      "date": "2026-04-07",
+      "dir": "buy",
+      "names": [
+        "Suwito",
+        "Suminto Husin Giman",
+        "Suganto Gunawan",
+        "Republik Capital Indonesia"
+      ],
+      "opposing": [
+        "Guna Makmur Raya"
+      ],
+      "current": [
+        {
+          "id": "TRUK.JK:buy:2026-04-07:CLUSTER_PATTERN:2c202a8f",
+          "holders": [
+            "Republik Capital Indonesia",
+            "Suganto Gunawan",
+            "Suminto Husin Giman",
+            "Suwito"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "TRUK.JK:buy:2026-04-07:CLUSTER_PATTERN:2c202a8f",
+          "holders": [
+            "Republik Capital Indonesia",
+            "Suganto Gunawan",
+            "Suminto Husin Giman",
+            "Suwito"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "ALII.JK|2026-02-13",
+      "symbol": "ALII.JK",
+      "date": "2026-02-13",
+      "dir": "buy",
+      "names": [
+        "Munawir",
+        "Aninditha Anestya Bakrie",
+        "Aulia"
+      ],
+      "opposing": [
+        "Aninditha Anestya Bakrie",
+        "Aulia"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "ALII.JK:buy:2026-02-13:CLUSTER_PATTERN:4a99d72f",
+          "holders": [
+            "Aninditha Anestya Bakrie",
+            "Aulia",
+            "Munawir"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "MGLV.JK|2026-02-09",
+      "symbol": "MGLV.JK",
+      "date": "2026-02-09",
+      "dir": "sell",
+      "names": [
+        "Jecky Salindeho",
+        "Stephen Sardjono",
+        "Sri Rahayu",
+        "Dennis Rahardja"
+      ],
+      "opposing": [
+        "Nextier Datamate Center"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "MGLV.JK:sell:2026-02-09:CLUSTER_PATTERN:a09b1960",
+          "holders": [
+            "Dennis Rahardja",
+            "Jecky Salindeho",
+            "Sri Rahayu",
+            "Stephen Sardjono"
+          ]
+        }
+      ],
+      "changed": true
+    },
+    {
+      "key": "BUVA.JK|2025-11-21",
+      "symbol": "BUVA.JK",
+      "date": "2025-11-21",
+      "dir": "buy",
+      "names": [
+        "Astini Bernawati Oudang",
+        "Cindy Budijono",
+        "Hendry Utomo",
+        "Satrio"
+      ],
+      "opposing": [
+        "Nusantara Utama Investama"
+      ],
+      "current": [
+        {
+          "id": "BUVA.JK:buy:2025-11-21:CLUSTER_PATTERN:8db9f7f4",
+          "holders": [
+            "Astini Bernawati Oudang",
+            "Cindy Budijono",
+            "Hendry Utomo",
+            "Nusantara Utamainvestama"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "BUVA.JK:buy:2025-11-21:CLUSTER_PATTERN:7dc603b1",
+          "holders": [
+            "Astini Bernawati Oudang",
+            "Cindy Budijono",
+            "Hendry Utomo",
+            "Nusantara Utamainvestama",
+            "Satrio"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "TRUK.JK|2025-11-14",
+      "symbol": "TRUK.JK",
+      "date": "2025-11-14",
+      "dir": "buy",
+      "names": [
+        "Catur Dharma Anugerah",
+        "Carolina Kusuma",
+        "Budi Gunawan"
+      ],
+      "opposing": [
+        "Guna Timur Raya"
+      ],
+      "current": [
+        {
+          "id": "TRUK.JK:buy:2025-11-14:CLUSTER_PATTERN:c27dd826",
+          "holders": [
+            "Budi Gunawan",
+            "Carolina Kusuma",
+            "Catur Dharma Anugerah"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "TRUK.JK:buy:2025-11-14:CLUSTER_PATTERN:c27dd826",
+          "holders": [
+            "Budi Gunawan",
+            "Carolina Kusuma",
+            "Catur Dharma Anugerah"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "SOFA.JK|2025-10-24",
+      "symbol": "SOFA.JK",
+      "date": "2025-10-24",
+      "dir": "sell",
+      "names": [
+        "Dimas Adiyasa Wiryaatmaja",
+        "Yohan Satya",
+        "Hardy Satya"
+      ],
+      "opposing": [
+        "Asia Investment Capital"
+      ],
+      "current": [
+        {
+          "id": "SOFA.JK:sell:2025-10-24:CLUSTER_PATTERN:e2589441",
+          "holders": [
+            "Dimas Adiyasa Wiryaatmaja",
+            "Hardy Satya",
+            "Yohan Satya"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "SOFA.JK:sell:2025-10-24:CLUSTER_PATTERN:e2589441",
+          "holders": [
+            "Dimas Adiyasa Wiryaatmaja",
+            "Hardy Satya",
+            "Yohan Satya"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "SPMA.JK|2025-08-14",
+      "symbol": "SPMA.JK",
+      "date": "2025-08-14",
+      "dir": "buy",
+      "names": [
+        "Barli Leoponco",
+        "Joseph Sulaiman",
+        "Edward Sopanan"
+      ],
+      "opposing": [
+        "Welly"
+      ],
+      "current": [
+        {
+          "id": "SPMA.JK:buy:2025-08-14:CLUSTER_PATTERN:1682a094",
+          "holders": [
+            "Barli Leoponco",
+            "Edward Sopanan",
+            "Joseph Sulaiman"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "SPMA.JK:buy:2025-08-14:CLUSTER_PATTERN:1682a094",
+          "holders": [
+            "Barli Leoponco",
+            "Edward Sopanan",
+            "Joseph Sulaiman"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "OBMD.JK|2025-04-29",
+      "symbol": "OBMD.JK",
+      "date": "2025-04-29",
+      "dir": "buy",
+      "names": [
+        "Ivan Alamsyah Siregar",
+        "Irvan Juliansah",
+        "Mohamad Asad"
+      ],
+      "opposing": [
+        "Ryanto Husodo"
+      ],
+      "current": [
+        {
+          "id": "OBMD.JK:buy:2025-04-29:CLUSTER_PATTERN:050bfecf",
+          "holders": [
+            "Irvan Juliansah",
+            "Ivan Alamsyah Siregar",
+            "Mohamad Asad"
+          ]
+        }
+      ],
+      "renamedOppositeOnly": [
+        {
+          "id": "OBMD.JK:buy:2025-04-29:CLUSTER_PATTERN:050bfecf",
+          "holders": [
+            "Irvan Juliansah",
+            "Ivan Alamsyah Siregar",
+            "Mohamad Asad"
+          ]
+        }
+      ],
+      "changed": false
+    },
+    {
+      "key": "MDIY.JK|2024-12-19",
+      "symbol": "MDIY.JK",
+      "date": "2024-12-19",
+      "dir": "buy",
+      "names": [
+        "Hendra Kurniawan",
+        "Rika Juniaty Tanzil",
+        "Edwin Cheah Yew Hong"
+      ],
+      "opposing": [
+        "Edwin Cheah Yew Hong",
+        "Darwin Cyril Noerhadi"
+      ],
+      "current": [],
+      "renamedOppositeOnly": [
+        {
+          "id": "MDIY.JK:buy:2024-12-19:CLUSTER_PATTERN:3cc1e3e2",
+          "holders": [
+            "Edwin Cheah Yew Hong",
+            "Hendra Kurniawan",
+            "Rika Juniaty Tanzil"
+          ]
+        }
+      ],
+      "changed": true
+    }
+  ]
+}

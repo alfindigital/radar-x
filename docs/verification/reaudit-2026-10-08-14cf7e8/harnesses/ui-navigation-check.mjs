@@ -1,0 +1,5 @@
+import {chromium} from 'file:///C:/Users/GEEKOM%20A8/Documents/Apps/radar-x-hackaton/node_modules/playwright/index.mjs';
+const b=await chromium.launch({headless:true});const p=await b.newPage({viewport:{width:1440,height:900}});p.on('pageerror',e=>console.log('ERROR',e.message));p.on('console',e=>{if(e.type()==='error')console.log('CONSOLE',e.text())});p.on('framenavigated',f=>{if(f===p.mainFrame())console.log('NAV',f.url())});
+await p.goto('http://localhost:3100/',{waitUntil:'networkidle'});const input=p.getByRole('combobox',{name:'Search issuer'}).filter({visible:true});await input.fill('BBCA');console.log('INPUT',await input.inputValue());await input.press('Enter');await p.waitForTimeout(10000);console.log('AFTER',p.url(),await p.locator('h1').allTextContents());
+await p.goto('http://localhost:3100/?scope=flagged',{waitUntil:'networkidle'});await p.locator('nav[aria-label="Board pages"] a').filter({hasText:'Next'}).click();await p.waitForTimeout(8000);console.log('PAGINATE',p.url(),await p.locator('nav[aria-label="Board pages"]').innerText());
+await b.close();

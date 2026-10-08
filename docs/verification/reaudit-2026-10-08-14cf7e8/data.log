@@ -1,0 +1,125 @@
+
+> radar-x@0.1.0 audit:data
+> tsx scripts/audit-data.ts
+
+{
+  "generatedAt": "2026-10-08T09:49:01.688Z",
+  "dataDir": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\data",
+  "sourcePolicy": "read-only; no provider calls and no source writes",
+  "files": [
+    {
+      "path": "data/tickers.json",
+      "status": "ok",
+      "sha256": "13fa5ce78f4ebbeb2eca04d5265e7ee984ea772cc206a4ffa13fed79ea0ee1a1",
+      "rows": 962,
+      "symbols": 962,
+      "minDate": null,
+      "maxDate": null,
+      "duplicateCount": 0,
+      "missingSourceCount": 0,
+      "transactionFeedLagCount": 0,
+      "zeroVolumeCount": 0
+    },
+    {
+      "path": "data/insider_trades.json",
+      "status": "ok",
+      "sha256": "e66184a300c5c0c73165cd8192c2a9cec2829606dde1413385d79294c9d855dd",
+      "rows": 3865,
+      "symbols": 496,
+      "minDate": "2021-09-17",
+      "maxDate": "2026-10-06",
+      "duplicateCount": 0,
+      "missingSourceCount": 0,
+      "transactionFeedLagCount": 3505,
+      "zeroVolumeCount": 0
+    },
+    {
+      "path": "data/flow_daily.json",
+      "status": "ok",
+      "sha256": "d46151217cdeb87919622dd14f08d5e459a11c3a9ac99307aa74905f51d02978",
+      "rows": 55165,
+      "symbols": 869,
+      "minDate": "2026-06-22",
+      "maxDate": "2026-10-07",
+      "duplicateCount": 0,
+      "missingSourceCount": 0,
+      "transactionFeedLagCount": 0,
+      "zeroVolumeCount": 0
+    },
+    {
+      "path": "data/price_daily.json",
+      "status": "ok",
+      "sha256": "cd9239ea87cd407175bf86379d693b662e8dbeb631967e1ed5e6dc82d23c97c0",
+      "rows": 63227,
+      "symbols": 963,
+      "minDate": "2026-06-22",
+      "maxDate": "2026-10-07",
+      "duplicateCount": 0,
+      "missingSourceCount": 0,
+      "transactionFeedLagCount": 0,
+      "zeroVolumeCount": 8201
+    },
+    {
+      "path": "data/broker_rows.json",
+      "status": "ok",
+      "sha256": "c568950a6f20244132681837422e2ae2d6410dd08087166d02ff4be137513610",
+      "rows": 308138,
+      "symbols": 863,
+      "minDate": "2026-09-07",
+      "maxDate": "2026-10-07",
+      "duplicateCount": 0,
+      "missingSourceCount": 0,
+      "transactionFeedLagCount": 0,
+      "zeroVolumeCount": 0
+    },
+    {
+      "path": "data/holders_monthly.json",
+      "status": "ok",
+      "sha256": "0b29fabbf67cabbcd17f526cd3a40db6ec79d054525d593fd566059c94530176",
+      "rows": 19975,
+      "symbols": 962,
+      "minDate": "2025-01-31",
+      "maxDate": "2026-09-30",
+      "duplicateCount": 0,
+      "missingSourceCount": 0,
+      "transactionFeedLagCount": 0,
+      "zeroVolumeCount": 0
+    }
+  ],
+  "derived": {
+    "status": "ok",
+    "asOf": "2026-10-08",
+    "inputHash": "5f42f985e61d11195b2ec96bc9d824468add71007822a051d4c565c7bee5a27d",
+    "files": [
+      {
+        "path": "data/derived-v2/scores.json",
+        "rows": 964,
+        "sha256": "855d6549b0044c7216cf43e25f25fe916845d44426b38d06cb193481b15ed1dd",
+        "match": true
+      },
+      {
+        "path": "data/derived-v2/cases.json",
+        "rows": 233,
+        "sha256": "4e99b1554a3839d18e1d1694c1d7bb9dc2b235a6b8b411685f9f886c169faa5e",
+        "match": true
+      },
+      {
+        "path": "data/derived-v2/exitwatch.json",
+        "rows": 964,
+        "sha256": "800d1205af1e3fbfb62fe7ce48dfdc7dbbb3b118a6426ec9529ab0db9a7c7dc4",
+        "match": true
+      }
+    ],
+    "failures": []
+  },
+  "totals": {
+    "rows": 451332,
+    "missingFiles": 0,
+    "duplicateRows": 0,
+    "missingSourceRows": 0,
+    "transactionFeedLagRows": 3505,
+    "suspiciousZeroVolumeRows": 8201
+  },
+  "failures": [],
+  "status": "ok"
+}

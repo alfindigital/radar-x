@@ -1,0 +1,454 @@
+{
+  "report": [
+    {
+      "theme": "dark",
+      "name": "home",
+      "route": "/",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "suppressed",
+      "route": "/?scope=suppressed",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "radar-v2",
+      "route": "/?v=radar",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "broker",
+      "route": "/broker",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "broker-inst",
+      "route": "/broker?cohort=institutional",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "broker-detail",
+      "route": "/broker/XL",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "dossier",
+      "route": "/stock/ADRO",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "dossier-exit",
+      "route": "/stock/PNLF",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "cases",
+      "route": "/cases",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "foreign",
+      "route": "/foreign",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "rotation",
+      "route": "/rotation",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "name": "methodology",
+      "route": "/methodology",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "home",
+      "route": "/",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "suppressed",
+      "route": "/?scope=suppressed",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "radar-v2",
+      "route": "/?v=radar",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "broker",
+      "route": "/broker",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "broker-inst",
+      "route": "/broker?cohort=institutional",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "broker-detail",
+      "route": "/broker/XL",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "dossier",
+      "route": "/stock/ADRO",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "dossier-exit",
+      "route": "/stock/PNLF",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "cases",
+      "route": "/cases",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "foreign",
+      "route": "/foreign",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "rotation",
+      "route": "/rotation",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "name": "methodology",
+      "route": "/methodology",
+      "status": 200,
+      "overflow": {
+        "scrollW": 1440,
+        "clientW": 1440,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "home",
+      "route": "/",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "suppressed",
+      "route": "/?scope=suppressed",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "radar-v2",
+      "route": "/?v=radar",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "broker",
+      "route": "/broker",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": [
+          "table.w-full text-sm right=407",
+          "thead. right=407",
+          "tr.text-left text-[10px] uppercase tracking-wider fai right=407",
+          "th.py-2 text-right font-medium right=407",
+          "tbody.mono text-xs right=407",
+          "tr.row-hover border-b border-line/60 right=407"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "broker-inst",
+      "route": "/broker?cohort=institutional",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": [
+          "table.w-full text-sm right=407",
+          "thead. right=407",
+          "tr.text-left text-[10px] uppercase tracking-wider fai right=407",
+          "th.py-2 text-right font-medium right=407",
+          "tbody.mono text-xs right=407",
+          "tr.row-hover border-b border-line/60 right=407"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "broker-detail",
+      "route": "/broker/XL",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "dossier",
+      "route": "/stock/ADRO",
+      "status": 200,
+      "overflow": {
+        "scrollW": 451,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "dossier-exit",
+      "route": "/stock/PNLF",
+      "status": 200,
+      "overflow": {
+        "scrollW": 412,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "cases",
+      "route": "/cases",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "foreign",
+      "route": "/foreign",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "rotation",
+      "route": "/rotation",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    },
+    {
+      "theme": "dark-mobile",
+      "name": "methodology",
+      "route": "/methodology",
+      "status": 200,
+      "overflow": {
+        "scrollW": 360,
+        "clientW": 360,
+        "off": []
+      },
+      "errors": []
+    }
+  ],
+  "failures": [
+    "dark-mobile/dossier: horizontal overflow 451px",
+    "dark-mobile/dossier-exit: horizontal overflow 412px"
+  ]
+}

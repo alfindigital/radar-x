@@ -1,0 +1,322 @@
+[
+  {
+    "name": "ownership-corrupt",
+    "args": [
+      "ownership",
+      "--limit",
+      "1"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "companyReport",
+        "A.JK",
+        [
+          "ownership"
+        ]
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_ownership",
+        1,
+        1,
+        "ok"
+      ]
+    ],
+    "writes": [
+      "ownership.json"
+    ],
+    "ownership": {
+      "schemaVersion": 1,
+      "engineVersion": "radarx-v2",
+      "source": "sectors",
+      "asOf": "2026-10-08",
+      "generatedAt": "2026-10-08T09:51:54.106Z",
+      "creditsEst": 1,
+      "refreshed": {
+        "A.JK": "2026-10-08T09:51:54.106Z"
+      },
+      "holders": [],
+      "whales": [],
+      "groups": [],
+      "instFlow": [],
+      "instTxn": [],
+      "misses": []
+    }
+  },
+  {
+    "name": "flows-partial",
+    "args": [
+      "flows",
+      "--universe",
+      "--limit",
+      "2"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "foreignFlowSymbol",
+        "A.JK"
+      ],
+      [
+        "foreignFlowSymbol",
+        "B.JK"
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_flows",
+        1,
+        1,
+        "partial"
+      ]
+    ],
+    "writes": []
+  },
+  {
+    "name": "broker-limit-one",
+    "args": [
+      "broker",
+      "--universe",
+      "--limit",
+      "1"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "brokerSummary",
+        "A.JK"
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_broker",
+        1,
+        0,
+        "ok"
+      ]
+    ],
+    "writes": []
+  },
+  {
+    "name": "broker-limit-negative",
+    "args": [
+      "broker",
+      "--universe",
+      "--limit",
+      "-1"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "brokerSummary",
+        "A.JK"
+      ],
+      [
+        "brokerSummary",
+        "B.JK"
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_broker",
+        2,
+        0,
+        "ok"
+      ]
+    ],
+    "writes": []
+  },
+  {
+    "name": "ownership-limit-zero",
+    "args": [
+      "ownership",
+      "--limit",
+      "0"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "companyReport",
+        "A.JK",
+        [
+          "ownership"
+        ]
+      ],
+      [
+        "companyReport",
+        "B.JK",
+        [
+          "ownership"
+        ]
+      ],
+      [
+        "companyReport",
+        "C.JK",
+        [
+          "ownership"
+        ]
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_ownership",
+        3,
+        3,
+        "ok"
+      ]
+    ],
+    "writes": [
+      "ownership.json"
+    ],
+    "ownership": {
+      "schemaVersion": 1,
+      "engineVersion": "radarx-v2",
+      "source": "sectors",
+      "asOf": "2026-10-08",
+      "generatedAt": "2026-10-08T09:51:54.120Z",
+      "creditsEst": 3,
+      "refreshed": {
+        "A.JK": "2026-10-08T09:51:54.120Z",
+        "B.JK": "2026-10-08T09:51:54.120Z",
+        "C.JK": "2026-10-08T09:51:54.120Z"
+      },
+      "holders": [],
+      "whales": [],
+      "groups": [],
+      "instFlow": [],
+      "instTxn": [],
+      "misses": []
+    }
+  },
+  {
+    "name": "cohort-echo-mismatch",
+    "args": [
+      "cohorttop",
+      "--symbols",
+      "A.JK"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "brokerSummaryTop",
+        "A.JK",
+        {
+          "cohort": "retail"
+        }
+      ],
+      [
+        "brokerSummaryTop",
+        "A.JK",
+        {
+          "cohort": "institutional"
+        }
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_cohorttop",
+        3,
+        1,
+        "partial"
+      ]
+    ],
+    "writes": [
+      "cohort_top.json"
+    ]
+  },
+  {
+    "name": "extras-all-actions-failed",
+    "args": [
+      "extras"
+    ],
+    "exitCode": 0,
+    "calls": [
+      [
+        "suspensions",
+        {
+          "limit": 100,
+          "offset": 0
+        }
+      ],
+      [
+        "corporateActionsCalendar",
+        "dividend"
+      ],
+      [
+        "corporateActionsCalendar",
+        "upcoming_dividend"
+      ],
+      [
+        "corporateActionsCalendar",
+        "bonus"
+      ],
+      [
+        "corporateActionsCalendar",
+        "right_issue"
+      ],
+      [
+        "corporateActionsCalendar",
+        "stock_split"
+      ],
+      [
+        "corporateActionsCalendar",
+        "warrant"
+      ],
+      [
+        "corporateActionsCalendar",
+        "agm"
+      ],
+      [
+        "brokersTop",
+        null
+      ],
+      [
+        "brokersTop",
+        {
+          "cohort": "retail"
+        }
+      ],
+      [
+        "brokersTop",
+        {
+          "cohort": "institutional"
+        }
+      ],
+      [
+        "mostTraded"
+      ],
+      [
+        "quarterlyFinancialDates",
+        {
+          "limit": 100,
+          "offset": 0
+        }
+      ]
+    ],
+    "logs": [
+      [
+        "ingest_extras",
+        13,
+        0,
+        "ok"
+      ]
+    ],
+    "writes": [
+      "suspensions.json",
+      "corporate_actions.json",
+      "brokers_top.json",
+      "most_traded.json",
+      "quarterly_dates.json"
+    ],
+    "corporateActions": {
+      "schemaVersion": 1,
+      "engineVersion": "radarx-v2",
+      "source": "sectors",
+      "asOf": "2026-10-08",
+      "generatedAt": "2026-10-08T09:51:54.128Z",
+      "types": {}
+    }
+  }
+]

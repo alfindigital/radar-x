@@ -1,0 +1,1205 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.reaudit.config.ts"
+    ],
+    "configFile": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\playwright.reaudit.config.ts",
+    "rootDir": "C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-20261008-14cf7e8-164802/source/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-20261008-14cf7e8-164802/e2e-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-20261008-14cf7e8-164802/source/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-20261008-14cf7e8-164802/e2e-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-20261008-14cf7e8-164802/source/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../e2e.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "board-v3.spec.ts",
+      "file": "board-v3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "exit watch board renders scored rows with numeric badge and flags",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:46.915Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-c33d4b54b567c62193e6",
+          "file": "board-v3.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "flagged scope renders flag chips",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1432,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:48.868Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-864e834a399f0c866c11",
+          "file": "board-v3.spec.ts",
+          "line": 40,
+          "column": 5
+        },
+        {
+          "title": "suppressed scope shows null-score rows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1484,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:50.315Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-964e44a27bbb512d8c17",
+          "file": "board-v3.spec.ts",
+          "line": 48,
+          "column": 5
+        },
+        {
+          "title": "board paginates beyond 150 rows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2390,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:51.817Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-009a9890141aaa3d21f1",
+          "file": "board-v3.spec.ts",
+          "line": 56,
+          "column": 5
+        },
+        {
+          "title": "preserved v2 board still renders at ?v=radar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1160,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:54.221Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-abe3da3322549ca918f5",
+          "file": "board-v3.spec.ts",
+          "line": 65,
+          "column": 5
+        },
+        {
+          "title": "issuer dossier shows exit watch panel, cohort chart, coverage, and recent-suspension context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:55.395Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-84d943db1d82021d2bff",
+          "file": "board-v3.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "broker board renders cohort labels and profile resolves",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2027,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:56.551Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-66ed2653a7c26fab907a",
+          "file": "board-v3.spec.ts",
+          "line": 85,
+          "column": 5
+        },
+        {
+          "title": "broker board cohort tabs switch the leaderboard session",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1224,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:58.590Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-523cd207dae508f73d93",
+          "file": "board-v3.spec.ts",
+          "line": 99,
+          "column": 5
+        },
+        {
+          "title": "mobile suppressed scope renders rows and dossier link",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Mobile-only coverage.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 109,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 219,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:57:59.828Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Mobile-only coverage.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 109,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-bb7757eb197f984969f6",
+          "file": "board-v3.spec.ts",
+          "line": 108,
+          "column": 5
+        },
+        {
+          "title": "exit watch board renders scored rows with numeric badge and flags",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Board columns verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 27,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 312,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:11.944Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Board columns verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 27,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-30eb29bbd966df60497c",
+          "file": "board-v3.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "flagged scope renders flag chips",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Board scope verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 41,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:12.398Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Board scope verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 41,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-5ad8ba87c6423fa8057a",
+          "file": "board-v3.spec.ts",
+          "line": 40,
+          "column": 5
+        },
+        {
+          "title": "suppressed scope shows null-score rows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Board scope verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 49,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 222,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:12.660Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Board scope verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 49,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-839dc175e237ecdbfc99",
+          "file": "board-v3.spec.ts",
+          "line": 48,
+          "column": 5
+        },
+        {
+          "title": "board paginates beyond 150 rows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Board scope verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 57,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 233,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:12.893Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Board scope verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 57,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-b59f50bfb900695ccd42",
+          "file": "board-v3.spec.ts",
+          "line": 56,
+          "column": 5
+        },
+        {
+          "title": "preserved v2 board still renders at ?v=radar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Desktop check only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 66,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 200,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:13.139Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Desktop check only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 66,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-5237df451cfca7924171",
+          "file": "board-v3.spec.ts",
+          "line": 65,
+          "column": 5
+        },
+        {
+          "title": "issuer dossier shows exit watch panel, cohort chart, coverage, and recent-suspension context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Dossier layout verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 72,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 210,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:13.362Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Dossier layout verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 72,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-fbaadd01debe1f30efc9",
+          "file": "board-v3.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "broker board renders cohort labels and profile resolves",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Broker tables verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 86,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 239,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:13.583Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Broker tables verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 86,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-d1fda3ffcebcf0489004",
+          "file": "board-v3.spec.ts",
+          "line": 85,
+          "column": 5
+        },
+        {
+          "title": "broker board cohort tabs switch the leaderboard session",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Broker tabs verified on desktop only.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                    "line": 100,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 208,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:13.834Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Broker tabs verified on desktop only.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\board-v3.spec.ts",
+                        "line": 100,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "894879b095bc9146f317-aef4d220b1cb4e463582",
+          "file": "board-v3.spec.ts",
+          "line": 99,
+          "column": 5
+        },
+        {
+          "title": "mobile suppressed scope renders rows and dossier link",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1917,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:14.056Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "894879b095bc9146f317-336e58a21c14221c99c5",
+          "file": "board-v3.spec.ts",
+          "line": 108,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "research.spec.ts",
+      "file": "research.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "desktop research journey keeps negative distribution and source evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3302,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:00.067Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cdcdb9c009151254af97-a4d9637a5f635ade05c1",
+          "file": "research.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "case detail exposes separate outcome status and bounded evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1591,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:03.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cdcdb9c009151254af97-713c6b9601f856e88ab1",
+          "file": "research.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "search resolves a known issuer and an unknown issuer remains explicit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3735,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:04.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cdcdb9c009151254af97-b9954eeabc3b5e637fa5",
+          "file": "research.spec.ts",
+          "line": 56,
+          "column": 5
+        },
+        {
+          "title": "desktop research journey keeps negative distribution and source evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Desktop evidence journey is covered by the dedicated mobile navigation test.",
+                  "location": {
+                    "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\research.spec.ts",
+                    "line": 15,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 202,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:15.991Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Desktop evidence journey is covered by the dedicated mobile navigation test.",
+                      "location": {
+                        "file": "C:\\Users\\GEEKOM A8\\AppData\\Local\\Temp\\radarx-reaudit-20261008-14cf7e8-164802\\source\\tests\\e2e\\research.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cdcdb9c009151254af97-8129f7f79f418d0b7358",
+          "file": "research.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "case detail exposes separate outcome status and bounded evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1707,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:16.206Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cdcdb9c009151254af97-2cc10474132b929fe09c",
+          "file": "research.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "search resolves a known issuer and an unknown issuer remains explicit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T09:58:17.922Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cdcdb9c009151254af97-6d293b3f0a0ba6a60eda",
+          "file": "research.spec.ts",
+          "line": 56,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "mobile navigation",
+          "file": "research.spec.ts",
+          "line": 70,
+          "column": 6,
+          "specs": [
+            {
+              "title": "reaches foreign flow and methodology",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop-chrome",
+                  "projectName": "desktop-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2483,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-08T09:58:08.736Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cdcdb9c009151254af97-9a61759293404a9eeae4",
+              "file": "research.spec.ts",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "reaches foreign flow and methodology",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 45000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2268,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-08T09:58:21.598Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cdcdb9c009151254af97-a4bb91501280074aec75",
+              "file": "research.spec.ts",
+              "line": 73,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T09:57:46.304Z",
+    "duration": 37728.961,
+    "expected": 16,
+    "skipped": 10,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

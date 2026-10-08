@@ -1,0 +1,38 @@
+{
+  "before": {
+    "width": 451,
+    "hosts": [
+      {
+        "text": "cov 0.75",
+        "tag": "SPAN",
+        "cls": "faint text-[10px]",
+        "tip": "Share of component weight backed by usable evidence.",
+        "opacity": "0",
+        "left": "0px",
+        "right": "-263.609px",
+        "width": "300px",
+        "hostLeft": 60.609375,
+        "tipRight": 360.609375
+      },
+      {
+        "text": "Sandiaga Salahuddin Uno",
+        "tag": "SPAN",
+        "cls": "tag",
+        "tip": "Reported holder · no ownership-transaction dossier in the snapshot",
+        "opacity": "0",
+        "left": "0px",
+        "right": "-136.188px",
+        "width": "300px",
+        "hostLeft": 150.203125,
+        "tipRight": 450.203125
+      }
+    ]
+  },
+  "noPseudo": 360,
+  "cybr": {
+    "rows": 30,
+    "first": "2024-08-16",
+    "last": "2025-07-07",
+    "sectionText": "\n2025-04-30\tAndri Hutama Putra · insider\tSELL\t200k\t1,045\tRp209.0M\n2025-05-05\tINV Management · insider\tSELL\t3.1M\t1,041\tRp3.2B\n2025-05-05\tBambang Susilo · insider\tBUY\t200k\t1,070\tRp214.1M\n2025-05-07\tINV Management · insider\tSELL\t1.3M\t1,033\tRp1.3B\n2025-06-24\tPatrick Rudolf Dannacher · insider\tBUY\t399k\t961\tRp383.5M\n2025-07-01\tMB Investment Management · insider\tSELL\t174k\t1,010\tRp175.5M\n2025-07-07\tPatrick Rudolf Dannacher · insider\tBUY\t426k\t958\tRp407.7M"
+  }
+}

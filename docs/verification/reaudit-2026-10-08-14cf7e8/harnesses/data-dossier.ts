@@ -1,0 +1,6 @@
+import {writeFile} from 'node:fs/promises';
+import {getIssuerDossier,getSectorRotation} from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/services.ts';
+async function main(){
+const result=[];for(const symbol of ['ADRO','BBCA','ABBA']){const d=await getIssuerDossier(symbol);const w=d.windowStats;const eligible=d.insider.filter(t=>t.txnDate>=w.from&&t.txnDate<=w.to&&t.txnType!=='others');const f=d.flow.filter(f=>f.date>=w.from&&f.date<=w.to);const price=d.price.filter(p=>p.date<=w.to).sort((a,b)=>a.date.localeCompare(b.date));result.push({symbol,stats:w,check:{buys:eligible.filter(t=>t.txnType==='buy').reduce((s,t)=>s+t.value,0),sells:eligible.filter(t=>t.txnType==='sell').reduce((s,t)=>s+t.value,0),flow:f.length?f.reduce((s,t)=>s+t.netForeignInflow,0):null,firstPrice:price[0]?.date,lastPrice:price.at(-1)?.date,sortOkay:d.price.every((p,i)=>!i||p.date>=d.price[i-1].date)}})}
+const rotation=await getSectorRotation();const rots=rotation?.sectors.flatMap(s=>s.subs.map(r=>({slug:r.slug,date:r.flowDate,observed:r.flowObserved,expected:r.flowExpected})));const out={dossiers:result,rotation:rots};await writeFile('C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-data-20261008/dossier.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));
+}main().catch(e=>{console.error(e);process.exitCode=1});

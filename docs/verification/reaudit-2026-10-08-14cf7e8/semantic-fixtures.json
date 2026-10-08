@@ -1,0 +1,171 @@
+{
+  "clusterMidSell": {
+    "candidateCount": 0,
+    "candidates": []
+  },
+  "clusterTailSell": {
+    "candidateCount": 1,
+    "candidates": [
+      {
+        "symbol": "FIX.JK",
+        "direction": "accumulate",
+        "anchorDate": "2026-09-20",
+        "windowStart": "2026-08-21",
+        "windowEnd": "2026-09-20",
+        "holders": [
+          "A",
+          "C",
+          "E"
+        ],
+        "insiderTrades": [
+          {
+            "symbol": "FIX.JK",
+            "holderName": "A",
+            "holderType": "insider",
+            "txnType": "buy",
+            "txnDate": "2026-09-20",
+            "filedAt": "2026-09-20",
+            "value": 100,
+            "amount": 1,
+            "price": 100,
+            "pctBefore": null,
+            "pctAfter": null,
+            "clusterHint": null,
+            "sourceUrl": null
+          },
+          {
+            "symbol": "FIX.JK",
+            "holderName": "C",
+            "holderType": "insider",
+            "txnType": "buy",
+            "txnDate": "2026-09-20",
+            "filedAt": "2026-09-20",
+            "value": 100,
+            "amount": 1,
+            "price": 100,
+            "pctBefore": null,
+            "pctAfter": null,
+            "clusterHint": null,
+            "sourceUrl": null
+          },
+          {
+            "symbol": "FIX.JK",
+            "holderName": "E",
+            "holderType": "insider",
+            "txnType": "buy",
+            "txnDate": "2026-09-20",
+            "filedAt": "2026-09-20",
+            "value": 100,
+            "amount": 1,
+            "price": 100,
+            "pctBefore": null,
+            "pctAfter": null,
+            "clusterHint": null,
+            "sourceUrl": null
+          }
+        ],
+        "flowWindow": [],
+        "priceWindow": [],
+        "abnormalFlowZ": null,
+        "abnormalVolumeZ": null,
+        "preDriftPct": 0,
+        "id": "FIX.JK:buy:2026-09-20:CLUSTER_PATTERN:4d688c0a",
+        "pattern": "CLUSTER_PATTERN"
+      }
+    ]
+  },
+  "knownBy": {
+    "includedTrades": [
+      {
+        "holder": "A",
+        "filedAt": "2026-09-20"
+      },
+      {
+        "holder": "C",
+        "filedAt": "2026-09-20"
+      },
+      {
+        "holder": "E",
+        "filedAt": "2026-09-20"
+      }
+    ],
+    "score": {
+      "symbol": "FIX.JK",
+      "asOf": "2026-10-01",
+      "score": null,
+      "coverageWeight": 0,
+      "components": {
+        "insiderZ": {
+          "raw": 300,
+          "z": null,
+          "weight": 0.3,
+          "contribution": 0,
+          "status": "unrankable",
+          "reason": "Fewer than five valid cohort observations.",
+          "observedFrom": "2026-09-20",
+          "observedTo": "2026-09-20",
+          "observations": 3
+        },
+        "foreignTrend": {
+          "raw": null,
+          "z": null,
+          "weight": 0.25,
+          "contribution": 0,
+          "status": "missing",
+          "reason": "No foreign-flow observations in the 90-day window.",
+          "observedFrom": null,
+          "observedTo": null,
+          "observations": 0
+        },
+        "instNetZ": {
+          "raw": null,
+          "z": null,
+          "weight": 0.2,
+          "contribution": 0,
+          "status": "missing",
+          "reason": "Broker observations are unavailable in the 14-day window.",
+          "observedFrom": null,
+          "observedTo": null,
+          "observations": 0
+        },
+        "retailExodusZ": {
+          "raw": null,
+          "z": null,
+          "weight": 0.15,
+          "contribution": 0,
+          "status": "missing",
+          "reason": "Two holder-composition months before the as-of date are required.",
+          "observedFrom": null,
+          "observedTo": null,
+          "observations": 0
+        },
+        "fclassShift": {
+          "raw": null,
+          "z": null,
+          "weight": 0.1,
+          "contribution": 0,
+          "status": "missing",
+          "reason": "Two holder-composition months before the as-of date are required.",
+          "observedFrom": null,
+          "observedTo": null,
+          "observations": 0
+        }
+      },
+      "methodVersion": "radarx-v2"
+    }
+  },
+  "storeMerge": {
+    "symbol": "FIX.JK",
+    "date": "2026-09-20",
+    "open": 100,
+    "high": 110,
+    "low": 90,
+    "close": 106,
+    "volume": 12000,
+    "marketCap": 1000000,
+    "observationKind": "ohlcv",
+    "fieldSources": {}
+  },
+  "corruptRefused": "Error: price_daily.json: corrupt JSON — refusing to read it as empty",
+  "corruptBytesPreserved": true
+}

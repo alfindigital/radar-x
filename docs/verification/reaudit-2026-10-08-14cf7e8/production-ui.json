@@ -1,0 +1,197 @@
+[
+  {
+    "theme": "light",
+    "path": "/",
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "count": 33,
+        "nodes": [
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Corporate action (e.g. dividend/split) within ±7 days of the window end.\">CA ±7D<span class=\"sr-only\"> (<!-- -->Corporate action (e.g. dividend/split) within ±7 days of the window end.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(7) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Trading suspension recorded within 14 days of the as-of date.\">SUSP ≤14D<span class=\"sr-only\"> (<!-- -->Trading suspension recorded within 14 days of the as-of date.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(8) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Reported free float below 20%; flow readings are noisier on thin floats.\">FF&lt;20%<span class=\"sr-only\"> (<!-- -->Reported free float below 20%; flow readings are noisier on thin floats.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(21) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Reported free float below 20%; flow readings are noisier on thin floats.\">FF&lt;20%<span class=\"sr-only\"> (<!-- -->Reported free float below 20%; flow readings are noisier on thin floats.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(22) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Corporate action (e.g. dividend/split) within ±7 days of the window end.\">CA ±7D<span class=\"sr-only\"> (<!-- -->Corporate action (e.g. dividend/split) within ±7 days of the window end.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(26) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Corporate action (e.g. dividend/split) within ±7 days of the window end.\">CA ±7D<span class=\"sr-only\"> (<!-- -->Corporate action (e.g. dividend/split) within ±7 days of the window end.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(27) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Corporate action (e.g. dividend/split) within ±7 days of the window end.\">CA ±7D<span class=\"sr-only\"> (<!-- -->Corporate action (e.g. dividend/split) within ±7 days of the window end.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(44) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Trading suspension recorded within 14 days of the as-of date.\">SUSP ≤14D<span class=\"sr-only\"> (<!-- -->Trading suspension recorded within 14 days of the as-of date.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(47) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Reported free float below 20%; flow readings are noisier on thin floats.\">FF&lt;20%<span class=\"sr-only\"> (<!-- -->Reported free float below 20%; flow readings are noisier on thin floats.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(50) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Reported free float below 20%; flow readings are noisier on thin floats.\">FF&lt;20%<span class=\"sr-only\"> (<!-- -->Reported free float below 20%; flow readings are noisier on thin floats.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(52) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Reported free float below 20%; flow readings are noisier on thin floats.\">FF&lt;20%<span class=\"sr-only\"> (<!-- -->Reported free float below 20%; flow readings are noisier on thin floats.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(53) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "html": "<span class=\"tag tag-watch tip-r\" data-tip=\"Reported free float below 20%; flow readings are noisier on thin floats.\">FF&lt;20%<span class=\"sr-only\"> (<!-- -->Reported free float below 20%; flow readings are noisier on thin floats.<!-- -->)</span></span>",
+            "target": [
+              ".row-hover.border-line\\/60.row-signal:nth-child(57) > td:nth-child(5) > .flex-wrap.gap-1.flex > .tag.tag-watch.tip-r"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #9a5b07, background color: #e8e1d7, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "help": "Links must be distinguishable without relying on color",
+        "count": 2,
+        "nodes": [
+          {
+            "html": "<a class=\"blue\" href=\"/?scope=suppressed\">View suppressed →</a>",
+            "target": [
+              ".blue[href=\"/?scope=suppressed\"]"
+            ],
+            "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.22:1 with the surrounding text. (Minimum contrast is 3:1, link text: #2563a8, surrounding text: #44566b)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+          },
+          {
+            "html": "<a class=\"blue\" href=\"/methodology\">methodology</a>",
+            "target": [
+              ".blue[href$=\"methodology\"]"
+            ],
+            "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.06:1 with the surrounding text. (Minimum contrast is 3:1, link text: #2563a8, surrounding text: #54687c)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "path": "/stock/ADRO",
+    "violations": []
+  },
+  {
+    "theme": "dark",
+    "path": "/",
+    "violations": [
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "help": "Links must be distinguishable without relying on color",
+        "count": 2,
+        "nodes": [
+          {
+            "html": "<a class=\"blue\" href=\"/?scope=suppressed\">View suppressed →</a>",
+            "target": [
+              ".blue[href=\"/?scope=suppressed\"]"
+            ],
+            "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.01:1 with the surrounding text. (Minimum contrast is 3:1, link text: #8fbfff, surrounding text: #aec0d1)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+          },
+          {
+            "html": "<a class=\"blue\" href=\"/methodology\">methodology</a>",
+            "target": [
+              ".blue[href$=\"methodology\"]"
+            ],
+            "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.7:1 with the surrounding text. (Minimum contrast is 3:1, link text: #8fbfff, surrounding text: #7e91a6)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "path": "/stock/ADRO",
+    "violations": []
+  },
+  {
+    "mobileClipping": {
+      "boundary": {
+        "x": 16,
+        "y": 650.5,
+        "width": 328,
+        "height": 7566.390625,
+        "top": 650.5,
+        "right": 344,
+        "bottom": 8216.890625,
+        "left": 16
+      },
+      "hits": []
+    }
+  },
+  {
+    "mobileSources": {
+      "links": [
+        {
+          "text": "Open",
+          "visible": false,
+          "href": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202412/d7e593ab16_e7d31fe278.pdf"
+        },
+        {
+          "text": "Open",
+          "visible": false,
+          "href": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202510/4d80ecf450_17be92eba5.pdf"
+        },
+        {
+          "text": "Open",
+          "visible": false,
+          "href": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_KSEI/LK-25052026-0814-00.pdf-0.pdf"
+        }
+      ],
+      "rows": 3
+    }
+  }
+]

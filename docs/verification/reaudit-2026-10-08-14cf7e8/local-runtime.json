@@ -1,0 +1,25 @@
+{
+  "pid": 52948,
+  "beforeRss": 483217408,
+  "afterRss": 483217408,
+  "samples": [
+    {
+      "path": "http://localhost:3119/api/tickers",
+      "status": 200,
+      "ms": 1370,
+      "bytes": 44663
+    },
+    {
+      "path": "http://localhost:3119/api/tickers",
+      "status": 200,
+      "ms": 14,
+      "bytes": 44663
+    },
+    {
+      "path": "http://localhost:3119/",
+      "status": 200,
+      "ms": 275,
+      "bytes": 1091679
+    }
+  ]
+}

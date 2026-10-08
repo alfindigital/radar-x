@@ -1,0 +1,767 @@
+[
+  {
+    "name": "qa-redesign.mjs",
+    "exit": 0,
+    "geometry": {
+      "scrollW": 360,
+      "clientW": 360,
+      "off": [
+        "button.clip right=410"
+      ]
+    },
+    "result": {
+      "report": [
+        {
+          "theme": "dark",
+          "name": "home",
+          "route": "/",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "suppressed",
+          "route": "/?scope=suppressed",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "radar-v2",
+          "route": "/?v=radar",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "broker",
+          "route": "/broker",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "broker-inst",
+          "route": "/broker?cohort=institutional",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "broker-detail",
+          "route": "/broker/XL",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "dossier",
+          "route": "/stock/ADRO",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "dossier-exit",
+          "route": "/stock/PNLF",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "cases",
+          "route": "/cases",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "foreign",
+          "route": "/foreign",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "rotation",
+          "route": "/rotation",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "name": "methodology",
+          "route": "/methodology",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "home",
+          "route": "/",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "suppressed",
+          "route": "/?scope=suppressed",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "radar-v2",
+          "route": "/?v=radar",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "broker",
+          "route": "/broker",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "broker-inst",
+          "route": "/broker?cohort=institutional",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "broker-detail",
+          "route": "/broker/XL",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "dossier",
+          "route": "/stock/ADRO",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "dossier-exit",
+          "route": "/stock/PNLF",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "cases",
+          "route": "/cases",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "foreign",
+          "route": "/foreign",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "rotation",
+          "route": "/rotation",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "name": "methodology",
+          "route": "/methodology",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "home",
+          "route": "/",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "suppressed",
+          "route": "/?scope=suppressed",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "radar-v2",
+          "route": "/?v=radar",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "broker",
+          "route": "/broker",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "broker-inst",
+          "route": "/broker?cohort=institutional",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "broker-detail",
+          "route": "/broker/XL",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "dossier",
+          "route": "/stock/ADRO",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "dossier-exit",
+          "route": "/stock/PNLF",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "cases",
+          "route": "/cases",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "foreign",
+          "route": "/foreign",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "rotation",
+          "route": "/rotation",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        },
+        {
+          "theme": "dark-mobile",
+          "name": "methodology",
+          "route": "/methodology",
+          "status": 200,
+          "overflow": {
+            "scrollW": 360,
+            "clientW": 360,
+            "off": [
+              "button.clip right=410"
+            ]
+          },
+          "errors": []
+        }
+      ],
+      "failures": []
+    }
+  },
+  {
+    "name": "qa-mobile.mjs",
+    "exit": 0,
+    "geometry": {
+      "title": "Internal app error",
+      "scrollW": 360,
+      "clientW": 360,
+      "overflowX": 0,
+      "pageH": 800,
+      "offenders": [
+        {
+          "tag": "a",
+          "r": 410,
+          "l": 0,
+          "w": 100,
+          "text": "clip"
+        }
+      ]
+    },
+    "result": {
+      "report": [
+        {
+          "route": "/",
+          "name": "home",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/?v=radar",
+          "name": "radar-v2",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/?scope=suppressed",
+          "name": "suppressed",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/broker",
+          "name": "broker",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/broker?cohort=institutional",
+          "name": "broker-inst",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/broker/XL",
+          "name": "broker-detail",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/stock/ADRO",
+          "name": "dossier",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/cases",
+          "name": "cases",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/foreign",
+          "name": "foreign",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/rotation",
+          "name": "rotation",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        },
+        {
+          "route": "/methodology",
+          "name": "methodology",
+          "ms": 0,
+          "title": "Internal app error",
+          "scrollW": 360,
+          "clientW": 360,
+          "overflowX": 0,
+          "pageH": 800,
+          "offenders": [
+            {
+              "tag": "a",
+              "r": 410,
+              "l": 0,
+              "w": 100,
+              "text": "clip"
+            }
+          ],
+          "consoleErrors": []
+        }
+      ],
+      "failures": []
+    }
+  }
+]

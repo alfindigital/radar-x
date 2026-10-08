@@ -1,0 +1,276 @@
+{
+  "dossiers": [
+    {
+      "symbol": "ADRO",
+      "stats": {
+        "days": 90,
+        "from": "2026-07-11",
+        "to": "2026-10-08",
+        "insiderBuys": 0,
+        "insiderSells": 0,
+        "foreignNet": -244218736000,
+        "foreignObs": 61,
+        "priceFrom": "2026-06-22",
+        "priceTo": "2026-10-07",
+        "priceChangePct": 13.537117903930133,
+        "priceObs": 76
+      },
+      "check": {
+        "buys": 0,
+        "sells": 0,
+        "flow": -244218736000,
+        "firstPrice": "2026-06-22",
+        "lastPrice": "2026-10-07",
+        "sortOkay": true
+      }
+    },
+    {
+      "symbol": "BBCA",
+      "stats": {
+        "days": 90,
+        "from": "2026-07-11",
+        "to": "2026-10-08",
+        "insiderBuys": 0,
+        "insiderSells": 0,
+        "foreignNet": -1023159382500,
+        "foreignObs": 61,
+        "priceFrom": "2026-07-10",
+        "priceTo": "2026-10-07",
+        "priceChangePct": -2.0242914979757085,
+        "priceObs": 62
+      },
+      "check": {
+        "buys": 0,
+        "sells": 0,
+        "flow": -1023159382500,
+        "firstPrice": "2026-07-10",
+        "lastPrice": "2026-10-07",
+        "sortOkay": true
+      }
+    },
+    {
+      "symbol": "ABBA",
+      "stats": {
+        "days": 90,
+        "from": "2026-07-11",
+        "to": "2026-10-08",
+        "insiderBuys": null,
+        "insiderSells": null,
+        "foreignNet": null,
+        "foreignObs": 0,
+        "priceFrom": "2026-07-10",
+        "priceTo": "2026-10-07",
+        "priceChangePct": 0,
+        "priceObs": 62
+      },
+      "check": {
+        "buys": 0,
+        "sells": 0,
+        "flow": null,
+        "firstPrice": "2026-07-10",
+        "lastPrice": "2026-10-07",
+        "sortOkay": true
+      }
+    }
+  ],
+  "rotation": [
+    {
+      "slug": "basic-materials",
+      "date": "2026-10-07",
+      "observed": 94,
+      "expected": 114
+    },
+    {
+      "slug": "consumer-services",
+      "date": "2026-10-07",
+      "observed": 45,
+      "expected": 52
+    },
+    {
+      "slug": "automobiles-components",
+      "date": "2026-10-07",
+      "observed": 15,
+      "expected": 16
+    },
+    {
+      "slug": "apparel-luxury-goods",
+      "date": "2026-10-07",
+      "observed": 15,
+      "expected": 22
+    },
+    {
+      "slug": "retailing",
+      "date": "2026-10-07",
+      "observed": 28,
+      "expected": 32
+    },
+    {
+      "slug": "leisure-goods",
+      "date": "2026-10-07",
+      "observed": 2,
+      "expected": 5
+    },
+    {
+      "slug": "household-goods",
+      "date": "2026-10-07",
+      "observed": 13,
+      "expected": 14
+    },
+    {
+      "slug": "media-entertainment",
+      "date": "2026-10-07",
+      "observed": 17,
+      "expected": 20
+    },
+    {
+      "slug": "food-beverage",
+      "date": "2026-10-07",
+      "observed": 94,
+      "expected": 102
+    },
+    {
+      "slug": "tobacco",
+      "date": "2026-10-07",
+      "observed": 4,
+      "expected": 4
+    },
+    {
+      "slug": "nondurable-household-products",
+      "date": "2026-10-07",
+      "observed": 11,
+      "expected": 11
+    },
+    {
+      "slug": "food-staples-retailing",
+      "date": "2026-10-07",
+      "observed": 13,
+      "expected": 14
+    },
+    {
+      "slug": "alternative-energy",
+      "date": "2026-10-07",
+      "observed": 1,
+      "expected": 2
+    },
+    {
+      "slug": "oil-gas-coal",
+      "date": "2026-10-07",
+      "observed": 76,
+      "expected": 89
+    },
+    {
+      "slug": "insurance",
+      "date": "2026-10-07",
+      "observed": 16,
+      "expected": 19
+    },
+    {
+      "slug": "financing-service",
+      "date": "2026-10-07",
+      "observed": 13,
+      "expected": 14
+    },
+    {
+      "slug": "banks",
+      "date": "2026-10-07",
+      "observed": 47,
+      "expected": 48
+    },
+    {
+      "slug": "investment-service",
+      "date": "2026-10-07",
+      "observed": 6,
+      "expected": 6
+    },
+    {
+      "slug": "holding-investment-companies",
+      "date": "2026-10-07",
+      "observed": 16,
+      "expected": 20
+    },
+    {
+      "slug": "pharmaceuticals-health-care-research",
+      "date": "2026-10-07",
+      "observed": 13,
+      "expected": 15
+    },
+    {
+      "slug": "healthcare-equipment-providers",
+      "date": "2026-10-07",
+      "observed": 26,
+      "expected": 26
+    },
+    {
+      "slug": "multi-sector-holdings",
+      "date": "2026-10-07",
+      "observed": 4,
+      "expected": 5
+    },
+    {
+      "slug": "industrial-services",
+      "date": "2026-10-07",
+      "observed": 19,
+      "expected": 23
+    },
+    {
+      "slug": "industrial-goods",
+      "date": "2026-10-07",
+      "observed": 33,
+      "expected": 38
+    },
+    {
+      "slug": "telecommunication",
+      "date": "2026-10-07",
+      "observed": 18,
+      "expected": 22
+    },
+    {
+      "slug": "heavy-constructions-civil-engineering",
+      "date": "2026-10-07",
+      "observed": 20,
+      "expected": 29
+    },
+    {
+      "slug": "utilities",
+      "date": "2026-10-07",
+      "observed": 10,
+      "expected": 11
+    },
+    {
+      "slug": "transportation-infrastructure",
+      "date": "2026-10-07",
+      "observed": 7,
+      "expected": 9
+    },
+    {
+      "slug": "properties-real-estate",
+      "date": "2026-10-07",
+      "observed": 79,
+      "expected": 93
+    },
+    {
+      "slug": "technology-hardware-equipment",
+      "date": "2026-10-07",
+      "observed": 10,
+      "expected": 11
+    },
+    {
+      "slug": "software-it-services",
+      "date": "2026-10-07",
+      "observed": 31,
+      "expected": 36
+    },
+    {
+      "slug": "logistics-deliveries",
+      "date": "2026-10-07",
+      "observed": 25,
+      "expected": 28
+    },
+    {
+      "slug": "transportation",
+      "date": "2026-10-07",
+      "observed": 11,
+      "expected": 12
+    }
+  ]
+}

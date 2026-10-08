@@ -1,0 +1,94 @@
+{
+  "writeOnlyStorage": {
+    "states": [
+      {
+        "label": "Theme: Auto. Switch to Light",
+        "htmlTheme": null
+      },
+      {
+        "label": "Theme: Auto. Switch to Light",
+        "htmlTheme": "light"
+      },
+      {
+        "label": "Theme: Auto. Switch to Light",
+        "htmlTheme": "light"
+      },
+      {
+        "label": "Theme: Auto. Switch to Light",
+        "htmlTheme": "light"
+      },
+      {
+        "label": "Theme: Auto. Switch to Light",
+        "htmlTheme": "light"
+      }
+    ],
+    "errors": []
+  },
+  "mobileTimeline": {
+    "svgWidth": 294,
+    "svgHeight": 102.546875,
+    "viewBox": 860,
+    "texts": [
+      {
+        "text": "2.3k",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "2.4k",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "2.6k",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "2.8k",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "2026-06-22",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "2026-10-07",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "price",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "foreign flow (+ buy / − sell)",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "▲ reported buy · ▼ reported sell",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      },
+      {
+        "text": "3 markers outside the displayed range",
+        "fontSize": "9px",
+        "scale": 0.34182291666666664,
+        "renderedPx": 3.07640625
+      }
+    ]
+  }
+}

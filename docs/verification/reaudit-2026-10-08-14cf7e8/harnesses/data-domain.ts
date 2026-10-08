@@ -1,0 +1,54 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { loadSnapshot } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/snapshot.ts';
+import { loadDerived, buildDerived, cohortsFromRegistry, indexBySymbol } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/derive.ts';
+import { loadBrokerTop, loadCohortTop, loadSuspensions, loadCorpActions, loadRegistry } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/feeds.ts';
+import { loadTaxonomy } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/taxonomy.ts';
+import { loadFreeFloat } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/ownership.ts';
+import { computeExitWatch } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/exitwatch.ts';
+import { computeScoresV2 } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/score.ts';
+import { detectCandidates } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/cases.ts';
+import { JsonStore } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/db.ts';
+
+async function main() {
+const source=await loadSnapshot(); const stored=await loadDerived();
+const [registry,bt,ct,susp,ca,ff,tax]=await Promise.all([loadRegistry(),loadBrokerTop(),loadCohortTop(),loadSuspensions(),loadCorpActions(),loadFreeFloat(),loadTaxonomy()]);
+const feedHashes=stored.manifest.feedHashes;
+const feeds={brokerTop:bt?.data??null,cohortTop:ct?.data??null,suspensionsBySymbol:indexBySymbol(susp?.data??[]),corpActionsBySymbol:indexBySymbol(ca?.data??[]),freeFloat:new Map((ff?.rows??[]).filter(r=>r.freeFloat!==null).map(r=>[r.symbol,r.freeFloat!])),feedHashes:feedHashes??{}};
+const caps=new Map((tax?.rows??[]).filter(r=>r.marketCap&&r.marketCap>0).map(r=>[r.symbol,r.marketCap!]));
+const cohorts=cohortsFromRegistry(registry?.data??[]); const asOf=stored.manifest.asOf;
+const replay=buildDerived(source,asOf,cohorts,feeds,caps);
+const withoutCaps=buildDerived(source,asOf,cohorts,feeds);
+const noInstit=buildDerived({...source,insider:source.insider.filter(r=>r.holderType==='insider')},asOf,cohorts,feeds,caps);
+const noOverlay=buildDerived(source,asOf,cohorts,{...feeds,brokerTop:null,cohortTop:null},caps);
+const json=(x:any)=>JSON.stringify(x);
+const changes=(a:any[],b:any[])=>a.flatMap((r,i)=>r.score!==b[i]?.score?[{symbol:r.symbol,before:r.score,after:b[i]?.score}]:[]);
+const holderTypeCounts=source.insider.reduce((o,r)=>(o[r.holderType]=(o[r.holderType]??0)+1,o),{} as Record<string,number>);
+const capFallback=stored.exitWatch.flatMap(r=>{const p=source.price.filter(p=>p.symbol===r.symbol&&p.date<=asOf&&p.marketCap&&p.marketCap>0).sort((a,b)=>a.date.localeCompare(b.date));return !p.length&&r.components.some(c=>c.raw!==null)?[{symbol:r.symbol,score:r.score,cap:caps.get(r.symbol)}]:[];});
+const staleHolder=stored.scores.flatMap(r=>{const c=r.components.retailExodusZ;return c.status==='available'&&c.observedTo&&c.observedTo<'2026-08-31'?[{symbol:r.symbol,score:r.score,observedTo:c.observedTo,raw:c.raw}]:[];});
+const suspended=stored.exitWatch.filter(r=>r.flags.suspended).map(r=>({symbol:r.symbol,score:r.score,coverage:r.coverage,suspensions:susp?.data.filter(s=>s.symbol===r.symbol),windowPrice:source.price.filter(p=>p.symbol===r.symbol&&p.date>=r.window.from&&p.date<=asOf).map(p=>({date:p.date,volume:p.volume,kind:p.observationKind})),components:r.components.map(c=>({key:c.key,raw:c.raw,z:c.z}))}));
+const eligible=source.insider.filter(r=>r.txnDate>=new Date(Date.parse(asOf)-89*864e5).toISOString().slice(0,10)&&r.txnDate<=asOf&&r.filedAt.slice(0,10)<=asOf&&r.txnType!=='others');
+const institutionOnly=[...new Set(eligible.map(r=>r.symbol))].filter(s=>eligible.filter(r=>r.symbol===s).every(r=>r.holderType!=='insider')).map(s=>({symbol:s,trades:eligible.filter(r=>r.symbol===s).map(r=>({holderType:r.holderType,holderName:r.holderName,value:r.value,txnType:r.txnType})),exit:stored.exitWatch.find(r=>r.symbol===s)}));
+const badStealth=stored.cases.filter(r=>r.pattern==='STEALTH_ACCUMULATION'&&(r.abnormalFlowZ===null||source.flow.filter(f=>f.symbol===r.symbol&&f.date<r.windowStart).length<5));
+const futureFilings=source.insider.filter(r=>r.txnDate<=asOf&&r.filedAt.slice(0,10)>asOf);
+const kinds=source.price.reduce((o,r)=>(o[r.observationKind??'unset']=(o[r.observationKind??'unset']??0)+1,o),{} as Record<string,number>);
+const rotation=JSON.parse(await readFile('data/sector_rotation.json','utf8'));
+const rotationCoverage=rotation.subsectors.map((r:any)=>({slug:r.slug,date:r.flowDate,observed:r.flowObserved,expected:r.flowExpected,actual:r.members.filter((s:string)=>source.flow.some(f=>f.symbol===s&&f.date===r.flowDate)).length,flow:r.netForeignFlow}));
+const fake=Array.from({length:5},(_,i)=>{const symbol=`F${i}.JK`;return {d:{symbol,insider:[],flow:[{symbol,date:'2026-10-01',netForeignInflow:100*(i+1),foreignBuyIdr:100*(i+1),foreignSellIdr:0}],price:[{symbol,date:'2026-10-01',open:null,high:null,low:null,close:100,volume:null,marketCap:null,observationKind:'close-only'}],broker:[{symbol,date:'2026-10-01',brokerCode:'I',netVal:100*(i+1)},{symbol,date:'2026-10-01',brokerCode:'R',netVal:-100*(i+1)}],holders:[],instBrokers:new Set(['I']),retailBrokers:new Set(['R']),marketCapFallback:10000},brokerTop:null,cohortTop:null,freeFloat:null,suspensions:[],corpActions:[]};});
+const healthy=computeExitWatch(fake as any,'2026-10-01');
+const futureSusp=computeExitWatch(fake.map((r,i)=>i===0?{...r,suspensions:[{symbol:r.d.symbol,suspension_date:'2026-10-08'}]}:r) as any,'2026-10-01');
+const oldSusp=computeExitWatch(fake.map((r,i)=>i===0?{...r,suspensions:[{symbol:r.d.symbol,suspension_date:'2020-01-01'}]}:r) as any,'2026-10-01');
+const staleHolders=computeScoresV2(fake.map((r,i)=>({...r.d,holders:[{symbol:r.d.symbol,month:'2025-01-31',changeInShareholders:i+1,foreign:{mutual_fund_f:1,financial_institutions_f:2,individual_f:1}},{symbol:r.d.symbol,month:'2026-09-30',changeInShareholders:null,foreign:{mutual_fund_f:2,financial_institutions_f:3,individual_f:2}}]})) as any,'2026-10-01');
+const smallSnapshot={...source,tickers:fake.map(r=>({symbol:r.d.symbol,name:'fixture',subSector:null})),insider:[],flow:fake.flatMap(r=>r.d.flow),price:fake.flatMap(r=>r.d.price),broker:fake.flatMap(r=>r.d.broker),holders:[]};
+const cap1=new Map(fake.map(r=>[r.d.symbol,10000])); const cap2=new Map(cap1);cap2.set('F0.JK',1);
+const sameHashA=buildDerived(smallSnapshot as any,'2026-10-01',cohorts,{...feeds,brokerTop:null,cohortTop:null},cap1); const sameHashB=buildDerived(smallSnapshot as any,'2026-10-01',cohorts,{...feeds,brokerTop:null,cohortTop:null},cap2);
+const hashStatus=[];
+for(const [name,expected] of Object.entries(feedHashes??{})){let actual='missing';try{actual=createHash('sha256').update(await readFile(path.join('data',name))).digest('hex')}catch{}hashStatus.push({name,match:actual===expected})}
+const missingVolume={symbol:'F0.JK',date:'2026-01-01',open:null,high:null,low:null,close:100,volume:null,marketCap:null,observationKind:'close-only'};
+const sparseCandidate=detectCandidates('F0.JK',{insider:[{symbol:'F0.JK',holderName:'A',holderType:'insider',txnType:'buy',txnDate:'2026-03-01',filedAt:'2026-03-01',value:1,amount:1,price:1,pctBefore:null,pctAfter:null,clusterHint:null,sourceUrl:null}],flow:[{symbol:'F0.JK',date:'2026-02-01',netForeignInflow:1e15,foreignBuyIdr:1e15,foreignSellIdr:0}],price:[missingVolume]} as any);
+const report={asOf,sourceInputHash:source.manifest.inputHash,storedInputHash:stored.manifest.inputHash,counts:{tickers:source.tickers.length,insider:source.insider.length,flow:source.flow.length,price:source.price.length,broker:source.broker.length,holders:source.holders.length,scores:stored.scores.length,cases:stored.cases.length,exit:stored.exitWatch.length},replayExact:{scores:json(stored.scores)===json(replay.scores),cases:json(stored.cases)===json(replay.cases),exit:json(stored.exitWatch)===json(replay.exitWatch)},hashStatus,capFallback,withoutCapsChanges:{v2:changes(stored.scores,withoutCaps.scores),v3:changes(stored.exitWatch,withoutCaps.exitWatch)},noOverlayChanges:changes(stored.exitWatch,noOverlay.exitWatch),holderTypeCounts,institutionOnly,institutionExclusionChanges:{v2:changes(stored.scores,noInstit.scores),v3:changes(stored.exitWatch,noInstit.exitWatch)},staleHolder,suspended,badStealth,futureFilings,kinds,rotationCoverage,fixtures:{unknownVolumeHealthy:healthy[0],futureSusp:futureSusp[0],oldSusp:oldSusp[0],staleHolder:staleHolders[0],sameInputHashDespiteCapChange:sameHashA.manifest.inputHash===sameHashB.manifest.inputHash,sameFeedHashDespiteCapChange:json(sameHashA.manifest.feedHashes)===json(sameHashB.manifest.feedHashes),changedCapRaw:{before:sameHashA.exitWatch[0].components[1].raw,after:sameHashB.exitWatch[0].components[1].raw},sparseCandidate}};
+await writeFile('C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-data-20261008/domain.json',JSON.stringify(report,null,2));
+console.log(JSON.stringify({asOf,counts:report.counts,replayExact:report.replayExact,hashStatus,capFallback:capFallback.length,capFallbackExamples:capFallback.slice(0,4),withoutCapsV2Changes:report.withoutCapsChanges.v2.length,withoutCapsV3Changes:report.withoutCapsChanges.v3.length,noOverlayChanges:report.noOverlayChanges.length,holderTypeCounts,institutionOnly:institutionOnly.length,institutionOnlyExamples:institutionOnly.slice(0,3),institutionExclusionChanges:{v2:report.institutionExclusionChanges.v2.length,v3:report.institutionExclusionChanges.v3.length},staleHolder,flaggedSuspended:suspended.length,suspended:suspended.slice(0,4),badStealth:badStealth.length,futureFilings:futureFilings.length,kinds,rotationCoverageBad:rotationCoverage.filter((r:any)=>r.observed!==r.actual),fixtures:report.fixtures},null,2));
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});

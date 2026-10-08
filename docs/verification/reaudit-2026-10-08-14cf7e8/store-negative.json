@@ -1,0 +1,54 @@
+{
+  "dates": {
+    "2026-02-31": {
+      "accepted": false,
+      "error": "Error: compute requires --as-of YYYY-MM-DD (a real calendar date)"
+    },
+    "2024-02-29": {
+      "accepted": true,
+      "parsed": {
+        "asOf": "2024-02-29",
+        "outputDir": "data\\derived-v2"
+      }
+    },
+    "2026-04-31": {
+      "accepted": false,
+      "error": "Error: compute requires --as-of YYYY-MM-DD (a real calendar date)"
+    },
+    "today": {
+      "accepted": true,
+      "parsed": {
+        "asOf": "2026-10-08",
+        "outputDir": "data\\derived-v2"
+      }
+    }
+  },
+  "sectors": {
+    "attempted": [
+      "dummy-1",
+      "dummy-3",
+      "dummy-5",
+      "dummy-2",
+      "dummy-4",
+      "dummy-6",
+      "dummy-6"
+    ],
+    "signalPresent": true,
+    "response": {},
+    "budgetRejected": true
+  },
+  "storeBatch": {
+    "reads": 1,
+    "writes": 1,
+    "renames": 1
+  },
+  "storeMissingLookup": {
+    "reads": 3,
+    "writes": 0,
+    "renames": 0
+  },
+  "coreCorrupt": {
+    "refused": true,
+    "bytes": "[{broken]"
+  }
+}

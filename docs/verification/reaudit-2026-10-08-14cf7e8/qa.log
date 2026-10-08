@@ -1,0 +1,39 @@
+dark/home ok  
+dark/suppressed ok  
+dark/radar-v2 ok  
+dark/broker ok  
+dark/broker-inst ok  
+dark/broker-detail ok  
+dark/dossier ok  
+dark/dossier-exit ok  
+dark/cases ok  
+dark/foreign ok  
+dark/rotation ok  
+dark/methodology ok  
+light/home ok  
+light/suppressed ok  
+light/radar-v2 ok  
+light/broker ok  
+light/broker-inst ok  
+light/broker-detail ok  
+light/dossier ok  
+light/dossier-exit ok  
+light/cases ok  
+light/foreign ok  
+light/rotation ok  
+light/methodology ok  
+dark-mobile/home ok  
+dark-mobile/suppressed ok  
+dark-mobile/radar-v2 ok  
+dark-mobile/broker ok  CLIP:table.w-full text-sm right=407 | thead. right=407 | tr.text-left text-[10px] uppercase tracking-wider fai right=407 | th.py-2 text-right font-medium right=407 | tbody.mono text-xs right=407 | tr.row-hover border-b border-line/60 right=407
+dark-mobile/broker-inst ok  CLIP:table.w-full text-sm right=407 | thead. right=407 | tr.text-left text-[10px] uppercase tracking-wider fai right=407 | th.py-2 text-right font-medium right=407 | tbody.mono text-xs right=407 | tr.row-hover border-b border-line/60 right=407
+dark-mobile/broker-detail ok  
+dark-mobile/dossier OVERFLOW 451  
+dark-mobile/dossier-exit OVERFLOW 412  
+dark-mobile/cases ok  
+dark-mobile/foreign ok  
+dark-mobile/rotation ok  
+dark-mobile/methodology ok  
+QA FAILED — 2 failure(s):
+  - dark-mobile/dossier: horizontal overflow 451px
+  - dark-mobile/dossier-exit: horizontal overflow 412px

@@ -1,0 +1,32 @@
+{
+  "before": {
+    "width": 412,
+    "hosts": [
+      {
+        "text": "cov 0.75",
+        "tag": "SPAN",
+        "cls": "faint text-[10px]",
+        "tip": "Share of component weight backed by usable evidence.",
+        "opacity": "0",
+        "left": "0px",
+        "right": "-263.609px",
+        "width": "300px",
+        "hostLeft": 60.609375,
+        "tipRight": 360.609375
+      },
+      {
+        "text": "Chandra Adisusanto",
+        "tag": "SPAN",
+        "cls": "tag",
+        "tip": "Reported holder · no ownership-transaction dossier in the snapshot",
+        "opacity": "0",
+        "left": "0px",
+        "right": "-169.188px",
+        "width": "300px",
+        "hostLeft": 110.609375,
+        "tipRight": 410.609375
+      }
+    ]
+  },
+  "noPseudo": 360
+}

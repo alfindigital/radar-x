@@ -1,0 +1,1722 @@
+[
+  {
+    "touch": false,
+    "theme": "dark",
+    "data": {
+      "inner": 360,
+      "doc": 451,
+      "body": 451,
+      "visual": 360,
+      "hits": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full text-xs",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource2024-12-09Alamtri Resources Indonesia · inst",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 130.65625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2952.625,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line text-left text-[10px] uppercase tracking-wider faint",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium",
+          "text": "Type",
+          "rect": {
+            "x": 345.75,
+            "y": 2821.96875,
+            "width": 40.8125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 386.5625,
+            "bottom": 2865.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Shares",
+          "rect": {
+            "x": 386.5625,
+            "y": 2821.96875,
+            "width": 56.65625,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 443.21875,
+            "bottom": 2865.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Price",
+          "rect": {
+            "x": 443.21875,
+            "y": 2821.96875,
+            "width": 48,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 491.21875,
+            "bottom": 2865.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Value",
+          "rect": {
+            "x": 491.21875,
+            "y": 2821.96875,
+            "width": 69.609375,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TBODY",
+          "cls": "mono",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open2025-10-16Alam",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 87,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2952.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 29,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2894.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "faint",
+          "text": " · institution",
+          "rect": {
+            "x": 300.15625,
+            "y": 2871.625,
+            "width": 100.8125,
+            "height": 16,
+            "top": 2871.625,
+            "right": 400.96875,
+            "bottom": 2887.625,
+            "left": 300.15625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3",
+          "text": "SELL",
+          "rect": {
+            "x": 345.75,
+            "y": 2865.125,
+            "width": 40.8125,
+            "height": 29,
+            "top": 2865.125,
+            "right": 386.5625,
+            "bottom": 2894.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "dist",
+          "text": "SELL",
+          "rect": {
+            "x": 345.75,
+            "y": 2871.625,
+            "width": 28.8125,
+            "height": 16,
+            "top": 2871.625,
+            "right": 374.5625,
+            "bottom": 2887.625,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "5.81B",
+          "rect": {
+            "x": 386.5625,
+            "y": 2865.125,
+            "width": 56.65625,
+            "height": 29,
+            "top": 2865.125,
+            "right": 443.21875,
+            "bottom": 2894.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "5,960",
+          "rect": {
+            "x": 443.21875,
+            "y": 2865.125,
+            "width": 48,
+            "height": 29,
+            "top": 2865.125,
+            "right": 491.21875,
+            "bottom": 2894.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp34.6T",
+          "rect": {
+            "x": 491.21875,
+            "y": 2865.125,
+            "width": 69.609375,
+            "height": 29,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2894.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2025-10-16Alamtri Resources Indonesia · insiderBUY231.0M1,435Rp331.5B2025-10-17Open",
+          "rect": {
+            "x": 16,
+            "y": 2894.125,
+            "width": 544.828125,
+            "height": 29,
+            "top": 2894.125,
+            "right": 560.828125,
+            "bottom": 2923.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "faint",
+          "text": " · insider",
+          "rect": {
+            "x": 300.15625,
+            "y": 2900.625,
+            "width": 72.015625,
+            "height": 16,
+            "top": 2900.625,
+            "right": 372.171875,
+            "bottom": 2916.625,
+            "left": 300.15625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2894.125,
+            "width": 40.8125,
+            "height": 29,
+            "top": 2894.125,
+            "right": 386.5625,
+            "bottom": 2923.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "acc",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2900.625,
+            "width": 21.609375,
+            "height": 16,
+            "top": 2900.625,
+            "right": 367.359375,
+            "bottom": 2916.625,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "231.0M",
+          "rect": {
+            "x": 386.5625,
+            "y": 2894.125,
+            "width": 56.65625,
+            "height": 29,
+            "top": 2894.125,
+            "right": 443.21875,
+            "bottom": 2923.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "1,435",
+          "rect": {
+            "x": 443.21875,
+            "y": 2894.125,
+            "width": 48,
+            "height": 29,
+            "top": 2894.125,
+            "right": 491.21875,
+            "bottom": 2923.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp331.5B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2894.125,
+            "width": 69.609375,
+            "height": 29,
+            "top": 2894.125,
+            "right": 560.828125,
+            "bottom": 2923.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2026-05-21Triputra Investindo Arya · institutionBUY20.5M2,219Rp45.4B2026-05-25Open",
+          "rect": {
+            "x": 16,
+            "y": 2923.125,
+            "width": 544.828125,
+            "height": 29,
+            "top": 2923.125,
+            "right": 560.828125,
+            "bottom": 2952.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "faint",
+          "text": " · institution",
+          "rect": {
+            "x": 278.5625,
+            "y": 2929.625,
+            "width": 100.8125,
+            "height": 16,
+            "top": 2929.625,
+            "right": 379.375,
+            "bottom": 2945.625,
+            "left": 278.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2923.125,
+            "width": 40.8125,
+            "height": 29,
+            "top": 2923.125,
+            "right": 386.5625,
+            "bottom": 2952.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "acc",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2929.625,
+            "width": 21.609375,
+            "height": 16,
+            "top": 2929.625,
+            "right": 367.359375,
+            "bottom": 2945.625,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "20.5M",
+          "rect": {
+            "x": 386.5625,
+            "y": 2923.125,
+            "width": 56.65625,
+            "height": 29,
+            "top": 2923.125,
+            "right": 443.21875,
+            "bottom": 2952.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "2,219",
+          "rect": {
+            "x": 443.21875,
+            "y": 2923.125,
+            "width": 48,
+            "height": 29,
+            "top": 2923.125,
+            "right": 491.21875,
+            "bottom": 2952.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp45.4B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2923.125,
+            "width": 69.609375,
+            "height": 29,
+            "top": 2923.125,
+            "right": 560.828125,
+            "bottom": 2952.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        }
+      ]
+    }
+  },
+  {
+    "touch": false,
+    "theme": "light",
+    "data": {
+      "inner": 360,
+      "doc": 451,
+      "body": 451,
+      "visual": 360,
+      "hits": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full text-xs",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource2024-12-09Alamtri Resources Indonesia · inst",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 130.65625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2952.625,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line text-left text-[10px] uppercase tracking-wider faint",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium",
+          "text": "Type",
+          "rect": {
+            "x": 345.75,
+            "y": 2821.96875,
+            "width": 40.8125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 386.5625,
+            "bottom": 2865.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Shares",
+          "rect": {
+            "x": 386.5625,
+            "y": 2821.96875,
+            "width": 56.65625,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 443.21875,
+            "bottom": 2865.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Price",
+          "rect": {
+            "x": 443.21875,
+            "y": 2821.96875,
+            "width": 48,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 491.21875,
+            "bottom": 2865.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Value",
+          "rect": {
+            "x": 491.21875,
+            "y": 2821.96875,
+            "width": 69.609375,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TBODY",
+          "cls": "mono",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open2025-10-16Alam",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 87,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2952.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 29,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2894.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "faint",
+          "text": " · institution",
+          "rect": {
+            "x": 300.15625,
+            "y": 2871.625,
+            "width": 100.8125,
+            "height": 16,
+            "top": 2871.625,
+            "right": 400.96875,
+            "bottom": 2887.625,
+            "left": 300.15625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3",
+          "text": "SELL",
+          "rect": {
+            "x": 345.75,
+            "y": 2865.125,
+            "width": 40.8125,
+            "height": 29,
+            "top": 2865.125,
+            "right": 386.5625,
+            "bottom": 2894.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "dist",
+          "text": "SELL",
+          "rect": {
+            "x": 345.75,
+            "y": 2871.625,
+            "width": 28.8125,
+            "height": 16,
+            "top": 2871.625,
+            "right": 374.5625,
+            "bottom": 2887.625,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "5.81B",
+          "rect": {
+            "x": 386.5625,
+            "y": 2865.125,
+            "width": 56.65625,
+            "height": 29,
+            "top": 2865.125,
+            "right": 443.21875,
+            "bottom": 2894.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "5,960",
+          "rect": {
+            "x": 443.21875,
+            "y": 2865.125,
+            "width": 48,
+            "height": 29,
+            "top": 2865.125,
+            "right": 491.21875,
+            "bottom": 2894.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp34.6T",
+          "rect": {
+            "x": 491.21875,
+            "y": 2865.125,
+            "width": 69.609375,
+            "height": 29,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2894.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2025-10-16Alamtri Resources Indonesia · insiderBUY231.0M1,435Rp331.5B2025-10-17Open",
+          "rect": {
+            "x": 16,
+            "y": 2894.125,
+            "width": 544.828125,
+            "height": 29,
+            "top": 2894.125,
+            "right": 560.828125,
+            "bottom": 2923.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "faint",
+          "text": " · insider",
+          "rect": {
+            "x": 300.15625,
+            "y": 2900.625,
+            "width": 72.015625,
+            "height": 16,
+            "top": 2900.625,
+            "right": 372.171875,
+            "bottom": 2916.625,
+            "left": 300.15625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2894.125,
+            "width": 40.8125,
+            "height": 29,
+            "top": 2894.125,
+            "right": 386.5625,
+            "bottom": 2923.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "acc",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2900.625,
+            "width": 21.609375,
+            "height": 16,
+            "top": 2900.625,
+            "right": 367.359375,
+            "bottom": 2916.625,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "231.0M",
+          "rect": {
+            "x": 386.5625,
+            "y": 2894.125,
+            "width": 56.65625,
+            "height": 29,
+            "top": 2894.125,
+            "right": 443.21875,
+            "bottom": 2923.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "1,435",
+          "rect": {
+            "x": 443.21875,
+            "y": 2894.125,
+            "width": 48,
+            "height": 29,
+            "top": 2894.125,
+            "right": 491.21875,
+            "bottom": 2923.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp331.5B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2894.125,
+            "width": 69.609375,
+            "height": 29,
+            "top": 2894.125,
+            "right": 560.828125,
+            "bottom": 2923.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2026-05-21Triputra Investindo Arya · institutionBUY20.5M2,219Rp45.4B2026-05-25Open",
+          "rect": {
+            "x": 16,
+            "y": 2923.125,
+            "width": 544.828125,
+            "height": 29,
+            "top": 2923.125,
+            "right": 560.828125,
+            "bottom": 2952.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "faint",
+          "text": " · institution",
+          "rect": {
+            "x": 278.5625,
+            "y": 2929.625,
+            "width": 100.8125,
+            "height": 16,
+            "top": 2929.625,
+            "right": 379.375,
+            "bottom": 2945.625,
+            "left": 278.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2923.125,
+            "width": 40.8125,
+            "height": 29,
+            "top": 2923.125,
+            "right": 386.5625,
+            "bottom": 2952.125,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "acc",
+          "text": "BUY",
+          "rect": {
+            "x": 345.75,
+            "y": 2929.625,
+            "width": 21.609375,
+            "height": 16,
+            "top": 2929.625,
+            "right": 367.359375,
+            "bottom": 2945.625,
+            "left": 345.75
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "20.5M",
+          "rect": {
+            "x": 386.5625,
+            "y": 2923.125,
+            "width": 56.65625,
+            "height": 29,
+            "top": 2923.125,
+            "right": 443.21875,
+            "bottom": 2952.125,
+            "left": 386.5625
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "2,219",
+          "rect": {
+            "x": 443.21875,
+            "y": 2923.125,
+            "width": 48,
+            "height": 29,
+            "top": 2923.125,
+            "right": 491.21875,
+            "bottom": 2952.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp45.4B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2923.125,
+            "width": 69.609375,
+            "height": 29,
+            "top": 2923.125,
+            "right": 560.828125,
+            "bottom": 2952.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        }
+      ]
+    }
+  },
+  {
+    "touch": true,
+    "theme": "dark",
+    "data": {
+      "inner": 451,
+      "doc": 451,
+      "body": 451,
+      "visual": 360,
+      "hits": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full text-xs",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource2024-12-09Alamtri Resources Indonesia · inst",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 190.65625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 3012.625,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line text-left text-[10px] uppercase tracking-wider faint",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Price",
+          "rect": {
+            "x": 443.21875,
+            "y": 2821.96875,
+            "width": 48,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 491.21875,
+            "bottom": 2865.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Value",
+          "rect": {
+            "x": 491.21875,
+            "y": 2821.96875,
+            "width": 69.609375,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TBODY",
+          "cls": "mono",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open2025-10-16Alam",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 147,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 3012.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 49,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2914.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "5,960",
+          "rect": {
+            "x": 443.21875,
+            "y": 2865.125,
+            "width": 48,
+            "height": 49,
+            "top": 2865.125,
+            "right": 491.21875,
+            "bottom": 2914.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp34.6T",
+          "rect": {
+            "x": 491.21875,
+            "y": 2865.125,
+            "width": 69.609375,
+            "height": 49,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2914.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2025-10-16Alamtri Resources Indonesia · insiderBUY231.0M1,435Rp331.5B2025-10-17Open",
+          "rect": {
+            "x": 16,
+            "y": 2914.125,
+            "width": 544.828125,
+            "height": 49,
+            "top": 2914.125,
+            "right": 560.828125,
+            "bottom": 2963.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "1,435",
+          "rect": {
+            "x": 443.21875,
+            "y": 2914.125,
+            "width": 48,
+            "height": 49,
+            "top": 2914.125,
+            "right": 491.21875,
+            "bottom": 2963.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp331.5B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2914.125,
+            "width": 69.609375,
+            "height": 49,
+            "top": 2914.125,
+            "right": 560.828125,
+            "bottom": 2963.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2026-05-21Triputra Investindo Arya · institutionBUY20.5M2,219Rp45.4B2026-05-25Open",
+          "rect": {
+            "x": 16,
+            "y": 2963.125,
+            "width": 544.828125,
+            "height": 49,
+            "top": 2963.125,
+            "right": 560.828125,
+            "bottom": 3012.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "2,219",
+          "rect": {
+            "x": 443.21875,
+            "y": 2963.125,
+            "width": 48,
+            "height": 49,
+            "top": 2963.125,
+            "right": 491.21875,
+            "bottom": 3012.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp45.4B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2963.125,
+            "width": 69.609375,
+            "height": 49,
+            "top": 2963.125,
+            "right": 560.828125,
+            "bottom": 3012.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        }
+      ]
+    }
+  },
+  {
+    "touch": true,
+    "theme": "light",
+    "data": {
+      "inner": 451,
+      "doc": 451,
+      "body": 451,
+      "visual": 360,
+      "hits": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full text-xs",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource2024-12-09Alamtri Resources Indonesia · inst",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 190.65625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 3012.625,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line text-left text-[10px] uppercase tracking-wider faint",
+          "text": "Transaction dateHolderTypeSharesPriceValueFiled atSource",
+          "rect": {
+            "x": 16,
+            "y": 2821.96875,
+            "width": 544.828125,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Price",
+          "rect": {
+            "x": 443.21875,
+            "y": 2821.96875,
+            "width": 48,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 491.21875,
+            "bottom": 2865.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TH",
+          "cls": "py-2 pr-3 font-medium text-right",
+          "text": "Value",
+          "rect": {
+            "x": 491.21875,
+            "y": 2821.96875,
+            "width": 69.609375,
+            "height": 43.15625,
+            "top": 2821.96875,
+            "right": 560.828125,
+            "bottom": 2865.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TBODY",
+          "cls": "mono",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open2025-10-16Alam",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 147,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 3012.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2024-12-09Alamtri Resources Indonesia · institutionSELL5.81B5,960Rp34.6T2024-12-13Open",
+          "rect": {
+            "x": 16,
+            "y": 2865.125,
+            "width": 544.828125,
+            "height": 49,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2914.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "5,960",
+          "rect": {
+            "x": 443.21875,
+            "y": 2865.125,
+            "width": 48,
+            "height": 49,
+            "top": 2865.125,
+            "right": 491.21875,
+            "bottom": 2914.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp34.6T",
+          "rect": {
+            "x": 491.21875,
+            "y": 2865.125,
+            "width": 69.609375,
+            "height": 49,
+            "top": 2865.125,
+            "right": 560.828125,
+            "bottom": 2914.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2025-10-16Alamtri Resources Indonesia · insiderBUY231.0M1,435Rp331.5B2025-10-17Open",
+          "rect": {
+            "x": 16,
+            "y": 2914.125,
+            "width": 544.828125,
+            "height": 49,
+            "top": 2914.125,
+            "right": 560.828125,
+            "bottom": 2963.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "1,435",
+          "rect": {
+            "x": 443.21875,
+            "y": 2914.125,
+            "width": 48,
+            "height": 49,
+            "top": 2914.125,
+            "right": 491.21875,
+            "bottom": 2963.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp331.5B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2914.125,
+            "width": 69.609375,
+            "height": 49,
+            "top": 2914.125,
+            "right": 560.828125,
+            "bottom": 2963.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TR",
+          "cls": "border-b border-line/40",
+          "text": "2026-05-21Triputra Investindo Arya · institutionBUY20.5M2,219Rp45.4B2026-05-25Open",
+          "rect": {
+            "x": 16,
+            "y": 2963.125,
+            "width": 544.828125,
+            "height": 49,
+            "top": 2963.125,
+            "right": 560.828125,
+            "bottom": 3012.125,
+            "left": 16
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right faint",
+          "text": "2,219",
+          "rect": {
+            "x": 443.21875,
+            "y": 2963.125,
+            "width": 48,
+            "height": 49,
+            "top": 2963.125,
+            "right": 491.21875,
+            "bottom": 3012.125,
+            "left": 443.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        },
+        {
+          "tag": "TD",
+          "cls": "py-1.5 pr-3 text-right",
+          "text": "Rp45.4B",
+          "rect": {
+            "x": 491.21875,
+            "y": 2963.125,
+            "width": 69.609375,
+            "height": 49,
+            "top": 2963.125,
+            "right": 560.828125,
+            "bottom": 3012.125,
+            "left": 491.21875
+          },
+          "overflowX": "visible",
+          "position": "static",
+          "minWidth": "0px",
+          "maxWidth": "none"
+        }
+      ]
+    }
+  }
+]

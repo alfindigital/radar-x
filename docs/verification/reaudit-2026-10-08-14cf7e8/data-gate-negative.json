@@ -1,0 +1,70 @@
+[
+  {
+    "name": "missing-all",
+    "exit": 1,
+    "status": "failed",
+    "failures": [
+      "required file missing: data/tickers.json",
+      "required file missing: data/insider_trades.json",
+      "required file missing: data/flow_daily.json",
+      "required file missing: data/price_daily.json",
+      "required file missing: data/broker_rows.json",
+      "required file missing: data/holders_monthly.json",
+      "data/derived-v2/manifest.json missing or unreadable"
+    ],
+    "totals": {
+      "rows": 0,
+      "missingFiles": 6,
+      "duplicateRows": 0,
+      "missingSourceRows": 0,
+      "transactionFeedLagRows": 0,
+      "suspiciousZeroVolumeRows": 0
+    },
+    "stderr": "audit:data FAILED — 7 gate failure(s)\n"
+  },
+  {
+    "name": "raw-changed-after-manifest",
+    "exit": 0,
+    "status": "ok",
+    "failures": [],
+    "totals": {
+      "rows": 6,
+      "missingFiles": 0,
+      "duplicateRows": 0,
+      "missingSourceRows": 0,
+      "transactionFeedLagRows": 0,
+      "suspiciousZeroVolumeRows": 0
+    },
+    "stderr": ""
+  },
+  {
+    "name": "duplicate-broker-row",
+    "exit": 0,
+    "status": "ok",
+    "failures": [],
+    "totals": {
+      "rows": 7,
+      "missingFiles": 0,
+      "duplicateRows": 1,
+      "missingSourceRows": 0,
+      "transactionFeedLagRows": 0,
+      "suspiciousZeroVolumeRows": 0
+    },
+    "stderr": ""
+  },
+  {
+    "name": "manifest-omits-required-cases-exitwatch",
+    "exit": 0,
+    "status": "ok",
+    "failures": [],
+    "totals": {
+      "rows": 6,
+      "missingFiles": 0,
+      "duplicateRows": 0,
+      "missingSourceRows": 0,
+      "transactionFeedLagRows": 0,
+      "suspiciousZeroVolumeRows": 0
+    },
+    "stderr": ""
+  }
+]

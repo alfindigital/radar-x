@@ -1,0 +1,9 @@
+import { readFile,writeFile } from 'node:fs/promises';
+import { detectCandidates } from 'C:/Users/GEEKOM A8/Documents/Apps/radar-x-hackaton/src/lib/cases.ts';
+async function main(){
+const rows=JSON.parse(await readFile('data/insider_trades.json','utf8')).filter((r:any)=>r.txnDate<='2026-10-08'&&r.filedAt.slice(0,10)<='2026-10-08'&&['buy','sell'].includes(r.txnType));
+const byKey=new Map<string,any[]>();for(const r of rows){const k=`${r.symbol}|${r.txnDate}`;if(!byKey.has(k))byKey.set(k,[]);byKey.get(k)!.push(r)}
+const events=[];for(const [k,rs] of byKey){for(const dir of ['buy','sell']){const names=[...new Set(rs.filter(r=>r.txnType===dir).map(r=>r.holderName))];if(names.length>=3&&rs.some(r=>r.txnType!==dir))events.push({key:k,symbol:rs[0].symbol,date:rs[0].txnDate,dir,names,opposing:rs.filter(r=>r.txnType!==dir).map(r=>r.holderName)})}}
+const results=[];for(const e of events){const insider=rows.filter((r:any)=>r.symbol===e.symbol);const current=detectCandidates(e.symbol,{insider,flow:[],price:[]});const altered=detectCandidates(e.symbol,{insider:insider.map((r:any)=>r.txnDate===e.date&&r.txnType!==e.dir?{...r,holderName:`ZZZ ${r.holderName}`}:r),flow:[],price:[]});const direction=e.dir==='buy'?'accumulate':'distribute';const selected=(xs:any[])=>xs.filter(r=>r.pattern==='CLUSTER_PATTERN'&&r.direction===direction&&r.anchorDate===e.date).map(r=>({id:r.id,holders:r.holders}));const a=selected(current),b=selected(altered);results.push({...e,current:a,renamedOppositeOnly:b,changed:a.length!==b.length})}
+const out={eventCount:events.length,changed:results.filter(r=>r.changed),all:results};await writeFile('C:/Users/GEEKOM A8/AppData/Local/Temp/radarx-reaudit-data-20261008/cluster-impact.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));
+}main().catch(e=>{console.error(e);process.exitCode=1});
