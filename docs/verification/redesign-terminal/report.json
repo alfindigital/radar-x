@@ -366,7 +366,7 @@
       "route": "/stock/ADRO",
       "status": 200,
       "overflow": {
-        "scrollW": 393,
+        "scrollW": 360,
         "clientW": 360,
         "off": []
       },
@@ -378,7 +378,7 @@
       "route": "/stock/PNLF",
       "status": 200,
       "overflow": {
-        "scrollW": 381,
+        "scrollW": 360,
         "clientW": 360,
         "off": []
       },
@@ -433,8 +433,5 @@
       "errors": []
     }
   ],
-  "failures": [
-    "dark-mobile/dossier: horizontal overflow 393px",
-    "dark-mobile/dossier-exit: horizontal overflow 381px"
-  ]
+  "failures": []
 }
