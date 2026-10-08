@@ -158,7 +158,13 @@ async function missing(kind: "flow" | "price" | "holders" | "broker", syms: stri
 
 async function ingestFlows() {
   const limit = Number(flag("limit", "200"));
-  const wl = await missing("flow", (await watchlist()).slice(0, limit));
+  const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
+  let wl = await missing("flow", base);
+  // Thinnest history first — a bounded --limit then maximizes backfill value
+  // instead of re-fetching the same watchlist head on every run.
+  const depth = new Map<string, number>();
+  for (const r of await store.listFlowUniverse()) depth.set(r.symbol, (depth.get(r.symbol) ?? 0) + 1);
+  wl = wl.sort((a, b) => (depth.get(a) ?? 0) - (depth.get(b) ?? 0)).slice(0, limit);
   let rows = 0;
   let calls = 0;
   tallyReset();
@@ -186,7 +192,16 @@ async function ingestFlows() {
 
 async function ingestPrices() {
   const limit = Number(flag("limit", "200"));
-  const wl = await missing("price", (await watchlist()).slice(0, limit));
+  const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
+  let wl = await missing("price", base);
+  // Symbols with no/fewest OHLCV observations first — close-only universe rows
+  // (observationKind absent here) count as zero depth.
+  const depth = new Map<string, number>();
+  try {
+    const stored = JSON.parse(readFileSync(path.join(process.cwd(), "data", "price_daily.json"), "utf8")) as { symbol: string; observationKind?: string }[];
+    for (const r of stored) if (r.observationKind === "ohlcv") depth.set(r.symbol, (depth.get(r.symbol) ?? 0) + 1);
+  } catch { /* empty store — every symbol is depth 0 */ }
+  wl = wl.sort((a, b) => (depth.get(a) ?? 0) - (depth.get(b) ?? 0)).slice(0, limit);
   let rows = 0;
   let calls = 0;
   tallyReset();
@@ -240,12 +255,13 @@ async function ingestHolders() {
   const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
   const wl = (await missing("holders", base)).slice(0, limit);
   const batch: HoldersMonthly[] = [];
+  const year = flag("year"); // e.g. --year 2025 backfills a prior calendar year
   let calls = 0;
   tallyReset();
   for (let i = 0; i < wl.length; i++) {
     const sym = wl[i];
     try {
-      const res = await api.shareholdersComposition(sym);
+      const res = await api.shareholdersComposition(sym, year ? { year: Number(year) } : {});
       calls++;
       tally.ok++;
       batch.push(
@@ -285,7 +301,19 @@ async function ingestHolders() {
 async function ingestBroker() {
   const limit = Number(flag("limit", "40"));
   const base = args.includes("--universe") ? await scopeUniverse() : await watchlist();
-  const wl = (await missing("broker", base)).slice(0, limit);
+  let wl = await missing("broker", base);
+  // Stalest-first: symbols with no rows or the oldest last-date refresh first,
+  // so a daily --limit rotates the whole universe instead of re-reading the
+  // same head of the list every run.
+  const last = new Map<string, string>();
+  try {
+    const stored = JSON.parse(readFileSync(path.join(process.cwd(), "data", "broker_rows.json"), "utf8")) as { symbol: string; date: string }[];
+    for (const r of stored) {
+      const m = last.get(r.symbol);
+      if (!m || r.date > m) last.set(r.symbol, r.date);
+    }
+  } catch { /* empty store — all equally stale */ }
+  wl = wl.sort((a, b) => (last.get(a) ?? "").localeCompare(last.get(b) ?? "")).slice(0, limit);
   const batch = new Map<string, BrokerSummaryRow[]>();
   let rows = 0;
   let calls = 0;
@@ -331,7 +359,7 @@ async function ingestBroker() {
 }
 
 async function ingestIndex() {
-  const start = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
+  const start = flag("from") ?? new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
   const res = await api.indexDailyRange("ihsg", { start });
   // The index endpoint returns a single price per day — a close-only
   // observation, not a fabricated OHLC.
@@ -347,9 +375,46 @@ async function ingestIndex() {
     observationKind: "close-only" as const,
     fieldSources: { close: "sectors-close" as const },
   }));
+  let calls = 1;
   const n = await store.upsertPriceDaily(mapped);
-  await store.log("ingest_index", 1, n, "ok");
   console.log(`index ihsg: ${n} rows`);
+
+  // --all: merge every index's range into index_daily.json (dedupe by
+  // code|date) so the history accretes instead of being bounded by whatever
+  // window the last `boards` full run happened to fetch.
+  if (args.includes("--all")) {
+    const idxFile = path.join(process.cwd(), "data", "index_daily.json");
+    let art: { rows: { indexCode: string; date: string; price: number }[]; asOf?: string | null } & Record<string, unknown> = {
+      schemaVersion: 1, engineVersion: "radarx-v2", source: "sectors", asOf: null, generatedAt: "", rows: [],
+    };
+    try { art = JSON.parse(readFileSync(idxFile, "utf8")); } catch { /* first run */ }
+    const have = new Set(art.rows.map((r) => `${r.indexCode}|${r.date}`));
+    const idxLatest = await api.indexDailyAll();
+    calls++;
+    const codes = [...new Set(idxLatest.map((r) => r.index_code.toLowerCase().replace(/[^a-z0-9]/g, "")))];
+    let added = 0;
+    for (const code of codes) {
+      try {
+        const rows = await api.indexDailyRange(code, { start });
+        calls++;
+        for (const r of rows) {
+          const key = `${r.index_code}|${r.date}`;
+          if (have.has(key)) continue;
+          have.add(key);
+          art.rows.push({ indexCode: r.index_code, date: r.date, price: r.price });
+          added++;
+        }
+      } catch (e) {
+        calls++;
+        console.warn(`index ${code}: ${e instanceof Error ? e.message : e}`);
+      }
+    }
+    art.asOf = art.rows.map((r) => r.date).sort().at(-1) ?? art.asOf;
+    art.generatedAt = new Date().toISOString();
+    await writeFile(idxFile, JSON.stringify(art));
+    console.log(`index --all: +${added} rows across ${codes.length} indices (${art.rows.length} total)`);
+  }
+  await store.log("ingest_index", calls, n, "ok");
 }
 
 // Full-universe refresh: /v2/close/ + /v2/foreign-flow/ per trading day.
@@ -1156,6 +1221,36 @@ async function ingestSegments() {
   await ingestPerSymbol("segments", "segments.json", (sym) => api.segments(sym), syms);
 }
 
+// /v2/news/ — market-news snapshot, accreted by timestamp+title so a daily
+// run builds a searchable archive. ~1-2 calls per run; the endpoint is
+// snapshot-only (no date params), so history is captured going forward.
+async function ingestNews() {
+  const dir = (f: string) => path.join(process.cwd(), "data", f);
+  const now = new Date().toISOString();
+  let art: { items: Record<string, unknown>[]; asOf?: string | null } & Record<string, unknown> = {
+    schemaVersion: 1, engineVersion: "radarx-v2", source: "sectors", asOf: null, generatedAt: "", items: [],
+  };
+  try { art = JSON.parse(readFileSync(dir("news.json"), "utf8")); } catch { /* first run */ }
+  const res = await api.news({ limit: 100 });
+  const items = Array.isArray(res) ? res : (res.results ?? []);
+  const key = (r: { timestamp?: string; title?: string }) => `${r.timestamp}|${r.title}`;
+  const have = new Set(art.items.map((r) => key(r as { timestamp?: string; title?: string })));
+  let added = 0;
+  for (const r of items) {
+    const k = key(r as { timestamp?: string; title?: string });
+    if (have.has(k)) continue;
+    have.add(k);
+    art.items.push(r as unknown as Record<string, unknown>);
+    added++;
+  }
+  const dates = art.items.map((r) => String(r.timestamp ?? "")).filter(Boolean).sort();
+  art.asOf = dates.at(-1)?.slice(0, 10) ?? now.slice(0, 10);
+  art.generatedAt = now;
+  await writeFile(dir("news.json"), JSON.stringify(art));
+  await store.log("ingest_news", 1, art.items.length, "ok");
+  console.log(`news: +${added} items → ${art.items.length} total, latest=${art.asOf}`);
+}
+
 const commands: Record<string, () => Promise<void>> = {
   universe: ingestUniverse,
   rotation: ingestRotation,
@@ -1176,6 +1271,7 @@ const commands: Record<string, () => Promise<void>> = {
   financials: ingestFinancials,
   corpactions: ingestCorpActions,
   segments: ingestSegments,
+  news: ingestNews,
 };
 
 if (!cmd || !commands[cmd]) {

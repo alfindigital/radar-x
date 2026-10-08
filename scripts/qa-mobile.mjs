@@ -15,15 +15,15 @@ const routes = [
   ['broker', '/broker'],
   ['broker-inst', '/broker?cohort=institutional'],
   ['broker-detail', '/broker/XL'],
-  ['dossier', '/saham/ADRO'],
-  ['kasus', '/kasus'],
-  ['asing', '/asing'],
-  ['rotasi', '/rotasi'],
-  ['metodologi', '/metodologi'],
+  ['dossier', '/stock/ADRO'],
+  ['cases', '/cases'],
+  ['foreign', '/foreign'],
+  ['rotation', '/rotation'],
+  ['methodology', '/methodology'],
 ];
 
 const report = [];
-const extraLinks = { kasusDetail: null, rotasiSub: null, orang: null };
+const extraLinks = { caseDetail: null, rotationSub: null, person: null };
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 360, height: 800 }, deviceScaleFactor: 2 });
@@ -72,14 +72,14 @@ async function visit(name, route, { midShot = false } = {}) {
       await page.screenshot({ path: `${OUT}/${name}-mid.png` });
     }
     report.push({ route, name, ms: Date.now() - t0, ...res, consoleErrors: errors });
-    if (name === 'kasus' && !extraLinks.kasusDetail) {
-      extraLinks.kasusDetail = await page.$eval('a[href^="/kasus/"]', (a) => a.getAttribute('href')).catch(() => null);
+    if (name === 'cases' && !extraLinks.caseDetail) {
+      extraLinks.caseDetail = await page.$eval('a[href^="/cases/"]', (a) => a.getAttribute('href')).catch(() => null);
     }
-    if (name === 'rotasi' && !extraLinks.rotasiSub) {
-      extraLinks.rotasiSub = await page.$eval('a[href^="/rotasi/"]', (a) => a.getAttribute('href')).catch(() => null);
+    if (name === 'rotation' && !extraLinks.rotationSub) {
+      extraLinks.rotationSub = await page.$eval('a[href^="/rotation/"]', (a) => a.getAttribute('href')).catch(() => null);
     }
-    if (name === 'dossier' && !extraLinks.orang) {
-      extraLinks.orang = await page.$eval('a[href^="/orang/"]', (a) => a.getAttribute('href')).catch(() => null);
+    if (name === 'dossier' && !extraLinks.person) {
+      extraLinks.person = await page.$eval('a[href^="/person/"]', (a) => a.getAttribute('href')).catch(() => null);
     }
   } catch (e) {
     report.push({ route, name, error: String(e).slice(0, 300), consoleErrors: errors });
@@ -89,9 +89,9 @@ async function visit(name, route, { midShot = false } = {}) {
 for (const [name, route] of routes) {
   await visit(name, route, { midShot: ['home', 'dossier', 'broker', 'suppressed'].includes(name) });
 }
-if (extraLinks.kasusDetail) await visit('kasus-detail', extraLinks.kasusDetail);
-if (extraLinks.rotasiSub) await visit('rotasi-sub', extraLinks.rotasiSub);
-if (extraLinks.orang) await visit('orang', extraLinks.orang);
+if (extraLinks.caseDetail) await visit('case-detail', extraLinks.caseDetail);
+if (extraLinks.rotationSub) await visit('rotation-sub', extraLinks.rotationSub);
+if (extraLinks.person) await visit('person', extraLinks.person);
 
 await browser.close();
 const failures = [];

@@ -33,6 +33,10 @@ export interface SymbolData {
   holders: HoldersMonthly[];
   instBrokers: Set<string>; // broker codes tagged institutional cohort
   retailBrokers: Set<string>; // broker codes tagged retail cohort
+  // Fallback market cap for symbols whose price rows carry none (universe
+  // close-only rows leave marketCap null) — populated from the taxonomy
+  // artifact by buildDerived.
+  marketCapFallback?: number | null;
 }
 
 export interface RawComponents {
@@ -103,10 +107,12 @@ function rawV2(d: SymbolData, key: ComponentKey, asOf: string): RawV2 {
   if (key === "foreignTrend") {
     const rows = d.flow.filter((row) => row.date >= inclusiveStart(asOf, 90) && row.date <= asOf);
     if (!rows.length) return missing("No foreign-flow observations in the 90-day window.");
-    const cap = [...d.price]
-      .filter((row) => row.date <= asOf && Number.isFinite(row.marketCap) && (row.marketCap ?? 0) > 0)
-      .sort((a, b) => a.date.localeCompare(b.date))
-      .at(-1)?.marketCap;
+    const cap =
+      [...d.price]
+        .filter((row) => row.date <= asOf && Number.isFinite(row.marketCap) && (row.marketCap ?? 0) > 0)
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .at(-1)?.marketCap ??
+      (d.marketCapFallback && d.marketCapFallback > 0 ? d.marketCapFallback : undefined);
     if (!cap) return { ...missing("Market capitalization is unavailable for normalization."), observations: rows.length, ...span(rows) };
     const raw = (rows.reduce((sum, row) => sum + row.netForeignInflow, 0) / cap) * 100;
     const dates = span(rows);
@@ -131,8 +137,12 @@ function rawV2(d: SymbolData, key: ComponentKey, asOf: string): RawV2 {
   const previous = holders.at(-2)!;
   const dates = span([previous, current]);
   if (key === "retailExodusZ") {
-    if (!Number.isFinite(current.changeInShareholders)) return { ...missing("Shareholder-count change is invalid."), ...dates, observations: 2 };
-    return { raw: -current.changeInShareholders, reason: null, ...dates, observations: 2 };
+    // The provider can publish a partial latest month (holder-class splits
+    // populated, shareholder count still null) — read the latest month whose
+    // change field is actually reported instead of dropping the component.
+    const reported = [...holders].reverse().find((row) => Number.isFinite(row.changeInShareholders));
+    if (!reported) return { ...missing("Shareholder-count change is invalid."), ...dates, observations: 2 };
+    return { raw: -reported.changeInShareholders, reason: null, ...span([reported]), observations: 1 };
   }
   const currentInstitutional = (current.foreign["mutual_fund_f"] ?? NaN) + (current.foreign["financial_institutions_f"] ?? NaN);
   const previousInstitutional = (previous.foreign["mutual_fund_f"] ?? NaN) + (previous.foreign["financial_institutions_f"] ?? NaN);
@@ -238,7 +248,7 @@ export function rawComponents(d: SymbolData, anchor: string): RawComponents {
     const cum = flow.reduce((s, f) => s + f.netForeignInflow, 0);
     // universe-close rows carry no marketCap — fall back to last row that has one
     const lastPrice = d.price.filter((p) => p.date <= anchor && p.marketCap).at(-1);
-    const cap = lastPrice?.marketCap;
+    const cap = lastPrice?.marketCap ?? (d.marketCapFallback && d.marketCapFallback > 0 ? d.marketCapFallback : undefined);
     foreignCum90dNorm = cap && cap > 0 ? (cum / cap) * 100 : 0; // % of market cap
   }
 

@@ -187,6 +187,63 @@ export function loadMostTraded(dataDir = DATA_DIR): Promise<Feed<{ date: string 
   );
 }
 
+export interface IdxTotalRow {
+  date: string;
+  idx_total_market_cap: number;
+}
+
+export function loadIdxTotal(dataDir = DATA_DIR): Promise<Feed<IdxTotalRow[]> | null> {
+  return readFeed(
+    "idx_total.json",
+    (env) => rowsOf(env) as unknown as IdxTotalRow[],
+    (d) => d.length,
+    dataDir,
+  );
+}
+
+export interface TopChangeEntry {
+  name?: string;
+  symbol: string;
+  price_change?: number;
+  last_close_price?: number;
+}
+
+export interface TopChangesSnapshot {
+  date: string;
+  fetchedAt?: string;
+  topGainers?: Record<string, TopChangeEntry[]>;
+  topLosers?: Record<string, TopChangeEntry[]>;
+}
+
+export function loadTopChanges(dataDir = DATA_DIR): Promise<Feed<TopChangesSnapshot[]> | null> {
+  return readFeed(
+    "top_changes.json",
+    (env) => (Array.isArray(env.snapshots) ? (env.snapshots as TopChangesSnapshot[]) : []),
+    (d) => d.length,
+    dataDir,
+  );
+}
+
+export interface NewsItem {
+  title: string;
+  body?: string;
+  source?: string;
+  timestamp: string;
+  symbol?: string;
+  sector?: string;
+  sub_sector?: string;
+  tags?: string[];
+}
+
+export function loadNews(dataDir = DATA_DIR): Promise<Feed<NewsItem[]> | null> {
+  return readFeed(
+    "news.json",
+    (env) => (Array.isArray(env.items) ? (env.items as NewsItem[]) : []),
+    (d) => d.length,
+    dataDir,
+  );
+}
+
 /** Optional per-cohort top-N overlay written by `npm run ingest -- cohorttop`. */
 export function loadCohortTop(dataDir = DATA_DIR): Promise<Feed<Map<string, CohortTopSymbol>> | null> {
   return readFeed(

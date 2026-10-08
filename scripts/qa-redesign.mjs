@@ -16,12 +16,12 @@ const routes = [
   ['broker', '/broker'],
   ['broker-inst', '/broker?cohort=institutional'],
   ['broker-detail', '/broker/XL'],
-  ['dossier', '/saham/ADRO'],
-  ['dossier-exit', '/saham/PNLF'],
-  ['kasus', '/kasus'],
-  ['asing', '/asing'],
-  ['rotasi', '/rotasi'],
-  ['metodologi', '/metodologi'],
+  ['dossier', '/stock/ADRO'],
+  ['dossier-exit', '/stock/PNLF'],
+  ['cases', '/cases'],
+  ['foreign', '/foreign'],
+  ['rotation', '/rotation'],
+  ['methodology', '/methodology'],
 ];
 
 const browser = await chromium.launch();

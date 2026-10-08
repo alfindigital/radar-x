@@ -499,8 +499,8 @@ export const api = {
   indexDailyRange: (code: string, p: { start?: string; end?: string } = {}) =>
     sectorsGet<{ index_code: string; date: string; price: number }[]>(`/v2/index-daily/${encodeURIComponent(code)}/`, p as Record<string, string | number>),
   brokerSummary: (symbol: string) => sectorsGet<BrokerSummaryResponse>(`/v2/broker-summary/${encodeURIComponent(symbol)}/`),
-  shareholdersComposition: (symbol: string) =>
-    sectorsGet<ShareholdersCompositionResponse>(`/v2/company/shareholders-composition/${encodeURIComponent(symbol)}/`),
+  shareholdersComposition: (symbol: string, p: { year?: number } = {}) =>
+    sectorsGet<ShareholdersCompositionResponse>(`/v2/company/shareholders-composition/${encodeURIComponent(symbol)}/`, p as Record<string, string | number>),
   companies: (p: { limit?: number; offset?: number; where?: string; order_by?: string }) =>
     sectorsGet<CompaniesResponse>("/v2/companies/", p as Record<string, string | number>),
   topChanges: () => sectorsGet<TopChangesResponse>("/v2/companies/top-changes/"),

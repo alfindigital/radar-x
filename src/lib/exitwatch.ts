@@ -76,7 +76,10 @@ function latestCap(d: SymbolData, asOf: string): number | null {
     .filter((row) => row.date <= asOf && Number.isFinite(row.marketCap) && (row.marketCap ?? 0) > 0)
     .sort((a, b) => a.date.localeCompare(b.date))
     .at(-1)?.marketCap;
-  return cap && cap > 0 ? cap : null;
+  if (cap && cap > 0) return cap;
+  // Close-only coverage carries no marketCap — fall back to the taxonomy cap
+  // so normalization still works for those symbols.
+  return d.marketCapFallback && d.marketCapFallback > 0 ? d.marketCapFallback : null;
 }
 
 interface RawResult {
@@ -107,7 +110,7 @@ function aggregateMatchesWindow(start: string | undefined, end: string | undefin
 }
 
 function aggregateContextNote(start: string | undefined, end: string | undefined): string {
-  return `top-N aggregate covers ${start || "?"}→${end || "?"} (outside the ${WINDOW_DAYS}d window) — kept as context, not scored`;
+  return `top-N aggregate covers ${start || "?"}→${end || "?"} (outside the ${WINDOW_DAYS}d window) · kept as context, not scored`;
 }
 
 /**

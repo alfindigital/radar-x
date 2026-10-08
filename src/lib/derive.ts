@@ -110,7 +110,7 @@ function knownBy(trade: InsiderTrade, asOf: string): boolean {
   return filedDay === null || filedDay <= asOf;
 }
 
-function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string, cohorts: BrokerCohorts): SymbolData {
+function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string, cohorts: BrokerCohorts, caps?: Map<string, number>): SymbolData {
   const byDate = <T extends { date: string }>(a: T, b: T) => a.date.localeCompare(b.date);
   return {
     symbol,
@@ -123,6 +123,7 @@ function buildSymbolData(snapshot: Snapshot, symbol: string, asOf: string, cohor
     holders: rowsFor(snapshot.holders, symbol).filter((row) => row.month <= asOf).sort((a, b) => a.month.localeCompare(b.month)),
     instBrokers: cohorts.instBrokers,
     retailBrokers: cohorts.retailBrokers,
+    marketCapFallback: caps?.get(symbol) ?? null,
   };
 }
 
@@ -131,6 +132,7 @@ export function buildDerived(
   asOf: string,
   cohorts: BrokerCohorts = EMPTY_COHORTS,
   feeds: ExitFeeds = NO_FEEDS,
+  caps?: Map<string, number>,
 ): DerivedSnapshot {
   assertAsOf(asOf);
   const symbols = new Set<string>([
@@ -142,7 +144,7 @@ export function buildDerived(
     ...snapshot.holders.map((row) => row.symbol),
   ]);
   symbols.delete(BENCH);
-  const data = [...symbols].sort().map((symbol) => buildSymbolData(snapshot, symbol, asOf, cohorts));
+  const data = [...symbols].sort().map((symbol) => buildSymbolData(snapshot, symbol, asOf, cohorts, caps));
   const scores = computeScoresV2(data, asOf);
   const benchmark = snapshot.price.filter((row) => row.symbol === BENCH && row.date <= asOf);
   const cases: DerivedCase[] = [];
@@ -189,7 +191,7 @@ export function buildDerived(
       limitations: [
         "Derived analytics use the immutable local Sectors snapshot and do not call an upstream provider.",
         "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete.",
-        "Exit Watch is a bounded pressure reading over labeled broker cohorts — not proof of intent; missing components lower coverage instead of scoring zero.",
+        "Exit Watch is a bounded pressure reading over labeled broker cohorts · not proof of intent; missing components lower coverage instead of scoring zero.",
       ],
       feedHashes: feeds.feedHashes,
     },

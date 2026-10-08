@@ -1,39 +1,39 @@
 {
   "schemaVersion": 2,
   "engineVersion": "radarx-v2",
-  "asOf": "2026-10-07",
-  "inputHash": "746bd12f24e17eb29fcf2eb05744feaace34c1b50f2b12da8636eecc31489b3c",
-  "generatedAt": "2026-10-07T15:40:42.903Z",
+  "asOf": "2026-10-08",
+  "inputHash": "5f42f985e61d11195b2ec96bc9d824468add71007822a051d4c565c7bee5a27d",
+  "generatedAt": "2026-10-08T01:42:46.683Z",
   "files": [
     {
       "path": "scores.json",
-      "rows": 962,
-      "sha256": "e1f4ffe1d758254b74b7d50d0eb0d8530f981d76c21af72b7d59dd9374e4b832",
+      "rows": 964,
+      "sha256": "855d6549b0044c7216cf43e25f25fe916845d44426b38d06cb193481b15ed1dd",
       "engineVersion": "radarx-v2"
     },
     {
       "path": "cases.json",
-      "rows": 169,
-      "sha256": "d982b97f82c9cc5bba28f61b4bd75604dd241bbbb247bca1e69881b1c81c8aae"
+      "rows": 233,
+      "sha256": "4e99b1554a3839d18e1d1694c1d7bb9dc2b235a6b8b411685f9f886c169faa5e"
     },
     {
       "path": "exitwatch.json",
-      "rows": 962,
-      "sha256": "a89a9e7c88ae62ff22ef8e427c1d854da237960babe60e1c55da1d9a9675a2e5",
+      "rows": 964,
+      "sha256": "e9f28c156851134a56623ff053300c55009d9b71b98d581a272636ea3f06bfc6",
       "engineVersion": "radarx-v3"
     }
   ],
   "limitations": [
     "Derived analytics use the immutable local Sectors snapshot and do not call an upstream provider.",
     "Retrospective outcomes are paired to common issuer and benchmark sessions and remain pending when incomplete.",
-    "Exit Watch is a bounded pressure reading over labeled broker cohorts — not proof of intent; missing components lower coverage instead of scoring zero."
+    "Exit Watch is a bounded pressure reading over labeled broker cohorts · not proof of intent; missing components lower coverage instead of scoring zero."
   ],
   "feedHashes": {
-    "broker_registry.json": "2c97b793cb538f7b90ce649e8915c8b3029b908aaff0f64c1178f81ebc3c99e7",
-    "broker_top.json": "4ac52f9717e66071bb83c1828befce34cef6d39ab85e8b777271b52fd861a7c6",
-    "cohort_top.json": "6a1c8f1759bfb97ef58253ce17596c0dfb5dd989723c111c39bb18b493c57a3c",
-    "suspensions.json": "0d7d273697fdccda99e234302a60a6d5b1ac133941f0f18a30347db774ded561",
-    "corporate_actions.json": "73f4a9c2e082f27075da0e3c7e3e7d3c88efb249f323ce09f3a4274886fc9758",
-    "free_float.json": "d546936f3ffe6dd709e8ca079d09c70cb1f159f5831adc5ed8100d7771f47e1a"
+    "broker_registry.json": "f0fa5f256514933347a3072c063f931899ee2263b9979707ef4f1857685f1bf0",
+    "broker_top.json": "b01ce4059fb1935bdf112d0ce925d37ba72b7f2e20ceda50564042c71ccdb00b",
+    "cohort_top.json": "c6e52917970b4028985bd76ae0897d2eb0afdfd8052f8fc37c6d97260d514510",
+    "suspensions.json": "481fe5030be889d83c72b7cc545d0d42c8358b7b10a6a9386edd806d8a4660fb",
+    "corporate_actions.json": "beeb72da62b97585680f815995c5cc7fcc016da590e36472e460b7b4f59b5625",
+    "free_float.json": "edf76dcd5fbdac47e010353a058205c056323281578a92e4b98d433f5be56b7d"
   }
 }

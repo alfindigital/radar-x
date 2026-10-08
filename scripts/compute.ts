@@ -14,6 +14,7 @@ import {
 import { loadBrokerTop, loadCohortTop, loadCorpActions, loadRegistry, loadSuspensions } from "../src/lib/feeds";
 import { loadFreeFloat } from "../src/lib/ownership";
 import { loadSnapshot } from "../src/lib/snapshot";
+import { loadTaxonomy } from "../src/lib/taxonomy";
 
 export interface ComputeArgs {
   asOf: string;
@@ -93,12 +94,13 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
     : EMPTY_COHORTS;
   if (!registry) console.warn("broker_registry.json missing — cohort components fall back to foreign proxy");
 
-  const [brokerTop, cohortTop, suspensions, corpActions, freeFloat] = await Promise.all([
+  const [brokerTop, cohortTop, suspensions, corpActions, freeFloat, taxonomy] = await Promise.all([
     loadBrokerTop(),
     loadCohortTop(),
     loadSuspensions(),
     loadCorpActions(),
     loadFreeFloat(),
+    loadTaxonomy(),
   ]);
   const feedHashes: Record<string, string> = {};
   for (const name of ["broker_registry.json", "broker_top.json", "cohort_top.json", "suspensions.json", "corporate_actions.json", "free_float.json"]) {
@@ -126,7 +128,15 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
     if (!feed) console.warn(`${name}.json missing — related exit components will show as missing`);
   }
 
-  const derived = buildDerived(snapshot, args.asOf, cohorts, feeds);
+  // Market-cap fallback from the taxonomy artifact: symbols covered only by
+  // universe close rows carry no marketCap, which would otherwise knock out
+  // every cap-normalized component (foreignTrend, exitwatch normalization).
+  const caps = new Map(
+    (taxonomy?.rows ?? [])
+      .filter((r) => typeof r.marketCap === "number" && r.marketCap > 0)
+      .map((r) => [r.symbol, r.marketCap as number]),
+  );
+  const derived = buildDerived(snapshot, args.asOf, cohorts, feeds, caps);
   await writeDerived(args.outputDir, derived);
   const scores = derived.scores.filter((row) => row.score !== null).length;
   const complete = derived.cases.flatMap((row) => row.outcomes).filter((outcome) => outcome.status === "complete").length;
