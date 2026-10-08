@@ -1403,7 +1403,14 @@ if (!cmd || !commands[cmd]) {
   process.exit(1);
 }
 
-commands[cmd]().catch((e) => {
+commands[cmd]().catch(async (e) => {
   console.error(e);
+  // A thrown stage exits 1 — record it as a failed run too, so the ingest log
+  // shows the failure instead of looking like the stage simply never ran.
+  try {
+    await store.log(`ingest_${cmd}`, 0, 0, "failed");
+  } catch {
+    /* logging itself is best-effort — the non-zero exit is what schedulers read */
+  }
   process.exit(1);
 });
