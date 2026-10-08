@@ -99,7 +99,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
                   <th className="py-2 pr-4 font-medium">#</th>
                   <th className="py-2 pr-4 font-medium">Broker</th>
                   <th className="py-2 pr-4 font-medium">Cohort</th>
-                  <th className="py-2 pr-4 text-right font-medium">Gross</th>
+                  <th className="hidden py-2 pr-4 text-right font-medium sm:table-cell">Gross</th>
                   <th className="py-2 text-right font-medium">Net</th>
                 </tr>
               </thead>
@@ -116,7 +116,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
                     <td className="py-3 pr-4">
                       <CohortTag cohort={e.cohort} />
                     </td>
-                    <td className="py-3 pr-4 text-right">{e.gross != null ? fmtCurrency(e.gross) : "—"}</td>
+                    <td className="hidden py-3 pr-4 text-right sm:table-cell">{e.gross != null ? fmtCurrency(e.gross) : "—"}</td>
                     <td className={`py-3 text-right ${(e.net ?? 0) < 0 ? "dist" : ""}`}>
                       {e.net != null ? fmtCurrency(e.net) : "—"}
                     </td>

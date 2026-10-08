@@ -305,6 +305,20 @@ a:hover {
   left: auto;
   right: 0;
 }
+/* Mid-row hosts: center the tip under the host and cap it — a left-anchored
+   300px tip from a mid-page host overflows the right edge on small screens
+   (dossier whale tags measured scrollW 451 at 360px). */
+.tip-c::after {
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 220px;
+}
+@media (max-width: 640px) {
+  [data-tip]::after,
+  [data-ftip]::after {
+    max-width: calc(100vw - 40px);
+  }
+}
 
 /* Sticky thead — pins under the 49px top bar while the page scrolls. The
    wrapper uses overflow-x: clip, not auto: clip keeps the viewport as the

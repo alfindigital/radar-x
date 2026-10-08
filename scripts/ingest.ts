@@ -1045,18 +1045,31 @@ async function ingestExtras() {
   // --- corporate-actions calendar: 7 types, one call each ---
   {
     const types = ["dividend", "upcoming_dividend", "bonus", "right_issue", "stock_split", "warrant", "agm"];
-    const cal: Record<string, unknown> = { ...meta, asOf, generatedAt: now, types: {} };
+    // Merge onto last-good: a failed type keeps its old block and lands in
+    // staleTypes, so a bad fetch can never erase stored evidence.
+    const cal = read("corporate_actions.json", {
+      ...meta, asOf: null as string | null, generatedAt: "",
+      types: {} as Record<string, unknown>, staleTypes: [] as string[],
+    });
+    const calTypes = (cal.types ??= {});
+    const staleTypes: string[] = [];
     for (const t of types) {
       try {
         const res = await api.corporateActionsCalendar(t);
         calls++;
-        (cal.types as Record<string, unknown>)[t] = res;
+        tally.ok++;
+        calTypes[t] = res;
         console.log(`corp-actions ${t}: ${Array.isArray(res[t]) ? res[t].length : "?"} events`);
       } catch (e) {
         calls++;
+        tally.failed++;
+        staleTypes.push(t);
         console.warn(`corp-actions ${t}: ${e instanceof Error ? e.message : e}`);
       }
     }
+    cal.staleTypes = staleTypes;
+    cal.asOf = asOf;
+    cal.generatedAt = now;
     await writeJson(dir("corporate_actions.json"), cal);
   }
 
@@ -1064,14 +1077,21 @@ async function ingestExtras() {
   // One session per cohort per day: all (default call) + retail + institutional.
   {
     const art = read("brokers_top.json", { ...meta, sessions: [] as Record<string, unknown>[] });
+    const key = (s: Record<string, unknown>) => `${s.date}|${s.cohort ?? "all"}`;
     for (const cohort of [undefined, "retail", "institutional"] as const) {
-      const res = await api.brokersTop(cohort ? { cohort } : undefined);
-      calls++;
-      const key = (s: Record<string, unknown>) => `${s.date}|${s.cohort ?? "all"}`;
-      if (!art.sessions.some((s) => key(s) === key(res as unknown as Record<string, unknown>))) {
-        art.sessions.push(res as unknown as Record<string, unknown>);
+      try {
+        const res = await api.brokersTop(cohort ? { cohort } : undefined);
+        calls++;
+        tally.ok++;
+        if (!art.sessions.some((s) => key(s) === key(res as unknown as Record<string, unknown>))) {
+          art.sessions.push(res as unknown as Record<string, unknown>);
+        }
+        art.asOf = res.date;
+      } catch (e) {
+        calls++;
+        tally.failed++;
+        console.warn(`brokers/top ${cohort ?? "all"}: ${e instanceof Error ? e.message : e}`);
       }
-      art.asOf = res.date;
     }
     art.generatedAt = now;
     await writeJson(dir("brokers_top.json"), art);
@@ -1080,35 +1100,51 @@ async function ingestExtras() {
 
   // --- most-traded: dict keyed by date (~10 days per call), accreted ---
   {
-    const res = await api.mostTraded();
-    calls++;
-    const art = read("most_traded.json", { ...meta, days: {} as Record<string, unknown> });
-    let added = 0;
-    for (const [date, rows] of Object.entries(res)) {
-      if (!art.days[date]) { art.days[date] = rows; added++; }
+    try {
+      const res = await api.mostTraded();
+      calls++;
+      const art = read("most_traded.json", { ...meta, days: {} as Record<string, unknown> });
+      let added = 0;
+      for (const [date, rows] of Object.entries(res)) {
+        if (!art.days[date]) { art.days[date] = rows; added++; }
+      }
+      art.asOf = Object.keys(art.days).sort().at(-1) ?? asOf;
+      art.generatedAt = now;
+      await writeJson(dir("most_traded.json"), art);
+      tally.ok++;
+      console.log(`most-traded: +${added} days → ${Object.keys(art.days).length} total`);
+    } catch (e) {
+      calls++;
+      tally.failed++;
+      console.warn(`most-traded: ${e instanceof Error ? e.message : e}`);
     }
-    art.asOf = Object.keys(art.days).sort().at(-1) ?? asOf;
-    art.generatedAt = now;
-    await writeJson(dir("most_traded.json"), art);
-    console.log(`most-traded: +${added} days → ${Object.keys(art.days).length} total`);
   }
 
   // --- quarterly financial dates feed (LK freshness for all emiten) ---
   {
-    const rows: Record<string, unknown>[] = [];
-    let offset = 0;
-    while (true) {
-      const res = await api.quarterlyFinancialDates({ limit: 100, offset });
+    try {
+      const rows: Record<string, unknown>[] = [];
+      let offset = 0;
+      while (true) {
+        const res = await api.quarterlyFinancialDates({ limit: 100, offset });
+        calls++;
+        rows.push(...(res.results as unknown as Record<string, unknown>[]));
+        if (!res.pagination?.has_next || res.results.length === 0) break;
+        offset = res.pagination.next_offset ?? offset + res.results.length;
+      }
+      // Full-replace artifact — write only after a complete fetch so a partial
+      // page stream can't truncate last-good.
+      await writeJson(dir("quarterly_dates.json"), { ...meta, asOf, generatedAt: now, rows });
+      tally.ok++;
+      console.log(`quarterly-dates: ${rows.length} rows`);
+    } catch (e) {
       calls++;
-      rows.push(...(res.results as unknown as Record<string, unknown>[]));
-      if (!res.pagination?.has_next || res.results.length === 0) break;
-      offset = res.pagination.next_offset ?? offset + res.results.length;
+      tally.failed++;
+      console.warn(`quarterly-dates: ${e instanceof Error ? e.message : e}`);
     }
-    await writeJson(dir("quarterly_dates.json"), { ...meta, asOf, generatedAt: now, rows });
-    console.log(`quarterly-dates: ${rows.length} rows`);
   }
 
-  await store.log("ingest_extras", calls, 0, "ok");
+  await logRun("ingest_extras", calls, 0);
   console.log(`extras done (${calls} calls)`);
 }
 
@@ -1126,10 +1162,10 @@ async function ingestPerSymbol(
     asOf: null as string | null, generatedAt: "", creditsEst: 0,
     data: {} as Record<string, unknown>, misses: [] as string[],
   };
-  try { Object.assign(art, JSON.parse(readFileSync(target, "utf8"))); } catch { /* first run */ }
+  Object.assign(art, readJsonOr(target, {}));
 
   const universe = symbols ?? (args.includes("--universe") ? await scopeUniverse() : await watchlist());
-  const limit = Number(flag("limit", "0")) || universe.length;
+  const limit = numFlag("limit", 0) || universe.length;
   const onlyMissing = args.includes("--only-missing");
   const targets = universe.filter((s) => !onlyMissing || !(s in art.data)).slice(0, limit);
 
@@ -1166,12 +1202,9 @@ async function ingestBrokerLeaderboard() {
   const dir = (f: string) => path.join(process.cwd(), "data", f);
   const now = new Date().toISOString();
   const meta = { schemaVersion: 1, engineVersion: "radarx-v2" as const, source: "sectors" as const };
-  let art: { asOf: string | null; generatedAt: string; sessions: Record<string, unknown>[] };
-  try {
-    art = JSON.parse(readFileSync(dir("brokers_top.json"), "utf8"));
-  } catch {
-    art = { ...meta, asOf: null, generatedAt: "", sessions: [] };
-  }
+  const art = readJsonOr(dir("brokers_top.json"), {
+    ...meta, asOf: null as string | null, generatedAt: "", sessions: [] as Record<string, unknown>[],
+  });
   let calls = 0;
   for (const cohort of [undefined, "retail", "institutional"] as const) {
     const res = await api.brokersTop(cohort ? { cohort } : undefined);
@@ -1220,22 +1253,25 @@ async function ingestCohortTop() {
     asOf: null as string | null, generatedAt: "", creditsEst: 0,
     data: {} as Record<string, unknown>, misses: [] as string[],
   };
-  try { Object.assign(art, JSON.parse(readFileSync(target, "utf8"))); } catch { /* first run */ }
+  Object.assign(art, readJsonOr(target, {}));
 
   let symbols: string[];
   const explicit = flag("symbols");
   if (explicit) {
     symbols = explicit.split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
   } else {
-    try {
-      const rows = JSON.parse(readFileSync(path.join(process.cwd(), "data", "derived-v2", "exitwatch.json"), "utf8")) as { symbol: string; score: number | null }[];
-      symbols = rows.filter((r) => r.score !== null).sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).map((r) => r.symbol);
-    } catch {
+    // Derived input — absent means compute hasn't run (fall back to watchlist
+    // order); corrupt means the artifact can't be trusted, so it throws.
+    const rows = readJsonOr<{ symbol: string; score: number | null }[] | null>(
+      path.join(process.cwd(), "data", "derived-v2", "exitwatch.json"), null);
+    if (rows === null) {
       console.warn("exitwatch.json missing — falling back to watchlist order");
       symbols = await watchlist();
+    } else {
+      symbols = rows.filter((r) => r.score !== null).sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).map((r) => r.symbol);
     }
   }
-  const limit = Number(flag("limit", "30")) || 30;
+  const limit = numFlag("limit", 30);
   const onlyMissing = args.includes("--only-missing");
   const targets = symbols.filter((s) => !onlyMissing || !(s in art.data)).slice(0, limit);
 
@@ -1248,10 +1284,10 @@ async function ingestCohortTop() {
       const retail = await api.brokerSummaryTop(sym, { cohort: "retail" });
       const institutional = await api.brokerSummaryTop(sym, { cohort: "institutional" });
       calls += 2;
-      tally.ok++;
       // Refuse to store silently if the API ignored the cohort filter.
       if (retail.cohort && retail.cohort !== "retail") throw new Error(`cohort echo mismatch: ${retail.cohort}`);
       if (institutional.cohort && institutional.cohort !== "institutional") throw new Error(`cohort echo mismatch: ${institutional.cohort}`);
+      tally.ok++;
       art.data[sym] = {
         retail: { start: retail.start, end: retail.end, top_buyers: retail.top_buyers ?? [], top_sellers: retail.top_sellers ?? [] },
         institutional: { start: institutional.start, end: institutional.end, top_buyers: institutional.top_buyers ?? [], top_sellers: institutional.top_sellers ?? [] },
@@ -1289,11 +1325,22 @@ async function ingestSegments() {
 async function ingestNews() {
   const dir = (f: string) => path.join(process.cwd(), "data", f);
   const now = new Date().toISOString();
-  let art: { items: Record<string, unknown>[]; asOf?: string | null } & Record<string, unknown> = {
-    schemaVersion: 1, engineVersion: "radarx-v2", source: "sectors", asOf: null, generatedAt: "", items: [],
-  };
-  try { art = JSON.parse(readFileSync(dir("news.json"), "utf8")); } catch { /* first run */ }
-  const res = await api.news({ limit: 100 });
+  const art = readJsonOr(dir("news.json"), {
+    schemaVersion: 1, engineVersion: "radarx-v2", source: "sectors",
+    asOf: null as string | null, generatedAt: "", items: [] as Record<string, unknown>[],
+  });
+  tallyReset();
+  let res: Awaited<ReturnType<typeof api.news>>;
+  try {
+    res = await api.news({ limit: 100 });
+    tally.ok++;
+  } catch (e) {
+    // Log the failure before the top-level handler exits — otherwise the run
+    // record just vanishes and the outage looks like a skip.
+    tally.failed++;
+    await logRun("ingest_news", 1, art.items.length);
+    throw e;
+  }
   const items = Array.isArray(res) ? res : (res.results ?? []);
   const key = (r: { timestamp?: string; title?: string }) => `${r.timestamp}|${r.title}`;
   const have = new Set(art.items.map((r) => key(r as { timestamp?: string; title?: string })));
@@ -1309,7 +1356,7 @@ async function ingestNews() {
   art.asOf = dates.at(-1)?.slice(0, 10) ?? now.slice(0, 10);
   art.generatedAt = now;
   await writeJson(dir("news.json"), art);
-  await store.log("ingest_news", 1, art.items.length, "ok");
+  await logRun("ingest_news", 1, art.items.length);
   console.log(`news: +${added} items → ${art.items.length} total, latest=${art.asOf}`);
 }
 

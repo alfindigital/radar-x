@@ -140,7 +140,7 @@ function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; co
                 {w}
               </Link>
             ) : (
-              <span key={w} className="tag" data-tip="Reported holder · no ownership-transaction dossier in the snapshot">
+              <span key={w} className="tag tip-c" data-tip="Reported holder · no ownership-transaction dossier in the snapshot">
                 {w}
               </span>
             ),

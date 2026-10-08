@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Verification evidence packs contain one-off harness scripts, not app code.
     "docs/**",
+    // video/ is a gitignored Remotion workspace owned by the video session.
+    "video/**",
   ]),
 ]);
 

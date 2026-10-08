@@ -50,7 +50,7 @@ RADAR-X helps Indonesian equity researchers spot reported exit pressure early, t
 ```text
 Public disclosures show who bought — they rarely show who is leaving. RADAR-X turns a frozen Sectors snapshot of all 962 IDX issuers into cohort-labeled exit-pressure readings, broker-level flow evidence, and matched historical outcomes, while keeping missing evidence visible instead of scoring it zero.
 
-Current snapshot (as of 7 October 2026): 244 publishable exit readings (57 high, 46 elevated, 90 watch, 51 low), 718 issuers honestly suppressed for insufficient coverage, and daily institutional-versus-retail flow series for 863 issuers. Descriptive public-data statistics, not a forecast or buy/sell recommendation.
+Current snapshot (as of 8 October 2026): 844 publishable exit readings (189 high, 122 elevated, 351 watch, 182 low), 120 issuers honestly suppressed for insufficient coverage, and daily institutional-versus-retail flow series for 826 issuers. Descriptive public-data statistics, not a forecast or buy/sell recommendation.
 
 Built for Sectors Hackathon 2026, Track 3 — Market Intelligence.
 

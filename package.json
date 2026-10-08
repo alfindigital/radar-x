@@ -11,6 +11,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "tsx --test tests/index.test.ts",
     "audit:data": "tsx scripts/audit-data.ts",
+    "audit:claims": "tsx scripts/check-claims.ts",
     "ingest": "tsx scripts/ingest.ts",
     "compute": "tsx scripts/compute.ts",
     "backfill": "tsx scripts/ingest.ts filings --months 6 && tsx scripts/ingest.ts index && tsx scripts/ingest.ts flows --limit 253 --only-missing && tsx scripts/ingest.ts prices --limit 253 --only-missing && tsx scripts/ingest.ts holders --limit 253 --only-missing && tsx scripts/ingest.ts broker --limit 40 --only-missing && tsx scripts/compute.ts --as-of today"
