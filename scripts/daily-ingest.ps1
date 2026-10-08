@@ -24,7 +24,10 @@ if ((Get-Date).Date -gt [datetime]"2026-10-11") {
   exit 0
 }
 
-$env:SECTORS_CALL_BUDGET = "600" # per-stage hard ceiling; ~570 expected total/day
+# Shared daily ceiling, not per-stage: the ledger file counts billed calls
+# across every stage process so the whole run cannot exceed 600/day.
+$env:SECTORS_CALL_BUDGET = "600"
+$env:SECTORS_CALL_LEDGER = Join-Path $logDir ".sectors-call-ledger.json"
 
 $failed = @()
 function Run([string]$name, [scriptblock]$block) {

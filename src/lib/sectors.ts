@@ -1,6 +1,9 @@
 // Sectors API v2 client — server-side only. API key never leaves the server.
 // Billing rules: 2xx billed, 404 = 1 credit, 400/4xx/5xx free. Never use ?q= (3 credits).
 
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
+
 const BASE = "https://api.sectors.app";
 
 export class SectorsError extends Error {
@@ -42,11 +45,37 @@ const keyPool = {
 
 const REQUEST_TIMEOUT_MS = 30_000;
 
-// Hard per-process call ceiling (billed requests, not logical calls — every
-// fetch attempt counts). 0/unset = unlimited. The daily ingest runner sets a
-// budget so a runaway stage cannot burn the provider quota.
+// Hard call ceiling (billed requests, not logical calls — every fetch attempt
+// counts). 0/unset = unlimited. The daily ingest runner sets a budget so a
+// runaway stage cannot burn the provider quota.
+// SECTORS_CALL_LEDGER points at a JSON file shared across stage processes —
+// {date, used} — so one budget covers the whole daily run, not 600 per stage.
+// The date field resets the count each day. Best-effort: sequential stages
+// make read-modify-write races practically unreachable.
 let callsMade = 0;
 const CALL_BUDGET = Number(process.env.SECTORS_CALL_BUDGET ?? 0) || 0;
+const CALL_LEDGER = process.env.SECTORS_CALL_LEDGER ?? null;
+const TODAY = new Date().toISOString().slice(0, 10);
+
+function ledgerRead(): number {
+  if (!CALL_LEDGER) return 0;
+  try {
+    const j = JSON.parse(readFileSync(CALL_LEDGER, "utf8")) as { date?: string; used?: number };
+    return j.date === TODAY ? (j.used ?? 0) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function ledgerBump(): void {
+  if (!CALL_LEDGER) return;
+  try {
+    mkdirSync(dirname(CALL_LEDGER), { recursive: true });
+    writeFileSync(CALL_LEDGER, JSON.stringify({ date: TODAY, used: ledgerRead() + 1 }));
+  } catch {
+    /* ledger unwritable — the per-process cap still applies */
+  }
+}
 
 export async function sectorsGet<T>(path: string, params?: Record<string, string | number>): Promise<T> {
   const url = new URL(`${BASE}${path}`);
@@ -73,8 +102,13 @@ export async function sectorsGet<T>(path: string, params?: Record<string, string
       continue;
     }
     const keyIndex = keys().indexOf(k);
-    if (CALL_BUDGET > 0 && ++callsMade > CALL_BUDGET) {
-      throw new Error(`sectors: call budget ${CALL_BUDGET} exceeded — aborting ${path}`);
+    if (CALL_BUDGET > 0) {
+      const billed = CALL_LEDGER ? ledgerRead() : callsMade;
+      if (billed + 1 > CALL_BUDGET) {
+        throw new Error(`sectors: call budget ${CALL_BUDGET} exceeded — aborting ${path}`);
+      }
+      callsMade++;
+      ledgerBump();
     }
     try {
       res = await fetch(url.toString(), {
