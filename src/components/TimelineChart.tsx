@@ -52,7 +52,11 @@ export default function TimelineChart({ price, flow, insider, anchorDate }: Prop
 
   return (
     <div className="space-y-2">
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-labelledby="timeline-title timeline-desc">
+    {/* min-width keeps bars/labels legible on narrow viewports — below ~560px
+        the chart scrolls horizontally instead of shrinking to unreadable
+        (860-unit bars rendered ~3px at 360px). */}
+    <div className="overflow-x-auto">
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img" aria-labelledby="timeline-title timeline-desc">
       <title id="timeline-title">Price, foreign flow, and reported ownership timeline</title>
       <desc id="timeline-desc">Signed foreign-flow bars share a zero line. Triangles mark reported buys and sells.</desc>
       {grid.map((g, i) => (
@@ -122,6 +126,7 @@ export default function TimelineChart({ price, flow, insider, anchorDate }: Prop
       </text>
       {outOfRangeMarks > 0 && <text x={W / 2} y={H - 6} textAnchor="middle" fontSize="9" fill="var(--ink-faint)">{outOfRangeMarks} marker{outOfRangeMarks === 1 ? "" : "s"} outside the displayed range</text>}
     </svg>
+    </div>
     <details className="rounded-md border border-line bg-panel px-3 py-2 text-xs">
       <summary className="cursor-pointer dim">View flow observations</summary>
       <div className="mt-2 max-h-40 overflow-auto">

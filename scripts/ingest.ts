@@ -404,8 +404,10 @@ async function ingestBroker() {
 }
 
 async function ingestIndex() {
+  tallyReset();
   const start = flag("from") ?? new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
   const res = await api.indexDailyRange("ihsg", { start });
+  tally.ok++;
   // The index endpoint returns a single price per day — a close-only
   // observation, not a fabricated OHLC.
   const mapped = res.map((r) => ({
@@ -437,12 +439,14 @@ async function ingestIndex() {
     const have = new Set(art.rows.map((r) => `${r.indexCode}|${r.date}`));
     const idxLatest = await api.indexDailyAll();
     calls++;
+    tally.ok++;
     const codes = [...new Set(idxLatest.map((r) => r.index_code.toLowerCase().replace(/[^a-z0-9]/g, "")))];
     let added = 0;
     for (const code of codes) {
       try {
         const rows = await api.indexDailyRange(code, { start });
         calls++;
+        tally.ok++;
         for (const r of rows) {
           const key = `${r.index_code}|${r.date}`;
           if (have.has(key)) continue;
@@ -452,15 +456,16 @@ async function ingestIndex() {
         }
       } catch (e) {
         calls++;
+        tally.failed++;
         console.warn(`index ${code}: ${e instanceof Error ? e.message : e}`);
       }
     }
     art.asOf = art.rows.map((r) => r.date).sort().at(-1) ?? art.asOf;
     art.generatedAt = new Date().toISOString();
     await writeJson(idxFile, art);
-    console.log(`index --all: +${added} rows across ${codes.length} indices (${art.rows.length} total)`);
+    console.log(`index --all: +${added} rows across ${codes.length} indices (${art.rows.length} total, ${tally.failed} failed)`);
   }
-  await store.log("ingest_index", calls, n, "ok");
+  await logRun("ingest_index", calls, n);
 }
 
 // Full-universe refresh: /v2/close/ + /v2/foreign-flow/ per trading day.
@@ -808,6 +813,7 @@ async function ingestTopChanges(
 // no date param, so history must be captured going forward). ≈55 calls total.
 async function ingestBoards() {
   const dir = (f: string) => path.join(process.cwd(), "data", f);
+  tallyReset();
   let calls = 0;
   const now = new Date().toISOString();
   const asOf = now.slice(0, 10);
@@ -856,18 +862,21 @@ async function ingestBoards() {
   // --- brokers registry (1 call, static) ---
   const brokers = await api.brokers();
   calls++;
+  tally.ok++;
   await writeJson(dir("broker_registry.json"), { ...meta, asOf, generatedAt: now, rows: brokers });
   console.log(`brokers: ${brokers.length}`);
 
   // --- idx-total (~1 month of daily IDX aggregate mcap) ---
   const idxTotal = await api.idxTotal();
   calls++;
+  tally.ok++;
   await writeJson(dir("idx_total.json"), { ...meta, asOf, generatedAt: now, rows: idxTotal });
   console.log(`idx-total: ${idxTotal.length} rows ${idxTotal[0]?.date}..${idxTotal.at(-1)?.date}`);
 
   // --- index-daily history per index (≤90d window; codes from live list) ---
   const idxCodesResp = await api.indexDailyAll();
   calls++;
+  tally.ok++;
   // API path codes are lowercase and strip non-alphanumerics (SRI-KEHATI → srikehati).
   const idxCodes = [...new Set(idxCodesResp.map((r) => r.index_code.toLowerCase().replace(/[^a-z0-9]/g, "")))];
   const idxRows: { indexCode: string; date: string; price: number }[] = [];
@@ -875,9 +884,11 @@ async function ingestBoards() {
     try {
       const rows = await api.indexDailyRange(code, { start: "2026-07-01" });
       calls++;
+      tally.ok++;
       idxRows.push(...rows.map((r) => ({ indexCode: r.index_code, date: r.date, price: r.price })));
     } catch (e) {
       calls++;
+      tally.failed++;
       console.warn(`index ${code}: ${e instanceof Error ? e.message : e}`);
     }
   }
@@ -887,14 +898,17 @@ async function ingestBoards() {
   // --- free-float per subsector (33 calls ≈ full IDX) ---
   const taxonomy = await api.subsectors();
   calls++;
+  tally.ok++;
   const ffRows: { symbol: string; companyName: string; freeFloat: number | null; subSector: string }[] = [];
   for (const t of taxonomy) {
     try {
       const rows = await api.freeFloat(t.subsector);
       calls++;
+      tally.ok++;
       ffRows.push(...rows.map((r) => ({ symbol: r.symbol, companyName: r.company_name, freeFloat: r.free_float, subSector: t.subsector })));
     } catch (e) {
       calls++;
+      tally.failed++;
       console.warn(`freefloat ${t.subsector}: ${e instanceof Error ? e.message : e}`);
     }
   }
@@ -904,8 +918,9 @@ async function ingestBoards() {
   // --- top-changes daily snapshot (accrete by session date) ---
   await ingestTopChanges(dir, meta, now, asOf);
   calls++;
+  tally.ok++;
 
-  await store.log("ingest_boards", calls, brokers.length + idxTotal.length + idxRows.length + ffRows.length, "ok");
+  await logRun("ingest_boards", calls, brokers.length + idxTotal.length + idxRows.length + ffRows.length);
   console.log(`boards done (${calls} calls)`);
 }
 

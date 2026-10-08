@@ -432,7 +432,12 @@ export default async function DossierPage({ params }: PageProps<"/stock/[ticker]
 
       <section>
         <h2 className="section-label mb-3">Reported ownership transactions</h2>
-        <TradesTable trades={d.insider} limit={30} />
+        {/* newest first — the raw list arrives ascending, so the first 30 rows
+            would be the oldest history, not the latest. */}
+        <TradesTable trades={[...d.insider].reverse()} limit={30} />
+        {d.insider.length > 30 && (
+          <p className="faint mt-2 text-[11px]">Showing the 30 most recent of {d.insider.length} reported transactions.</p>
+        )}
       </section>
 
       {d.cases.length > 0 && (

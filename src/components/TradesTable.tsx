@@ -18,8 +18,8 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
             <th className="py-2 pr-3 font-medium text-right">Shares</th>
             <th className="py-2 pr-3 font-medium text-right">Price</th>
             <th className="py-2 pr-3 font-medium text-right">Value</th>
-            <th className="hidden py-2 pr-3 font-medium text-right md:table-cell">Filed at</th>
-            <th className="hidden py-2 font-medium text-right md:table-cell">Source</th>
+            <th className="py-2 pr-3 font-medium text-right">Filed at</th>
+            <th className="py-2 font-medium text-right">Source</th>
           </tr>
         </thead>
         <tbody className="mono">
@@ -40,8 +40,8 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
               <td className="py-1.5 pr-3 text-right">{fmtShares(t.amount)}</td>
               <td className="py-1.5 pr-3 text-right faint">{fmtNum(t.price)}</td>
                 <td className="py-1.5 pr-3 text-right">{fmtCurrency(t.value)}</td>
-              <td className="hidden py-1.5 pr-3 text-right faint md:table-cell">{t.filedAt?.slice(0, 10) ?? "Unavailable"}</td>
-              <td className="hidden py-1.5 text-right md:table-cell">
+              <td className="py-1.5 pr-3 text-right faint">{t.filedAt?.slice(0, 10) ?? "Unavailable"}</td>
+              <td className="py-1.5 text-right">
                 {(() => { const url = safeSourceUrl(t.sourceUrl); return url ? <a href={url} target="_blank" rel="noreferrer" className="blue">Open</a> : <span className="faint">Unavailable</span>; })()}
               </td>
             </tr>

@@ -8,13 +8,20 @@ type TickerOption = { s: string; n: string };
 // Ticker list is served by /api/tickers and fetched lazily on first focus —
 // the header renders on every page, so the 962-row directory must not be
 // serialized into every document. Module-level promise dedupes both nav
-// instances (top bar + mobile nav).
+// instances (top bar + mobile nav). A failed fetch clears the cache so the
+// next focus retries — a transient 503 must not kill search for the session.
 let tickerCache: Promise<TickerOption[]> | null = null;
 
 function loadTickers(): Promise<TickerOption[]> {
   tickerCache ??= fetch("/api/tickers")
-    .then((r) => (r.ok ? (r.json() as Promise<TickerOption[]>) : []))
-    .catch(() => []);
+    .then((r) => {
+      if (!r.ok) throw new Error(`tickers HTTP ${r.status}`);
+      return r.json() as Promise<TickerOption[]>;
+    })
+    .catch((e) => {
+      tickerCache = null;
+      throw e;
+    });
   return tickerCache;
 }
 
@@ -27,7 +34,12 @@ export function SearchBox() {
 
   async function ensureTickers() {
     if (options.length) return;
-    setOptions(await loadTickers());
+    try {
+      setOptions(await loadTickers());
+      setError("");
+    } catch {
+      setError("Issuer directory unreachable — type the ticker code directly; it still navigates.");
+    }
   }
 
   function go(e: React.FormEvent) {
