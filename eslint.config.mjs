@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Verification evidence packs contain one-off harness scripts, not app code.
+    "docs/**",
   ]),
 ]);
 
