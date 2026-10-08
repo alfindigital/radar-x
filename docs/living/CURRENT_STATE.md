@@ -1,14 +1,14 @@
 # CURRENT_STATE — RADAR-X
 
-> Update tiap akhir task. Terakhir: 2026-10-08 (snapshot 10-08; OHLCV penuh 962/962, flow 826 syms, broker 588 syms — sisa breadth menyusul saat publish upstream + kuota key pulih).
+> Update tiap akhir task. Terakhir: 2026-10-08 malam (snapshot 10-08; OHLCV penuh 962/962, flow 826 syms, broker 826 syms — sisa ~136 emiten upstream-bound: 56 permanent-404 + feed mentok Sep-25/kosong. index_daily/top_changes/sector_rotation masih 10-07/10-06 upstream).
 
 - **Version:** `radarx-v3` **Exit Watch — built, audited, remediated.** v2 board
   preserved at `/?v=radar`.
-- **Gates:** `npm test` 53/53 · `typecheck` clean · `lint` 0 errors ·
+- **Gates:** `npm test` 56/56 · `typecheck` clean · `lint` 0 errors ·
   `audit:data` exit 0 · `build` clean (Next 16.3.8) ·
-  `compute --as-of 2026-10-08` (daily ingest) → exitwatch.json 964 rows
-  (850 publishable: 189 high / 126 elevated / 348 watch / 187 low, 114
-  suppressed-not-zero; cases 233; outcomes 289/189/221).
+  `compute --as-of 2026-10-08` → exitwatch.json 964 rows
+  (844 publishable: 189 high / 122 elevated / 351 watch / 182 low, 120
+  suppressed-not-zero; cases 224; outcomes 224/169/279).
 - **Audit 2026-10-06 (`docs/AUDIT-2026-10-06.md`, 32 findings):** semua P1 +
   P2 kritis diremediasi di `f659a5e`; sisanya (window convention, rotation
   coverage, scheduler contract, docs) ditutup di sesi ini.
@@ -18,9 +18,13 @@
 - **Rotation coverage:** `flowObserved`/`flowExpected` di `RotationSubsector`;
   UI rotasi menampilkan cakupan "N/M issuers" — bukan lagi implisit nol.
 - **Daily ingest contract (lokal-only):** task `RadarX-DailyIngest` (18:00,
-  EndBoundary 2026-10-11) → `boards --lite` → `filings --months 1` →
-  `ownership --limit 100` → `compute --as-of today` → `audit:data`.
-  `SECTORS_CALL_BUDGET=170` per run; script self-expires lewat 10-11.
+  EndBoundary 2026-10-11) → `boards --lite` → `universe --days 2` →
+  `filings --months 1` → `broker --universe --limit 200` → `extras` →
+  `cohorttop --limit 15` → `ownership --limit 150` →
+  `flows --universe --limit 100` → `prices --universe --limit 100` →
+  `compute --as-of today` → `audit:data`. Saturday adds tickers/rotation/
+  brokertop/index --all/holders --universe --limit 300.
+  `SECTORS_CALL_BUDGET=600` per stage; script self-expires lewat 10-11.
   Publish = manual commit + push; task ini tidak pernah deploy.
 - **Coverage expansion (2026-10-05):** universe-wide broker backfill
   (`ingest --universe --only-missing`, 647 calls / 703 symbols, 404s = honest
@@ -53,7 +57,9 @@
 - **New plumbing:** `src/lib/feeds.ts` (registry/suspensions/corpActions/
   brokerTop/brokersTop/cohortTop), `derive.ts` ExitFeeds + `indexBySymbol`,
   `compute.ts` loads all feeds + hashes them into manifest `feedHashes`.
-- **API keys:** pool `SECTORS_API_KEYS` = 11 live. `.env.local` live (key-4).
+- **API keys:** vault `sectors-api-key-1..16`; key 1–13 spent kumulatif
+  (`SUBSCRIPTION_DOES_NOT_ALLOW`), key 14/15/16 live (~±700 kredit sisa
+  setelah top-up sweep malam ini). Pool `.env.local` = 14 entries.
 - **Docs:** `docs/EVIDENCE_V3.md` = feed inventory + spend + limitations.
 - **Mobile QA (2026-10-05):** 360px sweep via `scripts/qa-mobile.mjs` across 14
   routes → fixed clipped theme toggle + wrapped logo (search moved to a
