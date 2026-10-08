@@ -1,7 +1,6 @@
 // Exit Watch board (default) — v2 radar board preserved behind ?v=radar.
 
 import Link from "next/link";
-import type { ReactNode } from "react";
 import { getExitBoard, getMarketContext, getRadarBoard } from "@/lib/services";
 import { ExitPressureBadge } from "@/components/ExitPressureBadge";
 import { FlagChips } from "@/components/FlagChips";
@@ -9,6 +8,7 @@ import { Pager, TABLE_PAGE_SIZE, pageHref, paginate } from "@/components/Pager";
 import DataStatus from "@/components/DataStatus";
 import RadarBoardView, { RadarAside } from "@/components/RadarBoardView";
 import Sparkline from "@/components/Sparkline";
+import { StatStrip, Stat } from "@/components/StatStrip";
 import type { ExitComponent, ExitWatchRow } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -112,19 +112,6 @@ function Row({ row, rank, spark }: { row: ExitWatchRow; rank: number; spark: num
   );
 }
 
-// KPI cell inside the hairline stats band.
-function StatCell({ label, value, sub, color }: { label: string; value: ReactNode; sub?: ReactNode; color?: string }) {
-  return (
-    <div className="bg-bg px-2.5 py-2">
-      <div className="mono text-[9px] uppercase tracking-[0.12em] faint">{label}</div>
-      <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums" style={color ? { color } : undefined}>
-        {value}
-      </div>
-      {sub && <div className="mono mt-0.5 text-[9px] faint">{sub}</div>}
-    </div>
-  );
-}
-
 export default async function BoardPage({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
   if (params.v === "radar") {
@@ -160,9 +147,9 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
       </div>
 
       {/* Stats band — hairline grid; the read at a glance before the tape. */}
-      <section className="grid grid-cols-4 gap-px border border-line bg-line/70 sm:grid-cols-8">
+      <StatStrip>
         {market.ihsg ? (
-          <StatCell
+          <Stat
             label={`IHSG · ${market.ihsg.date}`}
             value={market.ihsg.price.toLocaleString("en-US", { maximumFractionDigits: 0 })}
             sub={
@@ -175,16 +162,16 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             }
           />
         ) : (
-          <StatCell label="IHSG" value="—" />
+          <Stat label="IHSG" value="—" />
         )}
-        <StatCell label="Scored" value={board.counts.publishable} sub={`of ${board.rows.length}`} />
-        <StatCell label="High ≥75" value={board.counts.high} color="var(--dist)" />
-        <StatCell label="Elev ≥55" value={board.counts.elevated} color="var(--watch)" />
-        <StatCell label="Watch ≥35" value={board.counts.watch} color="var(--sky)" />
-        <StatCell label="Low" value={board.counts.low} color="var(--ink-dim)" />
-        <StatCell label="Suppressed" value={board.counts.insufficient} color="var(--ink-faint)" />
-        <StatCell label="Flagged" value={flagged.length} color="var(--watch)" />
-      </section>
+        <Stat label="Scored" value={board.counts.publishable} sub={`of ${board.rows.length}`} />
+        <Stat label="High ≥75" value={board.counts.high} color="var(--dist)" />
+        <Stat label="Elev ≥55" value={board.counts.elevated} color="var(--watch)" />
+        <Stat label="Watch ≥35" value={board.counts.watch} color="var(--sky)" />
+        <Stat label="Low" value={board.counts.low} color="var(--ink-dim)" />
+        <Stat label="Suppressed" value={board.counts.insufficient} color="var(--ink-faint)" />
+        <Stat label="Flagged" value={flagged.length} color="var(--watch)" />
+      </StatStrip>
 
       {(market.mostTraded.rows.length > 0 || market.ihsg) && (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border border-line px-2.5 py-1.5">

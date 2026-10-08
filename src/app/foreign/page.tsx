@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { getFlowRadar } from "@/lib/services";
 import { fmtIDR } from "@/components/fmt";
 import { Pager, pageHref, paginate } from "@/components/Pager";
+import { StatStrip, Stat } from "@/components/StatStrip";
 
 export const dynamic = "force-dynamic";
 
@@ -68,28 +69,12 @@ export default async function ForeignPage({ searchParams }: PageProps<"/foreign"
         </p>
       </div>
 
-      <section className="grid grid-cols-4 gap-px border border-line bg-line/70">
-        <div className="bg-bg px-2.5 py-2">
-          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Issuers observed</div>
-          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">{rows.length}</div>
-        </div>
-        <div className="bg-bg px-2.5 py-2">
-          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Net accumulating</div>
-          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums acc">
-            {rows.filter((r) => r.cumNet > 0).length}
-          </div>
-        </div>
-        <div className="bg-bg px-2.5 py-2">
-          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Net distributing</div>
-          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums dist">
-            {rows.filter((r) => r.cumNet < 0).length}
-          </div>
-        </div>
-        <div className="bg-bg px-2.5 py-2">
-          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Window</div>
-          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">14d</div>
-        </div>
-      </section>
+      <StatStrip>
+        <Stat label="Issuers observed" value={rows.length} />
+        <Stat label="Net accumulating" value={rows.filter((r) => r.cumNet > 0).length} color="var(--acc)" />
+        <Stat label="Net distributing" value={rows.filter((r) => r.cumNet < 0).length} color="var(--dist)" />
+        <Stat label="Window" value="14d" />
+      </StatStrip>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <FlowTable title="Largest foreign accumulation" rows={accPg.rows} sign="acc" startAt={accPg.from}>

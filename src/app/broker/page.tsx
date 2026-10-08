@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getBrokerBoard } from "@/lib/services";
 import { fmtCurrency } from "@/components/fmt";
 import { Pager, pageHref, paginate } from "@/components/Pager";
+import { StatStrip, Stat } from "@/components/StatStrip";
 import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
@@ -43,27 +44,18 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
       </div>
 
       {/* Registry cohort counts — same hairline-band language as the board stats. */}
-      <section className="grid grid-cols-3 gap-px border border-line bg-line/70 sm:grid-cols-6">
+      <StatStrip>
         {COHORT_ORDER.map((c) => (
-          <div key={c} className="bg-bg px-2.5 py-2">
-            <div className="mono text-[9px] uppercase tracking-[0.12em] faint">{c}</div>
-            <div
-              className="mono mt-0.5 text-[15px] font-semibold tabular-nums"
-              style={{ color: c === "institutional" ? "var(--cohort-inst)" : c === "retail" ? "var(--cohort-retail)" : undefined }}
-            >
-              {board.registry.byCohort[c] ?? 0}
-            </div>
-          </div>
+          <Stat
+            key={c}
+            label={c}
+            value={board.registry.byCohort[c] ?? 0}
+            color={c === "institutional" ? "var(--cohort-inst)" : c === "retail" ? "var(--cohort-retail)" : undefined}
+          />
         ))}
-        <div className="bg-bg px-2.5 py-2">
-          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Firms classified</div>
-          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">{board.registry.total}</div>
-        </div>
-        <div className="bg-bg px-2.5 py-2">
-          <div className="mono text-[9px] uppercase tracking-[0.12em] faint">Session</div>
-          <div className="mono mt-0.5 text-[15px] font-semibold tabular-nums">{board.date ?? "—"}</div>
-        </div>
-      </section>
+        <Stat label="Firms classified" value={board.registry.total} />
+        <Stat label="Session" value={board.date ?? "—"} />
+      </StatStrip>
 
       {board.date && <DataStatus asOf={board.date} />}
 
