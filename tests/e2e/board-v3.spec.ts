@@ -29,8 +29,8 @@ test("exit watch board renders scored rows with numeric badge and flags", async 
   await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
-  // numeric exit-pressure badge (td order: rank, issuer, pressure, components, flags)
-  await expect(rows.first().locator("td").nth(2)).toContainText(/\d+/);
+  // numeric exit-pressure badge (td order: rank, issuer, sparkline, pressure, components, flags)
+  await expect(rows.first().locator("td").nth(3)).toContainText(/\d+/);
   // component strip labels exist somewhere in the table header/rows
   await expect(page.getByText("INST").first()).toBeVisible();
   // issuer links resolve to dossiers
@@ -50,7 +50,7 @@ test("suppressed scope shows null-score rows", async ({ page }, testInfo) => {
   await page.goto("/?scope=suppressed");
   const rows = page.locator("tbody tr.row-hover");
   await expect(rows.first()).toBeVisible();
-  await expect(rows.first().locator("td").nth(2)).toContainText("low coverage");
+  await expect(rows.first().locator("td").nth(3)).toContainText("low coverage");
 });
 
 test("board paginates beyond 150 rows", async ({ page }, testInfo) => {
@@ -111,7 +111,7 @@ test("mobile suppressed scope renders rows and dossier link", async ({ page }, t
   await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
   const first = page.locator("tbody tr.row-hover").first();
   await expect(first).toBeVisible();
-  await expect(first.locator("td").nth(2)).toContainText("low coverage");
+  await expect(first.locator("td").nth(3)).toContainText("low coverage");
   await first.locator("a[href^='/stock/']").click();
   await expect(page).toHaveURL(/\/stock\/.+/);
   await expect(page.getByText(/market data through/)).toBeVisible();
