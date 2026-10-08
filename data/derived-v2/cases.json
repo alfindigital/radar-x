@@ -41002,7 +41002,7 @@
         "marketCap": 6582337423192,
         "observationKind": "ohlcv",
         "fieldSources": {
-          "close": "sectors-daily",
+          "close": "sectors-close",
           "open": "sectors-daily",
           "high": "sectors-daily",
           "low": "sectors-daily",
