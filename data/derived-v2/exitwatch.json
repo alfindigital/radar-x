@@ -2374,8 +2374,8 @@
   },
   {
     "symbol": "AIMS.JK",
-    "score": 63,
-    "tier": "elevated",
+    "score": null,
+    "tier": null,
     "coverage": 0.75,
     "components": [
       {
@@ -2436,7 +2436,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": false,
-      "suspended": false
+      "suspended": true
     },
     "series": [
       {
@@ -8005,8 +8005,8 @@
   },
   {
     "symbol": "ASPI.JK",
-    "score": 100,
-    "tier": "high",
+    "score": null,
+    "tier": null,
     "coverage": 0.75,
     "components": [
       {
@@ -8067,7 +8067,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": false,
-      "suspended": false
+      "suspended": true
     },
     "series": [
       {
@@ -27881,8 +27881,8 @@
   },
   {
     "symbol": "CSMI.JK",
-    "score": 35,
-    "tier": "watch",
+    "score": null,
+    "tier": null,
     "coverage": 0.75,
     "components": [
       {
@@ -27943,7 +27943,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": false,
-      "suspended": false
+      "suspended": true
     },
     "series": [
       {
@@ -37007,7 +37007,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -37046,7 +37046,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -37206,7 +37206,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -37245,7 +37245,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -38030,7 +38030,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -38069,7 +38069,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -40018,7 +40018,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -40057,7 +40057,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -44312,7 +44312,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": true,
-      "suspended": true
+      "suspended": false
     },
     "series": [],
     "window": {
@@ -44335,7 +44335,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -44374,7 +44374,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -45826,7 +45826,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -45865,7 +45865,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -48877,7 +48877,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -48916,7 +48916,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -49836,7 +49836,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -49875,7 +49875,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -50270,7 +50270,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -50309,7 +50309,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -50321,7 +50321,7 @@
       "corp_action_near": false,
       "float_constraint": true,
       "sparse_broker": true,
-      "suspended": true
+      "suspended": false
     },
     "series": [],
     "window": {
@@ -53373,7 +53373,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -53412,7 +53412,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -54405,7 +54405,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -55714,7 +55714,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -55753,7 +55753,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -57633,7 +57633,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled institutional in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -57672,7 +57672,7 @@
         "z": null,
         "contribution": 0,
         "status": "missing",
-        "reason": "No broker observations labeled retail in the saved snapshot.",
+        "reason": "broker top-N aggregate covers 2026-07-10→2026-10-08 (outside the 14d window) · kept as context, not scored",
         "observations": 0,
         "observedFrom": null,
         "observedTo": null,
@@ -70099,8 +70099,8 @@
   },
   {
     "symbol": "MPXL.JK",
-    "score": 73,
-    "tier": "elevated",
+    "score": null,
+    "tier": null,
     "coverage": 0.75,
     "components": [
       {
@@ -70161,7 +70161,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": false,
-      "suspended": false
+      "suspended": true
     },
     "series": [
       {
@@ -79133,8 +79133,8 @@
   },
   {
     "symbol": "PGLI.JK",
-    "score": 15,
-    "tier": "low",
+    "score": null,
+    "tier": null,
     "coverage": 0.75,
     "components": [
       {
@@ -79195,7 +79195,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": false,
-      "suspended": false
+      "suspended": true
     },
     "series": [
       {
@@ -82279,7 +82279,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": true,
-      "suspended": true
+      "suspended": false
     },
     "series": [],
     "window": {
@@ -100453,8 +100453,8 @@
   },
   {
     "symbol": "TEBE.JK",
-    "score": 0,
-    "tier": "low",
+    "score": null,
+    "tier": null,
     "coverage": 1,
     "components": [
       {
@@ -100515,7 +100515,7 @@
       "corp_action_near": false,
       "float_constraint": false,
       "sparse_broker": false,
-      "suspended": false
+      "suspended": true
     },
     "series": [
       {

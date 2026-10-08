@@ -3,7 +3,7 @@
   "engineVersion": "radarx-v2",
   "asOf": "2026-10-08",
   "inputHash": "088ebb0e91d99806c28358e9e3d2bff1f2a56d138cafc6e5b9b191f40983ae3e",
-  "generatedAt": "2026-10-08T13:37:08.474Z",
+  "generatedAt": "2026-10-08T13:55:30.070Z",
   "files": [
     {
       "path": "scores.json",
@@ -13,13 +13,13 @@
     },
     {
       "path": "cases.json",
-      "rows": 233,
-      "sha256": "2650096f7eebb0c7ee74a11c65fa9f40d318458976ad0d131f1551cd67b8a67c"
+      "rows": 224,
+      "sha256": "50921d61f2254c721f21c255448ddbebef9e0ead4857369426f81bfb7c8a86b8"
     },
     {
       "path": "exitwatch.json",
       "rows": 964,
-      "sha256": "41116b8f99d494eb7c463feed31c030ce819ac0b8272f2e630c459cdc0a4e497",
+      "sha256": "b2e397c510715b635dfd122d6fb34fbb407e821e237b51607627a729f7cd163b",
       "engineVersion": "radarx-v3"
     }
   ],
@@ -30,10 +30,11 @@
   ],
   "feedHashes": {
     "broker_registry.json": "f0fa5f256514933347a3072c063f931899ee2263b9979707ef4f1857685f1bf0",
-    "broker_top.json": "b01ce4059fb1935bdf112d0ce925d37ba72b7f2e20ceda50564042c71ccdb00b",
+    "broker_top.json": "90218e9d9198e32beb82b06f90abe64172c3ffbc00955f876feb9654534eaa16",
     "cohort_top.json": "723e146d8f2b880b2a6fc6733e0789f9d9b002b7eefb43556babda747ecb4fa6",
     "suspensions.json": "5cafb5b0a6a546af2c950faa00d93e4071469c26029d7be3532b53116af3f1b6",
     "corporate_actions.json": "27688e493b223528ff3633136adb7c5abfc877c6ab23e01345a8bad72228f796",
-    "free_float.json": "edf76dcd5fbdac47e010353a058205c056323281578a92e4b98d433f5be56b7d"
+    "free_float.json": "edf76dcd5fbdac47e010353a058205c056323281578a92e4b98d433f5be56b7d",
+    "taxonomy.json": "f858cf4b36a2b55f07232d3388a0265e8a4fe0495a0bc700601086ad75448f23"
   }
 }
