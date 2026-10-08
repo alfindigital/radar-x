@@ -58,12 +58,12 @@ Two evidence types, marked per row:
 | Feed | Coverage | Latest data |
 |---|---|---|
 | Universe | 964 symbols scored (962 live emiten + 2 delisted with filing history) | — |
-| Insider filings | 3,865 rows / 496 issuers | txn 2026-10-06 |
-| Broker rows | 308K rows / 863 symbols | 2026-10-07 |
-| Foreign flow | 811 symbols ≥60 days depth | 2026-10-07 |
-| Prices | OHLCV 962/962 | 2026-10-07 |
+| Insider filings | 3,866 rows / 496 issuers | txn 2026-10-06 |
+| Broker rows | 322K rows / 863 symbols | 2026-10-08 (~600 syms; tail pending quota) |
+| Foreign flow | 869 symbols | 2026-10-08 (826 syms) |
+| Prices | OHLCV 962/962 | 2026-10-08 |
 | Holders monthly | 962/962, ~21 months each | 2026-09-30 |
-| Suspensions | 609 rows | — |
+| Suspensions | 612 rows | — |
 | Free float | 961/962 | — |
 
 Full numbers and the two repair passes live in `docs/AUDIT-DATA-2026-10-08.md`.

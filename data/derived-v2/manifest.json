@@ -2,13 +2,13 @@
   "schemaVersion": 2,
   "engineVersion": "radarx-v2",
   "asOf": "2026-10-08",
-  "inputHash": "5f42f985e61d11195b2ec96bc9d824468add71007822a051d4c565c7bee5a27d",
-  "generatedAt": "2026-10-08T09:08:11.360Z",
+  "inputHash": "76b48932bde22c16935e57278a70ecbc1ffa850a9029edf93e4624931688c5d2",
+  "generatedAt": "2026-10-08T12:32:30.745Z",
   "files": [
     {
       "path": "scores.json",
       "rows": 964,
-      "sha256": "855d6549b0044c7216cf43e25f25fe916845d44426b38d06cb193481b15ed1dd",
+      "sha256": "796523f32723f5b3d5805c91991f9f062d65711e3ef9ce1f9f393d4ff77a8585",
       "engineVersion": "radarx-v2"
     },
     {
@@ -19,7 +19,7 @@
     {
       "path": "exitwatch.json",
       "rows": 964,
-      "sha256": "800d1205af1e3fbfb62fe7ce48dfdc7dbbb3b118a6426ec9529ab0db9a7c7dc4",
+      "sha256": "dcb04263e383cd57ba1af6e11c49307c4c9201d5387be2b38f42e54e6dc464bc",
       "engineVersion": "radarx-v3"
     }
   ],
@@ -31,9 +31,9 @@
   "feedHashes": {
     "broker_registry.json": "f0fa5f256514933347a3072c063f931899ee2263b9979707ef4f1857685f1bf0",
     "broker_top.json": "b01ce4059fb1935bdf112d0ce925d37ba72b7f2e20ceda50564042c71ccdb00b",
-    "cohort_top.json": "c6e52917970b4028985bd76ae0897d2eb0afdfd8052f8fc37c6d97260d514510",
-    "suspensions.json": "481fe5030be889d83c72b7cc545d0d42c8358b7b10a6a9386edd806d8a4660fb",
-    "corporate_actions.json": "beeb72da62b97585680f815995c5cc7fcc016da590e36472e460b7b4f59b5625",
+    "cohort_top.json": "723e146d8f2b880b2a6fc6733e0789f9d9b002b7eefb43556babda747ecb4fa6",
+    "suspensions.json": "5cafb5b0a6a546af2c950faa00d93e4071469c26029d7be3532b53116af3f1b6",
+    "corporate_actions.json": "27688e493b223528ff3633136adb7c5abfc877c6ab23e01345a8bad72228f796",
     "free_float.json": "edf76dcd5fbdac47e010353a058205c056323281578a92e4b98d433f5be56b7d"
   }
 }

@@ -1,14 +1,14 @@
 # CURRENT_STATE — RADAR-X
 
-> Update tiap akhir task. Terakhir: 2026-10-07 (snapshot 10-07 live di radarx.web.id; cleanup: dead v2 runtime loads + schema.sql + supabase stub dihapus, sharp/source-map-js dipatch).
+> Update tiap akhir task. Terakhir: 2026-10-08 (snapshot 10-08; OHLCV penuh 962/962, flow 826 syms, broker 588 syms — sisa breadth menyusul saat publish upstream + kuota key pulih).
 
 - **Version:** `radarx-v3` **Exit Watch — built, audited, remediated.** v2 board
   preserved at `/?v=radar`.
 - **Gates:** `npm test` 53/53 · `typecheck` clean · `lint` 0 errors ·
   `audit:data` exit 0 · `build` clean (Next 16.3.8) ·
-  `compute --as-of 2026-10-07` (daily ingest) → exitwatch.json 962 rows
-  (244 publishable: 57 high / 46 elevated / 90 watch / 51 low, 718
-  suppressed-not-zero; cases 169; outcomes 198/106/203).
+  `compute --as-of 2026-10-08` (daily ingest) → exitwatch.json 964 rows
+  (850 publishable: 189 high / 126 elevated / 348 watch / 187 low, 114
+  suppressed-not-zero; cases 233; outcomes 289/189/221).
 - **Audit 2026-10-06 (`docs/AUDIT-2026-10-06.md`, 32 findings):** semua P1 +
   P2 kritis diremediasi di `f659a5e`; sisanya (window convention, rotation
   coverage, scheduler contract, docs) ditutup di sesi ini.
