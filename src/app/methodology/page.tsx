@@ -9,6 +9,27 @@ export default function MethodologyPage() {
       </div>
 
       <section className="panel space-y-3 p-5">
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">How to read a page</h2>
+        <ul className="list-inside list-disc space-y-1.5 dim">
+          <li>
+            <b className="text-ink">Board.</b> Issuers rank by exit pressure: ≥75 <span className="dist">high</span>, ≥55 <span className="neutral">elevated</span>, ≥35 <span className="dim">watch</span>, below that lower observed pressure. A <span className="mono">—</span> with <span className="tag">low coverage</span> means fewer than half of the weighted components had usable evidence; it is suppressed, not scored zero.
+          </li>
+          <li>
+            <b className="text-ink">Component chips.</b> <span className="mono">INST / FOR / INS</span> are exit-side z-scores (institutional broker flow, foreign flow, insider sells); <span className="mono">RET</span> is the absorption side (retail-classified broker buying). Positive means above-cohort pressure in that component&apos;s own direction. Focus or hover any chip for its raw value, window, and observation count.
+          </li>
+          <li>
+            <b className="text-ink">Flags.</b> <span className="mono">SUSP ≤14D</span> a suspension was recorded near the window, <span className="mono">CA ±7D</span> a corporate action sits at the window edge, <span className="mono">FF&lt;20%</span> the float is thin. <span className="mono">SPARSE</span> marks thin labeled-broker coverage; it is context, not an alert. <span className="mono">SUSPENDED</span> means a suspension is on record and the regular-market tape printed zero volume all window — the row is quarantined out of the publishable board because negotiated-market blocks can still flow through the broker feed.
+          </li>
+          <li>
+            <b className="text-ink">Dossier.</b> The paired panels show institutional-classified (blue) versus retail-classified (ochre) net flow per session on a shared zero baseline. Below them sit the insider transaction wire, each row linked to its filing PDF on idx.co.id, and monthly holder composition. A <b className="text-ink">Pending</b> or <b className="text-ink">Unavailable</b> outcome means the horizon is not measurable yet; it never prints as 0%.
+          </li>
+          <li>
+            <b className="text-ink">Suggested order.</b> Open the <span className="mono">Flagged</span> scope, pick a row, check which components carry the score, then follow the source links before drawing any conclusion.
+          </li>
+        </ul>
+      </section>
+
+      <section className="panel space-y-3 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Positioning index (−100 to +100)</h2>
         <p>
           The v2 index is a descriptive, cross-sectional comparison across the saved cohort as of the displayed date.
@@ -82,13 +103,87 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
       </section>
 
       <section className="panel space-y-3 p-5">
+        <h2 className="text-xs font-bold uppercase tracking-wider dim">Where the data comes from</h2>
+        <p className="dim">
+          Everything external enters through one intermediary, the Sectors Financial API. Its upstream is official
+          Indonesian market plumbing: IDX disclosures and trading records, and KSEI custody registers. Insider rows and
+          suspension rows carry a <span className="mono">source</span> link to the original document on idx.co.id, so
+          the claim is checkable rather than asserted.
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+                <th className="py-1.5 pr-3 font-medium">What you see</th>
+                <th className="py-1.5 pr-3 font-medium">Upstream source</th>
+                <th className="py-1.5 font-medium">Cadence</th>
+              </tr>
+            </thead>
+            <tbody className="dim">
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Insider &amp; ≥5% holder transactions</td>
+                <td className="py-1.5 pr-3">IDX announcements forwarded from KSEI (LK ownership reports)</td>
+                <td className="py-1.5">per filing</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Cohort flow, broker boards</td>
+                <td className="py-1.5 pr-3">IDX per-broker daily trading records</td>
+                <td className="py-1.5">per session</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Foreign flow</td>
+                <td className="py-1.5 pr-3">IDX foreign-investor trading totals</td>
+                <td className="py-1.5">per session</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Holder composition</td>
+                <td className="py-1.5 pr-3">KSEI monthly shareholder register, aggregate by investor class</td>
+                <td className="py-1.5">monthly</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Major holders (≥5%)</td>
+                <td className="py-1.5 pr-3">Issuer-disclosed ownership register</td>
+                <td className="py-1.5">rolling</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Prices, IHSG, market cap</td>
+                <td className="py-1.5 pr-3">IDX end-of-day official series</td>
+                <td className="py-1.5">per session</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Suspensions, corporate actions</td>
+                <td className="py-1.5 pr-3">IDX announcements and corporate action calendar</td>
+                <td className="py-1.5">per event</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Free float</td>
+                <td className="py-1.5 pr-3">IDX published free-float figures</td>
+                <td className="py-1.5">periodic</td>
+              </tr>
+              <tr className="border-b border-line/40">
+                <td className="py-1.5 pr-3">Broker cohort labels (retail/institutional)</td>
+                <td className="py-1.5 pr-3">Sectors-curated broker registry; not an official IDX classification</td>
+                <td className="py-1.5">registry</td>
+              </tr>
+              <tr>
+                <td className="py-1.5 pr-3">News</td>
+                <td className="py-1.5 pr-3">Indonesian financial media aggregation</td>
+                <td className="py-1.5">rolling</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="panel space-y-3 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider dim">Data lineage and coverage</h2>
         <p className="dim">
           The public app reads a hash-verified local Sectors snapshot and generated artifacts. The snapshot includes
           parsed filings, foreign flow, daily prices, broker rows, monthly holders, tickers, a benchmark-observed IHSG
           series, and a saved subsector-aggregate artifact used by the sector rotation board. v3 Exit Watch additionally
           consumes the broker registry, per-issuer top-broker feeds, suspensions, corporate actions, and free-float feeds;
-          each hashed into the derived manifest (<span className="mono">feedHashes</span>).
+          each hashed into the derived manifest (<span className="mono">feedHashes</span>). The full feed-by-feed map
+          lives in <span className="mono">docs/DATA-LINEAGE.md</span> in the public repository.
           Retrieval times and historical publication availability are not verified for legacy rows. Ambiguous flat-OHLC or zero-volume
           observations are marked <span className="mono">legacy-unknown</span>.
         </p>
