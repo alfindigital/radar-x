@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import { detectCandidates } from "../src/lib/cases";
 import type { FlowDaily, InsiderTrade, PriceDaily } from "../src/lib/types";
 
-function trade(holderName: string, txnDate: string): InsiderTrade {
+function trade(holderName: string, txnDate: string, txnType: "buy" | "sell" = "buy"): InsiderTrade {
   return {
     symbol: "TEST.JK",
     holderName,
     holderType: "insider",
-    txnType: "buy",
+    txnType,
     txnDate,
     filedAt: `${txnDate}T18:00:00Z`,
     amount: 100,
@@ -51,6 +51,17 @@ test("future prices cannot change candidate identity or evidence", () => {
   const a = detectCandidates("TEST.JK", base);
   const b = detectCandidates("TEST.JK", altered);
   assert.deepEqual(a, b);
+});
+
+test("an interleaved seller does not split a buyer cluster", () => {
+  const candidates = detectCandidates("TEST.JK", {
+    insider: [trade("A", "2026-09-01"), trade("Z", "2026-09-05", "sell"), trade("B", "2026-09-10"), trade("C", "2026-09-20")],
+    flow,
+    price: [price("2026-08-01", 120), price("2026-09-01", 100), price("2026-09-10", 99), price("2026-09-20", 98)],
+  });
+  const cluster = candidates.find((candidate) => candidate.pattern === "CLUSTER_PATTERN")!;
+  assert.deepEqual(cluster.holders, ["A", "B", "C"]);
+  assert.deepEqual(cluster.insiderTrades.map((t) => t.holderName), ["A", "B", "C"]);
 });
 
 test("a fourth holder after the bounded window starts a separate event", () => {
