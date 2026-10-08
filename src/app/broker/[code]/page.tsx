@@ -76,7 +76,7 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
             <h2 className="section-label mb-3">Top buyer of ({p.symbolsTopBuyer.length})</h2>
             <div className="flex flex-wrap gap-1.5">
               {p.symbolsTopBuyer.slice(0, 60).map((s) => (
-                <Link key={s} href={`/saham/${s.replace(".JK", "")}`} className="tag hover:text-ink">
+                <Link key={s} href={`/stock/${s.replace(".JK", "")}`} className="tag hover:text-ink">
                   {s.replace(".JK", "")}
                 </Link>
               ))}
@@ -88,7 +88,7 @@ export default async function BrokerProfilePage({ params }: PageProps<"/broker/[
             <h2 className="section-label mb-3">Top seller of ({p.symbolsTopSeller.length})</h2>
             <div className="flex flex-wrap gap-1.5">
               {p.symbolsTopSeller.slice(0, 60).map((s) => (
-                <Link key={s} href={`/saham/${s.replace(".JK", "")}`} className="tag hover:text-ink">
+                <Link key={s} href={`/stock/${s.replace(".JK", "")}`} className="tag hover:text-ink">
                   {s.replace(".JK", "")}
                 </Link>
               ))}

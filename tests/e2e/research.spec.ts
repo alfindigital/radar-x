@@ -28,8 +28,8 @@ test("desktop research journey keeps negative distribution and source evidence",
   await expect(rows.first()).toBeVisible();
   await expect(rows.first()).toContainText("-");
 
-  await rows.first().locator("a[href^='/saham/']").click();
-  await expect(page).toHaveURL(/\/saham\//);
+  await rows.first().locator("a[href^='/stock/']").click();
+  await expect(page).toHaveURL(/\/stock\//);
   await expect(page.getByText("Reported ownership transactions")).toBeVisible();
   await expect(page.getByText(/market data through/)).toBeVisible();
   const sourceLinks = page.locator("a[href^='http://'], a[href^='https://']");
@@ -42,9 +42,9 @@ test("desktop research journey keeps negative distribution and source evidence",
 });
 
 test("case detail exposes separate outcome status and bounded evidence", async ({ page }) => {
-  await page.goto("/kasus");
+  await page.goto("/cases");
   await expect(page.getByRole("heading", { name: "Candidate Feed" })).toBeVisible();
-  const firstCase = page.locator("a[href^='/kasus/']").first();
+  const firstCase = page.locator("a[href^='/cases/']").first();
   await expect(firstCase).toBeVisible();
   await firstCase.click();
   await expect(page.getByText("Candidate pattern from reported transactions")).toBeVisible();
@@ -59,10 +59,10 @@ test("search resolves a known issuer and an unknown issuer remains explicit", as
   await page.waitForTimeout(750);
   await search.fill("BBCA");
   await search.press("Enter");
-  await expect(page).toHaveURL(/\/saham\/BBCA$/);
+  await expect(page).toHaveURL(/\/stock\/BBCA$/);
   await expect(page.getByText("BBCA").first()).toBeVisible();
 
-  await page.goto("/saham/ZZZZ");
+  await page.goto("/stock/ZZZZ");
   await expect(page.getByText("unknown", { exact: true })).toBeVisible();
   await expect(page.getByText("No price observations in the saved snapshot.")).toBeVisible();
 });
@@ -75,10 +75,10 @@ test.describe("mobile navigation", () => {
     const nav = page.getByRole("navigation", { name: "Primary navigation" });
     await expect(nav).toBeVisible();
     await nav.getByRole("link", { name: "Foreign flow" }).click();
-    await expect(page).toHaveURL(/\/asing$/);
+    await expect(page).toHaveURL(/\/foreign$/);
     await expect(page.getByRole("heading", { name: "Foreign Flow Radar" })).toBeVisible();
     await nav.getByRole("link", { name: "Methodology" }).click();
-    await expect(page).toHaveURL(/\/metodologi$/);
+    await expect(page).toHaveURL(/\/methodology$/);
     await expect(page.getByRole("heading", { name: "Methodology" })).toBeVisible();
   });
 });

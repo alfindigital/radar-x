@@ -24,11 +24,24 @@ const COMPONENT_CELLS: { key: ExitComponent["key"]; label: string; hint: string 
   { key: "retailAbsorb", label: "RET", hint: "Net flow of brokers classified retail: absorption side" },
 ];
 
+function componentLabel(key: ExitComponent["key"]) {
+  return COMPONENT_CELLS.find((m) => m.key === key)?.label ?? key;
+}
+
+function componentTip(c: ExitComponent): string {
+  if (c.status !== "available" || c.z === null) {
+    return `${componentLabel(c.key)}: n/a · ${c.reason ?? "no usable evidence for this component in the window"}`;
+  }
+  const z = c.z;
+  return `${componentLabel(c.key)}: z ${z >= 0 ? "+" : "−"}${Math.abs(z).toFixed(2)} · raw ${c.raw !== null ? `${c.raw >= 0 ? "+" : "−"}${Math.abs(c.raw).toFixed(3)}` : "—"}% of cap · ${c.observations} obs${c.source ? ` · ${c.source}` : ""}${c.observedFrom ? ` · ${c.observedFrom}→${c.observedTo}` : ""}`;
+}
+
 function ComponentCell({ c, kind }: { c: ExitComponent; kind: ExitComponent["key"] }) {
+  const label = componentLabel(c.key);
   if (c.status !== "available" || c.z === null) {
     return (
-      <div className="min-w-[54px]" title={c.reason ?? "No usable evidence for this component in the window."}>
-        <div className="faint text-[9px] uppercase tracking-wider">{COMPONENT_CELLS.find((m) => m.key === c.key)?.label}</div>
+      <div className="min-w-[54px]" data-tip={componentTip(c)}>
+        <div className="faint text-[9px] uppercase tracking-wider">{label}</div>
         <div className="faint mono text-[11px]">—</div>
       </div>
     );
@@ -47,11 +60,8 @@ function ComponentCell({ c, kind }: { c: ExitComponent; kind: ExitComponent["key
           : "var(--acc)";
   const pct = Math.min(100, (Math.abs(z) / 3) * 100);
   return (
-    <div
-      className="min-w-[54px]"
-      title={`z ${z >= 0 ? "+" : "−"}${Math.abs(z).toFixed(2)} · raw ${c.raw !== null ? `${c.raw >= 0 ? "+" : "−"}${Math.abs(c.raw).toFixed(3)}` : "—"}% of cap · ${c.observations} obs${c.source ? ` · ${c.source}` : ""}${c.observedFrom ? ` · ${c.observedFrom}→${c.observedTo}` : ""}`}
-    >
-      <div className="faint text-[9px] uppercase tracking-wider">{COMPONENT_CELLS.find((m) => m.key === c.key)?.label}</div>
+    <div className="min-w-[54px]" data-tip={componentTip(c)}>
+      <div className="faint text-[9px] uppercase tracking-wider">{label}</div>
       <div className="mono text-[11px] leading-tight" style={{ color }}>
         {z >= 0 ? "+" : "−"}
         {Math.abs(z).toFixed(1)}
@@ -65,11 +75,18 @@ function ComponentCell({ c, kind }: { c: ExitComponent; kind: ExitComponent["key
 
 function Row({ row, rank }: { row: ExitWatchRow; rank: number }) {
   const hot = row.score !== null && row.score >= 75;
+  // One focus stop per row exposes every component's evidence (z · raw · obs ·
+  // window); the dossier page holds the full breakdown. Per-cell data-tips stay
+  // hover-only for mouse users.
+  const groupTip = row.components.map(componentTip).join("\n");
   return (
     <tr className={`row-hover border-b border-line/60 ${hot ? "row-signal" : ""}`}>
       <td className="mono py-3 pl-1 pr-4 text-[11px] faint">{String(rank).padStart(2, "0")}</td>
-      <td className="py-3 pr-4">
-        <Link href={`/saham/${row.symbol.replace(".JK", "")}`} className="mono text-[13px] font-semibold tracking-wide">
+      <td className="tapcell py-3 pr-4">
+        <Link
+          href={`/stock/${row.symbol.replace(".JK", "")}`}
+          className="taplink mono text-[13px] font-semibold tracking-wide"
+        >
           {row.symbol.replace(".JK", "")}
         </Link>
       </td>
@@ -77,7 +94,7 @@ function Row({ row, rank }: { row: ExitWatchRow; rank: number }) {
         <ExitPressureBadge score={row.score} coverage={row.coverage} />
       </td>
       <td className="hidden py-3 pr-4 md:table-cell">
-        <div className="flex gap-4">
+        <div className="flex gap-4" role="group" aria-label={`Component evidence for ${row.symbol.replace(".JK", "")}`} tabIndex={0} data-ftip={groupTip}>
           {row.components.map((c) => (
             <ComponentCell key={c.key} c={c} kind={c.key} />
           ))}
@@ -106,7 +123,7 @@ function StatCell({ label, value, sub, color }: { label: string; value: ReactNod
 export default async function BoardPage({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
   if (params.v === "radar") {
-    const filter = typeof params.f === "string" ? params.f : "semua";
+    const filter = typeof params.f === "string" ? params.f : "all";
     return <RadarBoardView filter={filter} />;
   }
 
@@ -176,7 +193,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             <span className="mono flex flex-wrap items-center gap-x-2 text-[10px] uppercase tracking-wider faint">
               Heaviest vol <span className="normal-case">{market.mostTraded.date}</span>
               {market.mostTraded.rows.map((r) => (
-                <Link key={r.symbol} href={`/saham/${r.symbol.replace(".JK", "")}`} className="text-ink hover:text-acc">
+                <Link key={r.symbol} href={`/stock/${r.symbol.replace(".JK", "")}`} className="text-ink hover:text-acc">
                   {r.symbol.replace(".JK", "")}
                 </Link>
               ))}
@@ -202,6 +219,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
               <Link
                 key={s.key}
                 href={s.key === "all" ? "/" : `/?scope=${s.key}`}
+                aria-current={scope === s.key ? "page" : undefined}
                 className={`tab ${scope === s.key ? "tab-active" : ""}`}
               >
                 {s.label}
@@ -211,10 +229,10 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
             ))}
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="table-sticky">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+                <tr className="text-left text-[10px] uppercase tracking-wider faint">
                   <th className="mono py-2 pl-1 pr-4 font-normal">#</th>
                   <th className="mono py-2 pr-4 font-normal">Issuer</th>
                   <th className="mono py-2 pr-4 font-normal">Exit pressure</th>
@@ -274,7 +292,7 @@ export default async function BoardPage({ searchParams }: PageProps<"/">) {
           <p className="mt-4 text-[10px] faint">
             Exit pressure is a bounded descriptive reading over labeled broker-cohort flow, foreign flow, and reported
             insider transactions; not proof of intent or a prediction. Coverage gate ≥0.5 · feeds hashed in manifest ·{" "}
-            <Link href="/metodologi" className="blue">
+            <Link href="/methodology" className="blue">
               methodology
             </Link>
           </p>

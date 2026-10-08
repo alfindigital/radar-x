@@ -258,6 +258,118 @@ a:hover {
   background: color-mix(in srgb, var(--acc) 32%, transparent);
 }
 
+/* Evidence tips — attr()-driven so detail opens on hover AND :focus
+   (keyboard/touch hosts get tabindex). [data-ftip] is the focus-only variant
+   for row groups: nested [data-tip] cells keep their own hover tips without
+   the group tip firing on inner hover. */
+[data-tip],
+[data-ftip] {
+  position: relative;
+}
+[data-tip]::after,
+[data-ftip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 5px);
+  z-index: 30;
+  width: max-content;
+  max-width: 300px;
+  white-space: pre-line;
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+[data-ftip]::after {
+  content: attr(data-ftip);
+}
+[data-tip]:hover::after,
+[data-tip]:focus::after,
+[data-ftip]:focus::after {
+  opacity: 1;
+}
+/* Right-edge hosts: anchor the tip to the host's right edge so the hidden
+   ::after can't inflate the document scroll width. */
+.tip-r::after {
+  left: auto;
+  right: 0;
+}
+
+/* Sticky thead — pins under the 49px top bar while the page scrolls. The
+   wrapper uses overflow-x: clip, not auto: clip keeps the viewport as the
+   vertical scrollport so sticky engages. Only for tables that fit their
+   column budget at every breakpoint — clip hides overflow, never scrolls. */
+.table-sticky {
+  overflow-x: clip;
+}
+.table-sticky thead th {
+  position: sticky;
+  top: 49px;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Touch targets — coarse pointers only: the primary cell link fills its
+   cell so the hit area is ~45px instead of the ~24px text box. Desktop
+   density is unchanged. */
+@media (pointer: coarse) {
+  .tapcell {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .taplink {
+    display: inline-block;
+    padding-block: 16px;
+  }
+}
+
+/* Loader — one radar sweep, rotational (the scope-mark motif), not a pulse.
+   The global reduced-motion rule already freezes it. */
+.sweep {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+}
+.sweep::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg 300deg, var(--acc) 330deg 360deg);
+  animation: radarx-sweep 1.4s linear infinite;
+}
+.sweep::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px;
+  border-radius: 50%;
+  background: var(--acc);
+}
+@keyframes radarx-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* M2 — state transitions 140–220ms; reduced-motion kills them entirely */
 a,
 button,

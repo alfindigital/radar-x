@@ -150,9 +150,9 @@ function narrative(c: Omit<CaseRecord, "id" | "createdAt" | "score" | "evidence"
   nTrades: number;
   fwd30: number | null;
 }): string {
-  const names = c.holders.slice(0, 3).join(", ") + (c.holders.length > 3 ? ` +${c.holders.length - 3} lainnya` : "");
+  const names = c.holders.slice(0, 3).join(", ") + (c.holders.length > 3 ? ` +${c.holders.length - 3} others` : "");
   const val = c.totalValue >= 1e12 ? `${(c.totalValue / 1e12).toFixed(1)}T` : `${(c.totalValue / 1e9).toFixed(0)}M`;
-  const dir = c.direction === "accumulate" ? "beli" : "jual";
+  const dir = c.direction === "accumulate" ? "buy" : "sell";
   const res =
     c.fwd30 === null
       ? "No 30-day outcome is available yet."

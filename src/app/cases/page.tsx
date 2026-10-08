@@ -9,9 +9,11 @@ export const dynamic = "force-dynamic";
 
 const PATTERNS = ["", "STEALTH_ACCUMULATION", "INSIDER_CONTRA_BUY", "CLUSTER_PATTERN"];
 
-export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
-  const { pola } = await searchParams;
-  const pattern = typeof pola === "string" ? pola : undefined;
+export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
+  const q = await searchParams;
+  // ?pola= kept as a fallback for links shared before the param was renamed.
+  const raw = q.pattern ?? q.pola;
+  const pattern = typeof raw === "string" ? raw : undefined;
   const cases = await getCaseFeed(pattern);
 
   return (
@@ -27,7 +29,8 @@ export default async function CasesPage({ searchParams }: PageProps<"/kasus">) {
         {PATTERNS.map((p) => (
           <Link
             key={p || "all"}
-            href={p ? `/kasus?pola=${p}` : "/kasus"}
+            href={p ? `/cases?pattern=${p}` : "/cases"}
+            aria-current={pattern === p || (!pattern && !p) ? "page" : undefined}
             className={`tab ${pattern === p || (!pattern && !p) ? "tab-active" : ""}`}
           >
             {p ? PATTERN_LABEL[p] : "All"}

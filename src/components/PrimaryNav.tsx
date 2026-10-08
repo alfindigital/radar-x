@@ -7,10 +7,10 @@ import { useSyncExternalStore } from "react";
 export const NAV = [
   { href: "/", label: "Exit Watch" },
   { href: "/broker", label: "Brokers" },
-  { href: "/asing", label: "Foreign flow" },
-  { href: "/rotasi", label: "Sectors" },
-  { href: "/kasus", label: "Cases" },
-  { href: "/metodologi", label: "Methodology" },
+  { href: "/foreign", label: "Foreign flow" },
+  { href: "/rotation", label: "Sectors" },
+  { href: "/cases", label: "Cases" },
+  { href: "/methodology", label: "Methodology" },
 ] as const;
 
 export function useMountedPath() {

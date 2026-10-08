@@ -21,12 +21,12 @@ const jetMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RADAR-X — IDX Market Intelligence",
+  title: "RadarX · IDX Market Intelligence",
   description:
     "A reproducible market-intelligence view of Indonesian equity disclosures: exit pressure, institutional positioning, reported ownership, and measured historical outcomes.",
 };
 
-// Radar scope mark — concentric rings + one blip in a console badge chip.
+// Radar scope mark — lit phosphor wedge + beam + one blip in a console badge chip.
 function ScopeMark() {
   return (
     <span
@@ -35,10 +35,11 @@ function ScopeMark() {
       aria-hidden
     >
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="9.5" stroke="var(--acc)" strokeOpacity="0.6" />
-        <circle cx="12" cy="12" r="5.5" stroke="var(--acc)" strokeOpacity="0.38" />
-        <line x1="12" y1="12" x2="19.5" y2="6" stroke="var(--acc)" strokeWidth="1.6" />
-        <circle cx="16.4" cy="8.9" r="1.9" fill="var(--acc)" />
+        <path d="M12 12 L12 2.6 A9.4 9.4 0 0 1 18.65 5.35 Z" fill="var(--acc)" fillOpacity="0.3" />
+        <circle cx="12" cy="12" r="9.4" stroke="var(--acc)" strokeWidth="1.9" />
+        <line x1="12" y1="12" x2="18.5" y2="5.5" stroke="var(--acc)" strokeWidth="1.8" strokeLinecap="round" />
+        <circle cx="15" cy="6.8" r="1.5" fill="var(--acc)" />
+        <circle cx="12" cy="12" r="1.4" fill="var(--acc)" />
       </svg>
     </span>
   );
@@ -51,10 +52,10 @@ function TopNav() {
       <div className="flex h-12 items-center gap-4 px-4 md:gap-5 md:px-8">
         <Link
           href="/"
-          className="mono flex shrink-0 items-center gap-2 whitespace-nowrap text-[13px] font-semibold tracking-[0.14em]"
+          className="flex shrink-0 items-center gap-2 whitespace-nowrap text-[15px] font-extrabold leading-none tracking-[-0.01em]"
         >
           <ScopeMark />
-          RADAR<span className="acc">-X</span>
+          Radar<span className="acc">X</span>
         </Link>
         <DesktopNav />
         <div className="ml-auto flex min-w-0 items-center gap-3">
@@ -74,11 +75,11 @@ function Footer() {
   return (
     <footer className="border-t border-line px-4 py-6 md:px-8">
       <p className="max-w-3xl text-[11px] leading-relaxed faint">
-        RADAR-X presents descriptive statistics from public IDX disclosures via Sectors data. It is not investment
+        RadarX presents descriptive statistics from public IDX disclosures via Sectors data. It is not investment
         advice, a buy/sell recommendation, or an allegation about any person. Historical outcomes do not predict
         future returns.
       </p>
-      <p className="mono mt-2 text-[10px] faint">SECTORS HACKATHON 2026 · TRACK MARKET INTELLIGENCE</p>
+      <p className="mono mt-2 text-[10px] faint">SECTORS HACKATHON 2026 · TRACK 3 · MARKET INTELLIGENCE</p>
     </footer>
   );
 }

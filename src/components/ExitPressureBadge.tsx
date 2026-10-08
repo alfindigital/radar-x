@@ -7,7 +7,7 @@ export function ExitPressureBadge({ score, coverage }: { score: number | null; c
     return (
       <span className="inline-flex items-center gap-1.5">
         <span className="mono faint text-base">—</span>
-        <span className="tag" title="Fewer than half of the weighted components had usable evidence in this window.">
+        <span className="tag" data-tip="Fewer than half of the weighted components had usable evidence in this window.">
           low coverage
         </span>
       </span>
@@ -19,11 +19,16 @@ export function ExitPressureBadge({ score, coverage }: { score: number | null; c
   const label =
     score >= 75 ? "High exit pressure" : score >= 55 ? "Elevated exit pressure" : score >= 35 ? "Watch" : "Lower observed exit pressure";
   return (
-    <span className="inline-flex flex-col gap-1" title={`${label}: bounded reading over labeled broker-cohort flow; not proof of intent.`}>
+    <span className="inline-flex flex-col gap-1">
       <span className="inline-flex items-baseline gap-1.5">
-        <span className={`mono text-lg font-semibold tabular-nums leading-none ${cls}`}>{score}</span>
+        <span
+          className={`mono text-lg font-semibold tabular-nums leading-none ${cls}`}
+          data-tip={`${label}: bounded reading over labeled broker-cohort flow; not proof of intent.`}
+        >
+          {score}
+        </span>
         {coverage < 1 && (
-          <span className="faint text-[10px]" title="Share of component weight backed by usable evidence.">
+          <span className="faint text-[10px]" data-tip="Share of component weight backed by usable evidence.">
             cov {coverage.toFixed(2)}
           </span>
         )}

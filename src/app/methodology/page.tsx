@@ -5,7 +5,7 @@ export default function MethodologyPage() {
     <div className="mx-auto max-w-3xl space-y-6 text-sm leading-relaxed">
       <div>
         <h1 className="text-[26px] font-bold tracking-tight">Methodology</h1>
-        <p className="mt-1 text-[13px] dim">How RADAR-X summarizes reported ownership activity and its limits.</p>
+        <p className="mt-1 text-[13px] dim">How RadarX summarizes reported ownership activity and its limits.</p>
       </div>
 
       <section className="panel space-y-3 p-5">
@@ -97,7 +97,7 @@ weights = reported ownership .30 · foreign flow .25 · broker context .20
       <section className="panel space-y-3 border-watch/40 p-5">
         <h2 className="text-xs font-bold uppercase tracking-wider neutral">Disclaimer</h2>
         <p className="dim">
-          RADAR-X is public-data research, not investment advice, a recommendation, or a claim about intent or wrongdoing.
+          RadarX is public-data research, not investment advice, a recommendation, or a claim about intent or wrongdoing.
           Reported ownership activity is not proof of future price direction. Historical outcomes do not predict future returns.
         </p>
       </section>

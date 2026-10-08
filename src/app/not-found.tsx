@@ -18,7 +18,7 @@ export default function NotFound() {
           Brokers
         </Link>
         <span className="faint">·</span>
-        <Link href="/metodologi" className="dim hover:text-ink">
+        <Link href="/methodology" className="dim hover:text-ink">
           Methodology
         </Link>
       </div>

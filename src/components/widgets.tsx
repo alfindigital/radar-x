@@ -20,7 +20,7 @@ export function ScoreMarker({ score }: { score: number | null }) {
   if (score === null) return null;
   const pos = Math.max(0, Math.min(100, (score + 100) / 2));
   return (
-    <div className="relative h-1 w-20 bg-panel-2" style={{ borderRadius: "var(--radius-sm)" }} title={`${score > 0 ? "+" : ""}${score}`}>
+    <div className="tip-r relative h-1 w-20 bg-panel-2" style={{ borderRadius: "var(--radius-sm)" }} data-tip={`${score > 0 ? "+" : ""}${score}`}>
       <div
         className="absolute top-1/2 h-2.5 w-[3px] -translate-y-1/2"
         style={{ left: `calc(${pos}% - 1.5px)`, background: score >= 0 ? "var(--acc)" : "var(--dist)", borderRadius: 1 }}
@@ -46,7 +46,7 @@ export function ScoreBreakdown({ score }: { score: ScoreV2 }) {
         const z = component.z;
         const pct = z === null ? 0 : Math.min(100, (Math.abs(z) / 3) * 100);
         return (
-          <div key={m.key} title={`${m.hint} — bobot ${(m.weight * 100).toFixed(0)}%`}>
+          <div key={m.key} tabIndex={0} data-tip={`${m.hint} · weight ${(m.weight * 100).toFixed(0)}%`}>
             <div className="flex items-baseline justify-between text-xs">
               <span className="dim">
                 {m.label} <span className="faint">{(m.weight * 100).toFixed(0)}%</span>
@@ -78,7 +78,7 @@ export function CaseRow({ c }: { c: DerivedCase }) {
   const dir = outcome30.status === "complete" && outcome30.issuerPct !== null && outcome30.issuerPct < 0 ? "dist" : "neutral";
   return (
     <Link
-      href={`/kasus/${encodeURIComponent(c.id)}`}
+      href={`/cases/${encodeURIComponent(c.id)}`}
       className="row-hover grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-line px-1 py-3"
     >
       <div className="w-28">
@@ -89,7 +89,7 @@ export function CaseRow({ c }: { c: DerivedCase }) {
           <span className="mono text-sm font-bold">{c.symbol.replace(".JK", "")}</span>
           <span className="faint text-[11px]">{c.anchorDate}</span>
         </div>
-        <p className="mt-0.5 truncate text-xs dim">{names.length} distinct holders · {outcome30.status === "complete" ? "30-day outcome measured" : `30-day outcome ${outcome30.status}`}</p>
+        <p className="mt-0.5 truncate text-xs dim">{names.length} distinct holder{names.length === 1 ? "" : "s"} · {outcome30.status === "complete" ? "30-day outcome measured" : `30-day outcome ${outcome30.status}`}</p>
         <p className="mt-0.5 text-[11px] faint">
           {names.slice(0, 2).join(", ")}
           {names.length > 2 ? ` +${names.length - 2}` : ""} · {fmtCurrency(val)}

@@ -10,13 +10,14 @@ import { selectBoard } from "@/lib/board";
 import DataStatus from "@/components/DataStatus";
 
 const TABS = [
-  { key: "semua", label: "All Cohorts" },
+  { key: "all", label: "All Cohorts" },
   { key: "positive", label: "Positive Disparity (Accumulation)" },
   { key: "negative", label: "Negative Disparity (Distribution)" },
 ];
 
-// Legacy keys (?f=akumulasi / ?f=distribusi) keep working for old links.
+// Legacy keys (?f=semua / ?f=akumulasi / ?f=distribusi) keep working for old links.
 const FILTER_ALIASES: Record<string, string> = {
+  semua: "all",
   akumulasi: "positive",
   distribusi: "negative",
 };
@@ -36,7 +37,7 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Radar Board</h1>
           <p className="mt-1.5 text-[13px] dim">
-            Reported ownership activity across {scores.length} tracked issuers from a {universe}-issuer IDX directory · as of <span className="mono">{week ?? "—"}</span>
+            Reported ownership activity · coverage {scores.length}/{universe} IDX issuers · as of <span className="mono">{week ?? "—"}</span>
           </p>
         </div>
         <div className="flex items-center gap-4 text-xs">
@@ -58,7 +59,8 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
             {TABS.map((t) => (
               <Link
                 key={t.key}
-                href={t.key === "semua" ? "/?v=radar" : `/?v=radar&f=${t.key}`}
+                href={t.key === "all" ? "/?v=radar" : `/?v=radar&f=${t.key}`}
+                aria-current={resolved === t.key ? "page" : undefined}
                 className={`tab ${resolved === t.key ? "tab-active" : ""}`}
               >
                 {t.label}
@@ -66,10 +68,10 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
             ))}
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="table-sticky">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+                <tr className="text-left text-[10px] uppercase tracking-wider faint">
                   <th className="py-2 pr-4 font-medium">#</th>
                   <th className="py-2 pr-4 font-medium">Issuer</th>
                   <th className="py-2 pr-4 font-medium">Foreign flow</th>
@@ -83,8 +85,8 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
                 {shown.map((s, i) => (
                   <tr key={s.symbol} className="row-hover border-b border-line/60">
                     <td className="py-3 pr-4 faint">{i + 1}</td>
-                    <td className="py-3 pr-4">
-                      <Link href={`/saham/${s.symbol.replace(".JK", "")}`} className="font-bold text-sm">
+                    <td className="tapcell py-3 pr-4">
+                      <Link href={`/stock/${s.symbol.replace(".JK", "")}`} className="taplink font-bold text-sm">
                         {s.symbol.replace(".JK", "")}
                       </Link>
                     </td>
@@ -125,7 +127,7 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
                 <div key={i} className="row-hover flex items-center justify-between gap-3 border-b border-line/60 py-2.5">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <Link href={`/saham/${t.symbol.replace(".JK", "")}`} className="mono text-xs font-bold">
+                      <Link href={`/stock/${t.symbol.replace(".JK", "")}`} className="taplink mono text-xs font-bold">
                         {t.symbol.replace(".JK", "")}
                       </Link>
                       <span className={`tag ${t.txnType === "buy" ? "tag-acc" : t.txnType === "sell" ? "tag-dist" : ""}`}>
@@ -133,7 +135,7 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
                       </span>
                     </div>
                     <Link
-                      href={`/orang/${encodeURIComponent(t.holderName)}`}
+                      href={`/person/${encodeURIComponent(t.holderName)}`}
                       className="mt-0.5 block truncate text-[11px] dim"
                     >
                       {t.holderName}
@@ -152,7 +154,7 @@ export default async function RadarBoardView({ filter }: { filter: string }) {
           <section>
             <div className="mb-2 flex items-center justify-between">
               <h2 className="text-[10px] font-semibold uppercase tracking-widest faint">Candidate patterns</h2>
-              <Link href="/kasus" className="text-[11px] blue">
+              <Link href="/cases" className="text-[11px] blue">
                 All →
               </Link>
             </div>

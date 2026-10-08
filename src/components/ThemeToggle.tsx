@@ -96,14 +96,14 @@ export function ThemeToggle() {
     <button
       type="button"
       aria-label={`Theme: ${LABELS[mode]}. Switch to ${LABELS[NEXT[mode]]}`}
-      title={`${LABELS[mode]} — next: ${LABELS[NEXT[mode]]}`}
+      data-tip={`${LABELS[mode]} · next: ${LABELS[NEXT[mode]]}`}
       onClick={() => {
         const next = NEXT[mode];
         writeMode(next === "system" ? null : next);
         apply(next);
         window.dispatchEvent(new Event(EVENT));
       }}
-      className="flex h-11 w-11 shrink-0 items-center justify-center border border-line dim hover:border-line-2 hover:text-ink"
+      className="tip-r flex h-11 w-11 shrink-0 items-center justify-center border border-line dim hover:border-line-2 hover:text-ink"
       style={{ borderRadius: "var(--radius-sm)" }}
     >
       <ModeIcon mode={mode} />

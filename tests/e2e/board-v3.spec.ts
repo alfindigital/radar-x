@@ -34,7 +34,7 @@ test("exit watch board renders scored rows with numeric badge and flags", async 
   // component strip labels exist somewhere in the table header/rows
   await expect(page.getByText("INST").first()).toBeVisible();
   // issuer links resolve to dossiers
-  await expect(rows.first().locator("a[href^='/saham/']").first()).toBeVisible();
+  await expect(rows.first().locator("a[href^='/stock/']").first()).toBeVisible();
 });
 
 test("flagged scope renders flag chips", async ({ page }, testInfo) => {
@@ -68,7 +68,7 @@ test("issuer dossier shows exit watch panel, cohort chart, coverage, and recent-
   test.skip(testInfo.project.name === "mobile-chrome", "Dossier layout verified on desktop only.");
   // SONA.JK: suspension_recent flag set and a 2026-10-01 suspension record —
   // that date is a historical fact and survives snapshot refreshes.
-  await page.goto("/saham/SONA");
+  await page.goto("/stock/SONA");
   await expect(page.getByRole("heading", { name: "Exit Watch" })).toBeVisible();
   await expect(page.getByText(`14-day window ${winFrom} → ${asOf}`)).toBeVisible();
   await expect(page.getByText(/coverage \d+\.\d+/)).toBeVisible();
@@ -108,7 +108,7 @@ test("mobile suppressed scope renders rows and dossier link", async ({ page }, t
   const first = page.locator("tbody tr.row-hover").first();
   await expect(first).toBeVisible();
   await expect(first.locator("td").nth(2)).toContainText("low coverage");
-  await first.locator("a[href^='/saham/']").click();
-  await expect(page).toHaveURL(/\/saham\/.+/);
+  await first.locator("a[href^='/stock/']").click();
+  await expect(page).toHaveURL(/\/stock\/.+/);
   await expect(page.getByText(/market data through/)).toBeVisible();
 });

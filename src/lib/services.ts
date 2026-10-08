@@ -2,7 +2,7 @@
 // Reads the verified local snapshot and derived-v2 artifacts; never fetches or writes during a request.
 
 import { loadDerived, type BrokerCohorts, type DerivedCase, cohortsFromRegistry, EMPTY_COHORTS } from "./derive";
-import { loadBrokerTop, loadBrokersTop, loadCorpActions, loadIndexDaily, loadMostTraded, loadRegistry, loadSuspensions } from "./feeds";
+import { loadBrokerTop, loadBrokersTop, loadCorpActions, loadIdxTotal, loadIndexDaily, loadMostTraded, loadRegistry, loadSuspensions, loadTopChanges, type TopChangeEntry } from "./feeds";
 import { rankFlowRows, type FlowRadarRow } from "./flow";
 import { measureOutcome } from "./outcomes";
 import { loadOwnership, loadFreeFloat, ownershipForSymbol, freeFloatForSymbol, type IssuerOwnership } from "./ownership";
@@ -250,13 +250,16 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
 
 // Foreign-flow radar over the full stored universe — every issuer with
 // foreign-investor participation, not just insider-active ones.
+// Reference sessions are exchange trading days: the IHSG index feed is primary,
+// unioned with legacy ^IHSG price rows so a stale feed can't silence the radar.
 export async function getFlowRadar(windowDays = 14): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
-  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const [snapshot, derived, idx] = await Promise.all([loadSnapshot(), loadDerived(), loadIndexDaily()]);
   const to = derived.manifest.asOf;
   const from = new Date(new Date(`${to}T00:00:00Z`).getTime() - (windowDays - 1) * 864e5).toISOString().slice(0, 10);
-  const referenceDates = [...new Set(snapshot.price
-    .filter((row) => row.symbol === BENCH && row.date >= from && row.date <= to)
-    .map((row) => row.date))].sort();
+  const referenceDates = [...new Set([
+    ...(idx?.data ?? []).filter((row) => row.indexCode === "IHSG" && row.date >= from && row.date <= to).map((row) => row.date),
+    ...snapshot.price.filter((row) => row.symbol === BENCH && row.date >= from && row.date <= to).map((row) => row.date),
+  ])].sort();
   return { from, to, rows: rankFlowRows(snapshot.flow.filter((row) => row.date >= from && row.date <= to), referenceDates) };
 }
 
@@ -421,12 +424,14 @@ export async function getExitBoard(): Promise<ExitBoard> {
 export interface MarketContext {
   ihsg: { date: string; price: number; changePct: number | null } | null;
   mostTraded: { date: string | null; rows: { symbol: string; company_name?: string; volume?: number }[] };
+  idxTotal: { date: string; marketCap: number } | null;
+  topChanges: { date: string; gainers: TopChangeEntry[]; losers: TopChangeEntry[] } | null;
 }
 
 // Market backdrop for the Exit Watch board — IHSG last close + heaviest-volume
 // issuers of the latest saved session. Null/empty when feeds are absent.
 export async function getMarketContext(): Promise<MarketContext> {
-  const [idx, mt] = await Promise.all([loadIndexDaily(), loadMostTraded()]);
+  const [idx, mt, it, tc] = await Promise.all([loadIndexDaily(), loadMostTraded(), loadIdxTotal(), loadTopChanges()]);
   const ihsgRows = (idx?.data ?? []).filter((r) => r.indexCode === "IHSG").sort((a, b) => a.date.localeCompare(b.date));
   const last = ihsgRows.at(-1) ?? null;
   const prev = ihsgRows.at(-2) ?? null;
@@ -438,6 +443,19 @@ export async function getMarketContext(): Promise<MarketContext> {
           ? { date: last.date, price: last.price, changePct: null }
           : null,
     mostTraded: { date: mt?.data.date ?? null, rows: (mt?.data.rows ?? []).slice(0, 5) },
+    idxTotal:
+      it?.data.length
+        ? { date: it.data.at(-1)!.date, marketCap: it.data.at(-1)!.idx_total_market_cap }
+        : null,
+    topChanges: (() => {
+      const snap = tc?.data.at(-1);
+      if (!snap) return null;
+      return {
+        date: snap.date,
+        gainers: (snap.topGainers?.["1d"] ?? []).slice(0, 5),
+        losers: (snap.topLosers?.["1d"] ?? []).slice(0, 5),
+      };
+    })(),
   };
 }
 

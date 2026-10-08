@@ -9,7 +9,7 @@ import { fmtCurrency } from "@/components/fmt";
 
 export const dynamic = "force-dynamic";
 
-export default async function PersonPage({ params }: PageProps<"/orang/[holder]">) {
+export default async function PersonPage({ params }: PageProps<"/person/[holder]">) {
   const { holder } = await params;
   const d = await getPersonDossier(holder);
   if (!d) notFound();
@@ -22,7 +22,7 @@ export default async function PersonPage({ params }: PageProps<"/orang/[holder]"
         <p className="mt-1 text-xs dim">
           {s.totalTrades} reported transactions · {s.symbols} issuers:{" "}
           {d.symbols.map((sym) => (
-            <Link key={sym} href={`/saham/${sym.replace(".JK", "")}`} className="mono mr-1">
+            <Link key={sym} href={`/stock/${sym.replace(".JK", "")}`} className="mono mr-1">
               {sym.replace(".JK", "")}
             </Link>
           ))}

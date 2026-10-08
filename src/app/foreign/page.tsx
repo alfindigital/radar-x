@@ -10,10 +10,10 @@ function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: strin
   return (
     <section>
       <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">{title}</h2>
-      <div className="overflow-x-auto">
+      <div className="table-sticky">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+            <tr className="text-left text-[10px] uppercase tracking-wider faint">
               <th className="py-2 pr-4 font-medium">#</th>
               <th className="py-2 pr-4 font-medium">Issuer</th>
               <th className="py-2 pr-4 font-medium text-right">Net flow</th>
@@ -25,8 +25,8 @@ function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: strin
             {rows.map((r, i) => (
               <tr key={r.symbol} className="row-hover border-b border-line/60">
                 <td className="py-2.5 pr-4 faint">{i + 1}</td>
-                <td className="py-2.5 pr-4">
-                  <Link href={`/saham/${r.symbol.replace(".JK", "")}`} className="font-bold text-sm">
+                <td className="tapcell py-2.5 pr-4">
+                  <Link href={`/stock/${r.symbol.replace(".JK", "")}`} className="taplink font-bold text-sm">
                     {r.symbol.replace(".JK", "")}
                   </Link>
                 </td>
@@ -46,7 +46,7 @@ function FlowTable({ title, rows, sign }: { title: string; rows: { symbol: strin
   );
 }
 
-export default async function AsingPage() {
+export default async function ForeignPage() {
   const { from, to, rows } = await getFlowRadar(14);
   const acc = rows.filter((r) => r.cumNet > 0).slice(0, 50);
   const dist = rows.filter((r) => r.cumNet < 0).sort((a, b) => a.cumNet - b.cumNet).slice(0, 50);

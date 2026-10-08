@@ -15,7 +15,7 @@ function outcomeDisplay(outcome: { status: "complete" | "pending" | "unavailable
   return outcome.status === "complete" ? fmtPct(outcome.issuerPct, 1, "complete") : fmtPct(null, 1, outcome.status);
 }
 
-export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
+export default async function CasePage({ params }: PageProps<"/cases/[id]">) {
   const { id } = await params;
   const c = await getCase(id);
   if (!c) notFound();
@@ -31,7 +31,7 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
       <div>
         <div className="flex flex-wrap items-center gap-3">
           <span className={`tag ${patternTagClass(c.pattern)}`}>{PATTERN_LABEL[c.pattern] ?? c.pattern}</span>
-          <Link href={`/saham/${c.symbol.replace(".JK", "")}`} className="mono text-2xl font-bold">
+          <Link href={`/stock/${c.symbol.replace(".JK", "")}`} className="mono text-2xl font-bold">
             {c.symbol.replace(".JK", "")}
           </Link>
         </div>
@@ -86,7 +86,7 @@ export default async function CasePage({ params }: PageProps<"/kasus/[id]">) {
               <tr key={i} className="border-b border-line/40">
                 <td className="py-1.5 pr-3 faint">{t.txnDate}</td>
                 <td className="max-w-[240px] truncate py-1.5 pr-3">
-                  <Link href={`/orang/${encodeURIComponent(t.holderName)}`}>{t.holderName}</Link>
+                  <Link href={`/person/${encodeURIComponent(t.holderName)}`}>{t.holderName}</Link>
                 </td>
                 <td className={`py-1.5 pr-3 ${t.txnType === "buy" ? "acc" : "dist"}`}>{t.txnType.toUpperCase()}</td>
                 <td className="py-1.5 pr-3 text-right">{fmtShares(t.amount)}</td>

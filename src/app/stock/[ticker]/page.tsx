@@ -132,11 +132,11 @@ function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; co
           ))}
           {o.whales.map((w) =>
             knownHolders.has(w) ? (
-              <Link key={w} href={`/orang/${encodeURIComponent(w)}`} className="tag hover:border-line">
+              <Link key={w} href={`/person/${encodeURIComponent(w)}`} className="tag hover:border-line">
                 {w}
               </Link>
             ) : (
-              <span key={w} className="tag" title="Reported holder — no ownership-transaction dossier in the snapshot">
+              <span key={w} className="tag" data-tip="Reported holder · no ownership-transaction dossier in the snapshot">
                 {w}
               </span>
             ),
@@ -156,7 +156,7 @@ function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; co
                   <tr key={h.name} className="border-b border-line/40 last:border-0">
                     <td className="py-1.5 pr-3">
                       {h.holderSymbol ? (
-                        <Link href={`/saham/${h.holderSymbol.replace(".JK", "")}`} className="blue hover:underline">
+                        <Link href={`/stock/${h.holderSymbol.replace(".JK", "")}`} className="blue hover:underline">
                           {h.name}
                         </Link>
                       ) : (
@@ -238,7 +238,7 @@ function OwnershipSection({ o, covered, knownHolders }: { o: IssuerOwnership; co
   );
 }
 
-export default async function DossierPage({ params }: PageProps<"/saham/[ticker]">) {
+export default async function DossierPage({ params }: PageProps<"/stock/[ticker]">) {
   const { ticker } = await params;
   const d = await getIssuerDossier(ticker);
 

@@ -12,7 +12,7 @@ const COHORT_ORDER = ["institutional", "mixed", "retail", "unknown"] as const;
 function CohortTag({ cohort }: { cohort: string }) {
   const cls = cohort === "institutional" ? "cohort-inst" : cohort === "retail" ? "cohort-retail" : "dim";
   return (
-    <span className={`tag ${cls}`} title="Broker classification from the broker registry: describes the channel, not the ultimate trader.">
+    <span className={`tag ${cls}`} tabIndex={0} data-tip="Broker classification from the broker registry: describes the channel, not the ultimate trader.">
       {cohort}
     </span>
   );
@@ -72,6 +72,7 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
               <Link
                 key={t.key}
                 href={t.key === "all" ? "/broker" : `/broker?cohort=${t.key}`}
+                aria-current={cohort === t.key ? "page" : undefined}
                 className={`tab ${cohort === t.key ? "tab-active" : ""}`}
               >
                 {t.label}
@@ -91,10 +92,10 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
 
       {board.available && (
         <section>
-          <div className="overflow-x-auto">
+          <div className="table-sticky">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+                <tr className="text-left text-[10px] uppercase tracking-wider faint">
                   <th className="py-2 pr-4 font-medium">#</th>
                   <th className="py-2 pr-4 font-medium">Broker</th>
                   <th className="py-2 pr-4 font-medium">Cohort</th>
@@ -106,8 +107,8 @@ export default async function BrokerBoardPage({ searchParams }: PageProps<"/brok
                 {board.entries.map((e) => (
                   <tr key={e.broker_code} className="row-hover border-b border-line/60">
                     <td className="py-3 pr-4 faint">{e.rank}</td>
-                    <td className="py-3 pr-4">
-                      <Link href={`/broker/${e.broker_code}`} className="font-bold text-sm">
+                    <td className="tapcell py-3 pr-4">
+                      <Link href={`/broker/${e.broker_code}`} className="taplink font-bold text-sm">
                         {e.broker_code}
                       </Link>
                       {e.name && <span className="ml-2 text-[11px] dim">{e.name}</span>}

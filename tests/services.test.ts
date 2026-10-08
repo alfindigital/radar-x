@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { getIssuerDossier, getRadarBoard } from "../src/lib/services";
+import { getFlowRadar, getIssuerDossier, getRadarBoard } from "../src/lib/services";
 import { loadDerived } from "../src/lib/derive";
 import { loadSnapshot } from "../src/lib/snapshot";
 
@@ -33,6 +33,12 @@ test("unknown issuer is explicit and does not trigger a provider fetch", async (
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("flow radar ranks window rows against the exchange session calendar", async () => {
+  const radar = await getFlowRadar(14);
+  assert.ok(radar.rows.length > 0, "expected ranked flow rows for the current window");
+  assert.ok(radar.rows.every((r) => r.expectedSessions > 0));
 });
 
 test("known issuers use the verified derived-v2 score and do not mutate the snapshot", async () => {

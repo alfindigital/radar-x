@@ -31,7 +31,7 @@ function Panel({ days, field, label, color }: { days: Day[]; field: "instNet" | 
         const y = v < 0 ? zero + PAD : zero + PAD - h;
         return (
           <rect key={d.date} x={i * bw + bw * 0.15} y={y} width={bw * 0.7} height={Math.max(h, 0.5)} fill={color} opacity="0.9">
-            <title>{`${d.date} — ${label}: ${v < 0 ? "−" : "+"}Rp${fmtIDR(Math.abs(v))}`}</title>
+            <title>{`${d.date} · ${label}: ${v < 0 ? "−" : "+"}Rp${fmtIDR(Math.abs(v))}`}</title>
           </rect>
         );
       })}

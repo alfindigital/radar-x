@@ -5,6 +5,20 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./data/*.json", "./data/derived-v2/*.json"],
   },
+  // Routes were renamed to English; keep the old public URLs alive for
+  // shared links.
+  async redirects() {
+    return [
+      { source: "/asing", destination: "/foreign", permanent: false },
+      { source: "/metodologi", destination: "/methodology", permanent: false },
+      { source: "/rotasi", destination: "/rotation", permanent: false },
+      { source: "/rotasi/:sub", destination: "/rotation/:sub", permanent: false },
+      { source: "/kasus", destination: "/cases", permanent: false },
+      { source: "/kasus/:id", destination: "/cases/:id", permanent: false },
+      { source: "/orang/:holder", destination: "/person/:holder", permanent: false },
+      { source: "/saham/:ticker", destination: "/stock/:ticker", permanent: false },
+    ];
+  },
   // Baseline hardening headers. CSP is intentionally not set: Next's bootstrap
   // inline scripts need hashed/nonced policy work; tracked as follow-up.
   async headers() {

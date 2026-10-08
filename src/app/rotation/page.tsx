@@ -34,8 +34,9 @@ function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
   ].join("\n");
   return (
     <Link
-      href={`/rotasi/${s.slug}`}
-      title={tip}
+      href={`/rotation/${s.slug}`}
+      data-tip={tip}
+      aria-description={tip}
       className="block rounded-md border border-line px-3 py-2.5 transition-colors hover:border-line-2"
       style={{ background: `color-mix(in srgb, ${tone} ${alpha}%, transparent)` }}
     >
@@ -50,7 +51,7 @@ function Cell({ s, maxAbs }: { s: RotationSubsector; maxAbs: number }) {
   );
 }
 
-export default async function RotasiPage() {
+export default async function RotationPage() {
   const board = await getSectorRotation();
 
   if (!board) {
@@ -95,7 +96,7 @@ export default async function RotasiPage() {
         </div>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
         {board.sectors.map((g) => (
           <section key={g.slug} className="panel p-4">
             <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-widest faint">{g.label}</h2>
@@ -110,10 +111,10 @@ export default async function RotasiPage() {
 
       <section>
         <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-widest faint">All subsectors, ranked by 1-week mcap change</h2>
-        <div className="overflow-x-auto">
+        <div className="table-sticky">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider faint">
+              <tr className="text-left text-[10px] uppercase tracking-wider faint">
                 <th className="py-2 pr-4 font-medium">#</th>
                 <th className="py-2 pr-4 font-medium">Subsector</th>
                 <th className="hidden py-2 pr-4 font-medium md:table-cell">Sector</th>
@@ -133,8 +134,8 @@ export default async function RotasiPage() {
                 return (
                   <tr key={s.slug} className="row-hover border-b border-line/60">
                     <td className="py-2.5 pr-4 faint">{i + 1}</td>
-                    <td className="py-2.5 pr-4 font-sans font-medium">
-                      <Link href={`/rotasi/${s.slug}`} className="hover:text-ink">{s.subSector}</Link>
+                    <td className="tapcell py-2.5 pr-4 font-sans font-medium">
+                      <Link href={`/rotation/${s.slug}`} className="taplink hover:text-ink">{s.subSector}</Link>
                       <span className="faint ml-2">{s.companyCount ?? "—"}</span>
                     </td>
                     <td className="hidden py-2.5 pr-4 dim md:table-cell">{s.sector}</td>
@@ -148,8 +149,9 @@ export default async function RotasiPage() {
                       {s.medianPe === null ? "—" : `${s.medianPe.toFixed(1)}×`}
                     </td>
                     <td
-                      className="hidden py-2.5 pr-4 text-right dim lg:table-cell"
-                      title={s.valuationLatest ? `PB rank ${s.valuationLatest.pbRank ?? "—"} of 33 subsectors` : undefined}
+                      className="tip-r hidden py-2.5 pr-4 text-right dim lg:table-cell"
+                      tabIndex={s.valuationLatest ? 0 : undefined}
+                      data-tip={s.valuationLatest ? `PB rank ${s.valuationLatest.pbRank ?? "—"} of 33 subsectors` : undefined}
                     >
                       {s.valuationLatest?.pb == null ? "—" : `${s.valuationLatest.pb.toFixed(2)}×`}
                     </td>

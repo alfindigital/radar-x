@@ -22,13 +22,15 @@ export function FlagChips({ flags }: { flags: ExitFlags }) {
   return (
     <span className="flex flex-wrap gap-1">
       {alerts.map((m) => (
-        <span key={m.key} className="tag tag-watch" title={m.hint}>
+        <span key={m.key} className="tag tag-watch tip-r" data-tip={m.hint}>
           {m.label}
+          <span className="sr-only"> ({m.hint})</span>
         </span>
       ))}
       {context.map((m) => (
-        <span key={m.key} className="tag" title={m.hint}>
+        <span key={m.key} className="tag tip-r" data-tip={m.hint}>
           {m.label}
+          <span className="sr-only"> ({m.hint})</span>
         </span>
       ))}
     </span>

@@ -26,8 +26,8 @@ export default function TradesTable({ trades, limit }: { trades: InsiderTrade[];
           {rows.map((t, i) => (
             <tr key={i} className="border-b border-line/40">
               <td className="py-1.5 pr-3 faint">{t.txnDate}</td>
-              <td className="max-w-[240px] truncate py-1.5 pr-3">
-                <Link href={`/orang/${encodeURIComponent(t.holderName)}`} className="dim">
+              <td className="tapcell max-w-[240px] truncate py-1.5 pr-3">
+                <Link href={`/person/${encodeURIComponent(t.holderName)}`} className="taplink dim">
                   {t.holderName}
                 </Link>
                 <span className="faint"> · {t.holderType}</span>
