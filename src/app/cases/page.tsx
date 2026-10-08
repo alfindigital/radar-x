@@ -20,11 +20,9 @@ export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
 
   return (
     <div className="space-y-4">
-      <div>
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <h1 className="text-[26px] font-bold tracking-tight">Candidate Feed</h1>
-        <p className="mt-1.5 text-[13px] dim">
-          Bounded patterns from reported disclosures: {cases.length} candidates. Retrospective outcomes are measured, not predicted.
-        </p>
+        <span className="mono faint text-[10px] uppercase tracking-wider">{cases.length} candidates</span>
       </div>
 
       <div className="tabbar">

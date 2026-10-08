@@ -47,7 +47,10 @@
 - **Routes:** `/` = unified Dashboard (positioning index + distribution
   pressure in one tape; legacy `?v=radar`/`?f=` links resolve onto it) ·
   `/broker`, `/broker/[code]` new · dossier has a Distribution pressure panel
-  (tug-of-war chart, component coverage, suspension/CA context).
+  (tug-of-war chart, component coverage, suspension/CA context). Session
+  pickers where dated feeds allow it: `/foreign?to=` (14d window end over
+  saved flow dates) and `/broker?date=` (leaderboard session per cohort).
+  Subtitle prose stripped — headers are h1 + stats/controls only.
 - **Engine:** `src/lib/exitwatch.ts` — instExit .30 / foreignExit .25 /
   insiderExit .25 / retailAbsorb .20, robust-z clipped ±3, coverage gate ≥0.5.
 - **Cohort truth:** registry 88 brokers = inst 39 / mixed 42 / unknown 2 /

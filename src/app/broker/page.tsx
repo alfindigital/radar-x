@@ -5,6 +5,7 @@ import { getBrokerBoard } from "@/lib/services";
 import { fmtCurrency } from "@/components/fmt";
 import { Pager, pageHref, paginate } from "@/components/Pager";
 import { StatStrip, Stat } from "@/components/StatStrip";
+import { SessionPicker } from "@/components/SessionPicker";
 import DataStatus from "@/components/DataStatus";
 
 export const dynamic = "force-dynamic";
@@ -29,18 +30,26 @@ const COHORT_TABS = [
 export default async function BrokerBoardPage({ searchParams }: PageProps<"/broker">) {
   const params = await searchParams;
   const cohort = ["retail", "institutional"].includes(String(params.cohort)) ? String(params.cohort) : "all";
-  const board = await getBrokerBoard(cohort);
+  const dateParam = typeof params.date === "string" ? params.date : undefined;
+  const board = await getBrokerBoard(cohort, dateParam);
   const pg = paginate(board.entries, params.page);
+  // Session dates the picker may offer for this cohort — only sessions that
+  // exist in the feed, so no empty state is reachable through the control.
+  const sessionDates = [...new Set(board.sessions.filter((s) => s.cohort === cohort).map((s) => s.date))]
+    .sort()
+    .reverse();
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-[26px] font-bold tracking-tight">Broker board</h1>
-          <p className="mt-1 max-w-2xl text-[13px] dim">
-            Top brokers by reported activity; registry cohort labels describe the channel, not the ultimate trader.
-          </p>
-        </div>
+        <h1 className="text-[26px] font-bold tracking-tight">Broker board</h1>
+        <SessionPicker
+          base="/broker"
+          param="date"
+          dates={sessionDates}
+          value={board.date}
+          extra={{ cohort: cohort === "all" ? undefined : cohort }}
+        />
       </div>
 
       {/* Registry cohort counts — same hairline-band language as the board stats. */}

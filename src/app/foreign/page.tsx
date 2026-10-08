@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { getFlowRadar } from "@/lib/services";
+import { getFlowRadar, getFlowSessions } from "@/lib/services";
 import { fmtIDR } from "@/components/fmt";
 import { Pager, pageHref, paginate } from "@/components/Pager";
 import { StatStrip, Stat } from "@/components/StatStrip";
+import { SessionPicker } from "@/components/SessionPicker";
 
 export const dynamic = "force-dynamic";
 
@@ -52,7 +53,9 @@ function FlowTable({ title, rows, sign, startAt = 1, children }: { title: string
 
 export default async function ForeignPage({ searchParams }: PageProps<"/foreign">) {
   const params = await searchParams;
-  const { from, to, rows } = await getFlowRadar(14);
+  const sessions = await getFlowSessions();
+  const toParam = typeof params.to === "string" && sessions.includes(params.to) ? params.to : undefined;
+  const { from, to, rows } = await getFlowRadar(14, toParam);
   const acc = rows.filter((r) => r.cumNet > 0).slice(0, 50);
   const dist = rows.filter((r) => r.cumNet < 0).sort((a, b) => a.cumNet - b.cumNet).slice(0, 50);
   // Independent pagers: ?ap and ?dp keep each table's page in the URL so one
@@ -62,18 +65,19 @@ export default async function ForeignPage({ searchParams }: PageProps<"/foreign"
 
   return (
     <div className="space-y-4">
-      <div>
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <h1 className="text-[26px] font-bold tracking-tight">Foreign Flow Radar</h1>
-        <p className="mt-1 max-w-2xl text-[13px] dim">
-          Signed net foreign flow, {from ?? "—"} → {to ?? "—"}. Missing issuer rows are unknown, not zero.
-        </p>
+        <div className="flex items-center gap-3">
+          <span className="mono faint text-[10px] uppercase tracking-wider">14d ending</span>
+          <SessionPicker base="/foreign" param="to" dates={sessions} value={toParam} />
+        </div>
       </div>
 
       <StatStrip>
+        <Stat label="Window" value={`${from ?? "—"} → ${to ?? "—"}`} />
         <Stat label="Issuers observed" value={rows.length} />
         <Stat label="Net accumulating" value={rows.filter((r) => r.cumNet > 0).length} color="var(--acc)" />
         <Stat label="Net distributing" value={rows.filter((r) => r.cumNet < 0).length} color="var(--dist)" />
-        <Stat label="Window" value="14d" />
       </StatStrip>
 
       <div className="grid gap-6 lg:grid-cols-2">

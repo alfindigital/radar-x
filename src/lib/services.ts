@@ -252,15 +252,26 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
 // foreign-investor participation, not just insider-active ones.
 // Reference sessions are exchange trading days: the IHSG index feed is primary,
 // unioned with legacy ^IHSG price rows so a stale feed can't silence the radar.
-export async function getFlowRadar(windowDays = 14): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
+
+// Session dates the flow feed actually contains, latest first — the only dates
+// the board's window-end picker may offer.
+export async function getFlowSessions(): Promise<string[]> {
+  const snapshot = await loadSnapshot();
+  return [...new Set(snapshot.flow.map((r) => r.date))].sort().reverse();
+}
+
+export async function getFlowRadar(
+  windowDays = 14,
+  to?: string,
+): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
   const [snapshot, derived, idx] = await Promise.all([loadSnapshot(), loadDerived(), loadIndexDaily()]);
-  const to = derived.manifest.asOf;
-  const from = new Date(new Date(`${to}T00:00:00Z`).getTime() - (windowDays - 1) * 864e5).toISOString().slice(0, 10);
+  const end = to ?? derived.manifest.asOf;
+  const from = new Date(new Date(`${end}T00:00:00Z`).getTime() - (windowDays - 1) * 864e5).toISOString().slice(0, 10);
   const referenceDates = [...new Set([
-    ...(idx?.data ?? []).filter((row) => row.indexCode === "IHSG" && row.date >= from && row.date <= to).map((row) => row.date),
-    ...snapshot.price.filter((row) => row.symbol === BENCH && row.date >= from && row.date <= to).map((row) => row.date),
+    ...(idx?.data ?? []).filter((row) => row.indexCode === "IHSG" && row.date >= from && row.date <= end).map((row) => row.date),
+    ...snapshot.price.filter((row) => row.symbol === BENCH && row.date >= from && row.date <= end).map((row) => row.date),
   ])].sort();
-  return { from, to, rows: rankFlowRows(snapshot.flow.filter((row) => row.date >= from && row.date <= to), referenceDates) };
+  return { from, to: end, rows: rankFlowRows(snapshot.flow.filter((row) => row.date >= from && row.date <= end), referenceDates) };
 }
 
 export interface RotationBoard {
@@ -477,16 +488,20 @@ export interface BrokerBoard {
   available: boolean;
 }
 
-// Broker leaderboard — latest brokers_top session, each row labeled with its
-// registry cohort. When no registry/session exists the board reports itself
-// unavailable rather than showing an unlabeled list.
-export async function getBrokerBoard(cohort = "all"): Promise<BrokerBoard> {
+// Broker leaderboard — one brokers_top session (latest, or `date` when the
+// board's session picker supplies one), each row labeled with its registry
+// cohort. When no registry/session exists the board reports itself unavailable
+// rather than showing an unlabeled list.
+export async function getBrokerBoard(cohort = "all", date?: string): Promise<BrokerBoard> {
   const [sessions, registry] = await Promise.all([loadBrokersTop(), loadRegistry()]);
   const cohortByCode = new Map<string, RegistryRow>((registry?.data ?? []).map((r) => [r.code, r]));
-  const latest =
-    sessions?.data.find((s) => s.results.length && (s.cohort ?? "all") === cohort) ??
-    sessions?.data.find((s) => s.results.length) ??
-    null;
+  const latest = date
+    ? (sessions?.data.find((s) => s.date === date && (s.cohort ?? "all") === cohort && s.results.length) ??
+      sessions?.data.find((s) => s.results.length && (s.cohort ?? "all") === cohort) ??
+      null)
+    : (sessions?.data.find((s) => s.results.length && (s.cohort ?? "all") === cohort) ??
+      sessions?.data.find((s) => s.results.length) ??
+      null);
   const byCohort: Record<string, number> = {};
   for (const r of registry?.data ?? []) byCohort[r.cohort] = (byCohort[r.cohort] ?? 0) + 1;
   return {

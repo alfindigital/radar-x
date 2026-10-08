@@ -47,7 +47,9 @@ data/*.json (frozen Sectors snapshot)
                               └── services.ts → Next.js research pages
 ```
 
-The current manifest records 962 score rows (865 non-null v2 scores), 169 candidate patterns, 198 complete outcomes, 106 pending outcomes, and 203 unavailable paired outcomes, plus 244 publishable Exit Watch readings (57 high / 46 elevated / 90 watch / 51 low). These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
+The current manifest records 962 score rows (865 non-null v2 scores), 169 candidate patterns, 198 complete outcomes, 106 pending outcomes, and 203 unavailable paired outcomes, plus 244 publishable distribution-pressure readings (57 high / 46 elevated / 90 watch / 51 low). These counts are snapshot-specific; verify `data/derived-v2/manifest.json` after regeneration.
+
+Boards that read dated feeds let you pick the session: `/foreign?to=YYYY-MM-DD` slides the 14-day window across saved flow dates, `/broker?date=YYYY-MM-DD` selects the leaderboard session (per cohort). Snapshot-derived boards (`/`, `/rotation`, `/cases`) pin to the single manifest `asOf`.
 
 ## Method limits
 

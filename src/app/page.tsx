@@ -322,10 +322,6 @@ export default async function DashboardPage({ searchParams }: PageProps<"/">) {
             EOD {board.asOf} · {radar.universe} issuers
           </p>
           <h1 className="mt-1 text-[26px] font-bold tracking-tight">Dashboard</h1>
-          <p className="mt-1 max-w-2xl text-[13px] dim">
-            Who is accumulating and who is leaving, read from public IDX disclosures. Descriptive
-            reading, not a recommendation.
-          </p>
         </div>
       </div>
 
