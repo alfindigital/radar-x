@@ -5,6 +5,19 @@ import { NextRequest, NextResponse } from "next/server";
 // request. style-src keeps 'unsafe-inline': React `style={{}}` attributes are
 // not covered by nonces and are used by the chart components.
 export function proxy(request: NextRequest) {
+  // Short-circuit non-browser monitor pings hitting the beta alias root.
+  // Real browsers always send `sec-fetch-mode: navigate`.
+  if (
+    request.nextUrl.pathname === "/" &&
+    request.nextUrl.hostname === "radar-x-beta.vercel.app" &&
+    !request.headers.get("sec-fetch-mode")
+  ) {
+    return new NextResponse("ok", {
+      status: 200,
+      headers: { "content-type": "text/plain" },
+    });
+  }
+
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const isDev = process.env.NODE_ENV === "development";
   const contentSecurityPolicyHeaderValue = `
