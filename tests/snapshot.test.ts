@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { loadSnapshot } from "../src/lib/snapshot";
+import { rm } from "node:fs/promises";
+import { loadSnapshot, loadSnapshotParts } from "../src/lib/snapshot";
 
 const files = [
   "tickers.json",
@@ -73,4 +74,33 @@ test("rejects malformed required JSON instead of returning an empty dataset", as
   const dir = await fixtureDir();
   await writeFile(path.join(dir, "flow_daily.json"), "{broken", "utf8");
   await assert.rejects(loadSnapshot(dir), /flow_daily\.json/);
+});
+
+test("loadSnapshotParts reads only the requested datasets", async () => {
+  const dir = await fixtureDir({
+    "flow_daily.json": [{ symbol: "TEST.JK", date: "2026-09-22", netForeignInflow: 5 }],
+  });
+  // The big files are absent: a part loader that touched them would throw.
+  await rm(path.join(dir, "broker_rows.json"));
+  await rm(path.join(dir, "price_daily.json"));
+  const slice = await loadSnapshotParts(["tickers", "flow"], dir);
+  assert.equal(slice.tickers.length, 1);
+  assert.equal(slice.flow.length, 1);
+  assert.deepEqual(Object.keys(slice).sort(), ["flow", "tickers"]);
+  await assert.rejects(loadSnapshotParts(["broker"], dir), /broker_rows\.json/);
+});
+
+test("loadSnapshotParts normalises prices exactly like the full loader", async () => {
+  const dir = await fixtureDir({
+    "price_daily.json": [{ symbol: "TEST.JK", date: "2026-09-22", open: 100, high: 100, low: 100, close: 100, volume: 0, marketCap: null }],
+  });
+  const [full, slice] = await Promise.all([loadSnapshot(dir), loadSnapshotParts(["price"], dir)]);
+  assert.deepEqual(slice.price, full.price);
+  assert.equal(slice.price[0].observationKind, "legacy-unknown");
+});
+
+test("loadSnapshotParts rejects malformed JSON instead of returning an empty dataset", async () => {
+  const dir = await fixtureDir();
+  await writeFile(path.join(dir, "insider_trades.json"), "{broken", "utf8");
+  await assert.rejects(loadSnapshotParts(["insider"], dir), /insider_trades\.json/);
 });

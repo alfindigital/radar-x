@@ -21,6 +21,11 @@ const jetMono = JetBrains_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
+// Serverless functions on this project default to a 10 s limit; a cold start
+// that parses the data files can exceed it, which cuts the RSC stream
+// (React error #412 "Connection closed"). Allow the platform maximum.
+export const maxDuration = 60;
+
 export const metadata: Metadata = {
   title: "RadarX · IDX Market Intelligence",
   description:

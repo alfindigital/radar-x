@@ -8,7 +8,7 @@ import { measureOutcome } from "./outcomes";
 import { loadOwnership, loadFreeFloat, ownershipForSymbol, freeFloatForSymbol, type IssuerOwnership } from "./ownership";
 import { loadRotation, type RotationSubsector } from "./rotation";
 import { loadTaxonomy, taxonomyBySymbol } from "./taxonomy";
-import { loadSnapshot } from "./snapshot";
+import { loadSnapshotParts, type SnapshotSlice } from "./snapshot";
 import type { SymbolData } from "./score";
 import type {
   BrokerCohort,
@@ -92,7 +92,7 @@ export interface PersonDossier {
 }
 
 function loadSymbol(
-  snapshot: Awaited<ReturnType<typeof loadSnapshot>>,
+  snapshot: SnapshotSlice<"insider" | "flow" | "price" | "broker" | "holders">,
   symbol: string,
   cohorts: BrokerCohorts,
 ): SymbolData {
@@ -140,7 +140,9 @@ function issuerWindowStats(data: SymbolData, asOf: string, days = 90): IssuerWin
 }
 
 export async function getRadarBoard(): Promise<RadarBoard> {
-  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  // The board reads insider/flow/tickers only. Price, broker and holders are
+  // large and stay unloaded on this path.
+  const [snapshot, derived] = await Promise.all([loadSnapshotParts(["tickers", "insider", "flow"]), loadDerived()]);
   const scores = derived.scores;
   const insider = [...snapshot.insider].sort((a, b) => b.txnDate.localeCompare(a.txnDate)).slice(0, 15);
   const cases = derived.cases.slice(0, 12);
@@ -185,7 +187,7 @@ const EMPTY_OWNERSHIP: IssuerOwnership = { holders: [], whales: [], groups: [], 
 
 export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier> {
   const [snapshot, derived, ownership, freeFloat, registry, suspensions, corpActions] = await Promise.all([
-    loadSnapshot(),
+    loadSnapshotParts(["tickers", "insider", "flow", "price", "broker", "holders"]),
     loadDerived(),
     loadOwnership(),
     loadFreeFloat(),
@@ -256,7 +258,7 @@ export async function getIssuerDossier(symbolRaw: string): Promise<IssuerDossier
 // Session dates the flow feed actually contains, latest first — the only dates
 // the board's window-end picker may offer.
 export async function getFlowSessions(): Promise<string[]> {
-  const snapshot = await loadSnapshot();
+  const snapshot = await loadSnapshotParts(["flow"]);
   return [...new Set(snapshot.flow.map((r) => r.date))].sort().reverse();
 }
 
@@ -264,7 +266,7 @@ export async function getFlowRadar(
   windowDays = 14,
   to?: string,
 ): Promise<{ from: string | null; to: string | null; rows: FlowRadarRow[] }> {
-  const [snapshot, derived, idx] = await Promise.all([loadSnapshot(), loadDerived(), loadIndexDaily()]);
+  const [snapshot, derived, idx] = await Promise.all([loadSnapshotParts(["price", "flow"]), loadDerived(), loadIndexDaily()]);
   const end = to ?? derived.manifest.asOf;
   const from = new Date(new Date(`${end}T00:00:00Z`).getTime() - (windowDays - 1) * 864e5).toISOString().slice(0, 10);
   const referenceDates = [...new Set([
@@ -287,7 +289,7 @@ export interface RotationBoard {
 // "observed/total" count is accurate even for artifacts written before the
 // coverage fields existed.
 export async function getSectorRotation(): Promise<RotationBoard | null> {
-  const [rot, snapshot] = await Promise.all([loadRotation(), loadSnapshot()]);
+  const [rot, snapshot] = await Promise.all([loadRotation(), loadSnapshotParts(["flow"])]);
   if (!rot) return null;
   const flowDate = rot.subsectors.find((s) => s.flowDate)?.flowDate ?? null;
   const flowCovered = new Set(
@@ -318,7 +320,7 @@ export interface SubsectorDetail {
 // latest saved positioning score (null = issuer outside the scored cohort).
 export async function getSubsectorDetail(slugRaw: string): Promise<SubsectorDetail | null> {
   const slug = decodeRouteParam(slugRaw)?.toLowerCase() ?? "";
-  const [rot, derived, snapshot] = await Promise.all([loadRotation(), loadDerived(), loadSnapshot()]);
+  const [rot, derived, snapshot] = await Promise.all([loadRotation(), loadDerived(), loadSnapshotParts(["flow"])]);
   let row = rot?.subsectors.find((s) => s.slug === slug);
   if (!rot || !row) return null;
   if (row.flowDate && row.flowObserved == null) {
@@ -351,7 +353,7 @@ export async function getCase(id: string): Promise<DerivedCase | null> {
 export async function getPersonDossier(holderRaw: string): Promise<PersonDossier | null> {
   const holderName = decodeRouteParam(holderRaw);
   if (!holderName) return null;
-  const [snapshot, derived] = await Promise.all([loadSnapshot(), loadDerived()]);
+  const [snapshot, derived] = await Promise.all([loadSnapshotParts(["insider", "price"]), loadDerived()]);
   const trades = snapshot.insider.filter((trade) => trade.holderName === holderName);
   if (!trades.length) return null;
 

@@ -25,6 +25,19 @@ const DATA_FILES = [
 
 const DEFAULT_DATA_DIR = path.join(process.cwd(), "data");
 
+/** One dataset of the snapshot. `broker` alone is ~70 MB, so request handlers load only the parts they read. */
+export type SnapshotPart = "tickers" | "insider" | "flow" | "price" | "broker" | "holders";
+export type SnapshotSlice<P extends SnapshotPart> = Pick<Snapshot, P>;
+
+const PART_FILES: Record<SnapshotPart, string> = {
+  tickers: "tickers.json",
+  insider: "insider_trades.json",
+  flow: "flow_daily.json",
+  price: "price_daily.json",
+  broker: "broker_rows.json",
+  holders: "holders_monthly.json",
+};
+
 function asRows(file: string, value: unknown): Record<string, unknown>[] {
   if (!Array.isArray(value)) throw new Error(`${file}: expected a JSON array`);
   return value.map((row, index) => {
@@ -82,27 +95,53 @@ function normalizePriceRow(row: PriceDaily): PriceDaily {
   return { ...row, observationKind: "legacy-unknown", fieldSources };
 }
 
+async function readSnapshotFile(dataDir: string, file: string): Promise<{ rows: Record<string, unknown>[]; bytes: Buffer }> {
+  let bytes: Buffer;
+  try {
+    bytes = await readFile(path.join(/*turbopackIgnore: true*/ dataDir, file));
+  } catch (error) {
+    throw new Error(`${file}: unable to read snapshot file`, { cause: error });
+  }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(bytes.toString("utf8"));
+  } catch (error) {
+    throw new Error(`${file}: invalid JSON`, { cause: error });
+  }
+  return { rows: asRows(file, parsed), bytes };
+}
+
+async function loadPart(part: SnapshotPart, dataDir: string): Promise<unknown[]> {
+  const file = PART_FILES[part];
+  return cachedFileLoad(dataDir, [file], async () => {
+    const { rows } = await readSnapshotFile(dataDir, file);
+    return part === "price" ? (rows as unknown as PriceDaily[]).map(normalizePriceRow) : rows;
+  });
+}
+
+/**
+ * Request-path loader: reads and parses only the requested datasets, each
+ * cached on its own. Unlike `loadSnapshot` it skips the content hashes,
+ * date bounds and symbol indexes that only the build/audit scripts need, and
+ * the returned type contains exactly the requested keys, so touching a part
+ * that was not loaded fails to compile instead of silently reading nothing.
+ */
+export async function loadSnapshotParts<P extends SnapshotPart>(
+  parts: readonly P[],
+  dataDir = DEFAULT_DATA_DIR,
+): Promise<SnapshotSlice<P>> {
+  const entries = await Promise.all(parts.map(async (part) => [part, await loadPart(part, dataDir)] as const));
+  return Object.fromEntries(entries) as unknown as SnapshotSlice<P>;
+}
+
+/** Full snapshot with manifest and indexes — for compute/audit/ingest scripts, not request handlers. */
 export async function loadSnapshot(dataDir = DEFAULT_DATA_DIR): Promise<Snapshot> {
   return cachedFileLoad(dataDir, DATA_FILES.map(([file]) => file), () => loadSnapshotUncached(dataDir));
 }
 
 async function loadSnapshotUncached(dataDir: string): Promise<Snapshot> {
   const raw = new Map<string, { rows: Record<string, unknown>[]; bytes: Buffer }>();
-  for (const [file] of DATA_FILES) {
-    let bytes: Buffer;
-    try {
-      bytes = await readFile(path.join(/*turbopackIgnore: true*/ dataDir, file));
-    } catch (error) {
-      throw new Error(`${file}: unable to read snapshot file`, { cause: error });
-    }
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(bytes.toString("utf8"));
-    } catch (error) {
-      throw new Error(`${file}: invalid JSON`, { cause: error });
-    }
-    raw.set(file, { rows: asRows(file, parsed), bytes });
-  }
+  for (const [file] of DATA_FILES) raw.set(file, await readSnapshotFile(dataDir, file));
 
   const auditedAt = new Date().toISOString();
   const files: SourceFileMeta[] = DATA_FILES.map(([file]) => {
