@@ -8,6 +8,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Tes
+
+Jalankan `npm test` (tsx --test, file di `tests/`) dan `npm run typecheck` sebelum bilang selesai; keduanya wajib exit 0. E2E browser: `npm run test:e2e` (Playwright, `tests/e2e/`). Bila `node_modules` belum ada, `npm install` dulu. Fitur baru ikut menambah tes di `tests/`.
+
 <!-- antislop:start -->
 ## antislop
 For UI, copy, people, mobile layout, or code comments work, read `antislop.md` (core) and then the skill for the task:
